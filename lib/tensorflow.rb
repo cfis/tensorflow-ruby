@@ -48,6 +48,7 @@ require "tensorflow/eager/operation"
 require "tensorflow/eager/tensor_handle"
 
 # graph
+require "tensorflow/graph/function"
 require "tensorflow/graph/graph"
 require "tensorflow/graph/operation"
 require "tensorflow/graph/operation_description"

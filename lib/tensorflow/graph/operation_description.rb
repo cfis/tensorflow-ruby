@@ -4,15 +4,31 @@ module Tensorflow
       attr_reader :op_def
 
       def initialize(graph, op_name, name)
-        @op_def = Operation.op_def(op_name)
+        @op_def = self.check_op_def(graph, op_name)
         unless @op_def
           raise(::TensorflowError, "Unknown operation: #{op_name}")
         end
         @pointer = FFI.TF_NewOperation(graph, op_name, name)
       end
 
+      def check_op_def(graph, op_name)
+        buffer_ptr = FFI.TF_NewBuffer
+        Status.check do |status|
+          FFI.TF_GraphGetOpDef(graph, op_name, buffer_ptr, status)
+        end
+        buffer = FFI::Buffer.new(buffer_ptr)
+        string = buffer[:data].read_string(buffer[:length])
+        OpDef.decode(string)
+      ensure
+        FFI.TF_DeleteBuffer(buffer)
+      end
+
       def to_ptr
         @pointer
+      end
+
+      def device=(value)
+        FFI.TF_SetDevice(self, value)
       end
 
       def attr(attr_name)
@@ -36,15 +52,8 @@ module Tensorflow
       def add_inputs(*operations)
         operations = operations.flatten(1)
 
-        ptr = ::FFI::MemoryPointer.new(FFI::Output, operations.length)
-        operations.each_with_index do |operation, i|
-          input = FFI::Output.new(ptr + (i * FFI::Output.size))
-          input[:oper] = operation
-          input[:index] = 0
-          input
-        end
-
-        FFI.TF_AddInputList(self, ptr, operations.length)
+        operations_ptr = FFI::Output.pointer_array(operations)
+        FFI.TF_AddInputList(self, operations_ptr, operations.length)
       end
 
       def save

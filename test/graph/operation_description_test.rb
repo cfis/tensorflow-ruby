@@ -49,6 +49,17 @@ module Tensorflow
         new_tensor = operation.attr('v').tensor
         assert_equal(tensor.value, new_tensor.value)
       end
+
+      def test_set_device
+        graph = Graph.new
+        tensor = Tensor.new(10)
+        op_desc = OperationDescription.new(graph, 'Const', 'scalar10')
+        op_desc.attr('value').tensor = tensor
+        op_desc.attr('dtype').dtype = tensor.dtype
+        op_desc.device = "/cpu:0"
+        operation = op_desc.save
+        assert(operation)
+      end
     end
   end
 end

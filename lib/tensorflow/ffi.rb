@@ -21,7 +21,7 @@ module Tensorflow
         :length, :size_t,
         :data_deallocator, :pointer
     end
-    attach_function :TF_NewBuffer, %i[void], :pointer
+    attach_function :TF_NewBuffer, [], :pointer
     attach_function :TF_DeleteBuffer, [:pointer], :void
     attach_function :TF_GetBuffer, [:pointer], :pointer
 
@@ -32,11 +32,31 @@ module Tensorflow
     class Input < ::FFI::Struct
       layout :oper, :pointer,
              :index, :int
+
+      def self.pointer_array(operations)
+        result = ::FFI::MemoryPointer.new(self, operations.length)
+        operations.each_with_index do |operation, i|
+          input = self.new(result + (i * self.size))
+          input[:oper] = operation
+          input[:index] = 0
+        end
+        result
+      end
     end
 
     class Output < ::FFI::Struct
       layout :oper, :pointer,
              :index, :int
+
+      def self.pointer_array(operations)
+        result = ::FFI::MemoryPointer.new(self, operations.length)
+        operations.each_with_index do |operation, i|
+          input = self.new(result + (i * self.size))
+          input[:oper] = operation
+          input[:index] = 0
+        end
+        result
+      end
     end
 
     attach_function :TF_NewGraph, [], :pointer
@@ -49,7 +69,7 @@ module Tensorflow
 
     attach_function :TF_NewOperation, [:pointer, :string, :string], :pointer
     attach_function :TF_FinishOperation, [:pointer, :pointer], :pointer
-
+    attach_function :TF_SetDevice, [:pointer, :string,], :void
     attach_function :TF_SetAttrBool, [:pointer, :string, :uchar], :void
     attach_function :TF_SetAttrBoolList, [:pointer, :string, :pointer, :int], :void
     attach_function :TF_SetAttrInt, [:pointer, :string, :int64], :void
@@ -213,7 +233,16 @@ module Tensorflow
     attach_function :TF_OpDefinitionBuilderSetIsCommutative, [:pointer, :bool], :void
     attach_function :TF_OpDefinitionBuilderSetIsAggregate, [:pointer, :bool], :void
     attach_function :TF_OpDefinitionBuilderSetIsAggregate, [:pointer, :bool], :void
-
     attach_function :TF_OpDefinitionBuilderSetShapeInferenceFunction, [:pointer, :pointer], :void
+
+    attach_function :TF_GraphToFunction, [:pointer, :string, :uchar,
+                                          :int, :pointer,
+                                          :int, :pointer,
+                                          :int, :pointer,
+                                          :pointer, :pointer, :string, :pointer], :pointer
+    attach_function :TF_FunctionName, [:pointer], :strptr
+    attach_function :TF_FunctionToFunctionDef, [:pointer, :pointer, :pointer], :strptr
+    attach_function :TF_GraphCopyFunction, [:pointer, :pointer, :pointer, :pointer], :void
+    attach_function :TF_GraphGetOpDef, [:pointer, :string, :pointer, :pointer], :void
   end
 end

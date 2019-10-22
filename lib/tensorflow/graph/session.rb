@@ -38,11 +38,18 @@ module Tensorflow
       end
 
       def run(inputs, outputs)
-        inputs_ptr, tensors_ptr = self.initialize_inputs(inputs)
-        outputs_ptr = self.initialize_outputs(outputs)
+        operations = Array.new
+        tensors = Array.new
+        inputs.each do |operation, tensor|
+          operations << operation
+          tensors << tensor
+        end
+
+        inputs_ptr = FFI::Output.pointer_array(operations)
+        tensors_ptr = self.initialize_tensors(tensors)
+        outputs_ptr = FFI::Output.pointer_array(outputs)
         #targets = self.initialize_targets(targets)
         result_ptr = ::FFI::MemoryPointer.new(:pointer, outputs.length)
-
 
         run_options = nil
         targets = nil
@@ -68,36 +75,15 @@ module Tensorflow
         end
       end
 
-      def initialize_inputs(inputs)
-        inputs_ptr = ::FFI::MemoryPointer.new(FFI::Output, inputs.length)
-        tensors_ptr = ::FFI::MemoryPointer.new(:pointer, inputs.length)
+      def initialize_tensors(tensors)
+        tensors_ptr = ::FFI::MemoryPointer.new(:pointer, tensors.length)
 
-        position = 0
-        inputs.each do |operation, tensor|
-          input = FFI::Output.new(inputs_ptr + position * FFI::Output.size)
-          input[:oper] = operation
-          input[:index] = 0
-
-          tensor_ptr = (tensors_ptr +  position * FFI::Output.size)
+        tensors.each_with_index do |tensor, index|
+          tensor_ptr = (tensors_ptr +  index * FFI::Output.size)
           tensor_ptr.write_pointer(tensor.to_ptr)
-          position += 1
         end
 
-        return inputs_ptr, tensors_ptr
-      end
-
-      def initialize_outputs(outputs)
-        outputs_ptr = ::FFI::MemoryPointer.new(FFI::Output, outputs.length)
-
-        position = 0
-        outputs.each do |operation|
-          input = FFI::Output.new(outputs_ptr + position * FFI::Output.size)
-          input[:oper] = operation
-          input[:index] = 0
-          position += 1
-        end
-
-        outputs_ptr
+        tensors_ptr
       end
     end
   end

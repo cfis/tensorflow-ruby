@@ -9,6 +9,16 @@ module Tensorflow
         graph = nil
       end
 
+      def test_placeholder
+        graph = Graph.new
+        placeholder = graph.placeholder('placeholder_1')
+
+        assert_equal('placeholder_1', placeholder.name)
+        assert_equal('Placeholder', placeholder.op_type)
+        dims = graph.tensor_num_dims(placeholder)
+        assert_equal(-1, dims)
+      end
+
       def test_op_def
         graph = Graph.new
         op_def = graph.op_def('Variable')
@@ -23,30 +33,21 @@ module Tensorflow
 
       def test_tensor_num_dimensions
         graph = Graph.new
-        op_desc = OperationDescription.new(graph, 'Placeholder', 'arg')
-        op_desc.attr('dtype').dtype = :int32
-        placeholder = op_desc.save
-
+        placeholder = graph.placeholder('placeholder_1')
         dims = graph.tensor_num_dims(placeholder)
         assert_equal(-1, dims)
       end
 
       def test_tensor_get_shape
         graph = Graph.new
-        op_desc = OperationDescription.new(graph, 'Placeholder', 'arg')
-        op_desc.attr('dtype').dtype = :int32
-        placeholder = op_desc.save
-
+        placeholder = graph.placeholder('placeholder_1')
         shape = graph.tensor_get_shape(placeholder)
         assert_equal([-1], shape)
       end
 
       def test_tensor_set_shape
         graph = Graph.new
-        op_desc = OperationDescription.new(graph, 'Placeholder', 'arg')
-        op_desc.attr('dtype').dtype = :int32
-        placeholder = op_desc.save
-
+        placeholder = graph.placeholder('placeholder_1')
         graph.tensor_set_shape(placeholder, [2, -1])
         dims = graph.tensor_num_dims(placeholder)
         assert_equal(2, dims)
@@ -60,16 +61,10 @@ module Tensorflow
         graph = Graph.new
 
         # Add placeholder
-        op_desc = OperationDescription.new(graph, 'Placeholder', 'placeholder')
-        op_desc.attr('dtype').dtype = :int32
-        placeholder = op_desc.save
+        placeholder = graph.placeholder('placeholder_1')
 
         # Add constant
-        tensor = Tensor.new(2)
-        op_desc = OperationDescription.new(graph, 'Const', 'const')
-        op_desc.attr('dtype').dtype = tensor.dtype
-        op_desc.attr('value').tensor = tensor
-        constant = op_desc.save
+        constant = graph.constant(2, 'const_1')
 
         # Add add operation
         op_desc = OperationDescription.new(graph, "AddN", 'addn')
@@ -81,15 +76,15 @@ module Tensorflow
 
         operation = operations[0]
         assert_equal('Placeholder', operation.op_type)
-        assert_equal('placeholder', operation.name)
+        assert_equal('placeholder_1', operation.name)
 
         operation = operations[1]
         assert_equal('Placeholder', operation.op_type)
-        assert_equal('placeholder', operation.name)
+        assert_equal('placeholder_1', operation.name)
 
         operation = operations[2]
         assert_equal('Const', operation.op_type)
-        assert_equal('const', operation.name)
+        assert_equal('const_1', operation.name)
 
         operation = operations[3]
         assert_equal('AddN', operation.op_type)

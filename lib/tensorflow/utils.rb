@@ -54,7 +54,7 @@ module Tensorflow
               if v.is_a?(Tensor)
                 v
               else
-                Tensorflow.convert_to_tensor(v)
+                Tensor.new(v)
               end
             end
         end

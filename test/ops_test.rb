@@ -1,6 +1,6 @@
 require_relative "test_helper"
 
-class OperationsTest < Minitest::Test
+class OpsTest < Minitest::Test
   def test_eye
     assert_equal [[1, 0], [0, 1]], Tf.eye(2).value
   end
@@ -25,7 +25,7 @@ class OperationsTest < Minitest::Test
           [1, 2]
         end
 
-      tensor = Tf.identity(Tf::Tensor.constant(value, dtype: dtype))
+      tensor = Tf.identity(Tf::Tensor.new(value, dtype: dtype))
       assert_equal value, tensor.value
       assert_equal dtype, tensor.dtype
     end

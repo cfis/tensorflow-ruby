@@ -2,6 +2,8 @@ require_relative "test_helper"
 
 class KerasTest < Minitest::Test
   def test_sequential
+    skip
+
     mnist = Tf::Keras::Datasets::MNIST
     (x_train, y_train), (x_test, y_test) = mnist.load_data
     x_train = x_train / 255.0
@@ -16,7 +18,6 @@ class KerasTest < Minitest::Test
 
     model.summary
 
-    skip
 
     model.compile(optimizer: "adam", loss: "sparse_categorical_crossentropy", metrics: ["accuracy"])
 
@@ -25,6 +26,7 @@ class KerasTest < Minitest::Test
   end
 
   def test_subclassing
+    skip
     mnist = Tf::Keras::Datasets::MNIST
     (x_train, y_train), (x_test, y_test) = mnist.load_data
     x_train = x_train / 255.0

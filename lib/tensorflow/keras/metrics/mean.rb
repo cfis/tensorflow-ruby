@@ -13,7 +13,7 @@ module Tensorflow
         end
 
         def update_state(values)
-          input = Tensorflow.convert_to_tensor(values)
+          input = Eager.convert_to_tensor_handle(values)
           input = Tensorflow.cast(input, @dtype)
           @total.assign_add(Math.reduce_sum(input))
           @count.assign_add(Tensorflow.cast(RawOps.size(input: input), @dtype))

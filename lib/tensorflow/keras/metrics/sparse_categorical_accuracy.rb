@@ -3,8 +3,8 @@ module Tensorflow
     module Metrics
       class SparseCategoricalAccuracy < Mean
         def update_state(y_true, y_pred)
-          y_true = Tensorflow.convert_to_tensor(y_true)
-          y_pred = Tensorflow.convert_to_tensor(y_pred)
+          y_true = Eager.convert_to_tensor_handle(y_true)
+          y_pred = Eager.convert_to_tensor_handle(y_pred)
 
           y_pred = RawOps.arg_max(input: y_pred, dimension: -1)
 

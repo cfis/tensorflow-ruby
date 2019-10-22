@@ -15,7 +15,7 @@ module Tensorflow
           y = data["y"]
 
           len = x.shape[0]
-          indices = (0...len).to_a.shuffle(random: Random.new(seed))
+          indices = (0...len).to_a.shuffle(random: ::Random.new(seed))
           x = x[indices, true]
           y = y[indices]
 

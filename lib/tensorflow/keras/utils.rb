@@ -7,7 +7,7 @@ module Tensorflow
           initial_value =
             case initializer
             when "zeros"
-              Tensorflow.fill(Tensorflow.convert_to_tensor(shape, dtype: :int64), 0.0)
+              Tensorflow.fill(Eager.convert_to_tensor_handle(shape, dtype: :int64), 0.0)
             when "glorot_uniform"
               # TODO compute fans
               fan_in = shape[0]
@@ -24,7 +24,8 @@ module Tensorflow
             else
               raise Error, "Unknown initializer: #{initializer}"
             end
-          variable.assign(initial_value)
+
+          variable.value = initial_value
           variable
         end
 

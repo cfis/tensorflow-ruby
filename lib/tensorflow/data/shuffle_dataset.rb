@@ -8,9 +8,9 @@ module Tensorflow
 
         variant_tensor = RawOps.shuffle_dataset(
           input_dataset: input_dataset,
-          buffer_size: Tensorflow.convert_to_tensor(buffer_size, dtype: :int64),
-          seed: Tensorflow.convert_to_tensor(0, dtype: :int64),
-          seed2: Tensorflow.convert_to_tensor(0, dtype: :int64),
+          buffer_size: Eager.convert_to_tensor_handle(buffer_size, dtype: :int64),
+          seed: Eager.convert_to_tensor_handle(0, dtype: :int64),
+          seed2: Eager.convert_to_tensor_handle(0, dtype: :int64),
           output_types: @output_types,
           output_shapes: @output_shapes
         )

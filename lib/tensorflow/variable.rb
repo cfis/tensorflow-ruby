@@ -1,64 +1,71 @@
+require 'forwardable'
+
 module Tensorflow
   class Variable
-    attr_reader :name
+    extend Forwardable
+    def_delegators :value_handle, :dtype, :shape, :tensor, :value
+    attr_reader :name, :handle
 
     def initialize(initial_value = nil, dtype: nil, shape: nil, name: nil)
       @dtype = dtype || Utils.infer_type(Array(initial_value).flatten)
       @shape = shape
       @name = name
-      @pointer = RawOps.var_handle_op(dtype: type_enum, shape: [], shared_name: Context.default.shared_name)
-      assign(initial_value) if initial_value
+      @handle = RawOps.var_handle_op(dtype: type_enum, shape: [], shared_name: Eager::Context.default.shared_name)
+      self.value = initial_value
     end
 
-    def assign(value)
-      value = Tensorflow.convert_to_tensor(value, dtype: @dtype)
-      RawOps.assign_variable_op(resource: @pointer, value: value)
+    def value_handle
+      RawOps.read_variable_op(resource: self.handle, dtype: type_enum)
+    end
+
+    def value=(value)
+      if value
+        value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
+        RawOps.assign_variable_op(resource: self.handle, value: value)
+      end
+
       self
     end
 
     def assign_add(value)
-      value = Tensorflow.convert_to_tensor(value, dtype: @dtype)
-      RawOps.assign_add_variable_op(resource: @pointer, value: value)
+      value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
+      RawOps.assign_add_variable_op(resource: self.handle, value: value)
       self
     end
 
     def assign_sub(value)
-      value = Tensorflow.convert_to_tensor(value, dtype: @dtype)
-      RawOps.assign_sub_variable_op(resource: @pointer, value: value)
+      value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
+      RawOps.assign_sub_variable_op(resource: self.handle, value: value)
       self
     end
 
-    def read_value
-      RawOps.read_variable_op(resource: @pointer, dtype: type_enum)
-    end
-
     def +(other)
-      v = Variable.new(read_value.value, dtype: @dtype)
-      v.assign_add(other).read_value
+      v = Variable.new(value, dtype: @dtype)
+      v.assign_add(other)
     end
 
     def -(other)
-      v = Variable.new(read_value.value, dtype: @dtype)
-      v.assign_sub(other).read_value
+      v = Variable.new(value, dtype: @dtype)
+      v.assign_sub(other)
     end
 
     def to_s
       inspect
     end
 
-    def shape
-      read_value.shape
+    def rank
+      self.shape.size
+    end
+
+    def reshape(shape)
+      RawOps.reshape(tensor: self, shape: shape)
     end
 
     def inspect
-      value = read_value
-      inspection = %w(numo shape dtype).map { |v| "#{v}: #{value.send(v).inspect}"}
+      value = value_handle
+      inspection = %w(shape dtype).map { |v| "#{v}: #{value.send(v).inspect}"}
       inspection.unshift("name: #{name}") if name
       "#<#{self.class} #{inspection.join(", ")}>"
-    end
-
-    def to_ptr
-      read_value.to_ptr
     end
 
     private

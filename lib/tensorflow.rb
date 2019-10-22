@@ -18,24 +18,40 @@ Dir[File.join(__dir__, 'tensorflow', 'core', 'stream_executor', '*.rb')].each { 
 Dir[File.join(__dir__, 'tensorflow', 'core', 'framework', '*.rb')].each { |file| require file }
 #Dir[File.join(__dir__, 'tensorflow', 'core', 'protobuf', '*.rb')].each { |file| require file }
 
-# modules
-require "tensorflow/audio"
-require "tensorflow/bitwise"
-require "tensorflow/context"
-require "tensorflow/image"
-require "tensorflow/io"
-require "tensorflow/linalg"
-require "tensorflow/math"
-require "tensorflow/nn"
-require "tensorflow/operation"
-require "tensorflow/ops"
-require "tensorflow/random"
-require "tensorflow/raw_ops"
+# Core
+require "tensorflow/op_def_builder"
+require "tensorflow/status"
 require "tensorflow/strings"
+require "tensorflow/tensor_data_pointer"
+require "tensorflow/tensor_mixin"
 require "tensorflow/tensor"
 require "tensorflow/utils"
 require "tensorflow/variable"
 require "tensorflow/version"
+
+# Ops
+require "tensorflow/ops/audio"
+require "tensorflow/ops/bitwise"
+require "tensorflow/ops/image"
+require "tensorflow/ops/io"
+require "tensorflow/ops/linalg"
+require "tensorflow/ops/math"
+require "tensorflow/ops/nn"
+require "tensorflow/ops/ops"
+require "tensorflow/ops/random"
+require "tensorflow/ops/raw_ops"
+
+# eager
+require "tensorflow/eager/eager"
+require "tensorflow/eager/context"
+require "tensorflow/eager/operation"
+require "tensorflow/eager/tensor_handle"
+
+# graph
+require "tensorflow/graph/graph"
+require "tensorflow/graph/operation"
+require "tensorflow/graph/operation_description"
+require "tensorflow/graph/session"
 
 # specs
 require "tensorflow/type_spec"
@@ -102,21 +118,6 @@ module Tensorflow
 
     def library_version
       FFI.TF_Version
-    end
-
-    def convert_to_tensor(value, dtype: nil)
-      case value
-        when Tensor
-          value
-        when Variable
-          value
-        else
-          value = Tensor.new(value, dtype: dtype) unless value.is_a?(Tensor)
-          if dtype && value.dtype != dtype
-            raise StandardError, "Tensor conversion requested dtype #{dtype} for Tensor with dtype #{value.dtype}"
-          end
-          value
-      end
     end
   end
 end

@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require_relative "../test_helper"
 
 class ImageTest < Minitest::Test
   def test_decode_jpeg

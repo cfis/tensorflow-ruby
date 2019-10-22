@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require_relative "../test_helper"
 
 class IOTest < Minitest::Test
   def test_decode_base64

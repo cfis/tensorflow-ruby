@@ -188,6 +188,13 @@ module Tensorflow
     attach_function :TFE_DeleteContext, [:pointer], :void
     attach_function :TFE_ContextListDevices, [:pointer, :pointer], :pointer
     attach_function :TFE_ContextGetDevicePlacementPolicy, [:pointer], :int
+    attach_function :TFE_ContextAddFunction, [:pointer, :pointer, :pointer], :void
+    attach_function :TFE_ContextHasFunction, [:pointer, :string], :uchar
+    attach_function :TFE_ContextRemoveFunction, [:pointer, :string, :pointer], :void
+    attach_function :TFE_ContextAddFunction, [:pointer, :pointer, :pointer], :void
+    attach_function :TFE_ContextHasFunction, [:pointer, :string], :uchar
+    attach_function :TFE_ContextRemoveFunction, [:pointer, :string, :pointer], :void
+
     attach_function :TFE_NewTensorHandle, [:pointer, :pointer], :pointer
     attach_function :TFE_DeleteTensorHandle, [:pointer], :void
     attach_function :TFE_TensorHandleDataType, [:pointer], DataType
@@ -208,6 +215,8 @@ module Tensorflow
     attach_function :TFE_OpSetAttrInt, %i[pointer string int64_t], :void
     attach_function :TFE_OpSetAttrFloat, %i[pointer string float], :void
     attach_function :TFE_OpSetAttrFunction, [:pointer, :string, :pointer], :void
+    attach_function :TFE_OpSetAttrFunctionName, [:pointer, :string, :string, :size_t], :void
+    attach_function :TFE_OpSetAttrFunctionList, [:pointer, :string, :pointer, :int], :void
     attach_function :TFE_OpSetAttrBool, %i[pointer string uint8], :void
     attach_function :TFE_OpSetAttrTensor, %i[pointer string pointer pointer], :void
     attach_function :TFE_OpSetAttrType, %i[pointer string int], :void
@@ -244,5 +253,23 @@ module Tensorflow
     attach_function :TF_FunctionToFunctionDef, [:pointer, :pointer, :pointer], :strptr
     attach_function :TF_GraphCopyFunction, [:pointer, :pointer, :pointer, :pointer], :void
     attach_function :TF_GraphGetOpDef, [:pointer, :string, :pointer, :pointer], :void
+
+    attach_function :TF_GraphToGraphDef, [:pointer, :pointer, :pointer], :void
+
+    attach_function :TF_NewImportGraphDefOptions, [], :pointer
+    attach_function :TF_DeleteImportGraphDefOptions, [:pointer], :void
+    attach_function :TF_ImportGraphDefOptionsSetPrefix, [:pointer, :string], :void
+    attach_function :TF_ImportGraphDefOptionsSetDefaultDevice, [:pointer, :string], :void
+    attach_function :TF_ImportGraphDefOptionsSetUniquifyNames, [:pointer, :uchar], :void
+    attach_function :TF_ImportGraphDefOptionsSetUniquifyPrefix, [:pointer, :uchar], :void
+    attach_function :TF_ImportGraphDefOptionsAddInputMapping, [:pointer, :string, :int, Output], :void
+    attach_function :TF_ImportGraphDefOptionsRemapControlDependency, [:pointer, :string, :pointer], :void
+    attach_function :TF_ImportGraphDefOptionsAddControlDependency, [:pointer, :pointer], :void
+    attach_function :TF_ImportGraphDefOptionsAddReturnOutput, [:pointer,:string, :int], :void
+    attach_function :TF_ImportGraphDefOptionsNumReturnOutputs, [:pointer], :int
+    attach_function :TF_ImportGraphDefOptionsAddReturnOperation, [:pointer, :string], :void
+    attach_function :TF_ImportGraphDefOptionsNumReturnOperations, [:pointer], :int
+
+    attach_function :TF_GraphImportGraphDef, [:pointer, Buffer, :pointer, :pointer], :int
   end
 end

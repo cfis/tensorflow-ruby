@@ -49,9 +49,7 @@ module Tensorflow
         FFI.TF_AddInput(self, input)
       end
 
-      def add_inputs(*operations)
-        operations = operations.flatten(1)
-
+      def add_input_list(operations)
         operations_ptr = FFI::Output.pointer_array(operations)
         FFI.TF_AddInputList(self, operations_ptr, operations.length)
       end

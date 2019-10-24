@@ -103,15 +103,23 @@ module Tensorflow
             ptr = ::FFI::MemoryPointer.new(:int64, attr_value.size)
             ptr.write_array_of_int64(attr_value)
             FFI.TFE_OpSetAttrShape(op, attr_name, ptr, attr_value.size, status)
-            status.check
           when :tensor
             FFI.TFE_OpSetAttrTensor(op, attr_name, attr_value.tensor_pointer, status)
-            status.check
           # when :placeholder
-          # when :func
+          when :func
+            case attr_value
+              when Graph::Function
+                FFI.TFE_OpSetAttrFunctionName(op, attr_name, attr_value.name, attr_value.name.length)
+                #FFI.TFE_OpSetAttrFunction(op, attr_name, attr_value)
+              when String
+                FFI.TFE_OpSetAttrFunctionName(op, attr_name, attr_value, attr_value.length)
+              else
+                status.set(:tf_invalid_argument, "Invalid function attribute for attribute: #{attr_name}")
+            end
           else
-            raise "Unknown type: #{FFI::AttrType[type]}"
+            status.set(:tf_unknown, "Unsupported attribute type: #{FFI::AttrType[type]}")
         end
+        status.check
       end
 
       def add_input(op, status, input, i)

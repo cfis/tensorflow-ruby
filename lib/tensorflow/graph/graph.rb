@@ -26,13 +26,6 @@ module Tensorflow
         ops = OpDef.decode(string)
       end
 
-      def constant(tensor, name)
-        op_desc = OperationDescription.new(self, 'Const', name)
-        op_desc.attr('value').tensor = tensor
-        op_desc.attr('dtype').tensor = tensor.dtype
-        op_desc.save
-      end
-
       def operations
         result = Array.new
         position = 0
@@ -85,15 +78,32 @@ module Tensorflow
         end
       end
 
+      def copy_function(function, gradient=nil)
+        Status.check do |status|
+          FFI.TF_GraphCopyFunction(self, function, gradient, status)
+        end
+      end
+
       def to_function(name, operators, inputs, outputs, output_names)
         inputs_ptr = inputs ? FFI::Output.pointer_array(inputs) : nil
         outputs_ptr = outputs ? FFI::Output.pointer_array(outputs) : nil
 
-        output_names_ptr = ::FFI::MemoryPointer.new(:pointer, output_names.length, true)
-        output_names.each do |output_name|
-          output_name_ptr = ::FFI::MemoryPointer.from_string(output_name)
-          output_names_ptr.write_pointer(output_name_ptr)
+        # Check output names size
+        if output_names && output_names.length != Array(outputs).length
+          raise(ArgumentError, "output_names length must equal outputs length or be nil")
         end
+
+        # Convert to pointers - keep reference to pointers so they are not GC'ed until the end of the method
+        output_names_ptr = if output_names
+                             output_names_ptrs = output_names.map do |output_name|
+                               ::FFI::MemoryPointer.from_string(output_name)
+                             end
+                             output_names_ptr = ::FFI::MemoryPointer.new(:pointer, output_names_ptrs.length, true)
+                             output_names_ptr.write_array_of_pointer(output_names_ptrs)
+                             output_names_ptr
+                           else
+                             nil
+                           end
 
         append_hash_to_fn_name = 0
         options = nil
@@ -124,21 +134,39 @@ module Tensorflow
         op_desc.save
       end
 
-      # write_to writes out a serialized representation of graph in binary wire format.
-      # This graph defination can be written to file using write_file function and then
-      # converted to a readable form using converter.py file in the gem.
-      def write_to
-        buffer = Tensorflow::TF_NewBuffer()
-        status = Tensorflow::Status.new
-        Tensorflow::TF_GraphToGraphDef(c, buffer, status.c)
-        Tensorflow.buffer_write(buffer)
+      def export
+        buffer_ptr = FFI.TF_NewBuffer
+        Status.check do |status|
+          FFI.TF_GraphToGraphDef(self, buffer_ptr, status)
+        end
+
+        buffer = FFI::Buffer.new(buffer_ptr)
+        string = buffer[:data].read_string(buffer[:length])
+        GraphDef.decode(string)
+      ensure
+        FFI.TF_DeleteBuffer(buffer)
       end
 
-      # write_file writes out a serialized representation of graph to a file.
-      def write_file(filename)
-        File.open(filename, 'w') { |file| file.write(write_to) }
-      end
+      def import(graph_def, options=nil)
+        options ||= GraphDefOptions.new
 
+        data = if graph_def.is_a?(GraphDef)
+                 GraphDef.encode(graph_def)
+               else
+                 graph_def
+               end
+
+        ptr = ::FFI::MemoryPointer.new(:char, data.bytesize)
+        ptr.put_bytes(0, data)
+
+        buffer = FFI::Buffer.new
+        buffer[:data] = ptr
+        buffer[:length] = data.bytesize
+
+        Status.check do |status|
+            FFI.TF_GraphImportGraphDef(self, buffer, options, status)
+        end
+      end
     end
   end
 end

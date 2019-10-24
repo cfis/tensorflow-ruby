@@ -5,6 +5,10 @@ module Tensorflow
         @default ||= Context.new
       end
 
+      def self.finalize(pointer)
+        proc { FFI.TFE_DeleteContext(pointer) }
+      end
+
       def initialize
         options = FFI.TFE_NewContextOptions
         Status.check do |status|
@@ -17,10 +21,6 @@ module Tensorflow
       def execute(op_name, inputs = [], **attrs)
         operation = Operation.new(self)
         operation.execute(op_name, inputs, **attrs)
-      end
-
-      def function?(name)
-        FFI.TFE_ContextHasFunction(@pointer, name) != 0
       end
 
       def device_policy
@@ -43,11 +43,6 @@ module Tensorflow
         FFI.TFE_ContextEndStep(@pointer)
       end
 
-      def self.finalize(pointer)
-        # must use proc instead of stabby lambda
-        proc { FFI.TFE_DeleteContext(pointer) }
-      end
-
       def to_ptr
         @pointer
       end
@@ -55,6 +50,25 @@ module Tensorflow
       def shared_name
         # hard-coded in Python library
         "cd2c89b7-88b7-44c8-ad83-06c2a9158347"
+      end
+
+      def add_function(function)
+        Status.check do |status|
+          FFI.TFE_ContextAddFunction(self, function, status)
+        end
+      end
+
+      def remove_function(function)
+        name = function.is_a?(Graph::Function) ? function.name : function
+        Status.check do |status|
+          FFI.TFE_ContextRemoveFunction(self, name, status)
+        end
+      end
+
+      def function?(function)
+        name = function.is_a?(Graph::Function) ? function.name : function
+        # result is uchar
+        FFI.TFE_ContextHasFunction(self, name) != 0
       end
     end
   end

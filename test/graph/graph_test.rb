@@ -68,7 +68,7 @@ module Tensorflow
 
         # Add add operation
         op_desc = OperationDescription.new(graph, "AddN", 'addn')
-        op_desc.add_inputs(placeholder, constant)
+        op_desc.add_input_list([placeholder, constant])
         addn = op_desc.save
 
         operations = graph.operations
@@ -92,6 +92,47 @@ module Tensorflow
 
         operation = graph.operation('addn')
         refute_nil(operation)
+      end
+
+      def test_graph_def
+        graph = Graph.new
+
+        op_desc = OperationDescription.new(graph, 'Placeholder', "args_0")
+        op_desc.attr('dtype').dtype = :int32
+        op_desc.attr('shape').shape = [4]
+        args_0 = op_desc.save
+
+        op_desc = OperationDescription.new(graph, 'Square', 'square1')
+        op_desc.add_input(args_0)
+        square1 = op_desc.save
+
+        graph_def = graph.export
+        puts graph_def.node
+      end
+
+      def test_export_import
+        graph = Graph.new
+        placeholder = graph.placeholder('feed')
+        const = graph.constant(3, 'scalar')
+        op_desc = OperationDescription.new(graph, 'Neg', 'neg')
+        op_desc.add_input(const)
+        negate = op_desc.save
+
+        assert(graph.operation('feed'))
+        assert(graph.operation('scalar'))
+        assert(graph.operation('neg'))
+
+        # Get def
+        graph_def = graph.export
+
+        new_graph = Graph.new
+        options = GraphDefOptions.new
+        options.prefix = 'imported'
+        new_graph.import(graph_def, options)
+
+        assert(new_graph.operation('imported/feed'))
+        assert(new_graph.operation('imported/scalar'))
+        assert(new_graph.operation('imported/neg'))
       end
     end
   end

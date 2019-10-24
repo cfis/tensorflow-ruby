@@ -13,10 +13,13 @@ module Tensorflow
       #     .Attr("preserve_cardinality: bool = false")
       #     .SetShapeFn(shape_inference::ScalarShape);
 
-      def initialize(input_dataset, block, other_arguments: nil, output_types: nil, output_shapes: nil, use_inter_op_parallelism: nil, preserve_cardinality: nil)
+      def initialize(input_dataset, function, other_arguments: [], output_types: nil, output_shapes: nil, use_inter_op_parallelism: nil, preserve_cardinality: nil)
+        @output_types = output_types
+        @output_shapes = output_shapes
+
         variant_tensor = RawOps.map_dataset(input_dataset: input_dataset.variant_tensor,
                                             other_arguments: other_arguments,
-                                            f: block,
+                                            f: function,
                                             output_types: output_types,
                                             output_shapes: output_shapes,
                                             use_inter_op_parallelism: use_inter_op_parallelism,

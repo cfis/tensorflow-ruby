@@ -38,12 +38,8 @@ module Tensorflow
       end
 
       def run(inputs, outputs)
-        operations = Array.new
-        tensors = Array.new
-        inputs.each do |operation, tensor|
-          operations << operation
-          tensors << tensor
-        end
+        operations = inputs.keys
+        tensors = inputs.values
 
         inputs_ptr = FFI::Output.pointer_array(operations)
         tensors_ptr = self.initialize_tensors(tensors)
@@ -76,13 +72,11 @@ module Tensorflow
       end
 
       def initialize_tensors(tensors)
-        tensors_ptr = ::FFI::MemoryPointer.new(:pointer, tensors.length)
-
-        tensors.each_with_index do |tensor, index|
-          tensor_ptr = (tensors_ptr +  index * FFI::Output.size)
-          tensor_ptr.write_pointer(tensor.to_ptr)
+        tensors = tensors.map do |tensor|
+          tensor.is_a?(Tensor) ? tensor : Tensor.new(tensor)
         end
-
+        tensors_ptr = ::FFI::MemoryPointer.new(:pointer, tensors.length)
+        tensors_ptr.write_array_of_pointer(tensors)
         tensors_ptr
       end
     end

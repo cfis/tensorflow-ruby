@@ -49,8 +49,12 @@ module Tensorflow
       # the entire dataset and reads it into a ruby array in memory
       def data
         self.map do |slice|
-          slice.map do |tensor|
-            tensor.value
+          if slice.is_a?(Array)
+            slice.map do |tensor|
+              tensor.value
+            end
+          else
+            slice.value
           end
         end
       end

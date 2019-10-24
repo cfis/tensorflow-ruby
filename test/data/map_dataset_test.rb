@@ -3,25 +3,28 @@ require_relative "../test_helper"
 module Tensorflow
   module Data
     class MapDatasetTest < Minitest::Test
-      # def test_simple
-      #   components = [Numo::Int32.new(7).seq,
-      #                 Numo::NArray[[1, 2, 3]] * Numo::Int32.new(7).seq[true, :new],
-      #                 Numo::DFloat[37] * Numo::Int32.new(7).seq]
-      #
-      #   dataset = TensorDataset.new(components)
-      #
-      #   lambda = ->(x, y, z) do
-      #     [x.square, y.square, z.square]
-      #   end
-      #
-      #   map_dataset = MapDataset.new(dataset, lambda)
-      #
-      #   dataset.each_with_index do |slice, i|
-      #     assert_equal(components[0].to_a[i], slice[0].value)
-      #     assert_equal(components[1].to_a[i], slice[1].value)
-      #     assert_equal(components[2].to_a[i], slice[2].value)
-      #   end
-      # end
+      def test_simple
+        components = [[1, 2, 3]]
+        dataset = TensorDataset.new(components)
+
+        func_graph = Graph::Graph.new
+        x = func_graph.placeholder("x")
+
+        op_desc = Graph::OperationDescription.new(func_graph, 'Square', 'square')
+        op_desc.add_input(x)
+        square = op_desc.save
+
+        function = func_graph.to_function('MyFunc', nil, [x], [square], ['out1'])
+        Eager::Context.default.add_function(function)
+
+        map_dataset = MapDataset.new(dataset, function, output_types: [:int32], output_shapes: [[2, 3]])
+
+        map_dataset.each_with_index do |slice, i|
+          assert_equal(components[0][0] ** 2, slice.value[0])
+          assert_equal(components[0][1] ** 2, slice.value[1])
+          assert_equal(components[0][2] ** 2, slice.value[2])
+        end
+      end
     end
   end
 end

@@ -36,6 +36,24 @@ module Tensorflow
         FFI.TF_OperationDevice(self)
       end
 
+      def consumers
+        output = FFI::Output.new
+        output[:oper] = self
+        output[:index] = 0
+
+        count = FFI.TF_OperationOutputNumConsumers(output)
+        consumers = ::FFI::MemoryPointer.new(FFI::Output, count)
+        FFI.TF_OperationOutputConsumers(output, consumers, count)
+
+        result = Array.new
+        count.times do |i|
+          pointer = consumers[i]
+          input = FFI::Input.new(pointer)
+          result << Operation.new(input[:oper])
+        end
+        result
+      end
+
       def num_outputs
         FFI.TF_OperationNumOutputs(self)
       end
@@ -59,6 +77,14 @@ module Tensorflow
         end
 
         OperationAttr.new(self, attr_name, metadata)
+      end
+
+      def eql?(other)
+        self.name.eql?(other.name)
+      end
+
+      def ==(other)
+        self.name == other.name
       end
     end
 

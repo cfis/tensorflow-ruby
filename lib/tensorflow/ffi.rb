@@ -94,6 +94,9 @@ module Tensorflow
     attach_function :TF_OperationOutputType, [Output], DataType
     attach_function :TF_OperationOutputListLength, [:pointer, :string, :pointer], :int
 
+    attach_function :TF_OperationOutputNumConsumers, [Output], :int
+    attach_function :TF_OperationOutputConsumers, [Output, :pointer, :int], :int
+
     class AttrMetadata < ::FFI::Struct
       layout :is_list, :uchar,
              :list_size, :int64,

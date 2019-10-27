@@ -3,6 +3,10 @@ require_relative "../test_helper"
 module Tensorflow
   module Graph
     class OperationTest < Minitest::Test
+      def graph
+        @graph ||= Graph.new
+      end
+
       def test_operations
         op_defs = Operation.op_defs
         assert_kind_of(Hash, op_defs)
@@ -14,41 +18,60 @@ module Tensorflow
         refute_nil(op_def)
       end
 
-      def create_placeholder
-        graph = Graph.new
-        op_desc = OperationDescription.new(graph, 'Placeholder', 'feed')
-        op_desc.attr('dtype').dtype = :int32
-        op_desc.save
-      end
-
       def test_name
-        operation = create_placeholder
+        operation = graph.placeholder('feed')
         assert_equal('feed', operation.name)
       end
 
       def test_op_type
-        operation = create_placeholder
+        operation = graph.placeholder
         assert_equal('Placeholder', operation.op_type)
       end
 
       def test_device
-        operation = create_placeholder
+        operation = graph.placeholder
         assert_empty(operation.device)
       end
 
       def test_num_outputs
-        operation = create_placeholder
+        operation = graph.placeholder
         assert_equal(1, operation.num_outputs)
       end
 
       def test_output_type
-        operation = create_placeholder
+        operation = graph.placeholder
         assert_equal(:int32, operation.output_type)
       end
 
       def test_output_list_length
-        operation = create_placeholder
+        operation = graph.placeholder
         assert_equal(1, operation.output_list_length('output'))
+      end
+
+      def test_consumers
+        placeholder = graph.placeholder
+        consumers = placeholder.consumers
+        assert_empty(consumers)
+
+        constant = graph.constant(3)
+        consumers = placeholder.consumers
+        assert_empty(consumers)
+
+        add = graph.create_operation('Add', 'add') do |op_desc|
+          op_desc.add_input(placeholder)
+          op_desc.add_input(constant)
+        end
+
+        consumers = add.consumers
+        assert_empty(consumers)
+
+        consumers = placeholder.consumers
+        assert_equal(1, consumers.length)
+        assert_equal(add, consumers[0])
+
+        consumers = constant.consumers
+        assert_equal(1, consumers.length)
+        assert_equal(add, consumers[0])
       end
     end
   end

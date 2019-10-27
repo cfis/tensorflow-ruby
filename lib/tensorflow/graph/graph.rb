@@ -1,6 +1,10 @@
 module Tensorflow
   module Graph
     class Graph
+      attr_reader :name_scope
+      extend Forwardable
+      def_delegators :@name_scope, :name_scope, :scoped_name
+
       def self.finalize(pointer)
         proc do
           FFI::TF_DeleteGraph(pointer)
@@ -8,7 +12,7 @@ module Tensorflow
       end
 
       def initialize
-        @number_of_defaults_created = Hash.new(0)
+        @name_scope = NameScope.new
         @pointer = FFI.TF_NewGraph()
         ObjectSpace.define_finalizer(self, self.class.finalize(@pointer))
       end
@@ -43,6 +47,28 @@ module Tensorflow
       def operation(name)
         ptr = FFI.TF_GraphOperationByName(self, name)
         ptr.null? ? nil : Operation.new(ptr)
+      end
+
+      def create_operation(op_type, name=nil)
+        op_desc = OperationDescription.new(self, op_type, name)
+        yield op_desc if block_given?
+        op_desc.save
+      end
+
+      def placeholder(name='placeholder', dtype=:int32)
+        self.create_operation('Placeholder', name) do |op_desc|
+          op_desc.attr('dtype').dtype = dtype
+        end
+      end
+
+      def constant(value, name='const')
+        tensor = value.is_a?(Tensor) ? value : Tensor.new(value)
+        name = self.scoped_name(name)
+
+        self.create_operation('Const', name) do |op_desc|
+          op_desc.attr('value').tensor = tensor
+          op_desc.attr('dtype').dtype = tensor.dtype
+        end
       end
 
       def tensor_num_dims(operation)
@@ -118,20 +144,6 @@ module Tensorflow
                                  options, description, status)
         end
         Function.new(func)
-      end
-
-      def placeholder(name, dtype=:int32)
-        op_desc = OperationDescription.new(self, 'Placeholder', name)
-        op_desc.attr('dtype').dtype = dtype
-        op_desc.save
-      end
-
-      def constant(value, name=nil)
-        tensor = value.is_a?(Tensor) ? value : Tensor.new(value)
-        op_desc = OperationDescription.new(self, 'Const', name)
-        op_desc.attr('value').tensor = tensor
-        op_desc.attr('dtype').dtype = tensor.dtype
-        op_desc.save
       end
 
       def export

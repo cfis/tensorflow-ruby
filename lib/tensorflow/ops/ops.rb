@@ -33,6 +33,10 @@ module Tensorflow
       RawOps.reshape(tensor: tensor, shape: shape)
     end
 
+    def shape(input, out_type)
+      RawOps.shape(input: input, out_type: out_type)
+    end
+
     def squeeze(input, axis: nil)
       RawOps.squeeze(input: input, squeeze_dims: axis)
     end

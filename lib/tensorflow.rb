@@ -49,6 +49,7 @@ require "tensorflow/eager/tensor_handle"
 
 # graph
 require "tensorflow/graph/function"
+require "tensorflow/graph/gradients"
 require "tensorflow/graph/graph"
 require "tensorflow/graph/graph_def_options"
 require "tensorflow/graph/name_scope"

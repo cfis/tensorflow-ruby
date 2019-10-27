@@ -58,11 +58,15 @@ module Tensorflow
         FFI.TF_OperationNumOutputs(self)
       end
 
-      def output_type
-         output = FFI::Output.new
-         output[:oper] = self.to_ptr
-         output[:index] = 0
-         FFI.TF_OperationOutputType(output)
+      def output_types
+        result = Array.new(self.num_outputs)
+        self.num_outputs.times do |index|
+          output = FFI::Output.new
+          output[:oper] = self.to_ptr
+          output[:index] = index
+          result[index] = FFI.TF_OperationOutputType(output)
+        end
+        result
       end
 
       def output_list_length(arg_name)
@@ -85,6 +89,10 @@ module Tensorflow
 
       def ==(other)
         self.name == other.name
+      end
+
+      def to_s
+        "#{self.op_type}, name: #{self.name}"
       end
     end
 

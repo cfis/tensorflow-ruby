@@ -38,9 +38,9 @@ module Tensorflow
         assert_equal(1, operation.num_outputs)
       end
 
-      def test_output_type
+      def test_output_types
         operation = graph.placeholder
-        assert_equal(:int32, operation.output_type)
+        assert_equal([:int32], operation.output_types)
       end
 
       def test_output_list_length

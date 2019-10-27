@@ -49,8 +49,8 @@ module Tensorflow
         ptr.null? ? nil : Operation.new(ptr)
       end
 
-      def create_operation(op_type, name=nil)
-        op_desc = OperationDescription.new(self, op_type, name)
+      def create_operation(op_name, name=nil)
+        op_desc = OperationDescription.new(self, op_name, name)
         yield op_desc if block_given?
         op_desc.save
       end

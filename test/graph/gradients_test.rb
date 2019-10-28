@@ -30,7 +30,7 @@ module Tensorflow
 
         x = graph.constant(3.0, 'x')
         two = graph.constant(2.0, 'two')
-        pow = graph.create_operation('Pow', [x, two], name: 'pow')
+        pow = Math.pow(x, two)
 
         gradients = Gradients.new(graph)
         foo = gradients.derivative(pow, x)

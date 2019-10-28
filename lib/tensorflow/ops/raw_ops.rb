@@ -1345,7 +1345,7 @@ module Tensorflow
       OpsExecutor.execute("FakeQueue", [resource])
     end
 
-    def self.fill(dims: nil, value: nil, index_type: nil)
+    def self.fill(dims: nil, value: nil, index_type: :int64)
       OpsExecutor.execute("Fill", [dims, value], index_type: index_type)
     end
 

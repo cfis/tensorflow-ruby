@@ -32,21 +32,10 @@ module Tensorflow
         # First find all operations between the output and input operation
         operations = self.find_operations(output, input)
 
-        dtype = output.output_types.first
+        shape_op = Tensorflow.shape(output, :int64)
+        constant = graph.constant(1, 'one')
 
-        shape_op = graph.create_operation('Shape', 'shape') do |op_desc|
-          op_desc.add_input(output)
-          op_desc.attr('T').dtype = dtype
-        end
-
-        value = graph.constant(1, 'one')
-
-        fill_op = graph.create_operation('Fill') do |op_desc|
-          op_desc.add_input(shape_op)
-          op_desc.add_input(value)
-        end
-
-        fill_op
+        fill_op = Tensorflow.fill(shape_op, constant)
       end
     end
   end

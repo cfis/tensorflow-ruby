@@ -42,7 +42,7 @@ module Tensorflow
         count.times do |i|
           pointer = consumers[i]
           input = FFI::Input.new(pointer)
-          result << Operation.new(input[:oper])
+          result << Operation.new(self.graph, input[:oper])
         end
         result
       end

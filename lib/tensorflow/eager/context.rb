@@ -18,9 +18,29 @@ module Tensorflow
         FFI.TFE_DeleteContextOptions(options)
       end
 
-      def execute(op_name, inputs = [], **attrs)
-        operation = Operation.new(self)
-        operation.execute(op_name, inputs, **attrs)
+      def create_operation(op_name, inputs, attrs)
+        Operation.new(self, op_name, inputs, attrs)
+      end
+
+      def execute(operation)
+        # TODO decide how many retvals to allocate
+        retvals = ::FFI::MemoryPointer.new(:pointer, 10)
+        num_retvals = ::FFI::MemoryPointer.new(:int)
+        num_retvals.write_int(retvals.size)
+
+        Status.check do |status|
+          FFI.TFE_Execute(operation, retvals, num_retvals, status)
+        end
+
+        n = num_retvals.read_int
+        if n > 0
+          handles = retvals.read_array_of_pointer(n).map do |handle|
+            TensorHandle.new(handle)
+          end
+
+          # TODO handle case where n = 1 and still want an array for retvals
+          n == 1 ? handles.first : handles
+        end
       end
 
       def device_policy

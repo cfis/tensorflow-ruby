@@ -18,18 +18,15 @@ module Tensorflow
         host_graph = Graph.new
         host_graph.copy_function(function)
 
-        op_desc = OperationDescription.new(host_graph, 'MyFunc', 'MyFunc_0')
+        op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')
         func_operation = op_desc.save
 
         session = Session.new(host_graph, SessionOptions.new)
         result = session.run({}, [func_operation])
-        assert_equal(1, result.length)
-
-        tensor = result[0]
-        assert_equal(:int32, tensor.dtype)
-        assert_equal(0, tensor.shape.length)
-        assert_equal(4, tensor.byte_size)
-        assert_equal(10, tensor.value)
+        assert_equal(:int32, result.dtype)
+        assert_equal(0, result.shape.length)
+        assert_equal(4, result.byte_size)
+        assert_equal(10, result.value)
 
         session.close
       end
@@ -45,7 +42,7 @@ module Tensorflow
         func_graph = Graph.new
         feed = func_graph.placeholder('placeholder_1')
 
-        op_desc = OperationDescription.new(func_graph, 'Neg', 'neg_1')
+        op_desc = OperationDescription.new(func_graph, 'Neg', [], name: 'neg_1')
         op_desc.add_input(feed)
         negate = op_desc.save
 
@@ -57,19 +54,16 @@ module Tensorflow
 
         func_feed = host_graph.placeholder('placeholder_1')
 
-        op_desc = OperationDescription.new(host_graph, 'MyFunc', 'MyFunc_0')
+        op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')
         op_desc.add_input(func_feed)
         func_op = op_desc.save
 
         session = Session.new(host_graph, SessionOptions.new)
         result = session.run({func_feed  => Tensor.new(3)}, [func_op])
-        assert_equal(1, result.length)
-
-        tensor = result[0]
-        assert_equal(:int32, tensor.dtype)
-        assert_equal(0, tensor.shape.length)
-        assert_equal(4, tensor.byte_size)
-        assert_equal(-3, tensor.value)
+        assert_equal(:int32, result.dtype)
+        assert_equal(0, result.shape.length)
+        assert_equal(4, result.byte_size)
+        assert_equal(-3, result.value)
 
         session.close
       end
@@ -88,7 +82,7 @@ module Tensorflow
         feed1 = func_graph.placeholder('feed1')
         feed2 = func_graph.placeholder('feed2')
 
-        op_desc = OperationDescription.new(func_graph, 'AddN', 'add')
+        op_desc = OperationDescription.new(func_graph, 'AddN', [], name: 'add')
         op_desc.add_input_list([feed1, feed2])
         add = op_desc.save
 
@@ -101,20 +95,18 @@ module Tensorflow
         constant = host_graph.constant(2, 'scalar2')
         func_feed = host_graph.placeholder('placeholder_1')
 
-        op_desc = OperationDescription.new(host_graph, 'MyFunc', 'MyFunc_0')
+        op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')
         op_desc.add_input(constant)
         op_desc.add_input(func_feed)
         func_op = op_desc.save
 
         session = Session.new(host_graph, SessionOptions.new)
         result = session.run({func_feed => 3}, [func_op])
-        assert_equal(1, result.length)
 
-        tensor = result[0]
-        assert_equal(:int32, tensor.dtype)
-        assert_equal(0, tensor.shape.length)
-        assert_equal(4, tensor.byte_size)
-        assert_equal(5, tensor.value)
+        assert_equal(:int32, result.dtype)
+        assert_equal(0, result.shape.length)
+        assert_equal(4, result.byte_size)
+        assert_equal(5, result.value)
 
         session.close
       end

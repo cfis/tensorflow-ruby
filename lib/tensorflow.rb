@@ -30,6 +30,9 @@ require "tensorflow/variable"
 require "tensorflow/version"
 
 # Ops
+require "tensorflow/ops/ops_executor"
+require "tensorflow/ops/raw_ops"
+
 require "tensorflow/ops/audio"
 require "tensorflow/ops/bitwise"
 require "tensorflow/ops/image"
@@ -39,7 +42,6 @@ require "tensorflow/ops/math"
 require "tensorflow/ops/nn"
 require "tensorflow/ops/ops"
 require "tensorflow/ops/random"
-require "tensorflow/ops/raw_ops"
 
 # eager
 require "tensorflow/eager/eager"
@@ -109,6 +111,21 @@ module Tensorflow
 
   # friendlier error message
   autoload :FFI, "tensorflow/ffi"
+
+  def self.op_defs
+    buffer = FFI.TF_GetAllOpList
+    string = buffer[:data].read_string(buffer[:length])
+    ops = OpList.decode(string)
+    ops.op.each_with_object(Hash.new) do |op_def, hash|
+      hash[op_def.name] = op_def
+    end
+  ensure
+    FFI.TF_DeleteBuffer(buffer)
+  end
+
+  def self.op_def(op_name)
+    self.op_defs[op_name]
+  end
 
   class << self
     include Ops

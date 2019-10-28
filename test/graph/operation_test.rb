@@ -7,17 +7,6 @@ module Tensorflow
         @graph ||= Graph.new
       end
 
-      def test_operations
-        op_defs = Operation.op_defs
-        assert_kind_of(Hash, op_defs)
-        assert(op_defs.keys.length > 1000)
-      end
-
-      def test_op_def
-        op_def = Operation.op_def('ZipDataset')
-        refute_nil(op_def)
-      end
-
       def test_name
         operation = graph.placeholder('feed')
         assert_equal('feed', operation.name)

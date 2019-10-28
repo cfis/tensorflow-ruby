@@ -27,32 +27,18 @@ def arg_name(name)
   end
 end
 
-def read_op_def
-  require "tensorflow"
-
-  # TODO pull these into project?
-  path = "#{ENV["HOME"]}/forks/tensorflow"
-  $:.push(path)
-  require "tensorflow/core/framework/op_def_pb"
-
-  buffer = Tensorflow::FFI.TF_GetAllOpList
-  encoded = buffer[:data].read_bytes(buffer[:length])
-
-  Tensorflow::OpList.decode(encoded).op.sort_by(&:name)
-end
-
 task :generate_ops do
   defs = []
-  read_op_def.each do |op|
-    input_names = op.input_arg.map { |v| arg_name(v.name) }
-    options = op.attr.map { |v| arg_name(v.name) }.reject { |v| v[0] == v[0].upcase }
+  Tensorflow.op_defs.each do |op_def|
+    input_names = op_def.input_arg.map { |v| arg_name(v.name) }
+    options = op_def.attr.map { |v| arg_name(v.name) }.reject { |v| v[0] == v[0].upcase }
 
-    if op.name[0] != "_"
-      def_name = underscore(op.name).gsub(/2_d/, "2d").gsub(/3_d/, "3d")
+    if op_def.name[0] != "_"
+      def_name = underscore(op_def.name).gsub(/2_d/, "2d").gsub(/3_d/, "3d")
       def_options_str = (input_names + options).map { |v| ", #{v}: nil" }.join
       execute_options_str = options.map { |v| ", #{v}: #{v}" }.join
       defs << %!      def #{def_name}(#{def_options_str})
-        Context.default.execute("#{op.name}", [#{input_names.join(", ")}]#{execute_options_str})
+        Context.default.execute("#{op_def.name}", [#{input_names.join(", ")}]#{execute_options_str})
       end!
     end
   end

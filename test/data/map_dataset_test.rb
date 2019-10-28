@@ -10,7 +10,7 @@ module Tensorflow
         func_graph = Graph::Graph.new
         x = func_graph.placeholder("x")
 
-        op_desc = Graph::OperationDescription.new(func_graph, 'Square', 'square')
+        op_desc = Graph::OperationDescription.new(func_graph, 'Square', [], name: 'square')
         op_desc.add_input(x)
         square = op_desc.save
 

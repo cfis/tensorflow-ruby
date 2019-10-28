@@ -38,6 +38,8 @@ module Tensorflow
       end
 
       def run(inputs, outputs)
+        outputs = Array(outputs)
+
         operations = inputs.keys
         tensors = inputs.values
 
@@ -60,8 +62,14 @@ module Tensorflow
                             status)
         end
 
-        result_ptr.read_array_of_pointer(outputs.length).map do |pointer|
+        result = result_ptr.read_array_of_pointer(outputs.length).map do |pointer|
           Tensor.new(:pointer => pointer)
+        end
+
+        if outputs.length == 1
+          result.first
+        else
+          result
         end
       end
 

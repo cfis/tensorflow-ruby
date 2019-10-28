@@ -30,14 +30,10 @@ module Tensorflow
 
         x = graph.constant(3.0, 'x')
         two = graph.constant(2.0, 'two')
-
-        y = graph.create_operation('Pow', 'pow') do |op_desc|
-          op_desc.add_input(x)
-          op_desc.add_input(two)
-        end
+        pow = graph.create_operation('Pow', [x, two], name: 'pow')
 
         gradients = Gradients.new(graph)
-        foo = gradients.derivative(y, x)
+        foo = gradients.derivative(pow, x)
         #assert_equal(2, operations.length)
         a = foo
       end

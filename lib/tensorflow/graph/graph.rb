@@ -5,6 +5,10 @@ module Tensorflow
       extend Forwardable
       def_delegators :@name_scope, :name_scope, :scoped_name
 
+      def self.default
+        @default ||= Graph.new
+      end
+
       def self.finalize(pointer)
         proc do
           FFI::TF_DeleteGraph(pointer)
@@ -49,26 +53,24 @@ module Tensorflow
         ptr.null? ? nil : Operation.new(ptr)
       end
 
-      def create_operation(op_name, name=nil)
-        op_desc = OperationDescription.new(self, op_name, name)
-        yield op_desc if block_given?
+      def create_operation(op_name, inputs, attrs)
+        op_desc = OperationDescription.new(self, op_name, inputs, attrs)
         op_desc.save
       end
 
+      def execute(inputs: {}, outputs: [])
+        session = Session.new(self, SessionOptions.new)
+        session.run(inputs, outputs)
+      end
+
       def placeholder(name='placeholder', dtype=:int32)
-        self.create_operation('Placeholder', name) do |op_desc|
-          op_desc.attr('dtype').dtype = dtype
-        end
+        self.create_operation('Placeholder', [], name: name, dtype:dtype)
       end
 
       def constant(value, name='const')
         tensor = value.is_a?(Tensor) ? value : Tensor.new(value)
         name = self.scoped_name(name)
-
-        self.create_operation('Const', name) do |op_desc|
-          op_desc.attr('value').tensor = tensor
-          op_desc.attr('dtype').dtype = tensor.dtype
-        end
+        self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end
 
       def tensor_num_dims(operation)

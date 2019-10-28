@@ -10,7 +10,7 @@ module Tensorflow
       builder.output("output1: uint32")
       builder.register
 
-      op_def = Graph::Operation.op_def('SomeOp')
+      op_def = Tensorflow.op_def('SomeOp')
       assert(op_def)
 
       assert_equal(2, op_def.input_arg.length)
@@ -39,7 +39,7 @@ module Tensorflow
             .shape_inference(OpDefBuilder.unknown_shape_inference_func)
             .register
 
-      op_def = Graph::Operation.op_def('TestShapeInference')
+      op_def = Tensorflow.op_def('TestShapeInference')
       assert(op_def)
 
       assert_equal(0, op_def.input_arg.length)

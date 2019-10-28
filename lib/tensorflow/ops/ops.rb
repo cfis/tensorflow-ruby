@@ -2,7 +2,7 @@
 module Tensorflow
   module Ops
     def cast(x, dtype)
-      Eager::Context.default.execute("Cast", [x], DstT: FFI::DataType[dtype])
+      RawOps.cast(x: x, dstt: dtype)
     end
 
     def expand_dims(input, axis)

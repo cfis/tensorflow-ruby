@@ -90,6 +90,11 @@ module Tensorflow
     attach_function :TF_AddInput, [:pointer, Output], :void
     attach_function :TF_AddInputList, [:pointer, :pointer, :int], :void
 
+    attach_function :TF_OperationNumInputs, [:pointer], :int
+    attach_function :TF_OperationInputType, [Input], DataType
+    attach_function :TF_OperationInputListLength, [:pointer, :string, :pointer], :int
+    attach_function :TF_OperationAllInputs, [:pointer, :pointer, :int], :void
+
     attach_function :TF_OperationNumOutputs, [:pointer], :int
     attach_function :TF_OperationOutputType, [Output], DataType
     attach_function :TF_OperationOutputListLength, [:pointer, :string, :pointer], :int

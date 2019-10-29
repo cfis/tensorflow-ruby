@@ -21,17 +21,19 @@ module Tensorflow
               key: "dtype"
               value {
                 type: DT_FLOAT
+              }
             }
             attr {
               key: "value"
               value {
                 tensor {
-                  dtype: DT_float
+                  dtype: DT_FLOAT
                   tensor_shape {
                     []
                   }
                   float_val: 3.0
                 }
+              }
             }
           }
           node {
@@ -41,26 +43,31 @@ module Tensorflow
               key: "dtype"
               value {
                 type: DT_FLOAT
+              }
             }
             attr {
               key: "value"
               value {
                 tensor {
-                  dtype: DT_float
+                  dtype: DT_FLOAT
                   tensor_shape {
                     []
                   }
                   float_val: 2.0
                 }
+              }
             }
           }
           node {
             name: "Pow"
             op: "Pow"
+            input: "x"
+            input: "Pow/y"
             attr {
               key: "T"
               value {
                 type: DT_FLOAT
+              }
             }
           }
         EOS

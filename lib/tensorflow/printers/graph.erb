@@ -3,6 +3,9 @@
 node {
   name: "<%= operation.name %>"
   op: "<%= operation.op_type %>"
+  <% operation.inputs.each do |input| %>
+  input: "<%= input.name %>"
+  <% end %>
   <% op_def.attr.sort_by(&:name).each do |attr_def|
      attr = operation.attr(attr_def.name) %>
   attr {
@@ -11,7 +14,7 @@ node {
   <% case attr.metadata[:type]  %>
     <% when :tensor %>
       tensor {
-        dtype: DT_<%= attr.tensor.dtype %>
+        dtype: DT_<%= attr.tensor.dtype.upcase %>
         tensor_shape {
           <%= attr.tensor.shape %>
         }
@@ -20,6 +23,7 @@ node {
     <% when :type %>
       type: DT_<%= attr.dtype.to_s.upcase %>
     <% end %>
+    }
   }
   <% end %>
 }

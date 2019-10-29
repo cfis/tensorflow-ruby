@@ -22,6 +22,41 @@ module Tensorflow
         assert_empty(operation.device)
       end
 
+      def test_name
+        operation = graph.placeholder('feed')
+        assert_equal('feed', operation.name)
+      end
+
+      def test_op_type
+        operation = graph.placeholder
+        assert_equal('Placeholder', operation.op_type)
+      end
+
+      def test_device
+        operation = graph.placeholder
+        assert_empty(operation.device)
+      end
+
+      def test_num_inputs
+        graph = Graph.new
+        x = graph.constant(3.0, 'x')
+        pow = Math.pow(x, 2.0)
+        assert_equal(2, pow.num_inputs)
+      end
+
+      def test_inputs
+        graph = Graph.new
+        x = graph.constant(3.0, 'x')
+        pow = Math.pow(x, 2.0)
+
+        inputs = pow.inputs
+        assert_equal(2, inputs.length)
+        assert_equal(x, inputs[0])
+
+        powy = graph.operation('Pow/y')
+        assert_equal(powy, inputs[1])
+      end
+
       def test_num_outputs
         operation = graph.placeholder
         assert_equal(1, operation.num_outputs)

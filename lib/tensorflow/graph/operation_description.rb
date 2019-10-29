@@ -8,7 +8,7 @@ module Tensorflow
         @op_def = self.get_op_def(op_type)
         name = attrs.delete(:name) || op_type
         @name = self.graph.scoped_name(name)
-        @pointer = FFI.TF_NewOperation(graph, op_type, name)
+        @pointer = FFI.TF_NewOperation(graph, op_type, @name)
         setup_inputs(Array(inputs))
         setup_attrs(**attrs)
       end

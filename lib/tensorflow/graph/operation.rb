@@ -17,6 +17,14 @@ module Tensorflow
         @pointer
       end
 
+      def eql?(other)
+        self.name.eql?(other.name)
+      end
+
+      def ==(other)
+        self.name == other.name
+      end
+
       def name
         FFI.TF_OperationName(self)
       end
@@ -29,20 +37,19 @@ module Tensorflow
         FFI.TF_OperationDevice(self)
       end
 
-      def consumers
-        output = FFI::Output.new
-        output[:oper] = self
-        output[:index] = 0
+      def num_inputs
+        FFI.TF_OperationNumInputs(self)
+      end
 
-        count = FFI.TF_OperationOutputNumConsumers(output)
-        consumers = ::FFI::MemoryPointer.new(FFI::Output, count)
-        FFI.TF_OperationOutputConsumers(output, consumers, count)
-
+      def inputs
         result = Array.new
-        count.times do |i|
-          pointer = consumers[i]
-          input = FFI::Input.new(pointer)
-          result << Operation.new(self.graph, input[:oper])
+
+        pointer = ::FFI::MemoryPointer.new(FFI::Output, self.num_inputs)
+        FFI.TF_OperationAllInputs(self, pointer, self.num_inputs)
+        self.num_inputs.times do |index|
+          current_pointer = pointer + (FFI::Output.size * index)
+          output = FFI::Output.new(current_pointer)
+          result << self.class.new(self.graph, output[:oper])
         end
         result
       end
@@ -76,12 +83,22 @@ module Tensorflow
         OperationAttr.new(self, attr_name, metadata)
       end
 
-      def eql?(other)
-        self.name.eql?(other.name)
-      end
+      def consumers
+        output = FFI::Output.new
+        output[:oper] = self
+        output[:index] = 0
 
-      def ==(other)
-        self.name == other.name
+        count = FFI.TF_OperationOutputNumConsumers(output)
+        consumers = ::FFI::MemoryPointer.new(FFI::Output, count)
+        FFI.TF_OperationOutputConsumers(output, consumers, count)
+
+        result = Array.new
+        count.times do |i|
+          pointer = consumers[i]
+          input = FFI::Input.new(pointer)
+          result << Operation.new(self.graph, input[:oper])
+        end
+        result
       end
 
       def to_s

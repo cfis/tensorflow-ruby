@@ -17,8 +17,7 @@ module Tensorflow
         @output_types = output_types
         @output_shapes = output_shapes
 
-        variant_tensor = RawOps.map_dataset(input_dataset: input_dataset.variant_tensor,
-                                            other_arguments: other_arguments,
+        variant_tensor = RawOps.map_dataset(input_dataset.variant_tensor, other_arguments,
                                             f: function,
                                             output_types: output_types,
                                             output_shapes: output_shapes,

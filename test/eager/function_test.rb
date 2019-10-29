@@ -10,7 +10,7 @@ module Tensorflow
       end
 
       def test_function
-        context = Eager::Context.default
+        context = Eager::Context.new
 
         function = create_function
         context.add_function(function)
@@ -21,7 +21,7 @@ module Tensorflow
       end
 
       def test_function_by_name
-        context = Eager::Context.default
+        context = Eager::Context.new
         refute(context.function?('MyFunc'))
 
         function = create_function
@@ -33,11 +33,12 @@ module Tensorflow
       end
 
       def test_execute_function
-        context = Eager::Context.default
+        context = Eager::Context.new
         function = create_function
         context.add_function(function)
 
-        result = context.execute(function.name)
+        operation = context.create_operation(function.name)
+        result = context.execute(operation)
         assert_equal(10, result.value)
       end
     end

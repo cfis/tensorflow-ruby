@@ -9,7 +9,7 @@ module Tensorflow
           tensor.shape[1..]
         end
 
-        variant_tensor = RawOps.tensor_slice_dataset(components: @tensors, output_shapes: @output_shapes)
+        variant_tensor = RawOps.tensor_slice_dataset(@tensors, output_shapes: @output_shapes)
         super(variant_tensor)
       end
     end

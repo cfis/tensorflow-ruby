@@ -5,11 +5,9 @@ module Tensorflow
         @output_types = dataset.output_types
         @output_shapes = dataset.output_shapes
 
-        variant_tensor = RawOps.repeat_dataset(
-            input_dataset: dataset,
-            count: Tensor.new(count, dtype: :int64),
-            output_types: @output_types,
-            output_shapes: @output_shapes)
+        variant_tensor = RawOps.repeat_dataset(dataset, Tensor.new(count, dtype: :int64),
+                                               output_types: @output_types,
+                                               output_shapes: @output_shapes)
 
         super(variant_tensor)
       end

@@ -67,7 +67,7 @@ module Tensorflow
         constant = graph.constant(2, 'const_1')
 
         # Add add operation
-        op_desc = OperationDescription.new(graph, "AddN", 'addn')
+        op_desc = OperationDescription.new(graph, "AddN", [], name: 'addn')
         op_desc.add_input_list([placeholder, constant])
         addn = op_desc.save
 
@@ -97,14 +97,8 @@ module Tensorflow
       def test_graph_def
         graph = Graph.new
 
-        op_desc = OperationDescription.new(graph, 'Placeholder', "args_0")
-        op_desc.attr('dtype').dtype = :int32
-        op_desc.attr('shape').shape = [4]
-        args_0 = op_desc.save
-
-        op_desc = OperationDescription.new(graph, 'Square', 'square1')
-        op_desc.add_input(args_0)
-        square1 = op_desc.save
+        args_0 = graph.placeholder("args_0", :int32)
+        square1 = Math.square(args_0)
 
         graph_def = graph.export
         puts graph_def.node
@@ -114,7 +108,7 @@ module Tensorflow
         graph = Graph.new
         placeholder = graph.placeholder('feed')
         const = graph.constant(3, 'scalar')
-        op_desc = OperationDescription.new(graph, 'Neg', 'neg')
+        op_desc = OperationDescription.new(graph, 'Neg', [], name: 'neg')
         op_desc.add_input(const)
         negate = op_desc.save
 

@@ -15,10 +15,7 @@ module Tensorflow
 
         @output_types = output_types.flatten
         @output_shapes = output_shapes.flatten(1)
-        variant_tensor = RawOps.zip_dataset(
-            input_datasets: tensors,
-            output_types: @output_types,
-            output_shapes: @output_shapes)
+        variant_tensor = RawOps.zip_dataset(tensors, n: tensors.count, output_types: @output_types, output_shapes: @output_shapes)
 
         super(variant_tensor)
       end

@@ -15,13 +15,13 @@ module Tensorflow
     end
 
     def value_handle
-      RawOps.read_variable_op(resource: self.handle, dtype: type_enum)
+      RawOps.read_variable_op(self.handle, dtype: type_enum)
     end
 
     def value=(value)
       if value
         value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
-        RawOps.assign_variable_op(resource: self.handle, value: value)
+        RawOps.assign_variable_op(self.handle, value)
       end
 
       self
@@ -29,13 +29,13 @@ module Tensorflow
 
     def assign_add(value)
       value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
-      RawOps.assign_add_variable_op(resource: self.handle, value: value)
+      RawOps.assign_add_variable_op(self.handle, value)
       self
     end
 
     def assign_sub(value)
       value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
-      RawOps.assign_sub_variable_op(resource: self.handle, value: value)
+      RawOps.assign_sub_variable_op(self.handle, value)
       self
     end
 
@@ -58,7 +58,7 @@ module Tensorflow
     end
 
     def reshape(shape)
-      RawOps.reshape(tensor: self, shape: shape)
+      RawOps.reshape(self, shape)
     end
 
     def inspect

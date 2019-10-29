@@ -2,30 +2,30 @@ module Tensorflow
   module Math
     class << self
       def abs(x)
-        RawOps.abs(x: x)
+        RawOps.abs(x)
       end
 
       # def accumulate_n
       # end
 
       def acos(x)
-        RawOps.acos(x: x)
+        RawOps.acos(x)
       end
 
       def acosh(x)
-        RawOps.acosh(x: x)
+        RawOps.acosh(x)
       end
 
       def add(x, y)
-        RawOps.add(x: x, y: y)
+        RawOps.add(x, y)
       end
 
       def add_n(inputs)
-        RawOps.add_n(inputs: inputs)
+        RawOps.add_n(inputs, n: inputs.length)
       end
 
       def angle(input)
-        RawOps.angle(input: input)
+        RawOps.angle(input)
       end
 
       # def argmax
@@ -35,161 +35,161 @@ module Tensorflow
       # end
 
       def asin(x)
-        RawOps.asin(x: x)
+        RawOps.asin(x)
       end
 
       def asinh(x)
-        RawOps.asinh(x: x)
+        RawOps.asinh(x)
       end
 
       def atan(x)
-        RawOps.atan(x: x)
+        RawOps.atan(x)
       end
 
       def atan2(y, x)
-        RawOps.atan2(y: y, x: x)
+        RawOps.atan2(y, x)
       end
 
       def atanh(x)
-        RawOps.atanh(x: x)
+        RawOps.atanh(x)
       end
 
       # def bessel_i0
       # end
 
       def bessel_i0e(x)
-        RawOps.bessel_i0e(x: x)
+        RawOps.bessel_i0e(x)
       end
 
       # def bessel_i1
       # end
 
       def bessel_i1e(x)
-        RawOps.bessel_i1e(x: x)
+        RawOps.bessel_i1e(x)
       end
 
       def betainc(a, b, x)
-        RawOps.betainc(a: a, b: b, x: x)
+        RawOps.betainc(a, b, x)
       end
 
       def bincount(arr, size, weights)
-        RawOps.bincount(arr: arr, size: size, weights: weights)
+        RawOps.bincount(arr, size, weights)
       end
 
       def ceil(x)
-        RawOps.ceil(x: x)
+        RawOps.ceil(x)
       end
 
       # def confusion_matrix
       # end
 
       def conj(input)
-        RawOps.conj(input: input)
+        RawOps.conj(input)
       end
 
       def cos(x)
-        RawOps.cos(x: x)
+        RawOps.cos(x)
       end
 
       def cosh(x)
-        RawOps.cosh(x: x)
+        RawOps.cosh(x)
       end
 
       # def count_nonzero
       # end
 
       def cumprod(x, axis, exclusive: nil, reverse: nil)
-        RawOps.cumprod(x: x, axis: axis, exclusive: exclusive, reverse: reverse)
+        RawOps.cumprod(x, axis, exclusive: exclusive, reverse: reverse)
       end
 
       def cumsum(x, axis, exclusive: nil, reverse: nil)
-        RawOps.cumsum(x: x, axis: axis, exclusive: exclusive, reverse: reverse)
+        RawOps.cumsum(x, axis, exclusive: exclusive, reverse: reverse)
       end
 
       # def cumulative_logsumexp
       # end
 
       def digamma(x)
-        RawOps.digamma(x: x)
+        RawOps.digamma(x)
       end
 
       def divide(x, y)
-        RawOps.div(x: x, y: y)
+        RawOps.div(x, y)
       end
 
       # def divide_no_nan
       # end
 
       def equal(x, y)
-        RawOps.equal(x: x, y: y)
+        RawOps.equal(x, y)
       end
 
       def erf(x)
-        RawOps.erf(x: x)
+        RawOps.erf(x)
       end
 
       def erfc(x)
-        RawOps.erfc(x: x)
+        RawOps.erfc(x)
       end
 
       def exp(x)
-        RawOps.exp(x: x)
+        RawOps.exp(x)
       end
 
       def expm1(x)
-        RawOps.expm1(x: x)
+        RawOps.expm1(x)
       end
 
       def floor(x)
-        RawOps.floor(x: x)
+        RawOps.floor(x)
       end
 
       def floordiv(x, y)
-        RawOps.floor_div(x: x, y: y)
+        RawOps.floor_div(x, y)
       end
 
       def floormod(x, y)
-        RawOps.floor_mod(x: x, y: y)
+        RawOps.floor_mod(x, y)
       end
 
       def greater(x, y)
-        RawOps.greater(x: x, y: y)
+        RawOps.greater(x, y)
       end
 
       def greater_equal(x, y)
-        RawOps.greater_equal(x: x, y: y)
+        RawOps.greater_equal(x, y)
       end
 
       def igamma(a, x)
-        RawOps.igamma(a: a, x: x)
+        RawOps.igamma(a, x)
       end
 
       def igammac(a, x)
-        RawOps.igammac(a: a, x: x)
+        RawOps.igammac(a, x)
       end
 
       def imag(input)
-        RawOps.imag(input: input)
+        RawOps.imag(input)
       end
 
       def in_top_k(predictions, targets, k: nil)
-        RawOps.in_top_k(predictions: predictions, targets: targets, k: k)
+        RawOps.in_top_k(predictions, targets, k: k)
       end
 
       def invert_permutation(x)
-        RawOps.invert_permutation(x: x)
+        RawOps.invert_permutation(x)
       end
 
       def is_finite(x)
-        RawOps.is_finite(x: x)
+        RawOps.is_finite(x)
       end
 
       def is_inf(x)
-        RawOps.is_inf(x: x)
+        RawOps.is_inf(x)
       end
 
       def is_nan(x)
-        RawOps.is_nan(x: x)
+        RawOps.is_nan(x)
       end
 
       # def is_non_decreasing
@@ -205,28 +205,28 @@ module Tensorflow
       # end
 
       def less(x, y)
-        RawOps.less(x: x, y: y)
+        RawOps.less(x, y)
       end
 
       def less_equal(x, y)
-        RawOps.less_equal(x: x, y: y)
+        RawOps.less_equal(x, y)
       end
 
       def lgamma(x)
-        RawOps.lgamma(x: x)
+        RawOps.lgamma(x)
       end
 
       def log(x)
-        RawOps.log(x: x)
+        RawOps.log(x)
       end
 
       def log1p(x)
-        RawOps.log1p(x: x)
+        RawOps.log1p(x)
       end
 
       def log_sigmoid(x)
         x = Eager.convert_to_tensor_handle(x)
-        negative(RawOps.softplus(features: -x))
+        negative(RawOps.softplus(-x))
       end
 
       def log_softmax(logits)
@@ -234,15 +234,15 @@ module Tensorflow
       end
 
       def logical_and(x, y)
-        RawOps.logical_and(x: x, y: y)
+        RawOps.logical_and(x, y)
       end
 
       def logical_not(x)
-        RawOps.logical_not(x: x)
+        RawOps.logical_not(x)
       end
 
       def logical_or(x, y)
-        RawOps.logical_or(x: x, y: y)
+        RawOps.logical_or(x, y)
       end
 
       def logical_xor(x, y)
@@ -250,53 +250,53 @@ module Tensorflow
       end
 
       def maximum(x, y)
-        RawOps.maximum(x: x, y: y)
+        RawOps.maximum(x, y)
       end
 
       def minimum(x, y)
-        RawOps.minimum(x: x, y: y)
+        RawOps.minimum(x, y)
       end
 
       def mod(x, y)
-        RawOps.mod(x: x, y: y)
+        RawOps.mod(x, y)
       end
 
       def multiply(x, y)
-        RawOps.mul(x: x, y: y)
+        RawOps.mul(x, y)
       end
 
       def multiply_no_nan(x, y)
-        RawOps.mul_no_nan(x: x, y: y)
+        RawOps.mul_no_nan(x, y)
       end
 
       def negative(x)
-        RawOps.neg(x: x)
+        RawOps.neg(x)
       end
 
       # def nextafter
       # end
 
       def not_equal(x, y)
-        RawOps.not_equal(x: x, y: y)
+        RawOps.not_equal(x, y)
       end
 
       def polygamma(a, x)
-        RawOps.polygamma(a: a, x: x)
+        RawOps.polygamma(a, x)
       end
 
       # def polyval
       # end
 
       def pow(x, y)
-        RawOps.pow(x: x, y: y)
+        RawOps.pow(x, y)
       end
 
       def real(input)
-        RawOps.real(input: input)
+        RawOps.real(input)
       end
 
       def reciprocal(x)
-        RawOps.reciprocal(x: x)
+        RawOps.reciprocal(x)
       end
 
       # def reciprocal_no_nan
@@ -308,7 +308,7 @@ module Tensorflow
       def reduce_any(input_tensor, axis: nil, keepdims: false)
         input_tensor = Eager.convert_to_tensor_handle(input_tensor)
         axis ||= reduction_dims(input_tensor)
-        RawOps.any(input: input_tensor, reduction_indices: axis, keep_dims: keepdims)
+        RawOps.any(input_tensor, axis, keep_dims: keepdims)
       end
 
       # def reduce_euclidean_norm
@@ -320,25 +320,25 @@ module Tensorflow
       def reduce_max(input_tensor, axis: nil, keepdims: false)
         input_tensor = Eager.convert_to_tensor_handle(input_tensor)
         axis ||= reduction_dims(input_tensor)
-        RawOps.max(input: input_tensor, reduction_indices: axis, keep_dims: keepdims)
+        RawOps.max(input_tensor, axis, keep_dims: keepdims)
       end
 
       def reduce_mean(input_tensor, axis: nil, keepdims: false)
         input_tensor = Eager.convert_to_tensor_handle(input_tensor)
         axis ||= reduction_dims(input_tensor)
-        RawOps.mean(input: input_tensor, reduction_indices: axis, keep_dims: keepdims)
+        RawOps.mean(input_tensor, axis, keep_dims: keepdims)
       end
 
       def reduce_min(input_tensor, axis: nil, keepdims: false)
         input_tensor = Eager.convert_to_tensor_handle(input_tensor)
         axis ||= reduction_dims(input_tensor)
-        RawOps.min(input: input_tensor, reduction_indices: axis, keep_dims: keepdims)
+        RawOps.min(input_tensor, axis, keep_dims: keepdims)
       end
 
       def reduce_prod(input_tensor, axis: nil, keepdims: false)
         input_tensor = Eager.convert_to_tensor_handle(input_tensor)
         axis ||= reduction_dims(input_tensor)
-        RawOps.prod(input: input_tensor, reduction_indices: axis, keep_dims: keepdims)
+        RawOps.prod(input_tensor, axis, keep_dims: keepdims)
       end
 
       def reduce_std(input_tensor, axis: nil, keepdims: false)
@@ -349,64 +349,64 @@ module Tensorflow
       def reduce_sum(input_tensor, axis: nil, keepdims: false)
         input_tensor = Eager.convert_to_tensor_handle(input_tensor)
         axis ||= reduction_dims(input_tensor)
-        RawOps.sum(input: input_tensor, reduction_indices: axis, keep_dims: keepdims)
+        RawOps.sum(input_tensor, axis, keep_dims: keepdims)
       end
 
       def reduce_variance(input_tensor, axis: nil, keepdims: false)
         means = reduce_mean(input_tensor, axis: axis, keepdims: true)
-        squared_deviations = RawOps.square(x: input_tensor - means)
+        squared_deviations = RawOps.square(input_tensor - means)
         reduce_mean(squared_deviations, axis: axis, keepdims: keepdims)
       end
 
       def rint(x)
-        RawOps.rint(x: x)
+        RawOps.rint(x)
       end
 
       def round(x)
-        RawOps.round(x: x)
+        RawOps.round(x)
       end
 
       def rsqrt(x)
-        RawOps.rsqrt(x: x)
+        RawOps.rsqrt(x)
       end
 
       # def scalar_mul
       # end
 
       def segment_max(data, segment_ids)
-        RawOps.segment_max(data: data, segment_ids: segment_ids)
+        RawOps.segment_max(data, segment_ids)
       end
 
       def segment_mean(data, segment_ids)
-        RawOps.segment_mean(data: data, segment_ids: segment_ids)
+        RawOps.segment_mean(data, segment_ids)
       end
 
       def segment_min(data, segment_ids)
-        RawOps.segment_min(data: data, segment_ids: segment_ids)
+        RawOps.segment_min(data, segment_ids)
       end
 
       def segment_prod(data, segment_ids)
-        RawOps.segment_prod(data: data, segment_ids: segment_ids)
+        RawOps.segment_prod(data, segment_ids)
       end
 
       def segment_sum(data, segment_ids)
-        RawOps.segment_sum(data: data, segment_ids: segment_ids)
+        RawOps.segment_sum(data, segment_ids)
       end
 
       def sigmoid(x)
-        RawOps.sigmoid(x: x)
+        RawOps.sigmoid(x)
       end
 
       def sign(x)
-        RawOps.sign(x: x)
+        RawOps.sign(x)
       end
 
       def sin(x)
-        RawOps.sin(x: x)
+        RawOps.sin(x)
       end
 
       def sinh(x)
-        RawOps.sinh(x: x)
+        RawOps.sinh(x)
       end
 
       def softmax(logits)
@@ -422,77 +422,77 @@ module Tensorflow
       end
 
       def sqrt(x)
-        RawOps.sqrt(x: x)
+        RawOps.sqrt(x)
       end
 
       def square(x)
-        RawOps.square(x: x)
+        RawOps.square(x)
       end
 
       def squared_difference(x, y)
-        RawOps.squared_difference(x: x, y: y)
+        RawOps.squared_difference(x, y)
       end
 
       def subtract(x, y)
-        RawOps.sub(x: x, y: y)
+        RawOps.sub(x, y)
       end
 
       def tan(x)
-        RawOps.tan(x: x)
+        RawOps.tan(x)
       end
 
       def tanh(x)
-        RawOps.tanh(x: x)
+        RawOps.tanh(x)
       end
 
       def top_k(input, k: nil, sorted: nil)
-        RawOps.top_k(input: input, k: k, sorted: sorted)
+        RawOps.top_k(input, k: k, sorted: sorted)
       end
 
       # def truediv
       # end
 
       def unsorted_segment_max(data, segment_ids, num_segments)
-        RawOps.unsorted_segment_max(data: data, segment_ids: segment_ids, num_segments: num_segments)
+        RawOps.unsorted_segment_max(data, segment_ids, num_segments: num_segments)
       end
 
       # def unsorted_segment_mean
       # end
 
       def unsorted_segment_min(data, segment_ids, num_segments)
-        RawOps.unsorted_segment_min(data: data, segment_ids: segment_ids, num_segments: num_segments)
+        RawOps.unsorted_segment_min(data, segment_ids, num_segments: num_segments)
       end
 
       def unsorted_segment_prod(data, segment_ids, num_segments)
-        RawOps.unsorted_segment_prod(data: data, segment_ids: segment_ids, num_segments: num_segments)
+        RawOps.unsorted_segment_prod(data, segment_ids, num_segments: num_segments)
       end
 
       # def unsorted_segment_sqrt_n
       # end
 
       def unsorted_segment_sum(data, segment_ids, num_segments)
-        RawOps.unsorted_segment_sum(data: data, segment_ids: segment_ids, num_segments: num_segments)
+        RawOps.unsorted_segment_sum(data, segment_ids, num_segments: num_segments)
       end
 
       def xdivy(x, y)
-        RawOps.xdivy(x: x, y: y)
+        RawOps.xdivy(x, y)
       end
 
       def xlogy(x, y)
-        RawOps.xlogy(x: x, y: y)
+        RawOps.xlogy(x, y)
       end
 
       # def zero_fraction
       # end
 
       def zeta(x, q)
-        RawOps.zeta(x: x, q: q)
+        RawOps.zeta(x, q)
       end
 
       private
 
       def reduction_dims(input_tensor)
-        rank = RawOps.rank(input: input_tensor).value
+        rank = RawOps.rank(input_tensor).value
         Tensor.new((0...rank).to_a, dtype: :int32)
       end
     end

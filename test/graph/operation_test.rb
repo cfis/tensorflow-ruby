@@ -46,11 +46,7 @@ module Tensorflow
         consumers = placeholder.consumers
         assert_empty(consumers)
 
-        add = graph.create_operation('Add', 'add') do |op_desc|
-          op_desc.add_input(placeholder)
-          op_desc.add_input(constant)
-        end
-
+        add = graph.create_operation('Add', [placeholder, constant], name: 'add')
         consumers = add.consumers
         assert_empty(consumers)
 

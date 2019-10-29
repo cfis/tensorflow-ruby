@@ -31,10 +31,10 @@ module Tensorflow
 
       def each
         iterator, deleter = RawOps.anonymous_iterator_v2(output_types: @output_types, output_shapes: @output_shapes)
-        RawOps.make_iterator(dataset: @variant_tensor, iterator: iterator)
+        RawOps.make_iterator(@variant_tensor, iterator)
         begin
           loop do
-            values = RawOps.iterator_get_next_sync(iterator: iterator, output_types: @output_types, output_shapes: @output_shapes)
+            values = RawOps.iterator_get_next_sync(iterator, output_types: @output_types, output_shapes: @output_shapes)
             yield values
           end
         rescue ::TensorflowError => e
@@ -42,7 +42,7 @@ module Tensorflow
           raise e unless e.message == "End of sequence"
         end
       ensure
-        RawOps.delete_iterator(handle: iterator, deleter: deleter) if iterator
+        RawOps.delete_iterator(iterator, deleter) if iterator
       end
 
       # !!! DEBUG method. You don't want to use this method it because it iterates over

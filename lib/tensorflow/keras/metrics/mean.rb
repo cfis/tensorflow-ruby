@@ -16,11 +16,11 @@ module Tensorflow
           input = Eager.convert_to_tensor_handle(values)
           input = Tensorflow.cast(input, @dtype)
           @total.assign_add(Math.reduce_sum(input))
-          @count.assign_add(Tensorflow.cast(RawOps.size(input: input), @dtype))
+          @count.assign_add(Tensorflow.cast(RawOps.size(input), @dtype))
         end
 
         def result
-          RawOps.div_no_nan(x: @total, y: Tensorflow.cast(@count, :float))
+          RawOps.div_no_nan(@total, Tensorflow.cast(@count, :float))
         end
 
         def reset_states

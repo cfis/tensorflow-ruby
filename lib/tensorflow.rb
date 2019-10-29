@@ -30,9 +30,6 @@ require "tensorflow/variable"
 require "tensorflow/version"
 
 # Ops
-require "tensorflow/ops/ops_executor"
-require "tensorflow/ops/raw_ops"
-
 require "tensorflow/ops/audio"
 require "tensorflow/ops/bitwise"
 require "tensorflow/ops/image"
@@ -42,6 +39,7 @@ require "tensorflow/ops/math"
 require "tensorflow/ops/nn"
 require "tensorflow/ops/ops"
 require "tensorflow/ops/random"
+require "tensorflow/ops/raw_ops"
 
 # eager
 require "tensorflow/eager/eager"

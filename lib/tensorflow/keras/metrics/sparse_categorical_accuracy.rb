@@ -6,7 +6,7 @@ module Tensorflow
           y_true = Eager.convert_to_tensor_handle(y_true)
           y_pred = Eager.convert_to_tensor_handle(y_pred)
 
-          y_pred = RawOps.arg_max(input: y_pred, dimension: -1)
+          y_pred = RawOps.arg_max(y_pred, -1)
 
           if y_pred.dtype != y_true.dtype
             y_pred = Tensorflow.cast(y_pred, y_true.dtype)

@@ -41,7 +41,7 @@ module Tensorflow
         position_ptr.write_int(position)
         while (ptr = FFI.TF_GraphNextOperation(self, position_ptr))
           break if ptr.null?
-          result << Operation.new(ptr)
+          result << Operation.new(self, ptr)
           position_ptr.write_int(position += 1)
         end
 
@@ -50,7 +50,7 @@ module Tensorflow
 
       def operation(name)
         ptr = FFI.TF_GraphOperationByName(self, name)
-        ptr.null? ? nil : Operation.new(ptr)
+        ptr.null? ? nil : Operation.new(self, ptr)
       end
 
       def create_operation(op_name, inputs, attrs)

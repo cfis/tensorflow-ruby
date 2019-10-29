@@ -8,10 +8,9 @@ module Tensorflow
           tensor.shape
         end
 
-        variant_tensor = RawOps.tensor_dataset(
-            components: @tensors,
-            output_types: @output_types,
-            output_shapes: @output_shapes)
+        variant_tensor = RawOps.tensor_dataset(@tensors,
+                                               toutput_types: @output_types,
+                                               output_shapes: @output_shapes)
 
         super(variant_tensor)
       end

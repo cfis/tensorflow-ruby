@@ -15,7 +15,7 @@ module Tensorflow
       # end
 
       def cross(a, b)
-        RawOps.cross(a: a, b: b)
+        RawOps.cross(a, b)
       end
 
       # def det
@@ -45,7 +45,7 @@ module Tensorflow
         num_columns ||= num_rows
         zeros = Tensorflow.zeros([num_rows, num_columns])
         ones = Tensorflow.ones([num_rows])
-        RawOps.matrix_set_diag(input: zeros, diagonal: ones)
+        RawOps.matrix_set_diag(zeros, ones)
       end
 
       # def global_norm
@@ -72,7 +72,7 @@ module Tensorflow
       end
 
       def matmul(a, b, transpose_a: false, transpose_b: false)
-        RawOps.mat_mul(a: a, b: b, transpose_a: transpose_a, transpose_b: transpose_b)
+        RawOps.mat_mul(a, b, transpose_a: transpose_a, transpose_b: transpose_b)
       end
 
       # def matrix_transpose
@@ -126,7 +126,7 @@ module Tensorflow
       # end
 
       def tridiagonal_solve(diagonals, rhs, partial_pivoting: nil)
-        RawOps.tridiagonal_solve(diagonals: diagonals, rhs: rhs, partial_pivoting: partial_pivoting)
+        RawOps.tridiagonal_solve(diagonals, rhs, partial_pivoting: partial_pivoting)
       end
     end
   end

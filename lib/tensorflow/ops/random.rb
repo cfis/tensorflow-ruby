@@ -6,7 +6,7 @@ module Tensorflow
         mean_tensor = Tensor.new(mean, dtype: dtype)
         stddev_tensor = Tensor.new(stddev, dtype: dtype)
 
-        random = RawOps.random_standard_normal(shape: shape, seed: nil, seed2: nil, dtype: dtype)
+        random = RawOps.random_standard_normal(shape, seed: nil, seed2: nil, dtype: dtype)
         mul = random * stddev_tensor
         Math.add(mul, mean_tensor)
       end

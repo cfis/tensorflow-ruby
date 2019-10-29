@@ -18,7 +18,7 @@ module Tensorflow
         FFI.TFE_DeleteContextOptions(options)
       end
 
-      def create_operation(op_name, inputs, attrs)
+      def create_operation(op_name, inputs=[], attrs={})
         Operation.new(self, op_name, inputs, attrs)
       end
 

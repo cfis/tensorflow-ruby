@@ -1,22 +1,22 @@
 module Tensorflow
   module Graph
     class OperationDescription
-      attr_reader :graph, :op_def
+      attr_reader :graph, :name, :op_def
 
-      def initialize(graph, op_name, inputs, attrs)
+      def initialize(graph, op_type, inputs, attrs)
         @graph = graph
-        @op_def = self.get_op_def(op_name)
-        name = attrs.delete(:name) || op_name.downcase
-
-        @pointer = FFI.TF_NewOperation(graph, op_name, name)
+        @op_def = self.get_op_def(op_type)
+        name = attrs.delete(:name) || op_type
+        @name = self.graph.scoped_name(name)
+        @pointer = FFI.TF_NewOperation(graph, op_type, name)
         setup_inputs(Array(inputs))
         setup_attrs(**attrs)
       end
 
-      def get_op_def(op_name)
+      def get_op_def(op_type)
         buffer_ptr = FFI.TF_NewBuffer
         Status.check do |status|
-          FFI.TF_GraphGetOpDef(self.graph, op_name, buffer_ptr, status)
+          FFI.TF_GraphGetOpDef(self.graph, op_type, buffer_ptr, status)
         end
         buffer = FFI::Buffer.new(buffer_ptr)
         string = buffer[:data].read_string(buffer[:length])
@@ -48,6 +48,11 @@ module Tensorflow
 
       def setup_input(index, value)
         arg_def = self.op_def.input_arg[index]
+
+        unless value.is_a?(Operation)
+          input_name = "#{self.name}/#{arg_def.name}"
+          value = self.graph.constant(value, input_name)
+        end
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list

@@ -12,10 +12,10 @@ module Tensorflow
       end
     end
 
-    def self.execute(op_name, inputs=[], attrs={})
+    def self.execute(op_type, inputs=[], attrs={})
       executor = self.figure_graph_or_context(inputs)
       attrs = attrs.compact
-      operation = executor.create_operation(op_name, inputs, attrs)
+      operation = executor.create_operation(op_type, inputs, attrs)
       if executor.is_a?(Graph::Graph)
         operation
       else

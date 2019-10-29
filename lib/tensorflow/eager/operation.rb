@@ -3,11 +3,11 @@ module Tensorflow
     class Operation
       attr_reader :context, :op_def, :status
 
-      def initialize(context, op_name, inputs, attrs)
+      def initialize(context, op_type, inputs, attrs)
         @context = context
-        @op_def = Tensorflow.op_def(op_name)
+        @op_def = Tensorflow.op_def(op_type)
         @status = Status.new
-        @pointer = FFI.TFE_NewOp(context, op_name, self.status)
+        @pointer = FFI.TFE_NewOp(context, op_type, self.status)
 
         setup_inputs(inputs)
         setup_attrs(attrs)

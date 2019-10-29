@@ -3,8 +3,8 @@ module Tensorflow
     class Operation
       attr_reader :graph
 
-      def self.create(graph, op_name, name, *inputs, **attrs)
-        op_desc = OperationDescription.new(graph, op_name, name, inputs, attrs)
+      def self.create(graph, op_type, name, *inputs, **attrs)
+        op_desc = OperationDescription.new(graph, op_type, name, inputs, attrs)
         op_desc.save
       end
 

@@ -35,17 +35,14 @@ module Tensorflow
       end
 
       def operations
-        result = Array.new
-        position = 0
+        return enum_for(:operations) unless block_given?
+
+        # Get a pointer to a size_t set to 0
         position_ptr = ::FFI::MemoryPointer.new(:size_t, 1, true)
-        position_ptr.write_int(position)
         while (ptr = FFI.TF_GraphNextOperation(self, position_ptr))
           break if ptr.null?
-          result << Operation.new(self, ptr)
-          position_ptr.write_int(position += 1)
+          yield Operation.new(self, ptr)
         end
-
-        result
       end
 
       def operation(name)
@@ -53,8 +50,8 @@ module Tensorflow
         ptr.null? ? nil : Operation.new(self, ptr)
       end
 
-      def create_operation(op_name, inputs, attrs)
-        op_desc = OperationDescription.new(self, op_name, inputs, attrs)
+      def create_operation(op_type, inputs, attrs)
+        op_desc = OperationDescription.new(self, op_type, inputs, attrs)
         op_desc.save
       end
 
@@ -69,7 +66,6 @@ module Tensorflow
 
       def constant(value, name='const')
         tensor = value.is_a?(Tensor) ? value : Tensor.new(value)
-        name = self.scoped_name(name)
         self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end
 

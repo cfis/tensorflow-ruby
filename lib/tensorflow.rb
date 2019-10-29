@@ -41,7 +41,10 @@ require "tensorflow/ops/ops"
 require "tensorflow/ops/random"
 require "tensorflow/ops/raw_ops"
 
-# eager
+# Printers
+require "tensorflow/printers/graph"
+
+# Eager
 require "tensorflow/eager/eager"
 require "tensorflow/eager/context"
 require "tensorflow/eager/operation"

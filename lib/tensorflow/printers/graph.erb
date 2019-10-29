@@ -1,0 +1,26 @@
+<% graph.operations.each do |operation|
+   op_def = Tensorflow.op_def(operation.op_type) %>
+node {
+  name: "<%= operation.name %>"
+  op: "<%= operation.op_type %>"
+  <% op_def.attr.sort_by(&:name).each do |attr_def|
+     attr = operation.attr(attr_def.name) %>
+  attr {
+    key: "<%= attr_def.name %>"
+    value {
+  <% case attr.metadata[:type]  %>
+    <% when :tensor %>
+      tensor {
+        dtype: DT_<%= attr.tensor.dtype %>
+        tensor_shape {
+          <%= attr.tensor.shape %>
+        }
+        <%= attr.tensor.dtype %>_val: <%= attr.tensor.value %>
+      }
+    <% when :type %>
+      type: DT_<%= attr.dtype.to_s.upcase %>
+    <% end %>
+  }
+  <% end %>
+}
+<% end %>

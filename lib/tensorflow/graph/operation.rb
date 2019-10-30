@@ -25,6 +25,10 @@ module Tensorflow
         self.name == other.name
       end
 
+      def hash
+        self.name.hash
+      end
+
       def name
         FFI.TF_OperationName(self)
       end
@@ -35,6 +39,15 @@ module Tensorflow
 
       def device
         FFI.TF_OperationDevice(self)
+      end
+
+      def node_def
+        buffer = FFI::Buffer.new
+        Status.check do |status|
+          FFI.TF_OperationToNodeDef(self, buffer, status)
+        end
+        string = buffer[:data].read_string(buffer[:length])
+        ops = NodeDef.decode(string)
       end
 
       def num_inputs
@@ -72,6 +85,13 @@ module Tensorflow
       def output_list_length(arg_name)
         Status.check do |status|
           FFI.TF_OperationOutputListLength(self, arg_name, status)
+        end
+      end
+
+      def attributes
+        op_def = self.graph.op_def(self.op_type)
+        op_def.attr.map do |attr_def|
+          self.attr(attr_def.name)
         end
       end
 
@@ -180,11 +200,15 @@ module Tensorflow
 
       def shape
         size = self.metadata[:total_size]
-        pointer = ::FFI::MemoryPointer.new(:int64, size)
-        Status.check do |status|
-          FFI.TF_OperationGetAttrShape(self.operation, self.name, pointer, size, status)
+        if size == -1
+          []
+        else
+          pointer = ::FFI::MemoryPointer.new(:int64, size)
+          Status.check do |status|
+            FFI.TF_OperationGetAttrShape(self.operation, self.name, pointer, size, status)
+          end
+          pointer.read_array_of_int64(size)
         end
-        pointer.read_array_of_int64(size)
       end
 
       def string

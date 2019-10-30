@@ -14,10 +14,7 @@ module Tensorflow
 
         session = Session.new(graph, SessionOptions.new)
         result = session.run({placeholder => Tensor.new(3)}, [addn])
-        assert_equal(:int32, result.dtype)
-        assert_equal(0, result.shape.length)
-        assert_equal(4, result.byte_size)
-        assert_equal(5, result.value)
+        assert_equal(5, result)
 
         session.close
       end
@@ -32,10 +29,7 @@ module Tensorflow
 
         session = Session.new(graph, SessionOptions.new)
         result = session.run({placeholder => [[1, 2, 3], [4, 5, 6]]}, [square])
-        assert_equal(:int32, result.dtype)
-        assert_equal(2, result.shape.length)
-        assert_equal(24, result.byte_size)
-        assert_equal([[1, 4, 9], [16, 25, 36]], result.value)
+        assert_equal([[1, 4, 9], [16, 25, 36]], result)
       end
     end
   end

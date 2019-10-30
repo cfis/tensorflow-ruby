@@ -34,6 +34,30 @@ module Tensorflow
         ops = OpDef.decode(string)
       end
 
+      def forward(operation)
+        def forward_internal(set, operation)
+          operation.consumers.each do |consumer|
+            set << consumer
+            forward_internal(set, consumer)
+          end
+          set
+        end
+        result = Set.new([operation])
+        forward_internal(result, operation)
+      end
+
+      def backward(operation)
+        def backward_internal(set, operation)
+          operation.inputs.each do |input|
+            set << input
+            backward_internal(set, input)
+          end
+          set
+        end
+        result = Set.new([operation])
+        backward_internal(result, operation)
+      end
+
       def operations
         return enum_for(:operations) unless block_given?
 
@@ -50,22 +74,24 @@ module Tensorflow
         ptr.null? ? nil : Operation.new(self, ptr)
       end
 
-      def create_operation(op_type, inputs, attrs)
+      def create_operation(op_type, inputs=[], attrs={})
         op_desc = OperationDescription.new(self, op_type, inputs, attrs)
         op_desc.save
       end
 
       def execute(inputs: {}, outputs: [])
         session = Session.new(self, SessionOptions.new)
-        session.run(inputs, outputs)
+        result = session.run(inputs, outputs)
+        session.close
+        result
       end
 
       def placeholder(name='placeholder', dtype=:int32)
         self.create_operation('Placeholder', [], name: name, dtype:dtype)
       end
 
-      def constant(value, name='const')
-        tensor = value.is_a?(Tensor) ? value : Tensor.new(value)
+      def constant(value, name='const', dtype: nil)
+        tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype)
         self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end
 

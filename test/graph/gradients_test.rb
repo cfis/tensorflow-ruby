@@ -3,39 +3,39 @@ require_relative '../test_helper'
 module Tensorflow
   module Graph
     class GradientsTest < Minitest::Test
-      # def test_operations
-      #   graph = Graph.new
-      #
-      #   x = graph.constant(3.0, name='x')
-      #   two = graph.constant(2.0, name='x')
-      #
-      #   y = graph.create_operation('Pow') do |op_desc|
-      #     op_desc.add_input(x)
-      #     op_desc.add_input(two)
-      #   end
-      #
-      #   gradients = Gradients.new(graph)
-      #   operations = gradients.find_operations(y, x)
-      #   assert_equal(2, operations.length)
-      #
-      #   operation = operations[0]
-      #   assert_equal(x, operation)
-      #
-      #   operation = operations[1]
-      #   assert_equal(y, operation)
-      # end
-
-      def test_derivate_ops
+      def test_derivatives_simple
         graph = Graph.new
 
         x = graph.constant(3.0, 'x')
-        two = graph.constant(2.0, 'two')
-        pow = Math.pow(x, two)
+        pow = Math.pow(x, 2.0)
 
         gradients = Gradients.new(graph)
-        foo = gradients.derivative(pow, x)
-        #assert_equal(2, operations.length)
-        a = foo
+        derivatives = gradients.derivatives(pow, [x])
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, derivatives.flatten)
+        assert_equal(6.0, result)
+
+        session.close
+      end
+
+      def test_derivatives_chain
+        graph = Graph.new
+        a = graph.constant(1.0, 'a')
+        b = graph.constant(2.1, 'b')
+        y = Math.add(Math.pow(a, 2.0), b)
+        z = Math.sin(y)
+
+        gradients = Gradients.new(graph)
+        derivatives = gradients.derivatives(z, [a, b])
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, derivatives)
+        session.close
+
+        assert_equal(2, result.length)
+        assert_in_delta(-1.9983, result[0], 0.1)
+        assert_in_delta(-0.9991, result[1], 0.1)
       end
     end
   end

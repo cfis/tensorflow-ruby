@@ -23,10 +23,7 @@ module Tensorflow
 
         session = Session.new(host_graph, SessionOptions.new)
         result = session.run({}, [func_operation])
-        assert_equal(:int32, result.dtype)
-        assert_equal(0, result.shape.length)
-        assert_equal(4, result.byte_size)
-        assert_equal(10, result.value)
+        assert_equal(10, result)
 
         session.close
       end
@@ -60,10 +57,7 @@ module Tensorflow
 
         session = Session.new(host_graph, SessionOptions.new)
         result = session.run({func_feed  => Tensor.new(3)}, [func_op])
-        assert_equal(:int32, result.dtype)
-        assert_equal(0, result.shape.length)
-        assert_equal(4, result.byte_size)
-        assert_equal(-3, result.value)
+        assert_equal(-3, result)
 
         session.close
       end
@@ -102,11 +96,7 @@ module Tensorflow
 
         session = Session.new(host_graph, SessionOptions.new)
         result = session.run({func_feed => 3}, [func_op])
-
-        assert_equal(:int32, result.dtype)
-        assert_equal(0, result.shape.length)
-        assert_equal(4, result.byte_size)
-        assert_equal(5, result.value)
+        assert_equal(5, result)
 
         session.close
       end

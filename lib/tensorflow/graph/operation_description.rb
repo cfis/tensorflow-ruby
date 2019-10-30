@@ -40,6 +40,20 @@ module Tensorflow
         FFI.TF_SetDevice(self, value)
       end
 
+      def check_input(arg_def, input)
+        case input
+          when Array
+            input
+            #input.each do |input_element|
+            #end
+          when Operation
+            input
+          else
+            input_name = "#{self.name}/#{arg_def.name}"
+            self.graph.constant(input, input_name)
+        end
+      end
+
       def setup_inputs(inputs)
         inputs.each_with_index do |input, index|
           self.setup_input(index, input)
@@ -48,11 +62,7 @@ module Tensorflow
 
       def setup_input(index, value)
         arg_def = self.op_def.input_arg[index]
-
-        unless value.is_a?(Operation)
-          input_name = "#{self.name}/#{arg_def.name}"
-          value = self.graph.constant(value, input_name)
-        end
+        value = self.check_input(arg_def, value)
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list

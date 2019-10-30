@@ -29,7 +29,6 @@ module Tensorflow
                 tensor {
                   dtype: DT_FLOAT
                   tensor_shape {
-                    []
                   }
                   float_val: 3.0
                 }
@@ -51,7 +50,6 @@ module Tensorflow
                 tensor {
                   dtype: DT_FLOAT
                   tensor_shape {
-                    []
                   }
                   float_val: 2.0
                 }

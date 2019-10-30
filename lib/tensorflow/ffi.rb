@@ -90,6 +90,7 @@ module Tensorflow
     attach_function :TF_AddInput, [:pointer, Output], :void
     attach_function :TF_AddInputList, [:pointer, :pointer, :int], :void
 
+    attach_function :TF_OperationToNodeDef, [:pointer, :pointer, :pointer], :void
     attach_function :TF_OperationNumInputs, [:pointer], :int
     attach_function :TF_OperationInputType, [Input], DataType
     attach_function :TF_OperationInputListLength, [:pointer, :string, :pointer], :int
@@ -130,6 +131,9 @@ module Tensorflow
     attach_function :TF_OperationName, [:pointer], :string
     attach_function :TF_OperationOpType, [:pointer], :string
     attach_function :TF_OperationDevice, [:pointer], :string
+
+    attach_function :TF_AddGradients, [:pointer, :pointer, :int, :pointer, :int, :pointer, :pointer, :pointer], :void
+    attach_function :TF_AddGradientsWithPrefix, [:pointer, :string, :pointer, :int, :pointer, :int, :pointer, :pointer, :pointer], :void
 
     attach_function :TF_NewSessionOptions, [], :pointer
     attach_function :TF_SetTarget, [:pointer, :string], :void
@@ -260,7 +264,6 @@ module Tensorflow
     attach_function :TF_FunctionName, [:pointer], :strptr
     attach_function :TF_FunctionToFunctionDef, [:pointer, :pointer, :pointer], :strptr
     attach_function :TF_GraphCopyFunction, [:pointer, :pointer, :pointer, :pointer], :void
-    attach_function :TF_GraphGetOpDef, [:pointer, :string, :pointer, :pointer], :void
 
     attach_function :TF_GraphToGraphDef, [:pointer, :pointer, :pointer], :void
 

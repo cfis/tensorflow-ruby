@@ -12,7 +12,7 @@ module Tensorflow
       x = Graph::Graph.default.constant([[2.0]])
       matmul = Tf.matmul(x, x)
       result = Graph::Graph.default.execute(outputs: matmul)
-      assert_equal([[4.0]], result.value)
+      assert_equal([[4.0]], result)
     end
   end
 end

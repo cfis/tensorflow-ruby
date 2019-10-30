@@ -16,7 +16,9 @@ node {
       tensor {
         dtype: DT_<%= attr.tensor.dtype.upcase %>
         tensor_shape {
+          <% unless attr.tensor.shape.empty? %>
           <%= attr.tensor.shape %>
+          <% end %>
         }
         <%= attr.tensor.dtype %>_val: <%= attr.tensor.value %>
       }

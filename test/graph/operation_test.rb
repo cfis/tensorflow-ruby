@@ -22,19 +22,27 @@ module Tensorflow
         assert_empty(operation.device)
       end
 
-      def test_name
-        operation = graph.placeholder('feed')
-        assert_equal('feed', operation.name)
+      def test_node_def
+        graph = Graph.new
+        x = graph.constant(3.0, 'x')
+        node_def = x.node_def
+        assert(node_def)
       end
 
-      def test_op_type
-        operation = graph.placeholder
-        assert_equal('Placeholder', operation.op_type)
-      end
+      def test_attributes
+        graph = Graph.new
+        operation = graph.constant(4, 'test')
+        attributes = operation.attributes
+        assert_equal(2, attributes.length)
 
-      def test_device
-        operation = graph.placeholder
-        assert_empty(operation.device)
+        attribute = attributes[0]
+        assert_equal('value', attribute.name)
+        assert_kind_of(Tensor, attribute.value)
+        assert_equal(4, attribute.value.value)
+
+        attribute = attributes[1]
+        assert_equal('dtype', attribute.name)
+        assert_equal(:int32, attribute.value)
       end
 
       def test_num_inputs

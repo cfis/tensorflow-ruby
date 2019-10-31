@@ -1,17 +1,19 @@
 module Tensorflow
   module Utils
-    DTYPE_TO_NUMO_TYPE_MAP = {bool:   Numo::Bit,
-                              double: Numo::DFloat,
-                              float:  Numo::SFloat,
-                              int8:   Numo::Int8,
-                              int16:  Numo::Int16,
-                              int32:  Numo::Int32,
-                              int64:  Numo::Int64,
-                              uint8:  Numo::UInt8,
-                              uint16: Numo::UInt16,
-                              uint32: Numo::UInt32,
-                              uint64: Numo::UInt64,
-                              string: Numo::RObject}
+    DTYPE_TO_NUMO_TYPE_MAP = {bool:       Numo::Bit,
+                              complex64:  Numo::SComplex,
+                              complex128: Numo::DComplex,
+                              double:     Numo::DFloat,
+                              float:      Numo::SFloat,
+                              int8:       Numo::Int8,
+                              int16:      Numo::Int16,
+                              int32:      Numo::Int32,
+                              int64:      Numo::Int64,
+                              uint8:      Numo::UInt8,
+                              uint16:     Numo::UInt16,
+                              uint32:     Numo::UInt32,
+                              uint64:     Numo::UInt64,
+                              string:     Numo::RObject}
 
     NUMO_TYPE_TO_DTYPE_MAP = DTYPE_TO_NUMO_TYPE_MAP.each_with_object(Hash.new) do |pair, hash|
                                hash[pair.last] = pair.first

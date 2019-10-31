@@ -13,7 +13,7 @@ module Tensorflow
       value = [2.5, 3.5]
       tensor = Tensor.new(value, dtype: :float)
       assert_equal(:float, tensor.dtype)
-      assert_equal(value, tensor.value)
+      assert_equal(value, tensor.value.to_a)
     end
 
     def test_double
@@ -27,7 +27,7 @@ module Tensorflow
       value = [2.5, 3.5]
       tensor = Tensor.new(value)
       assert_equal(:double, tensor.dtype)
-      assert_equal(value, tensor.value)
+      assert_equal(value, tensor.value.to_a)
     end
 
     def test_true
@@ -48,7 +48,7 @@ module Tensorflow
       value = [[true, false], [false, true]]
       tensor = Tensor.new(value)
       assert_equal(:bool, tensor.dtype)
-      assert_equal(value, tensor.value)
+      assert_equal([[1, 0], [0, 1]], tensor.value.to_a)
     end
 
     def test_int32
@@ -77,7 +77,7 @@ module Tensorflow
       tensor = Tensor.new(value)
       assert_equal([2, 3], tensor.shape)
       assert_equal(:int32, tensor.dtype)
-      assert_equal(value, tensor.value)
+      assert_equal(value, tensor.value.to_a)
     end
 
     def test_int64
@@ -120,7 +120,7 @@ module Tensorflow
       tensor = Tensor.new(narray)
       assert_equal([4], tensor.shape)
       assert_equal(:int32, tensor.dtype)
-      assert_equal([1, 2, 3, 4], tensor.value)
+      assert_equal([1, 2, 3, 4], tensor.value.to_a)
     end
 
     def test_narray_2d
@@ -128,7 +128,7 @@ module Tensorflow
       tensor = Tensor.new(narray)
       assert_equal([4, 1], tensor.shape)
       assert_equal(:int32, tensor.dtype)
-      assert_equal([[1], [2], [3], [4]], tensor.value)
+      assert_equal([[1], [2], [3], [4]], tensor.value.to_a)
     end
 
     def test_add

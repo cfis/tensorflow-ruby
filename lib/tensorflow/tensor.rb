@@ -75,6 +75,21 @@ module Tensorflow
     end
 
     def value
+      # This would be a nice approach but doesn't seem to always work. See https://github.com/ruby-numo/numo-narray/issues/142
+      # bytes = data_pointer.read_bytes(self.byte_size)
+      # numo_klass = Utils::DTYPE_TO_NUMO_TYPE_MAP[self.dtype]
+      # narray = if self.shape.empty?
+      #           numo_klass.from_binary(bytes)
+      #          else
+      #            numo_klass.from_binary(bytes, self.shape)
+      #          end
+      #
+      # if element_count == 1
+      #   narray.to_a.first
+      # else
+      #   narray
+      # end
+
       value = case dtype
                 when :float, :double, :int32, :uint8, :int16, :int8, :int64, :uint16, :uint32, :uint64
                   data_pointer.send("read_array_of_#{dtype}", element_count)
@@ -88,14 +103,21 @@ module Tensorflow
                 when :string
                   read_tensor_string(data_pointer)
                 when :bool
-                  data_pointer.read_array_of_int8(element_count).map { |v| v == 1 }
+                  data_pointer.read_array_of_int8(element_count)
                 when :resource, :variant
                   return data_pointer
                 else
                   raise "Unknown type: #{dtype}"
                 end
 
-      reshape(value, shape)
+      if element_count == 1
+        value.first
+      elsif self.shape.length == 1
+        value
+      else
+        numo_klass = Utils::DTYPE_TO_NUMO_TYPE_MAP[self.dtype]
+        numo_klass[value].reshape(*self.shape)
+      end
     end
 
     def dtype
@@ -135,15 +157,6 @@ module Tensorflow
 
     def data_pointer
       FFI.TF_TensorData(self)
-    end
-
-    def reshape(arr, dims)
-      return arr.first if dims.empty?
-      arr = arr.flatten
-      dims[1..-1].reverse.each do |dim|
-        arr = arr.each_slice(dim)
-      end
-      arr.to_a
     end
 
     def calculate_shape(value)

@@ -36,21 +36,21 @@ module Tensorflow
       end
 
       def test_no_scope
-        constant = self.graph.constant(5.0, name='c')
-        assert_equal('c', constant.name)
+        constant = self.graph.constant(5.0)
+        assert_equal('Const', constant.name)
       end
 
       def test_unique_constant_name
-        constant_1 = self.graph.constant(5.0, name='c')
+        constant_1 = self.graph.constant(5.0, name: 'c')
         assert_equal('c', constant_1.name, 'c')
 
-        constant_2 = self.graph.constant(5.0, name='c')
+        constant_2 = self.graph.constant(5.0, name: 'c')
         assert_equal('c_1', constant_2.name)
       end
 
       def test_scope
         graph.name_scope('nested') do
-          constant = self.graph.constant(5.0, name='c')
+          constant = self.graph.constant(5.0, name: 'c')
           assert_equal('nested/c', constant.name)
         end
       end
@@ -64,12 +64,12 @@ module Tensorflow
       def test_nested_scopes
         graph.name_scope('nested') do
           graph.name_scope('inner') do
-            constant = self.graph.constant(5.0, name='c')
+            constant = self.graph.constant(5.0, name: 'c')
             assert_equal('nested/inner/c', constant.name)
           end
 
           graph.name_scope('inner') do
-            constant = self.graph.constant(5.0, name='c')
+            constant = self.graph.constant(5.0, name: 'c')
             assert_equal('nested/inner_1/c', constant.name)
           end
         end
@@ -77,14 +77,14 @@ module Tensorflow
 
       def test_reset_scope
         graph.name_scope('nested') do
-          constant = self.graph.constant(5.0, name='c')
+          constant = self.graph.constant(5.0, name: 'c')
           assert_equal('nested/c', constant.name)
           graph.name_scope(nil) do |scope|
             refute(scope)
-            constant = self.graph.constant(5.0, name='c')
+            constant = self.graph.constant(5.0, name: 'c')
             assert_equal('c', constant.name)
           end
-          constant = self.graph.constant(5.0, name='c')
+          constant = self.graph.constant(5.0, name: 'c')
           assert_equal('nested/c_1', constant.name)
         end
       end

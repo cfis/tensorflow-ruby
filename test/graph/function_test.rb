@@ -10,7 +10,7 @@ module Tensorflow
         #         v
 
         func_graph = Graph.new
-        const = func_graph.constant(10, 'scalar10')
+        const = func_graph.constant(10, name: 'scalar10')
 
         function = func_graph.to_function('MyFunc', nil, nil, [const], ['output1'])
         assert_equal('MyFunc', function.name)
@@ -86,7 +86,7 @@ module Tensorflow
         host_graph = Graph.new
         host_graph.copy_function(function)
 
-        constant = host_graph.constant(2, 'scalar2')
+        constant = host_graph.constant(2, name: 'scalar2')
         func_feed = host_graph.placeholder('placeholder_1')
 
         op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')

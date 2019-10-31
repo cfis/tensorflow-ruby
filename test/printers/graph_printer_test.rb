@@ -6,7 +6,7 @@ module Tensorflow
     class GraphPrinterTest < Minitest::Test
       def test_print
         graph = Tensorflow::Graph::Graph.new
-        x = graph.constant(3.0, "x")
+        x = graph.constant(3.0, name: "x")
         y = Math.pow(x, 2.0)
 
         io = StringIO.new

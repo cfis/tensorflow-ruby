@@ -63,7 +63,7 @@ module Tensorflow
         end
 
         result = result_ptr.read_array_of_pointer(outputs.length).map do |pointer|
-          Tensor.new(:pointer => pointer).value
+          Tensor.new(pointer).value
         end
 
         if outputs.length == 1

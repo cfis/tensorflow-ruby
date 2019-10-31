@@ -1,63 +1,61 @@
 module Tensorflow
   module Utils
-    NUMO_TYPE_MAP = {
-      int8: Numo::Int8,
-      int16: Numo::Int16,
-      int32: Numo::Int32,
-      int64: Numo::Int64,
-      uint8: Numo::UInt8,
-      uint16: Numo::UInt16,
-      uint32: Numo::UInt32,
-      uint64: Numo::UInt64,
-      float: Numo::SFloat,
-      double: Numo::DFloat
-    }
+    DTYPE_TO_NUMO_TYPE_MAP = {bool:   Numo::Bit,
+                              double: Numo::DFloat,
+                              float:  Numo::SFloat,
+                              int16:  Numo::Int16,
+                              int32:  Numo::Int32,
+                              int64:  Numo::Int64,
+                              uint8:  Numo::UInt8,
+                              uint16: Numo::UInt16,
+                              uint32: Numo::UInt32,
+                              uint64: Numo::UInt64,
+                              string: Numo::RObject}
 
-    class << self
-      def infer_type(value)
-        if value.is_a?(Numo::NArray)
-          type = NUMO_TYPE_MAP.find { |k, v| value.is_a?(v) }
-          if type
-            type.first
-          else
-            raise Error, "Unable to infer data type"
-          end
-        elsif value.empty?
-          raise Error, "Unable to infer data type"
-        elsif value.all? { |v| v.is_a?(String) }
-          :string
-        elsif value.all? { |v| v.is_a?(TrueClass) || v.is_a?(FalseClass) }
-          :bool
-        elsif value.all? { |v| v.is_a?(Integer) }
-          if value.all? { |v| v >= -2147483648 && v <= 2147483647 }
-            :int32
-          else
-            :int64
-          end
-        elsif value.all? { |v| v.is_a?(Complex) }
+    NUMO_TYPE_TO_DTYPE_MAP = DTYPE_TO_NUMO_TYPE_MAP.each_with_object(Hash.new) do |pair, hash|
+                               hash[pair.last] = pair.first
+                             end
+
+    def self.infer_dtype(value)
+      case value
+        when Numo::NArray
+          NUMO_TYPE_TO_DTYPE_MAP[value.class]
+        when Integer
+          (value >= -2147483648 && value <= 2147483647) ? :int32 : :int64
+        when Complex
           :complex128
-        elsif value.all? { |v| v.is_a?(Numeric) }
+        when Numeric
           :float
+        when String
+          :string
+        when TrueClass, FalseClass
+          :bool
+        when ::FFI::Pointer
+          :pointer
         else
-          raise ::TensorflowError, "Unable to infer data type"
-        end
+          raise(::TensorflowError, "Unsupported type: #{value.class}")
       end
+    end
 
-      def to_tensor_array(values)
-        case values
-          when Numo::NArray
-            [Tensor.new(values)]
-          when Tensor
-            [values]
-          else
-            values.to_a.map do |v|
-              if v.is_a?(Tensor)
-                v
-              else
-                Tensor.new(v)
-              end
+    def self.infer_numo_type(value)
+      dtype = self.infer_dtype(value)
+      DTYPE_TO_NUMO_TYPE_MAP[dtype]
+    end
+
+    def self.to_tensor_array(values)
+      case values
+        when Numo::NArray
+          [Tensor.new(values)]
+        when Tensor
+          [values]
+        else
+          values.to_a.map do |v|
+            if v.is_a?(Tensor)
+              v
+            else
+              Tensor.new(v)
             end
-        end
+          end
       end
     end
   end

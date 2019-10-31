@@ -225,8 +225,7 @@ module Tensorflow
         Status.check do |status|
           FFI.TF_OperationGetAttrTensor(self.operation, self.name, pointer, status)
         end
-        tensor_pointer = pointer.read_pointer
-        Tensor.new(:pointer => tensor_pointer)
+        Tensor.new(pointer.read_pointer)
       end
     end
   end

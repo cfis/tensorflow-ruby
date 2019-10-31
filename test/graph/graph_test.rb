@@ -3,129 +3,122 @@ require_relative "../test_helper"
 module Tensorflow
   module Graph
     class GraphTest < Minitest::Test
+      def graph
+        @graph ||= Graph.new
+      end
+
       def test_create
-        graph = Graph.new
-        assert(graph)
-        graph = nil
+        assert(self.graph)
       end
 
       def test_placeholder
-        graph = Graph.new
-        placeholder = graph.placeholder('placeholder_1')
+        placeholder = self.graph.placeholder('placeholder_1')
 
         assert_equal('placeholder_1', placeholder.name)
         assert_equal('Placeholder', placeholder.op_type)
-        dims = graph.tensor_num_dims(placeholder)
+        dims = self.graph.tensor_num_dims(placeholder)
         assert_equal(-1, dims)
       end
 
       def test_op_def
-        graph = Graph.new
-        op_def = graph.op_def('Variable')
+        op_def = self.graph.op_def('Variable')
         assert(op_def)
         assert_equal('Variable', op_def.name)
       end
 
       def test_operations
-        graph = Graph.new
-        assert_empty(graph.operations.to_a)
+        assert_empty(self.graph.operations.to_a)
       end
 
       def test_forward
-        graph = Graph.new
-        a = graph.constant(1.0, 'a')
-        b = graph.constant(2.1, 'b')
-        c = graph.constant(2.0, 'c')
+        a = self.graph.constant(1.0, name: 'a')
+        b = self.graph.constant(2.1, name: 'b')
+        c = self.graph.constant(2.0, name: 'c')
         d = Math.pow(a, c)
         y = Math.add(d, b)
         z = Math.sin(y)
 
-        path = graph.forward(a)
+        path = self.graph.forward(a)
         assert_equal([a, d, y, z], path.to_a)
 
-        path = graph.forward(b)
+        path = self.graph.forward(b)
         assert_equal([b, y, z], path.to_a)
 
-        path = graph.forward(c)
+        path = self.graph.forward(c)
         assert_equal([c, d, y, z], path.to_a)
 
-        path = graph.forward(d)
+        path = self.graph.forward(d)
         assert_equal([d, y, z], path.to_a)
 
-        path = graph.forward(y)
+        path = self.graph.forward(y)
         assert_equal([y, z], path.to_a)
 
-        path = graph.forward(z)
+        path = self.graph.forward(z)
         assert_equal([z], path.to_a)
       end
 
       def test_backward
-        graph = Graph.new
-        a = graph.constant(1.0, 'a')
-        b = graph.constant(2.1, 'b')
-        c = graph.constant(2.0, 'c')
+        a = self.graph.constant(1.0, name: 'a')
+        b = self.graph.constant(2.1, name: 'b')
+        c = self.graph.constant(2.0, name: 'c')
         d = Math.pow(a, c)
         y = Math.add(d, b)
         z = Math.sin(y)
 
-        path = graph.backward(z)
+        path = self.graph.backward(z)
         assert_equal([z, y, d, a, c, b], path.to_a)
 
-        path = graph.backward(y)
+        path = self.graph.backward(y)
         assert_equal([y, d, a, c, b], path.to_a)
 
-        path = graph.backward(d)
+        path = self.graph.backward(d)
         assert_equal([d, a, c], path.to_a)
 
-        path = graph.backward(c)
+        path = self.graph.backward(c)
         assert_equal([c], path.to_a)
 
-        path = graph.backward(b)
+        path = self.graph.backward(b)
         assert_equal([b], path.to_a)
 
-        path = graph.backward(a)
+        path = self.graph.backward(a)
         assert_equal([a], path.to_a)
       end
 
       def test_tensor_num_dimensions
-        graph = Graph.new
-        placeholder = graph.placeholder('placeholder_1')
-        dims = graph.tensor_num_dims(placeholder)
+        placeholder = self.graph.placeholder('placeholder_1')
+        dims = self.graph.tensor_num_dims(placeholder)
         assert_equal(-1, dims)
       end
 
       def test_tensor_get_shape
-        graph = Graph.new
-        placeholder = graph.placeholder('placeholder_1')
-        shape = graph.tensor_get_shape(placeholder)
+        placeholder = self.graph.placeholder('placeholder_1')
+        shape = self.graph.tensor_get_shape(placeholder)
         assert_equal([-1], shape)
       end
 
       def test_tensor_set_shape
-        graph = Graph.new
-        placeholder = graph.placeholder('placeholder_1')
-        graph.tensor_set_shape(placeholder, [2, -1])
-        dims = graph.tensor_num_dims(placeholder)
+        placeholder = self.graph.placeholder('placeholder_1')
+        self.graph.tensor_set_shape(placeholder, [2, -1])
+        dims = self.graph.tensor_num_dims(placeholder)
         assert_equal(2, dims)
 
-        shape = graph.tensor_get_shape(placeholder)
+        shape = self.graph.tensor_get_shape(placeholder)
         assert_equal([2, -1], shape)
       end
 
       def test_make_graph
         status = Status.new
-        graph = Graph.new
 
-        placeholder = graph.placeholder('placeholder_1')
+        placeholder = self.graph.placeholder('placeholder_1')
         attr = placeholder.attr('shape')
         puts attr.value
-        constant = graph.constant(2, 'const_1')
+        constant = self.graph.constant(2, name: 'const_1')
         addn = Math.add_n([placeholder, constant])
 
-        operations = graph.operations
+        operations = self.graph.operations
         assert_equal(3, operations.count)
 
-        operations = graph.operations.to_a
+        operations = self.graph.operations.to_a
         assert_equal(3, operations.count)
 
         operation = operations[0]
@@ -142,29 +135,27 @@ module Tensorflow
       end
 
       def test_graph_def
-        graph = Graph.new
 
-        args_0 = graph.placeholder("args_0", :int32)
+        args_0 = self.graph.placeholder("args_0", :int32)
         square1 = Math.square(args_0)
 
-        graph_def = graph.export
+        graph_def = self.graph.export
         puts graph_def.node
       end
 
       def test_export_import
-        graph = Graph.new
-        placeholder = graph.placeholder('feed')
-        const = graph.constant(3, 'scalar')
-        op_desc = OperationDescription.new(graph, 'Neg', [], name: 'neg')
+        placeholder = self.graph.placeholder('feed')
+        const = self.graph.constant(3, name: 'scalar')
+        op_desc = OperationDescription.new(self.graph, 'Neg', [], name: 'neg')
         op_desc.add_input(const)
         negate = op_desc.save
 
-        assert(graph.operation('feed'))
-        assert(graph.operation('scalar'))
-        assert(graph.operation('neg'))
+        assert(self.graph.operation('feed'))
+        assert(self.graph.operation('scalar'))
+        assert(self.graph.operation('neg'))
 
         # Get def
-        graph_def = graph.export
+        graph_def = self.graph.export
 
         new_graph = Graph.new
         options = GraphDefOptions.new

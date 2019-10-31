@@ -31,7 +31,7 @@ module Tensorflow
 
     def tensor
       Status.check do |status|
-        Tensor.new(:pointer => FFI.TFE_TensorHandleResolve(self, status))
+        Tensor.new(FFI.TFE_TensorHandleResolve(self, status))
       end
     end
 

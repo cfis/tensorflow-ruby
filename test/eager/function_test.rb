@@ -5,7 +5,7 @@ module Tensorflow
     class FunctionTest < Minitest::Test
       def create_function
         func_graph = Graph::Graph.new
-        const = func_graph.constant(10, 'scalar10')
+        const = func_graph.constant(10, name: 'scalar10')
         func_graph.to_function('MyFunc', nil, nil, [const], ['output1'])
       end
 

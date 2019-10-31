@@ -26,21 +26,21 @@ module Tensorflow
       end
 
       def batch_norm_with_global_normalization(t, m, v, beta, gamma, variance_epsilon: nil, scale_after_normalization: nil)
-        RawOps.batch_norm_with_global_normalization(t: t, m: m, v: v, beta: beta, gamma: gamma, variance_epsilon: variance_epsilon, scale_after_normalization: scale_after_normalization)
+        RawOps.batch_norm_with_global_normalization(t, m, v, beta, gamma, variance_epsilon: variance_epsilon, scale_after_normalization: scale_after_normalization)
       end
 
       # def batch_normalization
       # end
 
       def bias_add(value, bias, data_format: nil)
-        RawOps.bias_add(value: value, bias: bias, data_format: data_format)
+        RawOps.bias_add(value, bias, data_format: data_format)
       end
 
       # def collapse_repeated
       # end
 
       def compute_accidental_hits(true_classes, sampled_candidates, num_true: nil, seed: nil, seed2: nil)
-        RawOps.compute_accidental_hits(true_classes: true_classes, sampled_candidates: sampled_candidates, num_true: num_true, seed: seed, seed2: seed2)
+        RawOps.compute_accidental_hits(true_classes, sampled_candidates, num_true: num_true, seed: seed, seed2: seed2)
       end
 
       # def compute_average_loss
@@ -76,15 +76,15 @@ module Tensorflow
       # end
 
       def ctc_beam_search_decoder(inputs, sequence_length, beam_width: nil, top_paths: nil, merge_repeated: nil)
-        RawOps.ctc_beam_search_decoder(inputs: inputs, sequence_length: sequence_length, beam_width: beam_width, top_paths: top_paths, merge_repeated: merge_repeated)
+        RawOps.ctc_beam_search_decoder(inputs, sequence_length, beam_width: beam_width, top_paths: top_paths, merge_repeated: merge_repeated)
       end
 
       def ctc_greedy_decoder(inputs, sequence_length, merge_repeated: nil)
-        RawOps.ctc_greedy_decoder(inputs: inputs, sequence_length: sequence_length, merge_repeated: merge_repeated)
+        RawOps.ctc_greedy_decoder(inputs, sequence_length, merge_repeated: merge_repeated)
       end
 
       def ctc_loss(inputs, labels_indices, labels_values, sequence_length, preprocess_collapse_repeated: nil, ctc_merge_repeated: nil, ignore_longer_outputs_than_inputs: nil)
-        RawOps.ctc_loss(inputs: inputs, labels_indices: labels_indices, labels_values: labels_values, sequence_length: sequence_length, preprocess_collapse_repeated: preprocess_collapse_repeated, ctc_merge_repeated: ctc_merge_repeated, ignore_longer_outputs_than_inputs: ignore_longer_outputs_than_inputs)
+        RawOps.ctc_loss(inputs, labels_indices, labels_values, sequence_length, preprocess_collapse_repeated: preprocess_collapse_repeated, ctc_merge_repeated: ctc_merge_repeated, ignore_longer_outputs_than_inputs: ignore_longer_outputs_than_inputs)
       end
 
       # def ctc_unique_labels
@@ -136,7 +136,7 @@ module Tensorflow
       end
 
       def in_top_k(predictions, targets, k: nil)
-        RawOps.in_top_k(predictions: predictions, targets: targets, k: k)
+        RawOps.in_top_k(predictions, targets, k: k)
       end
 
       def l2_loss(t)
@@ -234,7 +234,7 @@ module Tensorflow
       end
 
       def softmax_cross_entropy_with_logits(features, labels)
-        RawOps.softmax_cross_entropy_with_logits(features: features, labels: labels)
+        RawOps.softmax_cross_entropy_with_logits(features, labels)
       end
 
       def softplus(features)
@@ -246,7 +246,7 @@ module Tensorflow
       end
 
       def space_to_batch(input, paddings, block_size: nil)
-        RawOps.space_to_batch(input: input, paddings: paddings, block_size: block_size)
+        RawOps.space_to_batch(input, paddings, block_size: block_size)
       end
 
       def space_to_depth(input, block_size: nil, data_format: nil)
@@ -254,7 +254,7 @@ module Tensorflow
       end
 
       def sparse_softmax_cross_entropy_with_logits(features, labels)
-        RawOps.sparse_softmax_cross_entropy_with_logits(features: features, labels: labels)
+        RawOps.sparse_softmax_cross_entropy_with_logits(features, labels)
       end
 
       # def sufficient_statistics

@@ -24,14 +24,14 @@ module Tensorflow
 
       def test_node_def
         graph = Graph.new
-        x = graph.constant(3.0, 'x')
+        x = graph.constant(3.0, name: 'x')
         node_def = x.node_def
         assert(node_def)
       end
 
       def test_attributes
         graph = Graph.new
-        operation = graph.constant(4, 'test')
+        operation = graph.constant(4, name: 'test')
         attributes = operation.attributes
         assert_equal(2, attributes.length)
 
@@ -47,14 +47,14 @@ module Tensorflow
 
       def test_num_inputs
         graph = Graph.new
-        x = graph.constant(3.0, 'x')
+        x = graph.constant(3.0, name: 'x')
         pow = Math.pow(x, 2.0)
         assert_equal(2, pow.num_inputs)
       end
 
       def test_inputs
         graph = Graph.new
-        x = graph.constant(3.0, 'x')
+        x = graph.constant(3.0, name: 'x')
         pow = Math.pow(x, 2.0)
 
         inputs = pow.inputs

@@ -90,8 +90,24 @@ module Tensorflow
         self.create_operation('Placeholder', [], name: name, dtype:dtype)
       end
 
-      def constant(value, name='const', dtype: nil)
-        tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype)
+      def constant(value, dtype: nil, shape: nil, name: 'Const')
+        value = case value
+                  when Tensor
+                    value
+                  when Array
+                    value
+                  when Numo::NArray
+                    value
+                  else
+                    if shape && shape.size > 0
+                      numo_klass = Utils.infer_numo_type(value)
+                      value = numo_klass.new(shape).fill(value)
+                    else
+                      value
+                    end
+                 end
+
+        tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype, shape: shape)
         self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end
 

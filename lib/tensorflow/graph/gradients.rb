@@ -23,7 +23,7 @@ module Tensorflow
             shape_op = Tensorflow.shape(output, :int32)
             const_name = "grad_ys_#{i}"
             const_type = output.output_types.first
-            constant = graph.constant(1, const_name, dtype: const_type)
+            constant = graph.constant(1, name: const_name, dtype: const_type)
             fill_op = Tensorflow.fill(shape_op, constant)
 
             self.derivative(fill_op, output, stop_operations, operations_path)

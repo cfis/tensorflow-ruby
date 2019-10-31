@@ -7,7 +7,7 @@ module Tensorflow
     attr_reader :name, :handle
 
     def initialize(initial_value = nil, dtype: nil, shape: nil, name: nil)
-      @dtype = dtype || Utils.infer_type(Array(initial_value).flatten)
+      @dtype = dtype || Utils.infer_dtype(Array(initial_value).flatten)
       @shape = shape
       @name = name
       @handle = RawOps.var_handle_op(dtype: type_enum, shape: [], shared_name: Eager::Context.default.shared_name)

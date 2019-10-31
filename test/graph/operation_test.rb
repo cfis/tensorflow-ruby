@@ -101,6 +101,69 @@ module Tensorflow
         assert_equal(1, consumers.length)
         assert_equal(add, consumers[0])
       end
+
+      def test_add
+        x = self.graph.constant(7)
+        y = x + 3
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(10, result)
+      end
+
+      def test_subtract
+        x = self.graph.constant(7)
+        y = x - 3
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(4, result)
+      end
+
+      def test_multiply
+        x = self.graph.constant(7)
+        y = x * 3
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(21, result)
+      end
+
+      def test_divide
+        x = self.graph.constant(9)
+        y = x / 3
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(3, result)
+      end
+
+      def test_negative
+        x = self.graph.constant(9)
+        y = -x
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(-9, result)
+      end
+
+      def test_exponent
+        x = self.graph.constant(9)
+        y = x ** 3
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(729, result)
+      end
+
+      def test_modulus
+        x = self.graph.constant(9)
+        y = x % 7
+
+        session = Session.new(graph, SessionOptions.new)
+        result = session.run({}, [y])
+        assert_equal(2, result)
+      end
     end
   end
 end

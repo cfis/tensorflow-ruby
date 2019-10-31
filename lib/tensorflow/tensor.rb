@@ -1,5 +1,6 @@
 module Tensorflow
   class Tensor
+    include Operators
     include TensorMixin
 
     def self.finalize(pointer)

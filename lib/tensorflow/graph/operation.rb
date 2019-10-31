@@ -1,6 +1,7 @@
 module Tensorflow
   module Graph
     class Operation
+      include Operators
       attr_reader :graph
 
       def self.create(graph, op_type, name, *inputs, **attrs)

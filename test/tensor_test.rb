@@ -109,5 +109,47 @@ module Tensorflow
       assert_equal(:int32, tensor.dtype)
       assert_equal([[1], [2], [3], [4]], tensor.value)
     end
+
+    def test_add
+      x = Tensor.new(7)
+      y = x + 3
+      assert_equal(10, y.value)
+    end
+
+    def test_subtract
+      x = Tensor.new(7)
+      y = x - 3
+      assert_equal(4, y.value)
+    end
+
+    def test_multiply
+      x = Tensor.new(7)
+      y = x * 3
+      assert_equal(21, y.value)
+    end
+
+    def test_divide
+      x = Tensor.new(9)
+      y = x / 3
+      assert_equal(3, y.value)
+    end
+
+    def test_negative
+      x = Tensor.new(9)
+      y = -x
+      assert_equal(-9, y.value)
+    end
+
+    def test_exponent
+      x = Tensor.new(9)
+      y = x ** 3
+      assert_equal(729, y.value)
+    end
+
+    def test_modulus
+      x = Tensor.new(9)
+      y = x % 7
+      assert_equal(2, y.value)
+    end
   end
 end 

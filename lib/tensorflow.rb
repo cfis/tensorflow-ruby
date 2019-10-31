@@ -18,6 +18,19 @@ Dir[File.join(__dir__, 'tensorflow', 'core', 'stream_executor', '*.rb')].each { 
 Dir[File.join(__dir__, 'tensorflow', 'core', 'framework', '*.rb')].each { |file| require file }
 #Dir[File.join(__dir__, 'tensorflow', 'core', 'protobuf', '*.rb')].each { |file| require file }
 
+# Ops
+require "tensorflow/ops/audio"
+require "tensorflow/ops/bitwise"
+require "tensorflow/ops/image"
+require "tensorflow/ops/io"
+require "tensorflow/ops/linalg"
+require "tensorflow/ops/math"
+require "tensorflow/ops/nn"
+require "tensorflow/ops/operators"
+require "tensorflow/ops/ops"
+require "tensorflow/ops/random"
+require "tensorflow/ops/raw_ops"
+
 # Core
 require "tensorflow/op_def_builder"
 require "tensorflow/status"
@@ -28,18 +41,6 @@ require "tensorflow/tensor"
 require "tensorflow/utils"
 require "tensorflow/variable"
 require "tensorflow/version"
-
-# Ops
-require "tensorflow/ops/audio"
-require "tensorflow/ops/bitwise"
-require "tensorflow/ops/image"
-require "tensorflow/ops/io"
-require "tensorflow/ops/linalg"
-require "tensorflow/ops/math"
-require "tensorflow/ops/nn"
-require "tensorflow/ops/ops"
-require "tensorflow/ops/random"
-require "tensorflow/ops/raw_ops"
 
 # Printers
 require "tensorflow/printers/graph"

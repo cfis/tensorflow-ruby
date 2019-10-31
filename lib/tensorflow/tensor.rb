@@ -30,8 +30,13 @@ module Tensorflow
         when Numo::NArray
           # TODO - validate shape or reshape
           shape ||= value.shape
+          # Cast the narray if necessary (say the user passed in float but we have a double array)
+          if Utils::NUMO_TYPE_TO_DTYPE_MAP[value.class] != dtype
+            value = value.cast_to(Utils::DTYPE_TO_NUMO_TYPE_MAP[dtype])
+          end
+
           data_ptr = TensorDataPointer.new(:uchar, value.byte_size)
-          data_ptr.write_bytes(value.to_string)
+          data_ptr.write_bytes(value.to_binary)
         when Integer
           data_ptr = TensorDataPointer.new(dtype)
           data_ptr.send("write_#{dtype}", value)
@@ -45,7 +50,7 @@ module Tensorflow
           end
         when Numeric
           data_ptr = TensorDataPointer.new(dtype)
-          data_ptr.write_float(value)
+          data_ptr.send("write_#{dtype}", value)
         when String
           data_ptr = write_tensor_string([value])
         when TrueClass, FalseClass
@@ -70,26 +75,25 @@ module Tensorflow
     end
 
     def value
-      value =
-        case dtype
-        when :float, :double, :int32, :uint8, :int16, :int8, :int64, :uint16, :uint32, :uint64
-          data_pointer.send("read_array_of_#{dtype}", element_count)
-        when :bfloat16
-          byte_str = data_pointer.read_bytes(element_count * 2)
-          element_count.times.map { |i| "#{byte_str[(2 * i)..(2 * i + 1)]}\x00\x00".unpack1("g") }
-        when :complex64
-          data_pointer.read_array_of_float(element_count * 2).each_slice(2).map { |v| Complex(*v) }
-        when :complex128
-          data_pointer.read_array_of_double(element_count * 2).each_slice(2).map { |v| Complex(*v) }
-        when :string
-          read_tensor_string(data_pointer)
-        when :bool
-          data_pointer.read_array_of_int8(element_count).map { |v| v == 1 }
-        when :resource, :variant
-          return data_pointer
-        else
-          raise "Unknown type: #{dtype}"
-        end
+      value = case dtype
+                when :float, :double, :int32, :uint8, :int16, :int8, :int64, :uint16, :uint32, :uint64
+                  data_pointer.send("read_array_of_#{dtype}", element_count)
+                when :bfloat16
+                  byte_str = data_pointer.read_bytes(element_count * 2)
+                  element_count.times.map { |i| "#{byte_str[(2 * i)..(2 * i + 1)]}\x00\x00".unpack1("g") }
+                when :complex64
+                  data_pointer.read_array_of_float(element_count * 2).each_slice(2).map { |v| Complex(*v) }
+                when :complex128
+                  data_pointer.read_array_of_double(element_count * 2).each_slice(2).map { |v| Complex(*v) }
+                when :string
+                  read_tensor_string(data_pointer)
+                when :bool
+                  data_pointer.read_array_of_int8(element_count).map { |v| v == 1 }
+                when :resource, :variant
+                  return data_pointer
+                else
+                  raise "Unknown type: #{dtype}"
+                end
 
       reshape(value, shape)
     end

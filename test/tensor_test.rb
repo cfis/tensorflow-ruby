@@ -9,6 +9,27 @@ module Tensorflow
       assert_equal(value, tensor.value)
     end
 
+    def test_float_array
+      value = [2.5, 3.5]
+      tensor = Tensor.new(value, dtype: :float)
+      assert_equal(:float, tensor.dtype)
+      assert_equal(value, tensor.value)
+    end
+
+    def test_double
+      value = 1.0
+      tensor = Tensor.new(value, dtype: :double)
+      assert_equal(:double, tensor.dtype)
+      assert_equal(value, tensor.value)
+    end
+
+    def test_double_array
+      value = [2.5, 3.5]
+      tensor = Tensor.new(value)
+      assert_equal(:double, tensor.dtype)
+      assert_equal(value, tensor.value)
+    end
+
     def test_true
       value = true
       tensor = Tensor.new(value)

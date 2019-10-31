@@ -3,6 +3,7 @@ module Tensorflow
     DTYPE_TO_NUMO_TYPE_MAP = {bool:   Numo::Bit,
                               double: Numo::DFloat,
                               float:  Numo::SFloat,
+                              int8:   Numo::Int8,
                               int16:  Numo::Int16,
                               int32:  Numo::Int32,
                               int64:  Numo::Int64,

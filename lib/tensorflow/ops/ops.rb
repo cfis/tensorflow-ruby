@@ -5,6 +5,11 @@ module Tensorflow
       RawOps.cast(x, dstt: dtype)
     end
 
+    def const(value: nil, dtype: nil)
+      dtype ||= Utils.infer_dtype(value)
+      RawOps.const(value: value, dtype: dtype)
+    end
+
     def expand_dims(input, axis)
       RawOps.expand_dims(input, axis)
     end
@@ -35,6 +40,14 @@ module Tensorflow
 
     def shape(input, out_type)
       RawOps.shape(input, out_type: out_type)
+    end
+
+    def split(split_dim, value, num_split: nil, typeT: nil)
+      RawOps.split(split_dim, value, num_split: num_split, typeT: typeT)
+    end
+
+    def split_v(value, size_splits, split_dim=0, num_split: nil, typeT: nil, tlen: nil)
+      RawOps.split_v(value, size_splits, split_dim, num_split: num_split, typeT: typeT, tlen: tlen)
     end
 
     def squeeze(input, axis: nil)

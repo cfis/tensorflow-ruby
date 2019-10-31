@@ -35,7 +35,7 @@ module Tensorflow
     # end
     #
     # def test_numo
-    #   Tensorflow::Utils::NUMO_TYPE_MAP.each do |type, klass|
+    #   Tensorflow::Utils::DTYPE_TO_NUMO_TYPE_MAP.each do |type, klass|
     #     value =
     #       case type
     #       when :float, :double

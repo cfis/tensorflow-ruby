@@ -5,8 +5,8 @@ module Tensorflow
     def self.figure_graph_or_context(inputs)
       if inputs.empty?
         Eager::Context.default
-      elsif inputs.flatten.first.is_a?(Graph::Operation)
-        inputs.flatten.first.graph
+      elsif input = inputs.flatten.detect {|input| input.is_a?(Graph::Operation)}
+        input.graph
       else
         Eager::Context.default
       end
@@ -23,7 +23,6 @@ module Tensorflow
       end
     end
 
-  
     def self.infeed_dequeue_tuple(dtypes: nil, shapes: nil)
       self.execute("InfeedDequeueTuple", [], dtypes: dtypes, shapes: shapes)
     end

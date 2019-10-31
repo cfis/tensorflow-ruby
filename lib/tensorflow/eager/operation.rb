@@ -100,7 +100,8 @@ module Tensorflow
             ptr.write_array_of_int64(attr_value)
             FFI.TFE_OpSetAttrShape(self, attr_name, ptr, attr_value.size, self.status)
           when :tensor
-            FFI.TFE_OpSetAttrTensor(self, attr_name, attr_value.tensor_pointer, self.status)
+            attr_value = Eager.convert_to_tensor_handle(attr_value)
+            FFI.TFE_OpSetAttrTensor(self, attr_name, attr_value.tensor, self.status)
           # when :placeholder
           when :func
             case attr_value

@@ -60,14 +60,14 @@ module Tensorflow
     # def test_negative
     #   assert_equal [-1, -2], Tf.negative([1, 2]).value
     # end
-
-    def test_reduce_any
-      x = Tensor.new([[true, true], [false, false]])
-      assert_equal true, Tf.reduce_any(x).value
-      assert_equal [true, true], Tf.reduce_any(x, axis: 0).value
-      assert_equal [true, false], Tf.reduce_any(x, axis: 1).value
-    end
-
+    #
+    # def test_reduce_any
+    #   x = Tensor.new([[true, true], [false, false]])
+    #   assert_equal true, Tf.reduce_any(x).value
+    #   assert_equal [true, true], Tf.reduce_any(x, axis: 0).value
+    #   assert_equal [true, false], Tf.reduce_any(x, axis: 1).value
+    # end
+    #
     # def test_reduce_max
     #   x = Tensor.new([[1, 2], [3, 4]])
     #   assert_equal 4, Tf.reduce_max(x).value
@@ -110,14 +110,14 @@ module Tensorflow
     #   assert_equal [0.5, 0.5], Tf::Math.reduce_std(x, axis: 1).value
     # end
     #
-    # def test_reduce_sum
-    #   x = Tensor.new([[1, 1, 1], [1, 1, 1]])
-    #   assert_equal 6, Tf.reduce_sum(x).value
-    #   assert_equal [2, 2, 2], Tf.reduce_sum(x, axis: 0).value
-    #   assert_equal [3, 3], Tf.reduce_sum(x, axis: 1).value
-    #   assert_equal [[3], [3]], Tf.reduce_sum(x, axis: 1, keepdims: true).value
-    #   assert_equal 6, Tf.reduce_sum(x, axis: [0, 1]).value
-    # end
+    def test_reduce_sum
+      x = Tensor.new([[1, 1, 1], [1, 1, 1]])
+      assert_equal 6, Tf.reduce_sum(x).value
+      assert_equal [2, 2, 2], Tf.reduce_sum(x, axis: 0).value
+      assert_equal [3, 3], Tf.reduce_sum(x, axis: 1).value
+      assert_equal [[3], [3]], Tf.reduce_sum(x, axis: 1, keepdims: true).value
+      assert_equal 6, Tf.reduce_sum(x, axis: [0, 1]).value
+    end
     #
     # def test_reduce_variance
     #   x = Tensor.new([[1.0, 2.0], [3.0, 4.0]])

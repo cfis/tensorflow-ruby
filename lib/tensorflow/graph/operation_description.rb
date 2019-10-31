@@ -42,12 +42,11 @@ module Tensorflow
 
       def check_input(arg_def, input)
         case input
-          when Array
-            input
-            #input.each do |input_element|
-            #end
           when Operation
             input
+          when Array
+            input_name = "#{self.name}/#{arg_def.name}"
+            self.graph.constant(input, name: input_name)
           else
             input_name = "#{self.name}/#{arg_def.name}"
             self.graph.constant(input, name: input_name)

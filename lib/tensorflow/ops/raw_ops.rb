@@ -552,7 +552,7 @@ module Tensorflow
     end
   
     def self.delete_multi_device_iterator(multi_device_iterator, iterators, deleter, n: nil)
-      self.execute("DeleteMultiDeviceIterator", [multi_device_iterator, iterators, deleter], N: n)
+      self.execute("DeleterMultiDeviceIterator", [multi_device_iterator, iterators, deleter], N: n)
     end
   
     def self.kmeans_plus_plus_initialization(points, num_to_sample, seed, num_retries_per_sample)

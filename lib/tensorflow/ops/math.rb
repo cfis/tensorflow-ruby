@@ -225,7 +225,6 @@ module Tensorflow
       end
 
       def log_sigmoid(x)
-        x = Eager.convert_to_tensor_handle(x)
         negative(RawOps.softplus(-x))
       end
 
@@ -305,10 +304,9 @@ module Tensorflow
       # def reduce_all
       # end
 
-      def reduce_any(input_tensor, axis: nil, keepdims: false)
-        input_tensor = Eager.convert_to_tensor_handle(input_tensor)
-        axis ||= reduction_dims(input_tensor)
-        RawOps.any(input_tensor, axis, keep_dims: keepdims)
+      def reduce_any(input, axis: nil, keepdims: false)
+        axis ||= reduction_dims(input)
+        RawOps.any(input, axis, keep_dims: keepdims)
       end
 
       # def reduce_euclidean_norm
@@ -317,44 +315,39 @@ module Tensorflow
       # def reduce_logsumexp
       # end
 
-      def reduce_max(input_tensor, axis: nil, keepdims: false)
-        input_tensor = Eager.convert_to_tensor_handle(input_tensor)
-        axis ||= reduction_dims(input_tensor)
-        RawOps.max(input_tensor, axis, keep_dims: keepdims)
+      def reduce_max(input, axis: nil, keepdims: false)
+        axis ||= reduction_dims(input)
+        RawOps.max(input, axis, keep_dims: keepdims)
       end
 
-      def reduce_mean(input_tensor, axis: nil, keepdims: false)
-        input_tensor = Eager.convert_to_tensor_handle(input_tensor)
-        axis ||= reduction_dims(input_tensor)
-        RawOps.mean(input_tensor, axis, keep_dims: keepdims)
+      def reduce_mean(input, axis: nil, keepdims: false)
+        axis ||= reduction_dims(input)
+        RawOps.mean(input, axis, keep_dims: keepdims)
       end
 
-      def reduce_min(input_tensor, axis: nil, keepdims: false)
-        input_tensor = Eager.convert_to_tensor_handle(input_tensor)
-        axis ||= reduction_dims(input_tensor)
-        RawOps.min(input_tensor, axis, keep_dims: keepdims)
+      def reduce_min(input, axis: nil, keepdims: false)
+        axis ||= reduction_dims(input)
+        RawOps.min(input, axis, keep_dims: keepdims)
       end
 
-      def reduce_prod(input_tensor, axis: nil, keepdims: false)
-        input_tensor = Eager.convert_to_tensor_handle(input_tensor)
-        axis ||= reduction_dims(input_tensor)
-        RawOps.prod(input_tensor, axis, keep_dims: keepdims)
+      def reduce_prod(input, axis: nil, keepdims: false)
+        axis ||= reduction_dims(input)
+        RawOps.prod(input, axis, keep_dims: keepdims)
       end
 
-      def reduce_std(input_tensor, axis: nil, keepdims: false)
-        variance = reduce_variance(input_tensor, axis: axis, keepdims: keepdims)
+      def reduce_std(input, axis: nil, keepdims: false)
+        variance = reduce_variance(input, axis: axis, keepdims: keepdims)
         sqrt(variance)
       end
 
-      def reduce_sum(input_tensor, axis: nil, keepdims: false)
-        input_tensor = Eager.convert_to_tensor_handle(input_tensor)
-        axis ||= reduction_dims(input_tensor)
-        RawOps.sum(input_tensor, axis, keep_dims: keepdims)
+      def reduce_sum(input, axis: nil, keepdims: false)
+        axis ||= reduction_dims(input)
+        RawOps.sum(input, axis, keep_dims: keepdims)
       end
 
-      def reduce_variance(input_tensor, axis: nil, keepdims: false)
-        means = reduce_mean(input_tensor, axis: axis, keepdims: true)
-        squared_deviations = RawOps.square(input_tensor - means)
+      def reduce_variance(input, axis: nil, keepdims: false)
+        means = reduce_mean(input, axis: axis, keepdims: true)
+        squared_deviations = RawOps.square(input - means)
         reduce_mean(squared_deviations, axis: axis, keepdims: keepdims)
       end
 
@@ -491,9 +484,9 @@ module Tensorflow
 
       private
 
-      def reduction_dims(input_tensor)
-        rank = RawOps.rank(input_tensor).value
-        Tensor.new((0...rank).to_a, dtype: :int32)
+      def reduction_dims(input)
+        rank = RawOps.rank(input)
+        range = Tensorflow.range(0, rank)
       end
     end
   end

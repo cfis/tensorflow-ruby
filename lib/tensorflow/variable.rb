@@ -7,7 +7,10 @@ module Tensorflow
     attr_reader :name, :handle
 
     def initialize(initial_value = nil, dtype: nil, shape: nil, name: nil)
-      @dtype = dtype || Utils.infer_dtype(Array(initial_value).flatten)
+      # We convert all arrays to narrays. This makes it a lot easier to support multidimensional arrays
+      initial_value = Numo::NArray.cast(initial_value) if initial_value.is_a?(Array)
+
+      @dtype = dtype || Utils.infer_dtype(initial_value)
       @shape = shape
       @name = name
       @handle = RawOps.var_handle_op(dtype: type_enum, shape: [], shared_name: Eager::Context.default.shared_name)

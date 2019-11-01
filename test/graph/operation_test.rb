@@ -107,7 +107,7 @@ module Tensorflow
         y = x + 3
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(10, result)
       end
 
@@ -116,7 +116,7 @@ module Tensorflow
         y = x - 3
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(4, result)
       end
 
@@ -125,7 +125,7 @@ module Tensorflow
         y = x * 3
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(21, result)
       end
 
@@ -134,7 +134,7 @@ module Tensorflow
         y = x / 3
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(3, result)
       end
 
@@ -143,7 +143,7 @@ module Tensorflow
         y = -x
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(-9, result)
       end
 
@@ -152,7 +152,7 @@ module Tensorflow
         y = x ** 3
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(729, result)
       end
 
@@ -161,7 +161,7 @@ module Tensorflow
         y = x % 7
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, [y])
+        result = session.run([y])
         assert_equal(2, result)
       end
     end

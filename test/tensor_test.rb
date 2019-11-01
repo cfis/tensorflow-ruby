@@ -94,6 +94,13 @@ module Tensorflow
       assert_equal(value, tensor.value)
     end
 
+    def test_complex_64
+      value = Complex(2, 3)
+      tensor = Tensor.new(value)
+      assert_equal(:complex64, tensor.dtype)
+      assert_equal(value, tensor.value)
+    end
+
     def test_complex_128
       value = Complex(2, 3)
       tensor = Tensor.new(value)
@@ -171,6 +178,13 @@ module Tensorflow
       x = Tensor.new(9)
       y = x % 7
       assert_equal(2, y.value)
+    end
+
+    def test_shape
+      tensor = Tensor.new(1, shape: [5, 30])
+      assert_equal([5, 30], tensor.shape)
+      assert_equal(:int32, tensor.dtype)
+      assert_equal(1, tensor.value[4,29])
     end
   end
 end 

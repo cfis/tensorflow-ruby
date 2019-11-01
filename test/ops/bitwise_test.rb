@@ -13,7 +13,7 @@ module Tensorflow
       lhs = Graph::Graph.default.constant([0, 5, 3, 14])
       rhs = Graph::Graph.default.constant([5, 0, 7, 11])
       operation = Bitwise.bitwise_and(lhs, rhs)
-      result = Graph::Graph.default.execute(outputs: operation)
+      result = Graph::Graph.default.execute(operation)
       assert_equal([0, 0, 3, 10], result)
     end
   end

@@ -164,7 +164,7 @@ module Tensorflow
         Status.check do |status|
           FFI.TF_OperationGetAttrBool(self.operation, self.name, pointer, status)
         end
-        pointer.read_uchar == 1 ? true : false
+        Boolean(pointer.read_uchar)
       end
 
       def dtype

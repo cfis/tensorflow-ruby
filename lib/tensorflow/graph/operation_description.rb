@@ -44,9 +44,6 @@ module Tensorflow
         case input
           when Operation
             input
-          when Array
-            input_name = "#{self.name}/#{arg_def.name}"
-            self.graph.constant(input, name: input_name)
           else
             input_name = "#{self.name}/#{arg_def.name}"
             self.graph.constant(input, name: input_name)
@@ -61,7 +58,6 @@ module Tensorflow
 
       def setup_input(index, value)
         arg_def = self.op_def.input_arg[index]
-        value = self.check_input(arg_def, value)
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list
@@ -73,6 +69,7 @@ module Tensorflow
           self.add_input_list(value)
         else
           # This input is a single item
+          value = self.check_input(arg_def, value)
           self.add_input(value)
         end
       end

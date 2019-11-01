@@ -61,5 +61,25 @@ module Tensorflow
           end
       end
     end
+
+    def self.reshape(value, dtype, shape)
+      value = case value
+                when Tensor
+                  value
+                when Array
+                  # We convert all arrays to narrays. This makes it a lot easier to support multidimensional arrays
+                  Numo::NArray.cast(value)
+                when Numo::NArray
+                  value
+                else
+                  if shape && shape.size > 0
+                    dtype ||= Utils.infer_dtype(value)
+                    numo_klass = Utils::DTYPE_TO_NUMO_TYPE_MAP[dtype]
+                    value = numo_klass.new(shape).fill(value)
+                  else
+                    value
+                  end
+              end
+    end
   end
 end

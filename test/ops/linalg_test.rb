@@ -11,7 +11,7 @@ module Tensorflow
     def test_matmul_graph
       x = Graph::Graph.default.constant([[2.0]])
       matmul = Tf.matmul(x, x)
-      result = Graph::Graph.default.execute(outputs: matmul)
+      result = Graph::Graph.default.execute([matmul])
       assert_equal([[4.0]], result)
     end
   end

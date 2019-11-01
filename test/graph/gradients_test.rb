@@ -13,7 +13,7 @@ module Tensorflow
       #   derivatives = gradients.derivatives(pow, [x])
       #
       #   session = Session.new(graph, SessionOptions.new)
-      #   result = session.run({}, derivatives.flatten)
+      #   result = session.run(derivatives.flatten)
       #   assert_equal(6.0, result)
       #
       #   session.close
@@ -30,7 +30,7 @@ module Tensorflow
       #   derivatives = gradients.derivatives(z, [a, b])
       #
       #   session = Session.new(graph, SessionOptions.new)
-      #   result = session.run({}, derivatives)
+      #   result = session.run(derivatives)
       #   session.close
       #
       #   assert_equal(2, result.length)
@@ -50,7 +50,7 @@ module Tensorflow
       #   w_grad = gradients.derivatives(h, [w])
       #
       #   session = Session.new(graph, SessionOptions.new)
-      #   result = session.run({}, w_grad)
+      #   result = session.run(w_grad)
       #   session.close
       #
       #   assert_equal(100, result.length)
@@ -64,18 +64,19 @@ module Tensorflow
         w = graph.constant(1.0, shape: [2, 2])
         x = graph.constant(1.0, shape: [2, 2])
         wx = Linalg.matmul(w, x)
-        split_wx = Tf.split(0, wx, num_split: 2)
-        c = Math.reduce_sum(split_wx)
-        gw = gradients.gradients(c, [w])[0]
+        split_wx = Tf.split(wx, 0, num_split: 2)
+        #c = Math.reduce_sum(split_wx)
+        c = Tensorflow.rank(split_wx)
 
-        gradients = Gradients.new(graph)
-        gw = gradients.derivatives(c, [w])
+        # gradients = Gradients.new(graph)
+        # gw = gradients.derivatives(wx, [w])#[0]
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run({}, gw)
+        result = session.run(split_wx)
         session.close
 
-        assert_equal(100, result.length)
+        puts result
+#        assert_equal(100, result.length)
       end
     end
   end

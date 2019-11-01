@@ -22,7 +22,7 @@ module Tensorflow
         func_operation = op_desc.save
 
         session = Session.new(host_graph, SessionOptions.new)
-        result = session.run({}, [func_operation])
+        result = session.run([func_operation])
         assert_equal(10, result)
 
         session.close
@@ -56,7 +56,7 @@ module Tensorflow
         func_op = op_desc.save
 
         session = Session.new(host_graph, SessionOptions.new)
-        result = session.run({func_feed  => Tensor.new(3)}, [func_op])
+        result = session.run([func_op], func_feed  => Tensor.new(3))
         assert_equal(-3, result)
 
         session.close
@@ -95,8 +95,8 @@ module Tensorflow
         func_op = op_desc.save
 
         session = Session.new(host_graph, SessionOptions.new)
-        result = session.run({func_feed => 3}, [func_op])
-        assert_equal(5, result)
+        result = session.run([func_op], func_feed => 3)
+        assert_equal([5, 5], result)
 
         session.close
       end

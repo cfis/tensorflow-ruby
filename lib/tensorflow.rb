@@ -31,12 +31,16 @@ require "tensorflow/ops/ops"
 require "tensorflow/ops/random"
 require "tensorflow/ops/raw_ops"
 
+# Extensions
+require "tensorflow/extensions/boolean.rb"
+require "tensorflow/extensions/narray.rb"
+
 # Core
 require "tensorflow/op_def_builder"
 require "tensorflow/status"
 require "tensorflow/strings"
-require "tensorflow/tensor_data_pointer"
 require "tensorflow/tensor_mixin"
+require "tensorflow/tensor_data"
 require "tensorflow/tensor"
 require "tensorflow/utils"
 require "tensorflow/variable"

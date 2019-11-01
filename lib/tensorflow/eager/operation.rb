@@ -17,16 +17,17 @@ module Tensorflow
         @pointer
       end
 
-      def setup_attrs(attr)
-        attr.each do |attr_name, attr_value|
+      def setup_attrs(attrs)
+        attrs.each do |attr_name, attr_value|
           next unless attr_value
 
           attr_name = attr_name.to_s
-          is_list = ::FFI::MemoryPointer.new(:int)
-          type = FFI.TFE_OpGetAttrType(self, attr_name, is_list, self.status)
+          list_ptr = ::FFI::MemoryPointer.new(:int)
+          type = FFI.TFE_OpGetAttrType(self, attr_name, list_ptr, self.status)
           self.status.check
+          is_list = Boolean(list_ptr.read_int)
 
-          if is_list.read_int == 1
+          if is_list
             add_list_attr(type, attr_name, attr_value)
           else
             add_scalar_attr(type, attr_name, attr_value)
@@ -37,7 +38,7 @@ module Tensorflow
       def add_list_attr(type, attr_name, attr_value)
         num_values = attr_value.size
 
-        case FFI::AttrType[type]
+        case type
           when :int
             values = ::FFI::MemoryPointer.new(:int64, num_values)
             values.write_array_of_int64(attr_value)
@@ -78,12 +79,12 @@ module Tensorflow
             values.write_array_of_int(types)
             FFI.TFE_OpSetAttrTypeList(self, attr_name, values, num_values)
           else
-            raise "Unknown list type: #{FFI::AttrType[type]}"
+            raise "Unknown list type: #{type}"
         end
       end
 
       def add_scalar_attr(type, attr_name, attr_value)
-        case FFI::AttrType[type]
+        case type
           when :string
             FFI.TFE_OpSetAttrString(self, attr_name, attr_value, attr_value.bytesize)
           when :int
@@ -114,7 +115,7 @@ module Tensorflow
                 self.status.set(:tf_invalid_argument, "Invalid function attribute for attribute: #{attr_name}")
             end
           else
-            self.status.set(:tf_unknown, "Unsupported attribute type: #{FFI::AttrType[type]}")
+            self.status.set(:tf_unknown, "Unsupported attribute type: #{type}")
         end
         self.status.check
       end

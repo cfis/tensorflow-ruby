@@ -79,9 +79,9 @@ module Tensorflow
         op_desc.save
       end
 
-      def execute(inputs: {}, outputs: [])
+      def execute(operations, feed_dict={})
         session = Session.new(self, SessionOptions.new)
-        result = session.run(inputs, outputs)
+        result = session.run(operations, feed_dict)
         session.close
         result
       end
@@ -91,22 +91,7 @@ module Tensorflow
       end
 
       def constant(value, dtype: nil, shape: nil, name: 'Const')
-        value = case value
-                  when Tensor
-                    value
-                  when Array
-                    value
-                  when Numo::NArray
-                    value
-                  else
-                    if shape && shape.size > 0
-                      numo_klass = Utils.infer_numo_type(value)
-                      value = numo_klass.new(shape).fill(value)
-                    else
-                      value
-                    end
-                 end
-
+        value = Utils.reshape(value, dtype, shape)
         tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype, shape: shape)
         self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end

@@ -49,11 +49,16 @@ module Tensorflow
              :index, :int
 
       def self.pointer_array(operations)
-        result = ::FFI::MemoryPointer.new(self, operations.length)
-        operations.each_with_index do |operation, i|
-          input = self.new(result + (i * self.size))
-          input[:oper] = operation
-          input[:index] = 0
+        length = operations.map {|operation| operation.num_outputs}.sum
+        result = ::FFI::MemoryPointer.new(self, length)
+        ptr = result
+        operations.each do |operation|
+          operation.num_outputs.times do |i|
+            output = self.new(ptr)
+            output[:oper] = operation
+            output[:index] = i
+            ptr += result.type_size
+          end
         end
         result
       end
@@ -222,7 +227,7 @@ module Tensorflow
     attach_function :TFE_OpGetDevice, [:pointer, :pointer], :string
     attach_function :TFE_OpAddInput, [:pointer, :pointer, :pointer], :void
     attach_function :TFE_OpAddInputList, %i[pointer pointer int pointer], :void
-    attach_function :TFE_OpGetAttrType, %i[pointer string pointer pointer], :int
+    attach_function :TFE_OpGetAttrType, %i[pointer string pointer pointer], AttrType
     attach_function :TFE_OpSetAttrString, %i[pointer string pointer size_t], :void
     attach_function :TFE_OpSetAttrInt, %i[pointer string int64_t], :void
     attach_function :TFE_OpSetAttrFloat, %i[pointer string float], :void

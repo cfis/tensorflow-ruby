@@ -5,7 +5,7 @@ module Tensorflow
       RawOps.cast(x, dstt: dtype)
     end
 
-    def const(value: nil, dtype: nil)
+    def const(value, dtype: nil)
       dtype ||= Utils.infer_dtype(value)
       RawOps.const(value: value, dtype: dtype)
     end
@@ -26,6 +26,10 @@ module Tensorflow
       fill(dims, 1)
     end
 
+    def rank(input, typeT: nil)
+      RawOps.rank(input, typeT: typeT)
+    end
+
     def range(start, limit = nil, delta = 1)
       unless limit
         limit = start
@@ -42,11 +46,12 @@ module Tensorflow
       RawOps.shape(input, out_type: out_type)
     end
 
-    def split(split_dim, value, num_split: nil, typeT: nil)
+    def split(value, split_dim, num_split: nil, typeT: nil)
       RawOps.split(split_dim, value, num_split: num_split, typeT: typeT)
     end
 
     def split_v(value, size_splits, split_dim=0, num_split: nil, typeT: nil, tlen: nil)
+      num_split ||= size_splits.length
       RawOps.split_v(value, size_splits, split_dim, num_split: num_split, typeT: typeT, tlen: tlen)
     end
 

@@ -19,8 +19,8 @@ module Tensorflow
         RawOps.string_length(input, unit: unit)
       end
 
-      def lower(input, encoding: "")
-        RawOps.string_lower(input, encoding: encoding)
+      def lower(input)
+        RawOps.string_lower(input.encode('UTF-8'), encoding: 'utf-8')
       end
 
       # def ngrams

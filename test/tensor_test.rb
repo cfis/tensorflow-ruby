@@ -41,7 +41,7 @@ module Tensorflow
       value = false
       tensor = Tensor.new(value)
       assert_equal(:bool, tensor.dtype)
-      refute(tensor.value)
+      assert_equal(0, tensor.value)
     end
 
     def test_boolean_array
@@ -96,7 +96,7 @@ module Tensorflow
 
     def test_complex_64
       value = Complex(2, 3)
-      tensor = Tensor.new(value)
+      tensor = Tensor.new(value, :dtype => :complex64)
       assert_equal(:complex64, tensor.dtype)
       assert_equal(value, tensor.value)
     end

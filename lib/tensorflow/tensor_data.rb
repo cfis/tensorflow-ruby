@@ -44,16 +44,17 @@ module Tensorflow
     end
 
     def self.write_array_of_string(strings)
-      # Calculate the memory needed for the start_offset section
-      start_offset_size = strings.size * 8 # 8 bytes for int64
+      # The start of the data section comes after the offset table
+      start_offset_size = strings.size * ::FFI.type_size(:int64)
 
       # Get the encoded sizes for each string
       encoded_sizes = strings.map do |string|
         FFI.TF_StringEncodedSize(string.bytesize)
       end
 
-      # Now figure the offsets. Notice we skip the last string [0..-2] since its offset would be the end of the pointer
-      offsets = [start_offset_size]
+      # Now figure the offsets. Offsets are relative to the beginning of data section, not the beginning of the pointer.
+      # Notice we skip the last string [0..-2] since its offset would be the end of the pointer
+      offsets = [0]
       encoded_sizes[0..-2].each do |encoded_size|
         offsets << offsets.last + encoded_size
       end
@@ -69,7 +70,7 @@ module Tensorflow
         offset = offsets[index]
         size = encoded_sizes[index]
         Status.check do |status|
-          FFI.TF_StringEncode(string, string.bytesize, result + offset, size, status)
+          FFI.TF_StringEncode(string, string.bytesize, result + start_offset_size + offset, size, status)
         end
       end
       result
@@ -109,6 +110,9 @@ module Tensorflow
     end
 
     def read_array_of_string(count)
+      # The start of the data section comes after the offset table
+      start_offset_size = count * ::FFI.type_size(:int64)
+
       # Read in the string offsets
       offsets = self.read_array_of_uint64(count)
 
@@ -117,7 +121,7 @@ module Tensorflow
         dst_ptr = ::FFI::MemoryPointer.new(:pointer)
         dst_len_ptr = ::FFI::MemoryPointer.new(:size_t)
         Status.check do |status|
-          FFI.TF_StringDecode(self + offset, src_bytes, dst_ptr, dst_len_ptr, status)
+          FFI.TF_StringDecode(self + start_offset_size + offset, src_bytes, dst_ptr, dst_len_ptr, status)
         end
         string_pointer = dst_ptr.read_pointer
         string_length = dst_len_ptr.read(:size_t)

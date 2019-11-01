@@ -106,7 +106,7 @@ module Tensorflow
                   raise "Unknown type: #{dtype}"
                 end
 
-      if element_count == 1
+      if self.shape.empty? && element_count==1
         value.first
       elsif self.shape.length == 1
         value

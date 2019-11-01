@@ -61,8 +61,7 @@ module Tensorflow
         pointer = ::FFI::MemoryPointer.new(FFI::Output, self.num_inputs)
         FFI.TF_OperationAllInputs(self, pointer, self.num_inputs)
         self.num_inputs.times do |index|
-          current_pointer = pointer + (FFI::Output.size * index)
-          output = FFI::Output.new(current_pointer)
+          output = FFI::Output.new(pointer[index])
           result << self.class.new(self.graph, output[:oper])
         end
         result

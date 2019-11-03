@@ -8,7 +8,7 @@ module Tensorflow
 
         variant_tensor = RawOps.batch_dataset_v2(
           input_dataset: input_dataset,
-          batch_size: Eager.convert_to_tensor_handle(batch_size, dtype: :int64),
+          batch_size: Eager::TensorHandle.from_value(batch_size, dtype: :int64),
           drop_remainder: drop_remainder,
           output_types: @output_types,
           output_shapes: @output_shapes

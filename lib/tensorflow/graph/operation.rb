@@ -51,24 +51,36 @@ module Tensorflow
         ops = NodeDef.decode(string)
       end
 
+      def to_output
+        output = FFI::Output.new
+        output[:oper] = self
+        output[:index]  = 0
+        output
+      end
+
       def num_inputs
         FFI.TF_OperationNumInputs(self)
       end
 
       def inputs
-        result = Array.new
-
         pointer = ::FFI::MemoryPointer.new(FFI::Output, self.num_inputs)
         FFI.TF_OperationAllInputs(self, pointer, self.num_inputs)
-        self.num_inputs.times do |index|
-          output = FFI::Output.new(pointer[index])
-          result << self.class.new(self.graph, output[:oper])
+        self.num_inputs.times.map do |index|
+          FFI::Output.new(pointer[index])
         end
-        result
       end
 
       def num_outputs
         FFI.TF_OperationNumOutputs(self)
+      end
+
+      def outputs
+        self.num_outputs.times.map do |i|
+          output = FFI::Output.new
+          output[:oper] = self
+          output[:index] = i
+          output
+        end
       end
 
       def output_types
@@ -225,7 +237,7 @@ module Tensorflow
         Status.check do |status|
           FFI.TF_OperationGetAttrTensor(self.operation, self.name, pointer, status)
         end
-        Tensor.new(pointer.read_pointer)
+        Tensor.from_pointer(pointer.read_pointer)
       end
     end
   end

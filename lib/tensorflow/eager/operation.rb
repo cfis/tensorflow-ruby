@@ -9,12 +9,17 @@ module Tensorflow
         @status = Status.new
         @pointer = FFI.TFE_NewOp(context, op_type, self.status)
 
-        setup_inputs(inputs)
         setup_attrs(attrs)
+        setup_inputs(inputs)
       end
 
       def to_ptr
         @pointer
+      end
+
+      def dtype
+        list_ptr = ::FFI::MemoryPointer.new(:int)
+        FFI.TFE_OpGetAttrType(self, 'dtype', list_ptr, self.status)
       end
 
       def setup_attrs(attrs)
@@ -101,7 +106,7 @@ module Tensorflow
             ptr.write_array_of_int64(attr_value)
             FFI.TFE_OpSetAttrShape(self, attr_name, ptr, attr_value.size, self.status)
           when :tensor
-            attr_value = Eager.convert_to_tensor_handle(attr_value)
+            attr_value = TensorHandle.from_value(attr_value)
             FFI.TFE_OpSetAttrTensor(self, attr_name, attr_value.tensor, self.status)
           # when :placeholder
           when :func
@@ -136,24 +141,37 @@ module Tensorflow
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list
+        #  value = TensorHandle.from_value(value)
           value.each do |a_value|
-            a_value = Eager.convert_to_tensor_handle(a_value)
+            a_value = TensorHandle.from_value(a_value)
             FFI.TFE_OpAddInput(self, a_value, self.status)
             self.status.check
           end
         elsif !arg_def.type_list_attr.empty?
           # This input is a heterogeneous list.
-          values = value.map do |a_value|
-                     Eager.convert_to_tensor_handle(a_value)
-                   end
+          #value = TensorHandle.from_value(value)
+          #FFI.TFE_OpAddInput(self, value, self.status)
+          # values = value.map do |a_value|
+          #            Eager::TensorHandle.from_value(a_value)
+          #          end
 
-          input_ptr = ::FFI::MemoryPointer.new(:pointer, values.size)
-          input_ptr.write_array_of_pointer(values)
-          FFI.TFE_OpAddInputList(self, input_ptr, values.size, self.status)
+          value = value.map do |a_value|
+            TensorHandle.from_value(a_value)
+          end
+          input_ptr = ::FFI::MemoryPointer.new(:pointer, value.size)
+          input_ptr.write_array_of_pointer(value)
+          FFI.TFE_OpAddInputList(self, input_ptr, value.size, self.status)
         else
-          # This input is a single item
-          input = Eager.convert_to_tensor_handle(value)
-          FFI.TFE_OpAddInput(self, input, self.status)
+          # This should be a single item
+          value = if value.is_a?(Array)
+                    value = value.map do |a_value|
+                      TensorHandle.from_value(a_value)
+                    end
+                    value = Tensorflow.pack(value)
+                  else
+                    TensorHandle.from_value(value)
+                  end
+          FFI.TFE_OpAddInput(self, value, self.status)
         end
         self.status.check
       end

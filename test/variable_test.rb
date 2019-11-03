@@ -11,7 +11,7 @@ module Tensorflow
       assert_equal([[[0, 1, 2],
                      [3, 4, 5]],
                     [[6, 7, 8],
-                     [9, 10, 11]]], var1.value.to_a)
+                     [9, 10, 11]]], var1.value)
     end
 
     def test_tensor
@@ -24,7 +24,7 @@ module Tensorflow
       assert_equal([[[0, 1, 2],
                      [3, 4, 5]],
                     [[6, 7, 8],
-                     [9, 10, 11]]], tensor.value.to_a)
+                     [9, 10, 11]]], tensor.value)
     end
 
     def test_rank
@@ -62,21 +62,21 @@ module Tensorflow
       tensor = var1.reshape([2, 6])
       assert_equal(:int32, tensor.dtype)
       assert_equal([2, 6], tensor.shape)
-      assert_equal([[0, 1, 2, 3, 4, 5], [6, 7, 8, 9, 10, 11]], tensor.value.to_a)
+      assert_equal([[0, 1, 2, 3, 4, 5], [6, 7, 8, 9, 10, 11]], tensor.value)
     end
 
     def test_addition
       v = Variable.new(0.0)
-      w = v + 1
+      w = v + 1.0
       assert_equal(0.0, v.value)
       assert_equal(1.0, w.value)
     end
 
-      def test_subtraction
-        v = Variable.new(0.0)
-        x = v - 1
-        assert_equal(0.0, v.value)
-        assert_equal(-1.0, x.value)
-      end
+    def test_subtraction
+      v = Variable.new(0.0)
+      x = v - 1.0
+      assert_equal(0.0, v.value)
+      assert_equal(-1.0, x.value)
+    end
   end
 end

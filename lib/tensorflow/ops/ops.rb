@@ -6,7 +6,7 @@ module Tensorflow
     end
 
     def const(value, dtype: nil)
-      dtype ||= Utils.infer_dtype(value)
+      dtype ||= TensorData.figure_dtype(value)
       RawOps.const(value: value, dtype: dtype)
     end
 
@@ -24,6 +24,11 @@ module Tensorflow
 
     def ones(dims)
       fill(dims, 1)
+    end
+
+    def pack(values, n: nil, typeT: nil, axis: 0)
+      typeT ||= TensorData.figure_dtype(values)
+      RawOps.pack(values, n: values.count, typeT: typeT, axis: axis)
     end
 
     def rank(input, typeT: nil)

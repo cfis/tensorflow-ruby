@@ -10,6 +10,28 @@ module Tensorflow
         end
       end
 
+      def self.from_value(value, dtype: nil)
+        case value
+          when TensorHandle
+            value
+          when Data::Dataset
+            value.variant_tensor
+          when Tensor
+            TensorHandle.new(value)
+          when Variable
+            value.value_handle
+          # when Array
+          #   value.map do |a_value|
+          #     #new_value =
+          #     self.from_value(a_value)
+          #   end
+          # when Array
+          #   value
+          else
+            TensorHandle.new(Tensor.new(value))
+        end
+      end
+
       def initialize(value)
         case value
           when ::FFI::Pointer
@@ -33,7 +55,7 @@ module Tensorflow
 
       def tensor
         Status.check do |status|
-          Tensor.new(FFI.TFE_TensorHandleResolve(self, status))
+          Tensor.from_pointer(FFI.TFE_TensorHandleResolve(self, status))
         end
       end
 

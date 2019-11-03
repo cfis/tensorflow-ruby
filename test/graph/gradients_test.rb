@@ -53,8 +53,6 @@ module Tensorflow
       #   result = session.run(w_grad)
       #   session.close
       #
-      #   assert_equal(100, result.length)
-      #
       #   expected = Numo::Float32.new([100, 10]).fill(32)
       #   assert_equal(expected.to_a, result)
       # end
@@ -63,20 +61,24 @@ module Tensorflow
         graph = Graph.new
         w = graph.constant(1.0, shape: [2, 2])
         x = graph.constant(1.0, shape: [2, 2])
+
+       # w = Tensor.new(1.0, shape: [2, 2])
+        #x = Tensor.new(1.0, shape: [2, 2])
+
         wx = Linalg.matmul(w, x)
         split_wx = Tf.split(wx, 0, num_split: 2)
-        #c = Math.reduce_sum(split_wx)
-        c = Tensorflow.rank(split_wx)
+        c = Math.reduce_sum(split_wx)
 
-        # gradients = Gradients.new(graph)
-        # gw = gradients.derivatives(wx, [w])#[0]
+        gradients = Gradients.new(graph)
+        gw = gradients.derivatives(c, [w])
 
         session = Session.new(graph, SessionOptions.new)
-        result = session.run(split_wx)
+        result = session.run([c])
         session.close
 
         puts result
-#        assert_equal(100, result.length)
+
+        assert_equal([[2.0, 2.0], [2.0, 2.0]], result)
       end
     end
   end

@@ -23,7 +23,7 @@ module Tensorflow
         when :string
           :string
         else
-          klass = Utils::DTYPE_TO_NUMO_TYPE_MAP[dtype]
+          klass = TensorData::DTYPE_TO_NUMO_TYPE_MAP[dtype]
           raise "Unknown type: #{dtype}" unless klass
           klass.cast(value)
       end

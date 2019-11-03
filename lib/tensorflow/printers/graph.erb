@@ -4,7 +4,8 @@ node {
   name: "<%= operation.name %>"
   op: "<%= operation.op_type %>"
   <% operation.inputs.each do |input| %>
-  input: "<%= input.name %>"
+    <% operation = Tensorflow::Graph::Operation.new(self.graph, input[:oper]) %>
+  input: "<%= operation.name %>"
   <% end %>
   <% op_def.attr.sort_by(&:name).each do |attr_def|
      attr = operation.attr(attr_def.name) %>

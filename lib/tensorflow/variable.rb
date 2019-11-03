@@ -10,7 +10,7 @@ module Tensorflow
       # We convert all arrays to narrays. This makes it a lot easier to support multidimensional arrays
       initial_value = Numo::NArray.cast(initial_value) if initial_value.is_a?(Array)
 
-      @dtype = dtype || Utils.infer_dtype(initial_value)
+      @dtype = dtype || TensorData.figure_dtype(initial_value)
       @shape = shape
       @name = name
       @handle = RawOps.var_handle_op(dtype: type_enum, shape: [], shared_name: Eager::Context.default.shared_name)
@@ -23,7 +23,6 @@ module Tensorflow
 
     def value=(value)
       if value
-        value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
         RawOps.assign_variable_op(self.handle, value)
       end
 
@@ -31,24 +30,22 @@ module Tensorflow
     end
 
     def assign_add(value)
-      value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
       RawOps.assign_add_variable_op(self.handle, value)
       self
     end
 
     def assign_sub(value)
-      value = Eager.convert_to_tensor_handle(value, dtype: @dtype)
-      RawOps.assign_sub_variable_op(self.handle, value)
+      RawOps.assign_sub_variable_op(self.handle, value, dtype: self.dtype)
       self
     end
 
     def +(other)
-      v = Variable.new(value, dtype: @dtype)
+      v = Variable.new(value, dtype: self.dtype)
       v.assign_add(other)
     end
 
     def -(other)
-      v = Variable.new(value, dtype: @dtype)
+      v = Variable.new(value, dtype: self.dtype)
       v.assign_sub(other)
     end
 

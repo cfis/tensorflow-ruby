@@ -2,8 +2,7 @@ module Tensorflow
   module Data
     class TensorSliceDataset < Dataset
       def initialize(elements)
-        # keep reference for memory
-        @tensors = Utils.to_tensor_array(elements)
+        @tensors = self.class.to_tensor_array(elements)
         @output_types = @tensors.map(&:dtype)
         @output_shapes = @tensors.map do |tensor|
           tensor.shape[1..]

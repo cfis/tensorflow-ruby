@@ -48,19 +48,22 @@ module Tensorflow
       layout :oper, :pointer,
              :index, :int
 
-      def self.pointer_array(operations)
-        length = operations.map {|operation| operation.num_outputs}.sum
-        result = ::FFI::MemoryPointer.new(self, length)
-        ptr = result
-        operations.each do |operation|
-          operation.num_outputs.times do |i|
-            output = self.new(ptr)
-            output[:oper] = operation
-            output[:index] = i
-            ptr += result.type_size
-          end
+      def self.array_to_ptr(outputs)
+        result = ::FFI::MemoryPointer.new(self, outputs.length)
+        outputs.each_with_index do |output, i|
+          copy_output = self.new(result[i])
+          copy_output[:oper] = output[:oper]
+          copy_output[:index] = output[:index]
         end
         result
+      end
+
+      def operation(graph)
+        Graph::Operation.new(graph, self[:oper])
+      end
+
+      def to_s
+        "#{self[:oper]}: #{self[:index]}"
       end
     end
 

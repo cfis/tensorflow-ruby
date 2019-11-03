@@ -32,41 +32,45 @@ module Tensorflow
       end
 
       def derivative(gradient, operation, stop_operations, operations_path)
-        input_operations = operation.inputs.select do |input_operation|
+        # This method follows the C api naming conventions for parameters. Visually it looks
+        # like this:
+        #
+        #   x  ------>  y  (forward)
+        #   dy <-----   dx (backward)
+
+        inputs = operation.inputs.select do |input|
+          input_operation = input.operation(self.graph)
           operations_path.include?(input_operation) && !stop_operations.include?(input_operation)
         end
 
-        return gradient if input_operations.empty?
+        return gradient if inputs.empty?
 
         # This is the output operation
         y = FFI::Output.new
         y[:oper] = operation
 
-        # Setup the input operations
-        x = ::FFI::MemoryPointer.new(FFI::Output, input_operations.length)
-        input_operations.each_with_index do |input, index|
-          output = FFI::Output.new(x[index])
-          output[:oper] = input
-          output[:index] = index
-        end
+        # These are the inputs to the output operation
+        x = FFI::Output.array_to_ptr(inputs)
 
-        # This is the gradient
+        # This is the gradient we are backpropagating
         dx = FFI::Output.new
         dx[:oper] = gradient
 
-        # This is the change in y
-        dy = ::FFI::MemoryPointer.new(FFI::Output, input_operations.length, true)
+        # This is the gradient we want to calculate
+        dy = ::FFI::MemoryPointer.new(FFI::Output, inputs.length, true)
 
         Status.check do |status|
           FFI.TF_AddGradients(self.graph,
                               y, 1,
-                              x, input_operations.length,
+                              x, inputs.length,
                               dx, status, dy)
         end
 
-        input_operations.map.with_index do |input_operation, i|
+        # We are done with this node, so backpropagate to the input nodes
+        inputs.map.with_index do |input, i|
           dy_output = FFI::Output.new(dy[i])
           unless dy_output[:oper].null?
+            input_operation = Operation.new(self.graph, input[:oper])
             dy_operation = Operation.new(self.graph, dy_output[:oper])
             self.derivative(dy_operation, input_operation, stop_operations, operations_path)
           end

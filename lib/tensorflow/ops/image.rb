@@ -154,7 +154,7 @@ module Tensorflow
       # end
 
       def resize(images, size)
-        images = Eager.convert_to_tensor_handle(images)
+        images = Eager::TensorHandle.from_value(images)
 
         batch = images.shape.size != 3
         images = Tensorflow.expand_dims(images, 0) unless batch

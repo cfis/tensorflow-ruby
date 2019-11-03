@@ -485,7 +485,7 @@ module Tensorflow
       private
 
       def reduction_dims(input)
-        rank = RawOps.rank(input)
+        rank = Tensorflow.rank(input)
         range = Tensorflow.range(0, rank)
       end
     end

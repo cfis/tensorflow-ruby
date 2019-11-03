@@ -38,17 +38,18 @@ module Tensorflow
       end
 
       def run(operations, feed_dict={})
-        operations = Array(operations)
+        operations = Array(operations).flatten.compact
 
-        inputs_ptr = FFI::Output.pointer_array(feed_dict.keys)
-        tensors_ptr = self.initialize_tensors(feed_dict.values)
+        key_outputs = feed_dict.keys.map(&:to_output)
+        keys_ptr = FFI::Output.array_to_ptr(key_outputs)
+        values_ptr = self.initialize_tensors(feed_dict.values)
 
         # Gather up all the outputs for each operation
-        outputs_ptr = FFI::Output.pointer_array(operations)
-        output_length = outputs_ptr.size / outputs_ptr.type_size
+        outputs = operations.map(&:outputs).flatten
+        outputs_ptr = FFI::Output.array_to_ptr(outputs)
 
         #targets = self.initialize_targets(targets)
-        result_ptr = ::FFI::MemoryPointer.new(:pointer, output_length)
+        result_ptr = ::FFI::MemoryPointer.new(:pointer, outputs.length)
 
         run_options = nil
         targets = nil
@@ -56,18 +57,18 @@ module Tensorflow
 
         Status.check do |status|
           FFI.TF_SessionRun(self, run_options,
-                            inputs_ptr, tensors_ptr, feed_dict.keys.length,
-                            outputs_ptr, result_ptr, output_length,
+                            keys_ptr, values_ptr, feed_dict.keys.length,
+                            outputs_ptr, result_ptr, outputs.length,
                             targets, 0,
                             metadata,
                             status)
         end
 
-        result = result_ptr.read_array_of_pointer(output_length).map do |pointer|
-          Tensor.new(pointer).value
+        result = result_ptr.read_array_of_pointer(outputs.length).map do |pointer|
+          Tensor.from_pointer(pointer).value
         end
 
-        if output_length == 1
+        if outputs.length == 1
           result.first
         else
           result

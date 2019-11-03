@@ -82,8 +82,9 @@ module Tensorflow
       end
 
       def add_input_list(operations)
-        operations_ptr = FFI::Output.pointer_array(operations)
-        FFI.TF_AddInputList(self, operations_ptr, operations.length)
+        outputs = operations.map(&:outputs).flatten
+        outputs_ptr = FFI::Output.array_to_ptr(outputs)
+        FFI.TF_AddInputList(self, outputs_ptr, outputs.length)
       end
 
       def setup_attrs(**attrs)

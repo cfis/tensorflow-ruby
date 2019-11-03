@@ -50,7 +50,7 @@ module Tensorflow
         tensor = const.attr('value').tensor
         assert_equal(:int32, tensor.dtype)
         assert_equal([2, 3], tensor.shape)
-        assert_equal([[1,2,3], [3,4,5]], tensor.value.to_a)
+        assert_equal([[1,2,3], [3,4,5]], tensor.value)
       end
 
       def test_constant_true
@@ -74,7 +74,7 @@ module Tensorflow
         tensor = const.attr('value').tensor
         assert_equal(:int32, tensor.dtype)
         assert_equal([3, 2], tensor.shape)
-        assert_equal([[3, 3], [3, 3], [3, 3]], tensor.value.to_a)
+        assert_equal([[3, 3], [3, 3], [3, 3]], tensor.value)
       end
     end
   end

@@ -9,6 +9,23 @@ module Tensorflow
       # TODO remove
       attr_reader :output_types, :output_shapes, :variant_tensor
 
+      def self.to_tensor_array(values)
+        case values
+          when Numo::NArray
+            [Tensor.new(values)]
+          when Tensor
+            [values]
+          else
+            values.to_a.map do |v|
+              if v.is_a?(Tensor)
+                v
+              else
+                Tensor.new(v)
+              end
+            end
+        end
+      end
+
       def initialize(variant_tensor)
         @variant_tensor = variant_tensor
       end

@@ -49,8 +49,9 @@ module Tensorflow
       def backward(operation)
         def backward_internal(set, operation)
           operation.inputs.each do |input|
-            set << input
-            backward_internal(set, input)
+            input_operation = input.operation(self)
+            set << input_operation
+            backward_internal(set, input_operation)
           end
           set
         end
@@ -91,7 +92,7 @@ module Tensorflow
       end
 
       def constant(value, dtype: nil, shape: nil, name: 'Const')
-        value = Utils.reshape(value, dtype, shape)
+        value = TensorData.value_with_shape(value, shape)
         tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype, shape: shape)
         self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end
@@ -135,12 +136,15 @@ module Tensorflow
         end
       end
 
-      def to_function(name, operators, inputs, outputs, output_names)
-        inputs_ptr = inputs ? FFI::Output.pointer_array(inputs) : nil
-        outputs_ptr = outputs ? FFI::Output.pointer_array(outputs) : nil
+      def to_function(name, operators, input_operations, output_operations, output_names)
+        inputs = input_operations ? input_operations.map(&:outputs).flatten : []
+        inputs_ptr = FFI::Output.array_to_ptr(inputs)
+
+        outputs = output_operations ? output_operations.map(&:outputs).flatten : []
+        outputs_ptr = FFI::Output.array_to_ptr(outputs)
 
         # Check output names size
-        if output_names && output_names.length != Array(outputs).length
+        if output_names && output_names.length != outputs.length
           raise(ArgumentError, "output_names length must equal outputs length or be nil")
         end
 

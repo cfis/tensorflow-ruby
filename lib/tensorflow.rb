@@ -42,7 +42,6 @@ require "tensorflow/strings"
 require "tensorflow/tensor_mixin"
 require "tensorflow/tensor_data"
 require "tensorflow/tensor"
-require "tensorflow/utils"
 require "tensorflow/variable"
 require "tensorflow/version"
 
@@ -50,7 +49,6 @@ require "tensorflow/version"
 require "tensorflow/printers/graph"
 
 # Eager
-require "tensorflow/eager/eager"
 require "tensorflow/eager/context"
 require "tensorflow/eager/operation"
 require "tensorflow/eager/tensor_handle"
@@ -82,6 +80,7 @@ require "tensorflow/data/tensor_slice_dataset"
 require "tensorflow/data/zip_dataset"
 
 # keras
+require "tensorflow/keras/utils"
 require "tensorflow/keras/datasets/boston_housing"
 require "tensorflow/keras/datasets/cifar10"
 require "tensorflow/keras/datasets/cifar100"
@@ -101,9 +100,6 @@ require "tensorflow/keras/model"
 require "tensorflow/keras/models/sequential"
 require "tensorflow/keras/optimizers/adam"
 require "tensorflow/keras/preprocessing/image"
-require "tensorflow/keras/utils"
-
-require 'tensorflow/core/framework/op_def_pb'
 
 # We can't use Tensorflow::Error because a protobuf message annoyingly assigns that as a module
 class TensorflowError < StandardError
@@ -135,7 +131,6 @@ module Tensorflow
 
   class << self
     include Ops
-    include Utils
 
     extend Forwardable
     def_delegators Linalg, :eye, :matmul

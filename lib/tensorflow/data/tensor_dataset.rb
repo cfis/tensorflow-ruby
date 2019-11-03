@@ -2,7 +2,7 @@ module Tensorflow
   module Data
     class TensorDataset < Dataset
       def initialize(elements)
-        @tensors = Utils.to_tensor_array(elements)
+        @tensors = self.class.to_tensor_array(elements)
         @output_types = @tensors.map(&:dtype)
         @output_shapes = @tensors.map do |tensor|
           tensor.shape

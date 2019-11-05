@@ -28,7 +28,8 @@ module Tensorflow
 
     def pack(values, n: nil, typeT: nil, axis: 0)
       typeT ||= TensorData.figure_dtype(values)
-      RawOps.pack(values, n: values.count, typeT: typeT, axis: axis)
+      n ||= values.count
+      RawOps.pack(values, n: n, typeT: typeT, axis: axis)
     end
 
     def rank(input, typeT: nil)

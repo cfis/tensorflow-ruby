@@ -15,7 +15,7 @@ module Tensorflow
         forwards.intersection(backwards)
       end
 
-      def derivatives(output, inputs, name: "gradients", stop_operations: Set.new)
+      def gradients(output, inputs, name: "gradients", stop_operations: Set.new)
         self.graph.name_scope(name) do
           inputs.map.with_index do |input, i|
             operations_path = self.path(output, input)
@@ -43,30 +43,35 @@ module Tensorflow
           operations_path.include?(input_operation) && !stop_operations.include?(input_operation)
         end
 
+        outputs = operation.outputs.select do |output|
+          output_operation = output.operation(self.graph)
+          operations_path.include?(output_operation) && !stop_operations.include?(output_operation)
+        end
+
         return gradient if inputs.empty?
 
-        # This is the output operation
-        y = FFI::Output.new
-        y[:oper] = operation
+        # These are the outputs from the operation
+        y = FFI::Output.array_to_ptr(outputs)
 
         # These are the inputs to the output operation
         x = FFI::Output.array_to_ptr(inputs)
 
         # This is the gradient we are backpropagating
-        dx = FFI::Output.new
-        dx[:oper] = gradient
+        dx = if gradient
+               FFI::Output.array_to_ptr(gradient.outputs)
+             end
 
         # This is the gradient we want to calculate
         dy = ::FFI::MemoryPointer.new(FFI::Output, inputs.length, true)
 
         Status.check do |status|
           FFI.TF_AddGradients(self.graph,
-                              y, 1,
+                              y, outputs.length,
                               x, inputs.length,
                               dx, status, dy)
         end
 
-        # We are done with this node, so backpropagate to the input nodes
+        # We are done with this operation, so backpropagate to the input operations
         inputs.map.with_index do |input, i|
           dy_output = FFI::Output.new(dy[i])
           unless dy_output[:oper].null?

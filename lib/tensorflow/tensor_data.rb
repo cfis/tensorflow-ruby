@@ -67,6 +67,10 @@ module Tensorflow
           :pointer
         when Tensor
           value.dtype
+        when Variable
+          value.dtype
+        when Graph::Operation
+          nil
         when Eager::TensorHandle
           value.dtype
         else

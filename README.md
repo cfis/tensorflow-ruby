@@ -4,8 +4,7 @@ Ruby bindings for [Tensorflow](https://github.com/tensorflow/tensorflow).
 
 ## Installation
 
-First you'll need to install Tensorflow 2. You can either do a full [installation](https://www.tensorflow.org/install
-) or just install [Tensorflow for C](https://www.tensorflow.org/install/lang_c). In both cases, you'll need to make 
+First you'll need to install Tensorflow 2. You can either do a full [installation](https://www.tensorflow.org/install) or just install [Tensorflow for C](https://www.tensorflow.org/install/lang_c). In both cases, you'll need to make 
 sure the tensorflow library is on the system PATH so the Ruby bindings can load it.
 
 Next install the gem:
@@ -16,25 +15,21 @@ gem install 'tensorflow-ruby'
 
 ## Overview
 
-The Ruby bindings attempt to mimic the [Python API](https://www.tensorflow.org/versions/r2.0/api_docs/python/tf). Just like the
+The Ruby bindings are on built on top of TensorFlow's [C API] (https://github.com/tensorflow/docs/blob/master/site/en/r1/guide/extend/bindings.md)
+which provides access to some, but not all, of TensorFlow's functionality. The Ruby bindings  
+are designed to mimic the [Python API](https://www.tensorflow.org/versions/r2.0/api_docs/python/tf). Just like the
 Python bindings, Ruby defaults to [eager](https://www.tensorflow.org/guide/eager) execution mode.
  
-Currently the bindings support:
+## Current Status
 
-* Ability to call all Tensorflow operations
-* Eager execution mode
-* Graph execution mode
-* Importing and exporting computation graphs
-* Creating and editing computation graphs
-* Creating custom operators
-* Gradients
-
-Unimplemented:
-
-* Autodiff
-* Keras API
-* Training models
-* Conversion of Ruby methods to graph functions
+Feature                                        |  Status
+:--------------------------------------------- | :---------------------------------------------------------- |
+Run a predefined Graph                         | Implemented                                                 |
+Graph construction with generated op functions | Implemented                                                 |
+Gradients                                      | Implemented                                                 |
+Functions                                      | Implemented                                                 |
+Control Flow                                   | Not Implemented                                             |
+Neural Network library                         | Not Implemnted                                              |
 
 ## Constants
 

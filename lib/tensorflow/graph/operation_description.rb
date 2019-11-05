@@ -9,8 +9,8 @@ module Tensorflow
         name = attrs.delete(:name) || op_type
         @name = self.graph.scoped_name(name)
         @pointer = FFI.TF_NewOperation(graph, op_type, @name)
-        setup_inputs(Array(inputs))
         setup_attrs(**attrs)
+        setup_inputs(Array(inputs))
       end
 
       def get_op_def(op_type)
@@ -75,14 +75,19 @@ module Tensorflow
       end
 
       def add_input(operation)
-        input = FFI::Output.new
-        input[:oper] = operation
-        input[:index] = 0
-        FFI.TF_AddInput(self, input)
+        # Check to see if the operation has multiple outputs, and if it does, we need to pack them together
+        # to fit into one input
+        if operation.outputs.length > 1
+          pack_operation = Tensorflow.pack(operation, n: operation.outputs.length)
+          FFI.TF_AddInput(self, pack_operation.outputs.first)
+        else
+          FFI.TF_AddInput(self, operation.outputs.first)
+        end
       end
 
       def add_input_list(operations)
-        outputs = operations.map(&:outputs).flatten
+        # Operation can represent multiple operations *or* one operation with multiple outputs (like SPLIT)
+        outputs = Array(operations).map(&:outputs).flatten
         outputs_ptr = FFI::Output.array_to_ptr(outputs)
         FFI.TF_AddInputList(self, outputs_ptr, outputs.length)
       end

@@ -1,11 +1,11 @@
 <% graph.operations.each do |operation|
-   op_def = Tensorflow.op_def(operation.op_type) %>
+   op_def = self.graph.op_def(operation.op_type) %>
 node {
   name: "<%= operation.name %>"
   op: "<%= operation.op_type %>"
   <% operation.inputs.each do |input| %>
-    <% operation = Tensorflow::Graph::Operation.new(self.graph, input[:oper]) %>
-  input: "<%= operation.name %>"
+    <% input_operation = Tensorflow::Graph::Operation.new(self.graph, input[:oper]) %>
+  input: "<%= input_operation.name %><%= input[:index] > 0 ? ":#{input[:index]}" : "" %>"
   <% end %>
   <% op_def.attr.sort_by(&:name).each do |attr_def|
      attr = operation.attr(attr_def.name) %>
@@ -17,17 +17,26 @@ node {
       tensor {
         dtype: DT_<%= attr.tensor.dtype.upcase %>
         tensor_shape {
-          <% unless attr.tensor.shape.empty? %>
-          <%= attr.tensor.shape %>
+          <% attr.tensor.shape.each do |dim| %>
+          dim {
+            size: <%= dim %>
+          }
           <% end %>
         }
-        <%= attr.tensor.dtype %>_val: <%= attr.tensor.value %>
+        <%= attr.tensor.dtype %>_val: <%= attr.tensor.value.is_a?(Numo::NArray) ? attr.tensor.value.to_a : attr.tensor.value %>
       }
     <% when :type %>
       type: DT_<%= attr.dtype.to_s.upcase %>
+    <% when :bool %>
+      b: <%= attr.value ? 'true' : 'false' %>
+    <% when :int %>
+      i: <%= attr.value %>
     <% end %>
     }
   }
   <% end %>
 }
 <% end %>
+versions {
+  producer: 119
+}

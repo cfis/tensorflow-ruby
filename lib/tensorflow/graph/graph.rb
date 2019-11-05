@@ -87,12 +87,11 @@ module Tensorflow
         result
       end
 
-      def placeholder(name='placeholder', dtype=:int32)
+      def placeholder(name='placeholder', dtype: :int32)
         self.create_operation('Placeholder', [], name: name, dtype:dtype)
       end
 
       def constant(value, dtype: nil, shape: nil, name: 'Const')
-        value = TensorData.value_with_shape(value, shape)
         tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype, shape: shape)
         self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end

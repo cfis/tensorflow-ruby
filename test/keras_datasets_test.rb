@@ -2,7 +2,7 @@ require_relative "test_helper"
 
 class KerasDatasetsTest < Minitest::Test
   def test_boston_housing
-    boston_housing = Tf::Keras::Datasets::BostonHousing
+    boston_housing = Tensorflow::Keras::Datasets::BostonHousing
     (x_train, y_train), (x_test, y_test) = boston_housing.load_data
 
     assert_equal [404, 13], x_train.shape
@@ -12,7 +12,7 @@ class KerasDatasetsTest < Minitest::Test
   end
 
   # def test_cifar10
-  #   cifar10 = Tf::Keras::Datasets::CIFAR10
+  #   cifar10 = Tensorflow::Keras::Datasets::CIFAR10
   #   (x_train, y_train), (x_test, y_test) = cifar10.load_data
 
   #   assert_equal [50000, 32, 32, 3], x_train.shape
@@ -22,7 +22,7 @@ class KerasDatasetsTest < Minitest::Test
   # end
 
   # def test_cifar100
-  #   cifar100 = Tf::Keras::Datasets::CIFAR100
+  #   cifar100 = Tensorflow::Keras::Datasets::CIFAR100
   #   (x_train, y_train), (x_test, y_test) = cifar100.load_data
 
   #   assert_equal [50000, 32, 32, 3], x_train.shape
@@ -32,7 +32,7 @@ class KerasDatasetsTest < Minitest::Test
   # end
 
   def test_fashion_mnist
-    fashion_mnist = Tf::Keras::Datasets::FashionMNIST
+    fashion_mnist = Tensorflow::Keras::Datasets::FashionMNIST
     (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data
 
     assert_equal [60000, 28, 28], x_train.shape
@@ -42,7 +42,7 @@ class KerasDatasetsTest < Minitest::Test
   end
 
   def test_imdb
-    imdb = Tf::Keras::Datasets::IMDB
+    imdb = Tensorflow::Keras::Datasets::IMDB
     # (x_train, y_train), (x_test, y_test) = imdb.load_data
 
     # assert_equal [25000], x_train.shape
@@ -54,7 +54,7 @@ class KerasDatasetsTest < Minitest::Test
   end
 
   def test_mnist
-    mnist = Tf::Keras::Datasets::MNIST
+    mnist = Tensorflow::Keras::Datasets::MNIST
     (x_train, y_train), (x_test, y_test) = mnist.load_data
 
     assert_equal [60000, 28, 28], x_train.shape
@@ -64,7 +64,7 @@ class KerasDatasetsTest < Minitest::Test
   end
 
   def test_reuters
-    reuters = Tf::Keras::Datasets::Reuters
+    reuters = Tensorflow::Keras::Datasets::Reuters
     # (x_train, y_train), (x_test, y_test) = reuters.load_data
 
     # assert_equal [8982], x_train.shape

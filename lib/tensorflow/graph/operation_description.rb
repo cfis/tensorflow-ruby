@@ -46,7 +46,7 @@ module Tensorflow
             input
           else
             input_name = "#{self.name}/#{arg_def.name}"
-            self.graph.constant(input, name: input_name)
+            Tensorflow.constant(input, name: input_name)
         end
       end
 

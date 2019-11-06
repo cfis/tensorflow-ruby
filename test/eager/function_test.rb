@@ -3,10 +3,15 @@ require_relative "../test_helper"
 module Tensorflow
   module Eager
     class FunctionTest < Minitest::Test
+      def setup
+        Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
+      end
+
       def create_function
-        func_graph = Graph::Graph.new
-        const = func_graph.constant(10, name: 'scalar10')
-        func_graph.to_function('MyFunc', nil, nil, [const], ['output1'])
+        Graph::Graph.new.as_default do |func_graph|
+          const = Tensorflow.constant(10, name: 'scalar10')
+          func_graph.to_function('MyFunc', nil, nil, [const], ['output1'])
+        end
       end
 
       def test_function

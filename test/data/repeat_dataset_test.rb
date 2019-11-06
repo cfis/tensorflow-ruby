@@ -3,6 +3,10 @@ require_relative "../test_helper"
 module Tensorflow
   module Data
     class RepeatDatasetTest < Minitest::Test
+      def setup
+        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+      end
+
       def test_simple
         components = [1,
                       Numo::NArray[1, 2, 3],

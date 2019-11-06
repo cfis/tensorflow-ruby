@@ -5,7 +5,7 @@ module Tensorflow
     class DatasetTest < Minitest::Test
       def test_from_tensor_slices
         skip
-        mnist = Tf::Keras::Datasets::MNIST
+        mnist = Tensorflow::Keras::Datasets::MNIST
         (x_train, y_train), (x_test, y_test) = mnist.load_data
 
         x_train = x_train / 255.0

@@ -1,12 +1,15 @@
 module Tensorflow
   module Graph
     class Graph
-      attr_reader :name_scope
       extend Forwardable
-      def_delegators :@name_scope, :name_scope, :scoped_name
+      def_delegators :@name_scope, :name_scope, :scoped_name, :unique_name
 
       def self.default
         @default ||= Graph.new
+      end
+
+      def self.reset_default
+        @default = Graph.new
       end
 
       def self.finalize(pointer)
@@ -23,6 +26,16 @@ module Tensorflow
 
       def to_ptr
         @pointer
+      end
+
+      def as_default
+        raise(TensorflowError, "Must provide block") unless block_given?
+        ExecutionContext.context.push(self)
+        begin
+          yield self
+        ensure
+          ExecutionContext.context.pop
+        end
       end
 
       def op_def(name)
@@ -85,15 +98,6 @@ module Tensorflow
         result = session.run(operations, feed_dict)
         session.close
         result
-      end
-
-      def placeholder(name='placeholder', dtype: :int32)
-        self.create_operation('Placeholder', [], name: name, dtype:dtype)
-      end
-
-      def constant(value, dtype: nil, shape: nil, name: 'Const')
-        tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype, shape: shape)
-        self.create_operation('Const', [], name: name, value: tensor, dtype: tensor.dtype)
       end
 
       def tensor_num_dims(operation)
@@ -204,7 +208,7 @@ module Tensorflow
         buffer[:length] = data.bytesize
 
         Status.check do |status|
-            FFI.TF_GraphImportGraphDef(self, buffer, options, status)
+          FFI.TF_GraphImportGraphDef(self, buffer, options, status)
         end
       end
     end

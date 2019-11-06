@@ -36,6 +36,8 @@ require "tensorflow/extensions/boolean.rb"
 require "tensorflow/extensions/narray.rb"
 
 # Core
+require "tensorflow/execution_context"
+require "tensorflow/name_scope"
 require "tensorflow/op_def_builder"
 require "tensorflow/status"
 require "tensorflow/strings"
@@ -58,7 +60,6 @@ require "tensorflow/graph/function"
 require "tensorflow/graph/gradients"
 require "tensorflow/graph/graph"
 require "tensorflow/graph/graph_def_options"
-require "tensorflow/graph/name_scope"
 require "tensorflow/graph/operation"
 require "tensorflow/graph/operation_description"
 require "tensorflow/graph/session"
@@ -101,13 +102,24 @@ require "tensorflow/keras/models/sequential"
 require "tensorflow/keras/optimizers/adam"
 require "tensorflow/keras/preprocessing/image"
 
+require 'tensorflow/python_compatiblity'
+
 # We can't use Tensorflow::Error because a protobuf message annoyingly assigns that as a module
 class TensorflowError < StandardError
 end
 
 module Tensorflow
+  extend Ops
+
+  GRAPH_MODE = 0
+  EAGER_MODE = 1
+
   class << self
     attr_accessor :ffi_lib
+
+    def library_version
+      FFI.TF_Version
+    end
   end
   self.ffi_lib = ["tensorflow", "libtensorflow.so"]
 
@@ -129,20 +141,19 @@ module Tensorflow
     self.op_defs[op_name]
   end
 
+  def self.execution_mode
+    @mode ||= Tensorflow::EAGER_MODE
+  end
+
+  def self.execution_mode=(value)
+    @mode = value
+  end
+
+  extend PythonCompatability
   class << self
-    include Ops
-
     extend Forwardable
-    def_delegators Linalg, :eye, :matmul
-    def_delegators Math, :abs, :acos, :acosh, :add, :add_n, :argmax, :argmin, :asin, :asinh, :atan, :atan2, :atanh, :cos, :cosh, :cumsum, :divide, :equal, :exp, :floor, :greater, :greater_equal, :less, :less_equal, :logical_and, :logical_not, :logical_or, :maximum, :minimum, :multiply, :negative, :not_equal, :pow, :reduce_all, :reduce_any, :reduce_logsumexp, :reduce_max, :reduce_mean, :reduce_min, :reduce_prod, :reduce_sum, :round, :scalar_mul, :sigmoid, :sign, :sin, :sinh, :sqrt, :square, :subtract, :tan, :tanh, :truediv
-    def_delegators NN, :space_to_batch
-    def_delegators Tensor, :constant, :placeholder
-
-    def library_version
-      FFI.TF_Version
-    end
+    def_delegators Linalg, *Linalg.singleton_methods
+    def_delegators Math, *Math.singleton_methods
+    def_delegators NN, *NN.singleton_methods
   end
 end
-
-# shortcut
-Tf = Tensorflow

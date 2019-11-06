@@ -20,15 +20,17 @@ module Tensorflow
           inputs.map.with_index do |input, i|
             operations_path = self.path(output, input)
 
-            shape_op = Tensorflow.shape(output, :int32)
-            const_name = "grad_ys_#{i}"
-            const_type = output.output_types.first
-            constant = graph.constant(1, name: const_name, dtype: const_type)
-            fill_op = Tensorflow.fill(shape_op, constant)
+            fill_op = self.graph.as_default do
+              shape_op = Tensorflow.shape(output, :int32)
+              const_name = "grad_ys_#{i}"
+              const_type = output.output_types.first
+              constant = Tensorflow.constant(1, name: const_name, dtype: const_type)
+              Tensorflow.fill(shape_op, constant)
+            end
 
             self.derivative(fill_op, output, stop_operations, operations_path)
-          end
-        end.compact.flatten
+          end.compact.flatten
+        end
       end
 
       def derivative(gradient, operation, stop_operations, operations_path)

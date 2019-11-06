@@ -1,6 +1,9 @@
 module Tensorflow
   module Eager
     class Context
+      extend Forwardable
+      def_delegators :@name_scope, :name_scope, :scoped_name, :unique_name
+
       def self.default
         @default ||= Context.new
       end
@@ -10,12 +13,23 @@ module Tensorflow
       end
 
       def initialize
+        @name_scope = NameScope.new
         options = FFI.TFE_NewContextOptions
         Status.check do |status|
           @pointer = FFI.TFE_NewContext(options, status)
         end
         ObjectSpace.define_finalizer(self, self.class.finalize(@pointer))
         FFI.TFE_DeleteContextOptions(options)
+      end
+
+      def as_default
+        raise(TensorflowError, "Must provide block") unless block_given?
+        ExecutionContext.stack.push(self)
+        begin
+          yield self
+        ensure
+          ExecutionContext.stack.pop
+        end
       end
 
       def create_operation(op_type, inputs=[], attrs={})
@@ -35,7 +49,7 @@ module Tensorflow
         n = num_retvals.read_int
         if n > 0
           handles = retvals.read_array_of_pointer(n).map do |handle|
-            TensorHandle.new(handle)
+            TensorHandle.new(self, handle)
           end
 
           # TODO handle case where n = 1 and still want an array for retvals

@@ -3,6 +3,10 @@ require_relative "../test_helper"
 module Tensorflow
   module Data
     class TensorSliceDatasetTest < Minitest::Test
+      def setup
+        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+      end
+
       def test_array
         components = [[1], [2], [3]]
         dataset = TensorSliceDataset.new(components)

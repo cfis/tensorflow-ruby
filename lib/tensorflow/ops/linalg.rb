@@ -1,133 +1,134 @@
 module Tensorflow
   module Linalg
-    class << self
-      # def adjoint
+      # def self.adjoint
       # end
 
-      # def band_part
+      # def self.band_part
       # end
 
-      def cholesky(input)
+      def self.cholesky(input)
         RawOps.cholesky(input: input)
       end
 
-      # def cholesky_solve
+      # def self.cholesky_solve
       # end
 
-      def cross(a, b)
+      def self.cross(a, b)
         RawOps.cross(a, b)
       end
 
-      # def det
+      # def self.det
       # end
 
-      def diag(diagonal)
+      def self.diag(diagonal)
         RawOps.diag(diagonal: diagonal)
       end
 
-      def diag_part(input)
+      def self.diag_part(input)
         RawOps.diag_part(input: input)
       end
 
-      # def eigh
+      # def self.eigh
       # end
 
-      # def eigvalsh
+      # def self.eigvalsh
       # end
 
-      # def einsum
+      # def self.einsum
       # end
 
-      # def expm
+      # def self.expm
       # end
 
-      def eye(num_rows, num_columns: nil)
+      def self.eye(num_rows, num_columns: nil)
         num_columns ||= num_rows
         zeros = Tensorflow.zeros([num_rows, num_columns])
         ones = Tensorflow.ones([num_rows])
         RawOps.matrix_set_diag(zeros, ones)
       end
 
-      # def global_norm
+      # def self.global_norm
       # end
 
-      def inv(x)
+      def self.inv(x)
         RawOps.inv(x: x)
       end
 
-      # def l2_normalize
+      # def self.l2_normalize
       # end
 
-      # def logdet
+      # def self.logdet
       # end
 
-      # def logm
+      # def self.logm
       # end
 
-      # def lstsq
+      # def self.lstsq
       # end
 
-      def lu(input, output_idx_type: nil)
+      def self.lu(input, output_idx_type: nil)
         RawOps.lu(input: input, output_idx_type: output_idx_type)
       end
 
-      def matmul(a, b, transpose_a: false, transpose_b: false)
+      # def self.matmul(a, b, transpose_a: false, transpose_b: false)
+      #   RawOps.mat_mul(a, b, transpose_a: transpose_a, transpose_b: transpose_b)
+      # end
+
+      def self.matmul(a, b, transpose_a: false, transpose_b: false)
         RawOps.mat_mul(a, b, transpose_a: transpose_a, transpose_b: transpose_b)
       end
-
-      # def matrix_transpose
+      # def self.matrix_transpose
       # end
 
-      # def matvec
+      # def self.matvec
       # end
 
-      # def norm
+      # def self.norm
       # end
 
-      # def normalize
+      # def self.normalize
       # end
 
-      def qr(input, full_matrices: nil)
+      def self.qr(input, full_matrices: nil)
         RawOps.qr(input: input, full_matrices: full_matrices)
       end
 
-      # def set_diag
+      # def self.set_diag
       # end
 
-      # def slogdet
+      # def self.slogdet
       # end
 
-      # def solve
+      # def self.solve
       # end
 
-      # def sqrtm
+      # def self.sqrtm
       # end
 
-      def svd(input, compute_uv: nil, full_matrices: nil)
+      def self.svd(input, compute_uv: nil, full_matrices: nil)
         RawOps.svd(input: input, compute_uv: compute_uv, full_matrices: full_matrices)
       end
 
-      # def tensor_diag
+      # def self.tensor_diag
       # end
 
-      # def tensor_diag_part
+      # def self.tensor_diag_part
       # end
 
-      # def tensordot
+      # def self.tensordot
       # end
 
-      # def trace
+      # def self.trace
       # end
 
-      # def triangular_solve
+      # def self.triangular_solve
       # end
 
-      # def tridiagonal_matmul
+      # def self.tridiagonal_matmul
       # end
 
-      def tridiagonal_solve(diagonals, rhs, partial_pivoting: nil)
+      def self.tridiagonal_solve(diagonals, rhs, partial_pivoting: nil)
         RawOps.tridiagonal_solve(diagonals, rhs, partial_pivoting: partial_pivoting)
       end
     end
-  end
 end

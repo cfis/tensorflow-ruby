@@ -13,6 +13,8 @@ module Tensorflow
       case value
         when Tensor
           value
+        when Eager::TensorHandle
+          value.tensor
         when Data::Dataset
           value.variant_tensor
         else

@@ -3,18 +3,20 @@ require_relative "../test_helper"
 module Tensorflow
   module Data
     class MapDatasetTest < Minitest::Test
+      def setup
+        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+      end
+
       def test_simple
         components = [[1, 2, 3]]
         dataset = TensorDataset.new(components)
 
-        func_graph = Graph::Graph.new
-        x = func_graph.placeholder("x")
+        function = Graph::Graph.new.as_default do |func_graph|
+          x = Tensorflow.placeholder("x")
+          square = Math.square(x)
+          func_graph.to_function('MyFunc', nil, [x], [square], ['out1'])
+        end
 
-        op_desc = Graph::OperationDescription.new(func_graph, 'Square', [], name: 'square')
-        op_desc.add_input(x)
-        square = op_desc.save
-
-        function = func_graph.to_function('MyFunc', nil, [x], [square], ['out1'])
         Eager::Context.default.add_function(function)
 
         map_dataset = MapDataset.new(dataset, function, output_types: [:int32], output_shapes: [[2, 3]])

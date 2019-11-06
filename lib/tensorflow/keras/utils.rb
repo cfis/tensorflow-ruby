@@ -7,7 +7,7 @@ module Tensorflow
           initial_value =
             case initializer
             when "zeros"
-              Tensorflow.fill(Eager::TensorHandle.from_value(shape, dtype: :int64), 0.0)
+              Tensorflow.fill(shape, 0.0)
             when "glorot_uniform"
               # TODO compute fans
               fan_in = shape[0]

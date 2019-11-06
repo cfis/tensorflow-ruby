@@ -3,6 +3,10 @@ require_relative "../test_helper"
 module Tensorflow
   module Data
     class ZipDatasetTest < Minitest::Test
+      def setup
+        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+      end
+
       def test_equal_length_components
         components = [Numo::NArray[[1], [2], [3], [4]].tile(20),
                       Numo::NArray[[12], [13], [14], [15]].tile(22),

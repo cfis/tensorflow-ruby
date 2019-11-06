@@ -3,35 +3,34 @@ require_relative "../test_helper"
 module Tensorflow
   module Graph
     class OperationTest < Minitest::Test
-      def graph
-        @graph ||= Graph.new
+      def setup
+        Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       end
 
       def test_name
-        operation = graph.placeholder('feed')
+        operation = Tensorflow.placeholder('feed')
         assert_equal('feed', operation.name)
       end
 
       def test_op_type
-        operation = graph.placeholder
+        operation = Tensorflow.placeholder
         assert_equal('Placeholder', operation.op_type)
       end
 
       def test_device
-        operation = graph.placeholder
+        operation = Tensorflow.placeholder
         assert_empty(operation.device)
       end
 
       def test_node_def
         graph = Graph.new
-        x = graph.constant(3.0, name: 'x')
+        x = Tensorflow.constant(3.0, name: 'x')
         node_def = x.node_def
         assert(node_def)
       end
 
       def test_attributes
-        graph = Graph.new
-        operation = graph.constant(4, name: 'test')
+        operation = Tensorflow.constant(4, name: 'test')
         attributes = operation.attributes
         assert_equal(2, attributes.length)
 
@@ -46,50 +45,50 @@ module Tensorflow
       end
 
       def test_num_inputs
-        graph = Graph.new
-        x = graph.constant(3.0, name: 'x')
+        x = Tensorflow.constant(3.0, name: 'x')
         pow = Math.pow(x, 2.0)
         assert_equal(2, pow.num_inputs)
       end
 
       def test_inputs
-        graph = Graph.new
-        x = graph.constant(3.0, name: 'x')
+        x = Tensorflow.constant(3.0, name: 'x')
         pow = Math.pow(x, 2.0)
 
         inputs = pow.inputs
         assert_equal(2, inputs.length)
-        assert_equal(x, inputs[0])
+        operation = inputs[0].operation(x.graph)
+        assert_equal(x, operation)
 
-        powy = graph.operation('Pow/y')
-        assert_equal(powy, inputs[1])
+        powy = x.graph.operation('Pow/y')
+        operation = inputs[1].operation(x.graph)
+        assert_equal(powy, operation)
       end
 
       def test_num_outputs
-        operation = graph.placeholder
+        operation = Tensorflow.placeholder
         assert_equal(1, operation.num_outputs)
       end
 
       def test_output_types
-        operation = graph.placeholder
+        operation = Tensorflow.placeholder
         assert_equal([:int32], operation.output_types)
       end
 
       def test_output_list_length
-        operation = graph.placeholder
+        operation = Tensorflow.placeholder
         assert_equal(1, operation.output_list_length('output'))
       end
 
       def test_consumers
-        placeholder = graph.placeholder
+        placeholder = Tensorflow.placeholder
         consumers = placeholder.consumers
         assert_empty(consumers)
 
-        constant = graph.constant(3)
+        constant = Tensorflow.constant(3)
         consumers = placeholder.consumers
         assert_empty(consumers)
 
-        add = graph.create_operation('Add', [placeholder, constant], name: 'add')
+        add = Math.add(placeholder, constant)
         consumers = add.consumers
         assert_empty(consumers)
 
@@ -103,64 +102,64 @@ module Tensorflow
       end
 
       def test_add
-        x = self.graph.constant(7)
+        x = Tensorflow.constant(7)
         y = x + 3
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(10, result)
       end
 
       def test_subtract
-        x = self.graph.constant(7)
+        x = Tensorflow.constant(7)
         y = x - 3
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(4, result)
       end
 
       def test_multiply
-        x = self.graph.constant(7)
+        x = Tensorflow.constant(7)
         y = x * 3
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(21, result)
       end
 
       def test_divide
-        x = self.graph.constant(9)
+        x = Tensorflow.constant(9)
         y = x / 3
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(3, result)
       end
 
       def test_negative
-        x = self.graph.constant(9)
+        x = Tensorflow.constant(9)
         y = -x
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(-9, result)
       end
 
       def test_exponent
-        x = self.graph.constant(9)
+        x = Tensorflow.constant(9)
         y = x ** 3
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(729, result)
       end
 
       def test_modulus
-        x = self.graph.constant(9)
+        x = Tensorflow.constant(9)
         y = x % 7
 
-        session = Session.new(graph, SessionOptions.new)
+        session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(2, result)
       end

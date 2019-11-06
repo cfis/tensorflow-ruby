@@ -2,28 +2,18 @@
 
 module Tensorflow
   module RawOps
-    def self.figure_graph_or_context(inputs)
-      if inputs.empty?
-        Eager::Context.default
-      elsif inputs.flatten.first.is_a?(Graph::Operation)
-        inputs.flatten.first.graph
-      else
-        Eager::Context.default
-      end
-    end
-
     def self.execute(op_type, inputs=[], attrs={})
-      executor = self.figure_graph_or_context(inputs)
+      context = ExecutionContext.context.current
       attrs = attrs.compact
-      operation = executor.create_operation(op_type, inputs, attrs)
-      if executor.is_a?(Graph::Graph)
+      operation = context.create_operation(op_type, inputs, attrs)
+      if context.is_a?(Graph::Graph)
         operation
       else
-        executor.execute(operation)
+        context.execute(operation)
       end
     end
 
-  <% Tensorflow.op_defs.values.each do |op_def|
+  <% Tensorflow.op_defs.values.sort_by(&:name).each do |op_def|
      name = RawOpHelper.underscore(op_def.name).downcase
 
      input_names = op_def.input_arg.map do |input|

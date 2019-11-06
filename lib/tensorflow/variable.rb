@@ -1,32 +1,49 @@
-require 'forwardable'
-
 module Tensorflow
   class Variable
-    extend Forwardable
-    def_delegators :value_handle, :dtype, :shape, :tensor, :value
-    attr_reader :name, :handle
+    attr_reader :handle, :dtype
 
-    def initialize(initial_value = nil, dtype: nil, shape: nil, name: nil)
-      # We convert all arrays to narrays. This makes it a lot easier to support multidimensional arrays
-      initial_value = Numo::NArray.cast(initial_value) if initial_value.is_a?(Array)
-
-      @dtype = dtype || TensorData.figure_dtype(initial_value)
-      @shape = shape
-      @name = name
-      @handle = RawOps.var_handle_op(dtype: type_enum, shape: [], shared_name: Eager::Context.default.shared_name)
+    def initialize(initial_value = nil, dtype: nil, shape: [], name: 'Variable')
+      # We immediately convert to a tensor because otherwise dtypes get screwed up
+      tensor = Tensor.from_value(initial_value)
+      @dtype = tensor.dtype
+      unique_name = ExecutionContext.context.current.unique_name(name)
+      @handle = RawOps.var_handle_op(dtype: @dtype, shape: tensor.shape, shared_name: unique_name)
       self.value = initial_value
     end
 
     def value_handle
-      RawOps.read_variable_op(self.handle, dtype: type_enum)
+      RawOps.read_variable_op(self.handle, dtype: @dtype)
     end
 
     def value=(value)
       if value
-        RawOps.assign_variable_op(self.handle, value)
+        RawOps.assign_variable_op(self.handle, value, dtype: @dtype)
       end
 
       self
+    end
+
+    def shape
+      raise(TensorflowError, "Only supported in eager execution mode") if Tensorflow.execution_mode == Tensorflow::GRAPH_MODE
+      self.value_handle.shape
+    end
+
+    def tensor
+      raise(TensorflowError, "Only supported in eager execution mode") if Tensorflow.execution_mode == Tensorflow::GRAPH_MODE
+      self.value_handle.tensor
+    end
+
+    def value
+      raise(TensorflowError, "Only supported in eager execution mode") if Tensorflow.execution_mode == Tensorflow::GRAPH_MODE
+      self.value_handle.value
+    end
+
+    def rank
+      self.shape.size
+    end
+
+    def reshape(shape)
+      RawOps.reshape(self, shape)
     end
 
     def assign_add(value)
@@ -53,25 +70,10 @@ module Tensorflow
       inspect
     end
 
-    def rank
-      self.shape.size
-    end
-
-    def reshape(shape)
-      RawOps.reshape(self, shape)
-    end
-
     def inspect
       value = value_handle
       inspection = %w(shape dtype).map { |v| "#{v}: #{value.send(v).inspect}"}
-      inspection.unshift("name: #{name}") if name
       "#<#{self.class} #{inspection.join(", ")}>"
-    end
-
-    private
-
-    def type_enum
-      FFI::DataType[@dtype.to_sym] if @dtype
     end
   end
 end

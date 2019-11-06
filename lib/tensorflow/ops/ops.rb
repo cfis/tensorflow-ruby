@@ -5,9 +5,9 @@ module Tensorflow
       RawOps.cast(x, dstt: dtype)
     end
 
-    def const(value, dtype: nil)
-      dtype ||= TensorData.figure_dtype(value)
-      RawOps.const(value: value, dtype: dtype)
+    def constant(value, dtype: nil, shape: [], name: 'Const')
+      tensor = value.is_a?(Tensor) ? value : Tensor.new(value, dtype: dtype, shape: shape)
+      RawOps.const(value: tensor, dtype: tensor.dtype, name: name)
     end
 
     def expand_dims(input, axis)
@@ -30,6 +30,10 @@ module Tensorflow
       typeT ||= TensorData.figure_dtype(values)
       n ||= values.count
       RawOps.pack(values, n: n, typeT: typeT, axis: axis)
+    end
+
+    def placeholder(name='Placeholder', dtype: :int32, shape: nil)
+      RawOps.placeholder(dtype: dtype, shape: shape, name: name)
     end
 
     def rank(input, typeT: nil)

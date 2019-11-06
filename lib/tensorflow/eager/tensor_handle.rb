@@ -4,20 +4,22 @@ module Tensorflow
       include TensorMixin
       include Operators
 
+      attr_reader :context
+
       def self.finalize(pointer)
         proc do
           FFI.TFE_DeleteTensorHandle(pointer)
         end
       end
 
-      def self.from_value(value, dtype: nil)
+      def self.from_value(context, value, dtype: nil)
         case value
           when TensorHandle
             value
           when Data::Dataset
             value.variant_tensor
           when Tensor
-            TensorHandle.new(value)
+            TensorHandle.new(context, value)
           when Variable
             value.value_handle
           # when Array
@@ -28,11 +30,12 @@ module Tensorflow
           # when Array
           #   value
           else
-            TensorHandle.new(Tensor.new(value))
+            TensorHandle.new(context, Tensor.new(value))
         end
       end
 
-      def initialize(value)
+      def initialize(context, value)
+        @context = context
         case value
           when ::FFI::Pointer
             @pointer = value

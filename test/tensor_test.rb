@@ -2,6 +2,10 @@ require_relative "test_helper"
 
 module Tensorflow
   class TensorTest < Minitest::Test
+    def setup
+      Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+    end
+
     def test_float
       value = 1.0
       tensor = Tensor.new(value)

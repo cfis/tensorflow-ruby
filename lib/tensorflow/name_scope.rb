@@ -4,7 +4,7 @@ module Tensorflow
   class NameScope
     attr_reader :stack, :names
 
-    def initialize(name: nil, reuse: nil, initializer: nil)
+    def initialize
       @stack = Array.new
       @names = Set.new
     end

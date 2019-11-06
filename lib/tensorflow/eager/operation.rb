@@ -8,6 +8,7 @@ module Tensorflow
         @op_def = Tensorflow.op_def(op_type)
         @status = Status.new
         @pointer = FFI.TFE_NewOp(context, op_type, self.status)
+        name = attrs.delete(:name) || op_type
 
         setup_attrs(attrs)
         setup_inputs(inputs)
@@ -106,7 +107,7 @@ module Tensorflow
             ptr.write_array_of_int64(attr_value)
             FFI.TFE_OpSetAttrShape(self, attr_name, ptr, attr_value.size, self.status)
           when :tensor
-            attr_value = TensorHandle.from_value(attr_value)
+            attr_value = TensorHandle.from_value(self.context, attr_value)
             FFI.TFE_OpSetAttrTensor(self, attr_name, attr_value.tensor, self.status)
           # when :placeholder
           when :func
@@ -141,22 +142,22 @@ module Tensorflow
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list
-        #  value = TensorHandle.from_value(value)
+        #  value = TensorHandle.from_value(self.context, value)
           value.each do |a_value|
-            a_value = TensorHandle.from_value(a_value)
+            a_value = TensorHandle.from_value(self.context, a_value)
             FFI.TFE_OpAddInput(self, a_value, self.status)
             self.status.check
           end
         elsif !arg_def.type_list_attr.empty?
           # This input is a heterogeneous list.
-          #value = TensorHandle.from_value(value)
+          #value = TensorHandle.from_value(self.context, value)
           #FFI.TFE_OpAddInput(self, value, self.status)
           # values = value.map do |a_value|
-          #            Eager::TensorHandle.from_value(a_value)
+          #            Eager::TensorHandle.from_value(self.context, a_value)
           #          end
 
           value = value.map do |a_value|
-            TensorHandle.from_value(a_value)
+            TensorHandle.from_value(self.context, a_value)
           end
           input_ptr = ::FFI::MemoryPointer.new(:pointer, value.size)
           input_ptr.write_array_of_pointer(value)
@@ -165,11 +166,11 @@ module Tensorflow
           # This should be a single item
           value = if value.is_a?(Array)
                     value = value.map do |a_value|
-                      TensorHandle.from_value(a_value)
+                      TensorHandle.from_value(self.context, a_value)
                     end
                     value = Tensorflow.pack(value)
                   else
-                    TensorHandle.from_value(value)
+                    TensorHandle.from_value(self.context, value)
                   end
           FFI.TFE_OpAddInput(self, value, self.status)
         end

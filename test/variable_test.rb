@@ -134,8 +134,8 @@ module Tensorflow
 
     def test_addition
       v = Variable.new(3.0)
-      v + 5.0
-      assert_equal(8.0, v.value)
+      add = v + 5.0
+      assert_equal(8.0, add.value)
     end
 
     def test_addition_graph
@@ -146,22 +146,15 @@ module Tensorflow
         session = Graph::Session.new(graph, Graph::SessionOptions.new)
         session.run(v.initializer)
         session.run(operation)
-        result = session.run(v.value)
+        result = session.run(operation)
         assert_equal(8, result)
       end
     end
 
     def test_subtraction
-      v = Variable.new(0.0)
-      x = v - 1.0
-      assert_equal(0.0, v.value)
-      assert_equal(-1.0, x.value)
-    end
-
-    def test_subtraction
       v = Variable.new(3.0)
-      v - 5.0
-      assert_equal(-2.0, v.value)
+      sub = v - 5.0
+      assert_equal(-2.0, sub.value)
     end
 
     def test_subtraction_graph
@@ -172,8 +165,27 @@ module Tensorflow
         session = Graph::Session.new(graph, Graph::SessionOptions.new)
         session.run(v.initializer)
         session.run(operation)
-        result = session.run(v.value)
+        result = session.run(operation)
         assert_equal(-2.0, result)
+      end
+    end
+
+    def test_multiplication
+      v = Variable.new(3.0)
+      mul = v * 5.0
+      assert_equal(15.0, mul.value)
+    end
+
+    def test_multiplication_graph
+      Graph::Graph.new.as_default do |graph|
+        v = Variable.new(3.0)
+        operation = v * 5.0
+
+        session = Graph::Session.new(graph, Graph::SessionOptions.new)
+        session.run(v.initializer)
+        session.run(operation)
+        result = session.run(operation)
+        assert_equal(15, result)
       end
     end
 

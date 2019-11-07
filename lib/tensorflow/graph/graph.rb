@@ -32,8 +32,27 @@ module Tensorflow
         @pointer
       end
 
-      def collection(name)
-        @collections[name] ||= Set.new
+      def collections
+        @collections.keys
+      end
+
+      def add_to_collection(name, value)
+        values = @collections[name] ||= Array.new
+        values << value
+      end
+
+      def add_to_collections(names, value)
+        names.each do |name|
+          self.add_to_collection(name, value)
+        end
+      end
+
+      def get_collection_ref(name, scope=nil)
+        @collection[name]
+      end
+
+      def clear_collection(name)
+        @collections[name] = Array.new
       end
 
       def as_default

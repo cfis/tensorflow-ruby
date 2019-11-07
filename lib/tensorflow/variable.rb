@@ -1,12 +1,10 @@
 module Tensorflow
   class Variable
+    include Operators
+
     attr_reader :handle, :dtype
 
-    def self.global(graph)
-
-    end
-
-    def initialize(initial_value = nil, dtype: nil, shape: [], shared_name: nil, name: 'Variable')
+    def initialize(initial_value = nil, dtype: nil, shape: [], shared_name: nil, name: 'Variable', trainable: false)
       if initial_value
         # We immediately convert to a tensor because otherwise dtypes get screwed up
         tensor = Tensor.from_value(initial_value, dtype: dtype)
@@ -19,7 +17,15 @@ module Tensorflow
       unique_name = ExecutionContext.current.unique_name(name || shared_name)
       shared_name ||= unique_name
 
-      ExecutionContext.current.collection(Graph::GraphKeys::GLOBAL_VARIABLES) << self
+      collections = [Graph::GraphKeys::GLOBAL_VARIABLES]
+      if trainable
+        collections << Graph::GraphKeys::TRAINABLE_VARIABLES
+      end
+
+      if ExecutionContext.current.is_a?(Graph::Graph)
+        ExecutionContext.current.add_to_collections(collections, self)
+      end
+
       @handle = RawOps.var_handle_op(dtype: @dtype, shape: shape, shared_name: shared_name, name: unique_name)
       self.value = tensor if tensor
     end
@@ -86,14 +92,6 @@ module Tensorflow
 
     def assign_sub(value)
       RawOps.assign_sub_variable_op(self.handle, value, dtype: self.dtype)
-    end
-
-    def +(other)
-      self.assign_add(other)
-    end
-
-    def -(other)
-      self.assign_sub(other)
     end
 
     # def to_s

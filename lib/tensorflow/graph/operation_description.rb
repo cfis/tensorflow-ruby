@@ -9,8 +9,9 @@ module Tensorflow
         name = attrs.delete(:name) || op_type
         @name = self.graph.scoped_name(name)
         @pointer = FFI.TF_NewOperation(graph, op_type, @name)
-        setup_attrs(**attrs)
         setup_inputs(Array(inputs))
+        setup_control_inputs(graph.control_inputs)
+        setup_attrs(**attrs)
       end
 
       def get_op_def(op_type)
@@ -44,10 +45,31 @@ module Tensorflow
         case input
           when Operation
             input
+          when Variable
+            input.value_handle
           else
             input_name = "#{self.name}/#{arg_def.name}"
             Tensorflow.constant(input, name: input_name)
         end
+      end
+
+      def setup_control_inputs(control_inputs)
+        control_inputs.each do |control_input|
+          setup_control_input(control_input)
+        end
+      end
+
+      def setup_control_input(control_input)
+        control_input = case control_input
+                          when Operation
+                            control_input
+                          when Variable
+                            control_input.handle
+                          else
+                            raise(TensorflowError, "Invalid control input")
+                          end
+
+        FFI.TF_AddControlInput(self, control_input)
       end
 
       def setup_inputs(inputs)

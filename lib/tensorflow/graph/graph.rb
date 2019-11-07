@@ -1,6 +1,8 @@
 module Tensorflow
   module Graph
     class Graph
+      attr_reader :control_inputs
+
       extend Forwardable
       def_delegators :@name_scope, :name_scope, :scoped_name, :unique_name
 
@@ -19,8 +21,10 @@ module Tensorflow
       end
 
       def initialize
+        @collections = Hash.new
         @name_scope = NameScope.new
         @pointer = FFI.TF_NewGraph()
+        @control_inputs = Array.new
         ObjectSpace.define_finalizer(self, self.class.finalize(@pointer))
       end
 
@@ -28,13 +32,26 @@ module Tensorflow
         @pointer
       end
 
+      def collection(name)
+        @collections[name] ||= Set.new
+      end
+
       def as_default
         raise(TensorflowError, "Must provide block") unless block_given?
-        ExecutionContext.context.push(self)
+        ExecutionContext.push(self)
         begin
           yield self
         ensure
-          ExecutionContext.context.pop
+          ExecutionContext.pop
+        end
+      end
+
+      def control_dependencies(control_inputs)
+        @control_inputs = Array(control_inputs)
+        begin
+          yield self
+        ensure
+          @control_inputs = []
         end
       end
 

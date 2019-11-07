@@ -3,16 +3,12 @@ require_relative "../test_helper"
 module Tensorflow
   module Graph
     class GraphTest < Minitest::Test
-      def graph
-        @graph ||= Graph.new
-      end
-
       def setup
         Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       end
 
       def test_create
-        assert(self.graph)
+        assert(Graph.new)
       end
 
       def test_as_default
@@ -140,6 +136,35 @@ module Tensorflow
           operation = operations[2]
           assert_equal('AddN', operation.op_type)
           assert_equal('AddN', operation.name)
+        end
+      end
+
+      def test_control_inputs
+        Graph.new.as_default do |graph|
+          feed1 = Tensorflow.placeholder('feed1')
+
+          feed2 = Tensorflow.placeholder('feed2')
+
+          constant = Tensorflow.constant(5, name: 'scalar5')
+
+          add = graph.control_dependencies([constant]) do
+            Math.add(feed1, feed2)
+          end
+
+          assert_equal(0, feed1.num_control_inputs)
+          assert_equal(0, feed1.num_control_outputs)
+
+          assert_equal(0, feed2.num_control_inputs)
+          assert_equal(0, feed2.num_control_outputs)
+
+          assert_equal(0, constant.num_control_inputs)
+          assert_equal(1, constant.num_control_outputs)
+          assert_equal(add, constant.control_outputs[0])
+
+          assert_equal(1, add.num_control_inputs)
+          assert_equal(1, add.control_inputs.length)
+          assert_equal(constant, add.control_inputs[0])
+          assert_equal(0, add.num_control_outputs)
         end
       end
 

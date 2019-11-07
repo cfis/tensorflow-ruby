@@ -74,10 +74,7 @@ module Tensorflow
         function = Graph.new.as_default do |func_graph|
           feed1 = Tensorflow.placeholder('feed1')
           feed2 = Tensorflow.placeholder('feed2')
-
-          op_desc = OperationDescription.new(func_graph, 'AddN', [], name: 'add')
-          op_desc.add_input_list([feed1, feed2])
-          add = op_desc.save
+          add = Math.add(feed1, feed2)
 
           func_graph.to_function('MyFunc', nil, [feed1, feed2], [add, add], ['output1', 'output2'])
         end
@@ -97,6 +94,43 @@ module Tensorflow
           session = Session.new(host_graph, SessionOptions.new)
           result = session.run([func_op], func_feed => 3)
           assert_equal([5, 5], result)
+
+          session.close
+        end
+      end
+
+      def test_control_dependency
+        #
+        #     |  |    scalar
+        #     |  |    .
+        #     v  v    . <---- control dependency
+        #     add < -
+        #      |
+        #      v
+
+        function = Graph.new.as_default do |func_graph|
+          feed1 = Tensorflow.placeholder('feed1')
+          feed2 = Tensorflow.placeholder('feed2')
+          constant = Tensorflow.constant(5, name: 'scalar5')
+
+          add = func_graph.control_dependencies([constant]) do
+            Math.add(feed1, feed2)
+          end
+
+          func_graph.to_function('MyFunc', nil, [feed1, feed2], [add], ['output1'])
+        end
+        assert_equal('MyFunc', function.name)
+
+        Graph.new.as_default do |host_graph|
+          host_graph.copy_function(function)
+
+          constant = Tensorflow.constant(2, name: 'scalar2')
+          func_feed = Tensorflow.placeholder('placeholder_1')
+          func_op = host_graph.create_operation('MyFunc', [constant, func_feed], name: 'MyFunc_0')
+
+          session = Session.new(host_graph, SessionOptions.new)
+          result = session.run([func_op], func_feed => 3)
+          assert_equal(5, result)
 
           session.close
         end

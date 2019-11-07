@@ -9,7 +9,7 @@ module Tensorflow
       end
     end
 
-    def self.from_value(value)
+    def self.from_value(value, dtype: nil)
       case value
         when Tensor
           value
@@ -18,7 +18,7 @@ module Tensorflow
         when Data::Dataset
           value.variant_tensor
         else
-          Tensor.new(value)
+          Tensor.new(value, dtype: dtype)
       end
     end
 

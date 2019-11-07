@@ -47,19 +47,23 @@ module Tensorflow
         # Gather up all the outputs for each operation
         outputs = operations.map(&:outputs).flatten
         outputs_ptr = FFI::Output.array_to_ptr(outputs)
-
-        #targets = self.initialize_targets(targets)
         result_ptr = ::FFI::MemoryPointer.new(:pointer, outputs.length)
 
+        # Create a pointer to each operation
+        targets_ptr = ::FFI::MemoryPointer.new(:pointer, operations.length)
+        targets_ptr.write_array_of_pointer(operations)
+
         run_options = nil
-        targets = nil
         metadata = nil
 
         Status.check do |status|
           FFI.TF_SessionRun(self, run_options,
+                            # Inputs
                             keys_ptr, values_ptr, feed_dict.keys.length,
+                            # Outputs
                             outputs_ptr, result_ptr, outputs.length,
-                            targets, 0,
+                            # Targets
+                            targets_ptr, operations.length,
                             metadata,
                             status)
         end

@@ -98,6 +98,12 @@ module Tensorflow
     attach_function :TF_AddInput, [:pointer, Output], :void
     attach_function :TF_AddInputList, [:pointer, :pointer, :int], :void
 
+    attach_function :TF_AddControlInput, [:pointer, :pointer], :void
+    attach_function :TF_OperationNumControlInputs, [:pointer], :int
+    attach_function :TF_OperationGetControlInputs, [:pointer, :pointer, :int], :int
+    attach_function :TF_OperationNumControlOutputs, [:pointer], :int
+    attach_function :TF_OperationGetControlOutputs, [:pointer, :pointer, :int], :int
+
     attach_function :TF_OperationToNodeDef, [:pointer, :pointer, :pointer], :void
     attach_function :TF_OperationNumInputs, [:pointer], :int
     attach_function :TF_OperationInputType, [Input], DataType

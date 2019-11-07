@@ -3,7 +3,7 @@
 module Tensorflow
   module RawOps
     def self.execute(op_type, inputs=[], attrs={})
-      context = ExecutionContext.context.current
+      context = ExecutionContext.current(inputs)
       attrs = attrs.compact
       operation = context.create_operation(op_type, inputs, attrs)
       if context.is_a?(Graph::Graph)
@@ -4906,8 +4906,8 @@ module Tensorflow
       self.execute("UpperBound", [sorted_inputs, values], T: typeT, out_type: out_type)
     end
   
-    def self.var_handle_op(container: "", shared_name: "", dtype: nil, shape: nil)
-      self.execute("VarHandleOp", [], container: container, shared_name: shared_name, dtype: dtype, shape: shape)
+    def self.var_handle_op(container: "", shared_name: "", dtype: nil, shape: nil, name: nil)
+      self.execute("VarHandleOp", [], container: container, shared_name: shared_name, dtype: dtype, shape: shape, name: name)
     end
   
     def self.var_is_initialized_op(resource)

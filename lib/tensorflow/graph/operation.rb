@@ -4,11 +4,6 @@ module Tensorflow
       include Operators
       attr_reader :graph
 
-      def self.create(graph, op_type, name, *inputs, **attrs)
-        op_desc = OperationDescription.new(graph, op_type, name, inputs, attrs)
-        op_desc.save
-      end
-
       def initialize(graph, pointer)
         @graph = graph
         @pointer = pointer
@@ -70,6 +65,19 @@ module Tensorflow
         end
       end
 
+      def num_control_outputs
+        FFI.TF_OperationNumControlOutputs(self)
+      end
+
+      def control_outputs
+        pointer = ::FFI::MemoryPointer.new(:pointer, self.num_control_outputs)
+        FFI.TF_OperationGetControlOutputs(self, pointer, self.num_control_outputs)
+        self.num_control_outputs.times.map do |index|
+          operation_ptr = pointer[index].read_pointer
+          self.class.new(self.graph, operation_ptr)
+        end
+      end
+
       def num_outputs
         FFI.TF_OperationNumOutputs(self)
       end
@@ -97,6 +105,19 @@ module Tensorflow
       def output_list_length(arg_name)
         Status.check do |status|
           FFI.TF_OperationOutputListLength(self, arg_name, status)
+        end
+      end
+
+      def num_control_inputs
+        FFI.TF_OperationNumControlInputs(self)
+      end
+
+      def control_inputs
+        pointer = ::FFI::MemoryPointer.new(:pointer, self.num_control_inputs)
+        FFI.TF_OperationGetControlInputs(self, pointer, self.num_control_inputs)
+        self.num_control_inputs.times.map do |index|
+          operation_ptr = pointer[index].read_pointer
+          self.class.new(self.graph, operation_ptr)
         end
       end
 

@@ -3,7 +3,7 @@
 module Tensorflow
   module RawOps
     def self.execute(op_type, inputs=[], attrs={})
-      context = ExecutionContext.context.current
+      context = ExecutionContext.current(inputs)
       attrs = attrs.compact
       operation = context.create_operation(op_type, inputs, attrs)
       if context.is_a?(Graph::Graph)

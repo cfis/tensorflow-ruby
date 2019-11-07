@@ -4,7 +4,7 @@ module Tensorflow
   module Graph
     class GradientsTest < Minitest::Test
       def setup
-        Tensorflow.disable_eager_execution
+        Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       end
 
       def test_gradients_simple

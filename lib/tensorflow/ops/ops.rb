@@ -14,8 +14,8 @@ module Tensorflow
       RawOps.expand_dims(input, axis)
     end
 
-    def fill(dims, value)
-      RawOps.fill(dims, value)
+    def fill(dims, value, dtype: nil)
+      RawOps.fill(dims, value, typeT: dtype)
     end
 
     def identity(input)
@@ -77,8 +77,9 @@ module Tensorflow
       RawOps.transpose(x, perm)
     end
 
-    def zeros(dims)
-      fill(dims, 0)
+    def zeros(dims, dtype: nil)
+      const = self.constant(0, dtype: dtype)
+      fill(dims, const, dtype: dtype)
     end
 
     def zeros_like(x)

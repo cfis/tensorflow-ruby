@@ -71,6 +71,10 @@ require "tensorflow/type_spec"
 require "tensorflow/batchable_type_spec"
 require "tensorflow/tensor_spec"
 
+# Train
+require "tensorflow/train/optimizer"
+require "tensorflow/train/gradient_descent_optimizer"
+
 # data
 require "tensorflow/data/dataset"
 require "tensorflow/data/batch_dataset"

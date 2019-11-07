@@ -5,14 +5,22 @@ module Tensorflow
     attr_reader :handle, :dtype
 
     def initialize(initial_value = nil, dtype: nil, shape: [], shared_name: nil, name: 'Variable', trainable: false)
-      if initial_value
-        # We immediately convert to a tensor because otherwise dtypes get screwed up
-        tensor = Tensor.from_value(initial_value, dtype: dtype)
-        @dtype = tensor.dtype
-        shape = tensor.shape
-      else
-        @dtype = dtype
-      end
+      initial_value = case initial_value
+                      when NilClass
+                        @dtype = dtype
+                        initial_value
+                      when Graph::Operation
+                        @dtype = dtype
+                        initial_value
+                      when Tensor
+                        @dtype = tensor.dtype
+                        initial_value
+                      else
+                        tensor = Tensor.from_value(initial_value, dtype: dtype)
+                        @dtype = tensor.dtype
+                        shape = tensor.shape
+                        tensor
+                      end
 
       unique_name = ExecutionContext.current.unique_name(name || shared_name)
       shared_name ||= unique_name
@@ -27,7 +35,7 @@ module Tensorflow
       end
 
       @handle = RawOps.var_handle_op(dtype: @dtype, shape: shape, shared_name: shared_name, name: unique_name)
-      self.value = tensor if tensor
+      self.value = initial_value if initial_value
     end
 
     def value_handle
@@ -55,7 +63,11 @@ module Tensorflow
       RawOps.var_is_initialized_op(self.handle)
     end
 
-    # Pretend to be an operation to make implementating Session#run cleaner
+    # These methods match the operation api to enable gradients and sessions
+    def consumers
+      self.handle.consumers
+    end
+
     def outputs
       []
     end
@@ -86,8 +98,8 @@ module Tensorflow
       RawOps.reshape(self, shape)
     end
 
-    def assign_add(value)
-      RawOps.assign_add_variable_op(self.handle, value)
+    def assign_add(value, dtype: nil)
+      RawOps.assign_add_variable_op(self.handle, value, dtype: dtype)
     end
 
     def assign_sub(value)

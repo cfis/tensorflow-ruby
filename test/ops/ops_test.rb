@@ -125,7 +125,21 @@ module Tensorflow
     end
 
     def test_zeros
-      assert_equal([[0, 0, 0], [0, 0, 0]], Tensorflow.zeros([2, 3]).value)
+      zeros = Tensorflow.zeros([2, 3])
+      assert_equal([[0, 0, 0], [0, 0, 0]], zeros.value)
+      assert_equal(:int32, zeros.dtype)
+    end
+
+    def test_zeros_int64
+      zeros = Tensorflow.zeros([2, 3], dtype: :int64)
+      assert_equal([[0, 0, 0], [0, 0, 0]], zeros.value)
+      assert_equal(:int64, zeros.dtype)
+    end
+
+    def test_zeros_no_shape
+      zeros = Tensorflow.zeros([], dtype: :int64)
+      assert_equal(0, zeros.value)
+      assert_equal(:int64, zeros.dtype)
     end
 
     def test_zeros_like

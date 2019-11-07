@@ -32,11 +32,6 @@ module Tensorflow
         end
       end
 
-      # Just dummy api to match Graph api
-      def collection(name)
-        Set.new
-      end
-
       def create_operation(op_type, inputs=[], attrs={})
         Operation.new(self, op_type, inputs, attrs)
       end

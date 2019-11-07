@@ -46,7 +46,7 @@ module Tensorflow
           when Operation
             input
           when Variable
-            input.value_handle
+            arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
             input_name = "#{self.name}/#{arg_def.name}"
             Tensorflow.constant(input, name: input_name)

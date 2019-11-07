@@ -15,7 +15,7 @@ module Tensorflow
         forwards.intersection(backwards)
       end
 
-      def gradients(output, inputs, name: "gradients", stop_operations: Set.new)
+      def gradients(output, inputs, grad_ys: nil, name: "gradients", stop_operations: Set.new)
         self.graph.name_scope(name) do
           inputs.map.with_index do |input, i|
             operations_path = self.path(output, input)

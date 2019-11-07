@@ -48,7 +48,7 @@ module Tensorflow
       end
 
       def get_collection_ref(name, scope=nil)
-        @collection[name]
+        @collections[name]
       end
 
       def clear_collection(name)

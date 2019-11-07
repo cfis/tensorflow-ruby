@@ -164,7 +164,7 @@ module Tensorflow
           FFI.TFE_OpAddInputList(self, input_ptr, value.size, self.status)
         else
           # This should be a single item
-          value = if value.is_a?(Array)
+          value = if value.is_a?(Array) && !value.empty?
                     value = value.map do |a_value|
                       TensorHandle.from_value(self.context, a_value)
                     end

@@ -7,6 +7,9 @@ node {
     <% input_operation = Tensorflow::Graph::Operation.new(self.graph, input[:oper]) %>
   input: "<%= input_operation.name %><%= input[:index] > 0 ? ":#{input[:index]}" : "" %>"
   <% end %>
+  <% operation.control_inputs.each do |control_input| %>
+  input: "^<%= control_input.name %>"
+  <% end %>
   <% op_def.attr.sort_by(&:name).each do |attr_def|
      attr = operation.attr(attr_def.name) %>
   attr {
@@ -31,6 +34,17 @@ node {
       b: <%= attr.value ? 'true' : 'false' %>
     <% when :int %>
       i: <%= attr.value %>
+    <% when :shape %>
+      <% if attr.shape.empty? %>
+      shape {
+      }
+      <% else %>
+      shape {
+        <%= attr.shape %>
+      }
+      <% end %>
+    <% when :string %>
+      s: "<%= attr.value %>"
     <% end %>
     }
   }

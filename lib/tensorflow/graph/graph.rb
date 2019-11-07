@@ -195,7 +195,7 @@ module Tensorflow
         Function.new(func)
       end
 
-      def export
+      def as_graph_def
         buffer_ptr = FFI.TF_NewBuffer
         Status.check do |status|
           FFI.TF_GraphToGraphDef(self, buffer_ptr, status)

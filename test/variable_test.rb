@@ -15,7 +15,6 @@ module Tensorflow
     end
 
     def test_simple_graph
-      Tensorflow.disable_eager_execution
       Graph::Graph.new.as_default do |graph|
         var = Variable.new(32)
         assert_kind_of(Graph::Operation, var.handle)
@@ -220,32 +219,23 @@ module Tensorflow
       end
     end
 
-    def test_shared_name
-      Graph::Graph.new.as_default do |graph|
-        session = Graph::Session.new(graph, Graph::SessionOptions.new)
-
-        v = Variable.new(300.0, shared_name: 'var4')
-        session.run(v.initializer)
-
-        w = Variable.new(nil, shared_name: 'var4', dtype: v.dtype)
-        result = session.run(w.value)
-        assert_equal(300.0, result)
-      end
-    end
-
     def test_variables_initialized
       Graph::Graph.new.as_default do |graph|
-        v = Variable.new([1, 2], name: "v")
+        v = Variable.new(1.0, name: "var0")
         w = Variable.new([3, 4], name: "w")
 
         initializer = Tensorflow.global_variables_initializer
 
         session = Graph::Session.new(graph, Graph::SessionOptions.new)
-        result = session.run(initializer)
+        session.run(initializer)
 
-        operations = Tensorflow.global_variables.each do |variable|
-          assert(variable.initialized?)
+        operations = Tensorflow.global_variables.map do |variable|
+          variable.initialized?
         end
+
+        result = session.run(operations)
+        assert_equal(1, result[0])
+        assert_equal(1, result[1])
       end
     end
   end

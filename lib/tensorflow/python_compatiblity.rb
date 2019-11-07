@@ -29,7 +29,7 @@ module Tensorflow
       if ExecutionContext.eager?
         RawOps.no_op
       else
-        Control.group(variables)
+        Control.group(variables.map(&:initializer))
       end
     end
   end

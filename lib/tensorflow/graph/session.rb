@@ -68,7 +68,8 @@ module Tensorflow
                             status)
         end
 
-        result = result_ptr.read_array_of_pointer(outputs.length).map do |pointer|
+        result = result_ptr.read_array_of_pointer(outputs.length).map.with_index do |pointer, i|
+          output = outputs[i]
           Tensor.from_pointer(pointer).value
         end
 

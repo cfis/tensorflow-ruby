@@ -19,6 +19,7 @@ module Tensorflow
         self.graph.name_scope(name) do
           inputs.map.with_index do |input, i|
             operations_path = self.path(output, input)
+            next if operations_path.empty?
 
             fill_op = self.graph.as_default do
               shape_op = Tensorflow.shape(output, :int32)
@@ -29,7 +30,7 @@ module Tensorflow
             end
 
             self.derivative(fill_op, output, stop_operations, operations_path)
-          end.compact.flatten
+          end.flatten.compact
         end
       end
 

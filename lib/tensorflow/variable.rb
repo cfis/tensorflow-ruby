@@ -68,8 +68,12 @@ module Tensorflow
       self.handle.consumers
     end
 
+    # This enables executing variables to get the values in a session
     def outputs
-      []
+      output = FFI::Output.new
+      output[:oper] = self.value_handle
+      output[:index] = 0
+      [output]
     end
 
     def to_ptr

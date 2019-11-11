@@ -1,8 +1,8 @@
 # keep in alphabetical order
 module Tensorflow
   module Ops
-    def cast(x, dtype)
-      RawOps.cast(x, dstt: dtype)
+    def cast(x, source_dtype: nil, destination_dtype: nil, truncate: false)
+      RawOps.cast(x, srct: source_dtype, dstt: destination_dtype, truncate: truncate)
     end
 
     def constant(value, dtype: nil, shape: [], name: 'Const')
@@ -32,7 +32,7 @@ module Tensorflow
       RawOps.pack(values, n: n, typeT: typeT, axis: axis)
     end
 
-    def placeholder(name='Placeholder', dtype: :int32, shape: nil)
+    def placeholder(dtype, name: 'Placeholder', shape: nil)
       RawOps.placeholder(dtype: dtype, shape: shape, name: name)
     end
 

@@ -37,7 +37,7 @@ module Tensorflow
                   # We convert all arrays to narrays. This makes it a lot easier to support multidimensional arrays
                   result = Numo::NArray.cast(value)
                 else
-                  TensorData.value_with_shape(value, shape)
+                  TensorData.value_with_shape(value, dtype, shape)
               end
 
       tensor_data = TensorData.new(value, dtype: dtype, shape: shape)
@@ -51,7 +51,7 @@ module Tensorflow
         dims_ptr = nil
       end
 
-      @pointer = FFI.TF_NewTensor(FFI::DataType[dtype],
+      @pointer = FFI.TF_NewTensor(dtype,
                                   dims_ptr, shape ? shape.size : 0,
                                   tensor_data, tensor_data.byte_size,
                                   TensorData::Deallocator, nil)

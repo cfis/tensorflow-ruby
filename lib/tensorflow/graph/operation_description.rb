@@ -1,7 +1,7 @@
 module Tensorflow
   module Graph
     class OperationDescription
-      attr_reader :graph, :name, :op_def
+      attr_reader :graph, :name, :op_def, :dtype
 
       def initialize(graph, op_type, inputs, attrs)
         @graph = graph
@@ -9,7 +9,10 @@ module Tensorflow
         name = attrs.delete(:name) || op_type
         @name = self.graph.scoped_name(name)
         @pointer = FFI.TF_NewOperation(graph, op_type, @name)
-        setup_inputs(Array(inputs))
+
+        inputs = Array(inputs)
+        @dtype = figure_dtype(attrs, inputs)
+        setup_inputs(inputs)
         setup_control_inputs(graph.control_inputs)
         setup_attrs(**attrs)
       end
@@ -26,6 +29,25 @@ module Tensorflow
         FFI.TF_DeleteBuffer(buffer)
       end
 
+      def figure_dtype(attrs, inputs)
+        attr_def = self.op_def.attr.detect do |attr_def|
+          attr_def.type == 'type'
+        end
+
+        result = attr_def ? attrs[attr_def.name.to_sym] : nil
+        unless result
+          inputs.each do |input|
+            case input
+              when Operation
+                return input.output_types.first
+              when Variable
+                return input.dtype
+            end
+          end
+        end
+        nil
+      end
+
       def to_ptr
         @pointer
       end
@@ -39,18 +61,6 @@ module Tensorflow
 
       def device=(value)
         FFI.TF_SetDevice(self, value)
-      end
-
-      def check_input(arg_def, input)
-        case input
-          when Operation
-            input
-          when Variable
-            arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
-          else
-            input_name = "#{self.name}/#{arg_def.name}"
-            Tensorflow.constant(input, name: input_name)
-        end
       end
 
       def setup_control_inputs(control_inputs)
@@ -70,6 +80,18 @@ module Tensorflow
                           end
 
         FFI.TF_AddControlInput(self, control_input)
+      end
+
+      def check_input(arg_def, input)
+        case input
+          when Operation
+            input
+          when Variable
+            arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
+          else
+            input_name = "#{self.name}/#{arg_def.name}"
+            Tensorflow.constant(input, name: input_name, dtype: self.dtype)
+        end
       end
 
       def setup_inputs(inputs)

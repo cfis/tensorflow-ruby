@@ -19,7 +19,14 @@ module Tensorflow
       end
 
       def apply_dense(grad, var)
-        RawOps.resource_apply_gradient_descent(var, @learning_rate_tensor, grad)
+        dtype = grad.output_types.first
+        learning_rate = if @learning_rate_tensor.output_types.first == dtype
+                          @learning_rate_tensor
+                        else
+                          Tensorflow.cast(@learning_rate_tensor, destination_dtype: dtype)
+                        end
+
+        RawOps.resource_apply_gradient_descent(var, learning_rate, grad)
       end
     end
   end

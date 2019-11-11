@@ -42,7 +42,10 @@ module Tensorflow
 
         key_outputs = feed_dict.keys.map(&:to_output)
         keys_ptr = FFI::Output.array_to_ptr(key_outputs)
-        values_ptr = self.initialize_tensors(feed_dict.values)
+
+        values = self.values_to_tensors(feed_dict)
+        values_ptr = ::FFI::MemoryPointer.new(:pointer, values.length)
+        values_ptr.write_array_of_pointer(values)
 
         # Gather up all the outputs for each operation
         outputs = operations.map(&:outputs).flatten
@@ -86,13 +89,17 @@ module Tensorflow
         end
       end
 
-      def initialize_tensors(tensors)
-        tensors = tensors.map do |tensor|
-          tensor.is_a?(Tensor) ? tensor : Tensor.new(tensor)
+      def values_to_tensors(values)
+        values.map do |key, value|
+          if value.is_a?(Tensor)
+            value
+          else
+            # The value dtype needs to match the key dtype
+            raise(TensorflowError, "Cannot determine dtype: #{key}") if key.num_outputs != 1
+            dtype = key.output_types.first
+            Tensor.new(value, dtype: dtype)
+          end
         end
-        tensors_ptr = ::FFI::MemoryPointer.new(:pointer, tensors.length)
-        tensors_ptr.write_array_of_pointer(tensors)
-        tensors_ptr
       end
     end
   end

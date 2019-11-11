@@ -89,7 +89,7 @@ module Tensorflow
       end
     end
 
-    def self.value_with_shape(value, shape)
+    def self.value_with_shape(value, dtype, shape)
       if shape && shape.size > 0
         dtype ||= self.figure_dtype(value)
         numo_klass = DTYPE_TO_NUMO_TYPE_MAP[dtype]

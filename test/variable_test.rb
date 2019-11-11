@@ -20,9 +20,14 @@ module Tensorflow
         assert_kind_of(Graph::Operation, var.handle)
         assert_equal(:int32, var.dtype)
 
+        # Execute the value
         session = Graph::Session.new(graph, Graph::SessionOptions.new)
         session.run(var.initializer)
         result = session.run(var.value)
+        assert_equal(32, result)
+
+        # Let's check executing the variable does the same thing
+        result = session.run(var)
         assert_equal(32, result)
       end
     end
@@ -194,7 +199,7 @@ module Tensorflow
         v = Variable.new([1, 2], name: "v")
         w = Variable.new([3, 4], name: "w")
 
-        global_variables = graph.collection(Graph::GraphKeys::GLOBAL_VARIABLES)
+        global_variables = graph.get_collection_ref(Graph::GraphKeys::GLOBAL_VARIABLES)
         assert_equal(2, global_variables.length)
         assert_equal(v, global_variables.to_a[0])
         assert_equal(w, global_variables.to_a[1])
@@ -206,7 +211,7 @@ module Tensorflow
         v = Variable.new([1, 2], name: "v")
         w = Variable.new([3, 4], name: "w")
 
-        global_variables = graph.collection(Graph::GraphKeys::GLOBAL_VARIABLES)
+        global_variables = graph.get_collection_ref(Graph::GraphKeys::GLOBAL_VARIABLES)
         operations = global_variables.map do |variable|
           variable.initialized?
         end

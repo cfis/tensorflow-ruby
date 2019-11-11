@@ -191,7 +191,7 @@ module Tensorflow
 
     # https://github.com/tensorflow/tensorflow/blob/master/tensorflow/c/tf_tensor.h
     callback :tensor_deallocator, [:pointer, :size_t, :pointer], :void
-    attach_function :TF_NewTensor, [:int, :pointer, :int, :pointer, :size_t, :tensor_deallocator, :pointer], :pointer
+    attach_function :TF_NewTensor, [DataType, :pointer, :int, :pointer, :size_t, :tensor_deallocator, :pointer], :pointer
     attach_function :TF_DeleteTensor, [:pointer], :void
     attach_function :TF_TensorType, [:pointer], DataType
     attach_function :TF_NumDims, [:pointer], :int

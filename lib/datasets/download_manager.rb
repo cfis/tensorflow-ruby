@@ -1,6 +1,6 @@
 require 'net/http'
 require 'tmpdir'
-require_relative './resource'
+require_relative './source'
 
 module Tensorflow
   module Datasets

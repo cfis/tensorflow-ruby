@@ -12,7 +12,7 @@ module Tensorflow
       if ExecutionContext.eager?
         []
       else
-        ExecutionContext.current.collection(Graph::GraphKeys::GLOBAL_VARIABLES)
+        ExecutionContext.current.get_collection_ref(Graph::GraphKeys::GLOBAL_VARIABLES)
       end
     end
 
@@ -21,7 +21,10 @@ module Tensorflow
         RawOps.no_op
       else
         global_variables = ExecutionContext.current.get_collection_ref(Graph::GraphKeys::GLOBAL_VARIABLES)
-        self.variables_initializer(global_variables)
+        global_variables = Array(global_variables)
+        if global_variables.length > 0
+          self.variables_initializer(global_variables)
+        end
       end
     end
 

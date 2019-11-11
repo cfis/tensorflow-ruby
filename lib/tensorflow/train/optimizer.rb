@@ -2,8 +2,6 @@
 module Tensorflow
   module Train
     class Optimizer
-#      include SlotCreator
-
       attr_reader :name
 
       def initialize(name: nil, use_locking: false)
@@ -17,6 +15,9 @@ module Tensorflow
 
       def minimize(loss, var_list: nil, grad_loss: nil, global_step: nil, name: nil)
         grads_and_vars = compute_gradients(loss, var_list: var_list, grad_loss: grad_loss)
+        if grads_and_vars.empty?
+          raise(TensorflowError, "No gradients provided for any variable, check your graph for ops that do not support gradients")
+        end
         apply_gradients(grads_and_vars, global_step: global_step, name: name)
       end
 
@@ -41,12 +42,15 @@ module Tensorflow
         #end
       end
 
-      def compute_gradients(loss, var_list: var_list, grad_loss: nil)
+      def compute_gradients(loss, var_list: nil, grad_loss: nil)
         graph = loss.graph
-        trainable_vars = var_list || graph.collection_by_ref(Tensorflow::Graph::GraphKeys::TRAINABLE_VARIABLES)
+        trainable_vars = var_list || graph.get_collection_ref(Tensorflow::Graph::GraphKeys::TRAINABLE_VARIABLES)
 
+        if trainable_vars.nil? || trainable_vars.empty?
+          raise(TensorflowError, 'There are no variables to train for the loss function')
+        end
         gradients = Graph::Gradients.new(graph)
-        grads = gradients.gradients(loss, var_list, grad_ys: grad_loss)
+        grads = gradients.gradients(loss, trainable_vars, grad_ys: grad_loss)
 
         grads.zip(trainable_vars)
       end

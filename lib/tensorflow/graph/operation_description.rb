@@ -6,8 +6,7 @@ module Tensorflow
       def initialize(graph, op_type, inputs, attrs)
         @graph = graph
         @op_def = self.get_op_def(op_type)
-        name = attrs.delete(:name) || op_type
-        @name = self.graph.scoped_name(name.to_s)
+        @name = self.graph.scoped_name(attrs[:name].to_s)
         @pointer = FFI.TF_NewOperation(graph, op_type, @name)
 
         inputs = Array(inputs)

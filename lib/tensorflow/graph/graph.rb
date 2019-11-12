@@ -175,7 +175,7 @@ module Tensorflow
         end
       end
 
-      def to_function(name, operators, input_operations, output_operations, output_names)
+      def to_function(name, operators, input_operations, output_operations, output_names=nil)
         inputs = input_operations ? input_operations.map(&:outputs).flatten : []
         inputs_ptr = FFI::Output.array_to_ptr(inputs)
 

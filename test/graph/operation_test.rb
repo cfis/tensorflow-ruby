@@ -5,20 +5,21 @@ module Tensorflow
     class OperationTest < Minitest::Test
       def setup
         Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
+        Graph.reset_default
       end
 
       def test_name
-        operation = Tensorflow.placeholder('feed')
+        operation = Tensorflow.placeholder(:int32, name: 'feed')
         assert_equal('feed', operation.name)
       end
 
       def test_op_type
-        operation = Tensorflow.placeholder
+        operation = Tensorflow.placeholder(:int32)
         assert_equal('Placeholder', operation.op_type)
       end
 
       def test_device
-        operation = Tensorflow.placeholder
+        operation = Tensorflow.placeholder(:int32)
         assert_empty(operation.device)
       end
 
@@ -65,22 +66,22 @@ module Tensorflow
       end
 
       def test_num_outputs
-        operation = Tensorflow.placeholder
+        operation = Tensorflow.placeholder(:int32)
         assert_equal(1, operation.num_outputs)
       end
 
       def test_output_types
-        operation = Tensorflow.placeholder
+        operation = Tensorflow.placeholder(:int32)
         assert_equal([:int32], operation.output_types)
       end
 
       def test_output_list_length
-        operation = Tensorflow.placeholder
+        operation = Tensorflow.placeholder(:int32)
         assert_equal(1, operation.output_list_length('output'))
       end
 
       def test_consumers
-        placeholder = Tensorflow.placeholder
+        placeholder = Tensorflow.placeholder(:int32)
         consumers = placeholder.consumers
         assert_empty(consumers)
 

@@ -78,7 +78,7 @@ module Tensorflow
 
     def test_placeholder
       Graph::Graph.default.as_default do |graph|
-        placeholder = Tensorflow.placeholder('placeholder_1')
+        placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
         assert_equal('placeholder_1', placeholder.name)
         assert_equal('Placeholder', placeholder.op_type)
         dims = graph.tensor_num_dims(placeholder)

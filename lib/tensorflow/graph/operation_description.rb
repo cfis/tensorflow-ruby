@@ -1,17 +1,17 @@
 module Tensorflow
   module Graph
     class OperationDescription
-      attr_reader :graph, :name, :op_def, :dtype
+      attr_reader :graph, :name, :op_def, :guessed_dtype
 
       def initialize(graph, op_type, inputs, attrs)
         @graph = graph
         @op_def = self.get_op_def(op_type)
         name = attrs.delete(:name) || op_type
-        @name = self.graph.scoped_name(name)
+        @name = self.graph.scoped_name(name.to_s)
         @pointer = FFI.TF_NewOperation(graph, op_type, @name)
 
         inputs = Array(inputs)
-        @dtype = figure_dtype(attrs, inputs)
+        @guessed_dtype = figure_dtype(attrs, inputs)
         setup_inputs(inputs)
         setup_control_inputs(graph.control_inputs)
         setup_attrs(**attrs)
@@ -89,8 +89,9 @@ module Tensorflow
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
+            dtype = arg_def.dtype || self.guessed_dtype
             input_name = "#{self.name}/#{arg_def.name}"
-            Tensorflow.constant(input, name: input_name, dtype: self.dtype)
+            Tensorflow.constant(input, name: input_name, dtype: dtype)
         end
       end
 

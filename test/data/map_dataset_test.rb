@@ -12,7 +12,7 @@ module Tensorflow
         dataset = TensorDataset.new(components)
 
         function = Graph::Graph.new.as_default do |func_graph|
-          x = Tensorflow.placeholder("x")
+          x = Tensorflow.placeholder(:int32, name: "x")
           square = Math.square(x)
           func_graph.to_function('MyFunc', nil, [x], [square], ['out1'])
         end

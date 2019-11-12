@@ -14,7 +14,7 @@ module Tensorflow
         x = Tensorflow::Variable.new([1.0, 2.0])
         handle = Eager::TensorHandle.from_value(Context.default, x)
         assert_equal([1.0, 2.0], handle.value)
-        assert_equal(:float, handle.dtype)
+        assert_equal(:double, handle.dtype)
         assert_equal([2], handle.shape)
       end
 

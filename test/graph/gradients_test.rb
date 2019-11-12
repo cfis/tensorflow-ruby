@@ -75,16 +75,12 @@ module Tensorflow
           gradients = Gradients.new(graph)
           gw = gradients.gradients(c, [w])
 
-          printer = Printers::Graph.new(graph)
-          File.open('c:/temp/graph2.txt', 'wb') do |file|
-            printer.print(file)
-          end
 
           session = Session.new(graph, SessionOptions.new)
           result = session.run([gw])
           session.close
 
-          assert_equal([[2.0, 2.0], [2.0, 2.0]], result.to_a)
+          assert_equal([[2.0, 2.0], [2.0, 2.0]], result)
         end
       end
     end

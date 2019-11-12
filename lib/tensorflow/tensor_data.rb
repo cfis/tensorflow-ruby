@@ -10,7 +10,7 @@ module Tensorflow
   # Thus this class creates its own memory and fress the memory only after being called bcak by tensorflow.
 
   class TensorData
-    extend FFI::Library
+    extend ::FFI::Library
     ffi_lib "#{RbConfig::CONFIG['RUBY_SO_NAME']}.#{RbConfig::CONFIG['SOEXT']}"
     attach_function :ruby_xmalloc, [:size_t], :pointer
     attach_function :ruby_xfree, [:pointer], :void

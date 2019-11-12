@@ -2,7 +2,7 @@ require_relative "../test_helper"
 
 module Tensorflow
   module Graph
-    class FuntionTest < Minitest::Test
+    class FunctionTest < Minitest::Test
       def test_oneop_zeroinputs_oneoutput
         #
         #      constant
@@ -38,7 +38,7 @@ module Tensorflow
         #           v
 
         function = Graph.new.as_default do |func_graph|
-          feed = Tensorflow.placeholder('placeholder_1')
+          feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')
           negate = Math.negative(feed)
           func_graph.to_function('MyFunc', nil, [feed], [negate], ['negated_num'])
         end
@@ -47,7 +47,7 @@ module Tensorflow
         Graph.new.as_default do |host_graph|
           host_graph.copy_function(function)
 
-          func_feed = Tensorflow.placeholder('placeholder_1')
+          func_feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')
 
           op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')
           op_desc.add_input(func_feed)
@@ -72,8 +72,8 @@ module Tensorflow
         #     v   v
 
         function = Graph.new.as_default do |func_graph|
-          feed1 = Tensorflow.placeholder('feed1')
-          feed2 = Tensorflow.placeholder('feed2')
+          feed1 = Tensorflow.placeholder(:int32, name: 'feed1')
+          feed2 = Tensorflow.placeholder(:int32, name: 'feed2')
           add = Math.add(feed1, feed2)
 
           func_graph.to_function('MyFunc', nil, [feed1, feed2], [add, add], ['output1', 'output2'])
@@ -84,7 +84,7 @@ module Tensorflow
           host_graph.copy_function(function)
 
           constant = Tensorflow.constant(2, name: 'scalar2')
-          func_feed = Tensorflow.placeholder('placeholder_1')
+          func_feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')
 
           op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')
           op_desc.add_input(constant)
@@ -109,8 +109,8 @@ module Tensorflow
         #      v
 
         function = Graph.new.as_default do |func_graph|
-          feed1 = Tensorflow.placeholder('feed1')
-          feed2 = Tensorflow.placeholder('feed2')
+          feed1 = Tensorflow.placeholder(:int32, name: 'feed1')
+          feed2 = Tensorflow.placeholder(:int32, name: 'feed2')
           constant = Tensorflow.constant(5, name: 'scalar5')
 
           add = func_graph.control_dependencies([constant]) do
@@ -125,7 +125,7 @@ module Tensorflow
           host_graph.copy_function(function)
 
           constant = Tensorflow.constant(2, name: 'scalar2')
-          func_feed = Tensorflow.placeholder('placeholder_1')
+          func_feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')
           func_op = host_graph.create_operation('MyFunc', [constant, func_feed], name: 'MyFunc_0')
 
           session = Session.new(host_graph, SessionOptions.new)

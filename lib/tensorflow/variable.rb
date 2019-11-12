@@ -22,6 +22,8 @@ module Tensorflow
                         tensor
                       end
 
+      name = name&.to_s
+      shared_name = shared_name&.to_s
       unique_name = ExecutionContext.current.unique_name(name || shared_name)
       shared_name ||= unique_name
 

@@ -9,7 +9,7 @@ module Tensorflow
       
       def test_run_scalar
         Graph.new.as_default do |graph|
-          placeholder = Tensorflow.placeholder('placeholder', dtype: :int32)
+          placeholder = Tensorflow.placeholder(:int32)
           constant = Tensorflow.constant(2)
           addn = Math.add_n([placeholder, constant])
 
@@ -23,7 +23,7 @@ module Tensorflow
 
       def test_run_array
         Graph.new.as_default do |graph|
-          placeholder = Tensorflow.placeholder('placeholder', dtype: :int32)
+          placeholder = Tensorflow.placeholder(:int32)
           square = Math.square(placeholder)
 
           session = Session.new(graph, SessionOptions.new)

@@ -13,7 +13,7 @@ module Tensorflow
         end
 
         def update_state(values)
-          input = Tensorflow.cast(input, @dtype)
+          input = Tensorflow.cast(input, destination_dtype: @dtype)
           @total.assign_add(Math.reduce_sum(input))
           @count.assign_add(Tensorflow.cast(RawOps.size(input), @dtype))
         end

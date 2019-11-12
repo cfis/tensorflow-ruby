@@ -1,10 +1,8 @@
 require "bundler/setup"
-Bundler.require(:default)
+#Bundler.require(:default)
 require "minitest/autorun"
-require "minitest/pride"
-require "base64"
-require "tensorflow/extensions/array.rb"
-#require "mini_magick"
+require "tensorflow"
+require "tensorflow/extensions/array"
 
 class Minitest::Test
   private

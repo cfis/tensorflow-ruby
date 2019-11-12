@@ -32,11 +32,9 @@ require "tensorflow/ops/ops"
 require "tensorflow/ops/random"
 require "tensorflow/ops/raw_ops"
 
-# Extensions
-require "tensorflow/extensions/boolean.rb"
-require "tensorflow/extensions/narray.rb"
-
 # Core
+require "tensorflow/ffi"
+require "tensorflow/decorators"
 require "tensorflow/execution_context"
 require "tensorflow/name_scope"
 require "tensorflow/op_def_builder"
@@ -47,6 +45,11 @@ require "tensorflow/tensor_data"
 require "tensorflow/tensor"
 require "tensorflow/variable"
 require "tensorflow/version"
+
+# Extensions
+require "tensorflow/extensions/arg_def.rb"
+require "tensorflow/extensions/boolean.rb"
+require "tensorflow/extensions/narray.rb"
 
 # Printers
 require "tensorflow/printers/graph"
@@ -127,7 +130,6 @@ module Tensorflow
       FFI.TF_Version
     end
   end
-  self.ffi_lib = ["tensorflow", "libtensorflow.so"]
 
   # friendlier error message
   autoload :FFI, "tensorflow/ffi"

@@ -94,19 +94,19 @@ module Tensorflow
       end
 
       def test_tensor_num_dimensions
-        placeholder = Tensorflow.placeholder('placeholder_1')
+        placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
         dims = Graph.default.tensor_num_dims(placeholder)
         assert_equal(-1, dims)
       end
 
       def test_tensor_get_shape
-        placeholder = Tensorflow.placeholder('placeholder_1')
+        placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
         shape = Graph.default.tensor_get_shape(placeholder)
         assert_equal([-1], shape)
       end
 
       def test_tensor_set_shape
-        placeholder = Tensorflow.placeholder('placeholder_1')
+        placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
         Graph.default.tensor_set_shape(placeholder, [2, -1])
         dims = Graph.default.tensor_num_dims(placeholder)
         assert_equal(2, dims)
@@ -119,7 +119,7 @@ module Tensorflow
         status = Status.new
 
         Graph.new.as_default do |graph|
-          placeholder = Tensorflow.placeholder('placeholder_1')
+          placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
           constant = Tensorflow.constant(2, name: 'const_1')
           addn = Math.add_n([placeholder, constant])
           operations = graph.operations.to_a
@@ -141,9 +141,9 @@ module Tensorflow
 
       def test_control_inputs
         Graph.new.as_default do |graph|
-          feed1 = Tensorflow.placeholder('feed1')
+          feed1 = Tensorflow.placeholder(:int32, name: 'feed1')
 
-          feed2 = Tensorflow.placeholder('feed2')
+          feed2 = Tensorflow.placeholder(:int32, name: 'feed2')
 
           constant = Tensorflow.constant(5, name: 'scalar5')
 
@@ -169,17 +169,17 @@ module Tensorflow
       end
 
       def test_graph_def
-        args_0 = Tensorflow.placeholder("args_0", dtype: :int32)
+        args_0 = Tensorflow.placeholder(:int32, name: "args_0")
         square1 = Math.square(args_0)
 
-        graph_def = Graph.default.export
+        graph_def = Graph.default.as_graph_def
         refute_nil(graph_def)
       end
 
       def test_export_import
         graph_def = nil
         Graph.new.as_default do |graph|
-          placeholder = Tensorflow.placeholder('feed')
+          placeholder = Tensorflow.placeholder(:int32, name: 'feed')
           const = Tensorflow.constant(3, name: 'scalar')
           result = Math.negative(const)
 
@@ -188,7 +188,7 @@ module Tensorflow
           assert(graph.operation('Neg'))
 
           # Get def
-          graph_def = graph.export
+          graph_def = graph.as_graph_def
         end
 
         Graph.new.as_default do |new_graph|

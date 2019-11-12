@@ -3,7 +3,7 @@ module Tensorflow
     extend ::FFI::Library
 
     begin
-      ffi_lib Tensorflow.ffi_lib
+      ffi_lib ["tensorflow", "libtensorflow"]
     rescue LoadError => e
       raise e if ENV["TENSORFLOW_DEBUG"]
       raise LoadError, "Could not find Tensorflow"

@@ -23,11 +23,14 @@ module Tensorflow
      attributes_in = op_def.attr.map do |attr_def|
        RawOpHelper.process_attribute(attr_def)
      end
+     attributes_in << "name: nil"
 
      attributes_out = op_def.attr.map do |attr_def|
        attribute_name = RawOpHelper.check_attribute_name(attr_def)
        "#{attr_def.name}: #{attribute_name}"
-     end %>
+     end
+     attributes_out << "name: name" %>
+
     def self.<%= name %>(<%= (input_names + attributes_in).join(', ') %>)
       self.execute("<%= op_def.name %>", [<%= input_names.join(', ') %>], <%= attributes_out.join(', ') %>)
     end

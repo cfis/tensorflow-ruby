@@ -67,7 +67,11 @@ class RawOpHelper
                     else
                       case attr_def.default_value.value
                         when :s
-                          "\"#{attr_def.default_value['s']}\""
+                          if attr_def.default_value['s'].empty?
+                            'nil'
+                          else
+                            "\"#{attr_def.default_value['s']}\""
+                          end
                         when :list
                           []
                         when :shape

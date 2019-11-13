@@ -1,4 +1,18 @@
 module Tensorflow
+  FFI::DataType.symbols.each do |dtype|
+    define_singleton_method(dtype) do
+      dtype
+    end
+  end
+
+  def self.float32
+    :float
+  end
+
+  def self.float64
+    :double
+  end
+
   module PythonCompatability
     def disable_eager_execution
       self.execution_mode = Tensorflow::GRAPH_MODE

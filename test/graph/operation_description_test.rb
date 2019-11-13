@@ -120,6 +120,51 @@ module Tensorflow
         assert_equal(:complex64, operation.attr('v').dtype)
         assert_equal(:complex64, operation.attr('v').value)
       end
+
+      def test_addn
+        Graph.new.as_default do |graph|
+          constant1 = Tensorflow.constant(12)
+          constant2 = Tensorflow.constant(15)
+          add = Math.add_n([constant1, constant2])
+
+          session = Session.new(graph, SessionOptions.new)
+          result = session.run(add)
+          assert_equal(27, result)
+        end
+      end
+
+      def test_capture
+        # Create a constant in graph 1
+        constant = nil
+        g1 = Graph.new.as_default do |graph|
+               constant = Tensorflow.constant(12, name: "CaptureMe")
+             end
+
+        # Create graph 2 and negate the value
+        Graph.new.as_default do |graph|
+          neg = Math.negative(constant)
+
+          session = Session.new(graph, SessionOptions.new)
+          result = session.run(neg)
+          assert_equal(-12, result)
+        end
+      end
+
+      def test_capture_invalid
+        # Create a constant in graph 1
+        placeholder = nil
+        g1 = Graph.new.as_default do |graph|
+          placeholder = Tensorflow.placeholder(:int32, name: "CaptureMe")
+        end
+
+        # Create graph 2 and negate the value
+        Graph.new.as_default do |graph|
+          exception = assert_raises(TensorflowError) do
+            Math.negative(placeholder)
+          end
+          assert_equal("Cannot capture a placeholder by value (name: CaptureMe, type: Placeholder)", exception.message)
+        end
+      end
     end
   end
 end

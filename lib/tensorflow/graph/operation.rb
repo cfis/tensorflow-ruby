@@ -152,10 +152,7 @@ module Tensorflow
         FFI.TF_OperationOutputConsumers(output, consumers_ptr, count)
 
         count.times.map do |i|
-          input = FFI::Input.new(consumers_ptr[i])
-          # Need to set the index since its 0 and not equal to the output index
-          input[:index] = index
-          input
+          FFI::Input.new(consumers_ptr[i])
         end
       end
 

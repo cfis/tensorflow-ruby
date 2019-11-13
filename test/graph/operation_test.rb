@@ -138,7 +138,7 @@ module Tensorflow
         consumer = consumers[0]
         consumer_operation = consumer.operation(Graph.default)
         assert_equal(rank, consumer_operation)
-        assert_equal(1, consumer[:index])
+        assert_equal(0, consumer[:index])
       end
 
       def test_add

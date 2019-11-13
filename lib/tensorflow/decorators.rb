@@ -32,7 +32,7 @@ module Tensorflow
               # Now convert the graph to a function
               new_function = function_graph.to_function(method.original_name.to_s, nil, placeholders, [result])
               # Add it to the current graph
-              current_graph.copy_function(new_function)
+              current_graph.add_function(new_function)
               new_function
             end
           end

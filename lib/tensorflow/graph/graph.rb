@@ -169,7 +169,7 @@ module Tensorflow
         end
       end
 
-      def copy_function(function, gradient=nil)
+      def add_function(function, gradient=nil)
         Status.check do |status|
           FFI.TF_GraphCopyFunction(self, function, gradient, status)
         end

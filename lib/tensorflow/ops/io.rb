@@ -42,7 +42,7 @@ module Tensorflow
     # def self.decode_proto
     # end
 
-    def self.decode_raw(bytes, out_type: nil, little_endian: nil)
+    def self.decode_raw(bytes, out_type, little_endian: nil)
       RawOps.decode_raw(bytes: bytes, out_type: out_type, little_endian: little_endian)
     end
 

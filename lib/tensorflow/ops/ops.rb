@@ -1,7 +1,7 @@
 # keep in alphabetical order
 module Tensorflow
   module Ops
-    def cast(x, source_dtype: nil, destination_dtype: nil, truncate: false)
+    def cast(x, destination_dtype, source_dtype: nil, truncate: false)
       RawOps.cast(x, srct: source_dtype, dstt: destination_dtype, truncate: truncate)
     end
 

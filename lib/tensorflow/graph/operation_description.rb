@@ -6,7 +6,8 @@ module Tensorflow
       def initialize(graph, op_type, inputs, attrs)
         @graph = graph
         @op_def = self.get_op_def(op_type)
-        @name = self.graph.scoped_name(attrs[:name].to_s)
+        raw_name = attrs.delete(:name).to_s
+        @name = self.graph.scoped_name(raw_name)
         @pointer = FFI.TF_NewOperation(graph, op_type, @name)
 
         inputs = Array(inputs)
@@ -81,10 +82,31 @@ module Tensorflow
         FFI.TF_AddControlInput(self, control_input)
       end
 
+      def capture(operation)
+        if self.op_def.is_stateful
+          raise(TensorflowError, "Cannot capture a stateful node (name: #{operation.name}, type: #{operation.op_type})")
+        elsif operation.op_type == "Placeholder"
+          raise(TensorflowError, "Cannot capture a placeholder by value (name: #{operation.name}, type: #{operation.op_type})")
+        end
+
+        # Recursively work through inputs
+        new_inputs = operation.inputs.map do |input|
+          input_operation = input.operation(self.graph)
+          self.capture(input_operation)
+        end
+
+        attrs = operation.attributes.reduce(Hash.new) do |hash, attr|
+          hash[attr.name.to_sym] = attr.value
+          hash
+        end
+        attrs[:name] = operation.name
+        self.graph.create_operation(operation.op_type, new_inputs, **attrs)
+      end
+
       def check_input(arg_def, input)
         case input
           when Operation
-            input
+            self.graph.equal?(input.graph) ? input : capture(input)
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
@@ -103,30 +125,34 @@ module Tensorflow
       def setup_input(index, value)
         arg_def = self.op_def.input_arg[index]
 
+        checked_value = if !arg_def.number_attr.empty? || !arg_def.type_list_attr.empty?
+                          value.map do |sub_value|
+                            self.check_input(arg_def, sub_value)
+                          end
+                        else
+                          self.check_input(arg_def, value)
+                        end
+
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list
-          self.add_input_list(value) #addn operation required a list, but something else I don't remember wanted each input separate?
-          # value.each do |a_value|
-          #   self.add_input(a_value)
-          # end
+          self.add_input_list(checked_value)
         elsif !arg_def.type_list_attr.empty?
-          self.add_input_list(value)
+          self.add_input_list(checked_value)
         else
           # This input is a single item
-          value = self.check_input(arg_def, value)
-          self.add_input(value)
+          self.add_input(checked_value)
         end
       end
 
       def add_input(operation)
         # Check to see if the operation has multiple outputs, and if it does, we need to pack them together
         # to fit into one input
-        if operation.outputs.length > 1
-          pack_operation = Tensorflow.pack(operation, n: operation.outputs.length)
-          FFI.TF_AddInput(self, pack_operation.outputs.first)
-        else
-          FFI.TF_AddInput(self, operation.outputs.first)
-        end
+        # if operation.outputs.length > 1
+        #   pack_operation = Tensorflow.pack(operation, n: operation.outputs.length)
+        #   FFI.TF_AddInput(self, pack_operation.outputs.first)
+        # else
+           FFI.TF_AddInput(self, operation.outputs.first)
+        # end
       end
 
       def add_input_list(operations)
@@ -158,19 +184,39 @@ module Tensorflow
           when 'float'
             FFI.TF_SetAttrFloat(self, attr_def.name, value)
           when 'func'
-            FFI.TF_SetAttrFuncName(self, attr_def.name, value, value.length)
+            function_name = value.is_a?(Function) ? value.name : value
+            FFI.TF_SetAttrFuncName(self, attr_def.name, function_name, function_name.length)
           when 'shape'
             pointer = ::FFI::MemoryPointer.new(:int64, value.length)
             pointer.write_array_of_int64(value)
             FFI.TF_SetAttrShape(self, attr_def.name, pointer, value.length)
+          when 'list(shape)'
+            dims_pointer = ::FFI::MemoryPointer.new(:pointer, value.length)
+            num_dims_pointer = ::FFI::MemoryPointer.new(:int32, value.length)
+            value.each_with_index do |shape, i|
+              dim_pointer = ::FFI::MemoryPointer.new(:int64, shape.length)
+              dim_pointer.write_array_of_int64(shape)
+              dims_pointer.put_pointer(i * ::FFI.type_size(:pointer), dim_pointer)
+              num_dims_pointer.put_int32(i * ::FFI.type_size(:int32), shape.length)
+            end
+            FFI.TF_SetAttrShapeList(self, attr_def.name, dims_pointer, num_dims_pointer, value.length)
           when 'string'
             FFI.TF_SetAttrString(self, attr_def.name, value, value.length)
+          when 'list(string)'
+            a = 1
+            #FFI.TF_SetAttrString(self, attr_def.name, value, value.length)
           when 'tensor'
             Status.check do |status|
               FFI.TF_SetAttrTensor(self, attr_def.name, value, status)
             end
           when 'type'
             FFI.TF_SetAttrType(self, attr_def.name, value)
+          when 'list(type)'
+            value_ptr = ::FFI::MemoryPointer.new(FFI::DataType.native_type.size, value.count)
+            value.each_with_index do |a_value, i|
+              value_ptr.put_int32(i * FFI::DataType.native_type.size, FFI::DataType[a_value])
+            end
+            FFI.TF_SetAttrTypeList(self, attr_def.name, value_ptr, value.count)
           else
             raise(TensorflowError, "Unsupported attribute. #{self.op_def.name} - #{attr_def.name}")
         end

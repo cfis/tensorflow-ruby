@@ -66,6 +66,7 @@ require "tensorflow/graph/graph"
 require "tensorflow/graph/graph_def_options"
 require "tensorflow/graph/graph_keys"
 require "tensorflow/graph/operation"
+require "tensorflow/graph/operation_attr"
 require "tensorflow/graph/operation_description"
 require "tensorflow/graph/session"
 

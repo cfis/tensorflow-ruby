@@ -33,14 +33,8 @@ module Tensorflow
       layout :oper, :pointer,
              :index, :int
 
-      def self.pointer_array(operations)
-        result = ::FFI::MemoryPointer.new(self, operations.length)
-        operations.each_with_index do |operation, i|
-          input = self.new(result + (i * self.size))
-          input[:oper] = operation
-          input[:index] = 0
-        end
-        result
+      def operation(graph)
+        Graph::Operation.new(graph, self[:oper])
       end
     end
 

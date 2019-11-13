@@ -91,6 +91,10 @@ module Tensorflow
         end
       end
 
+      def [](index)
+        self.outputs[index]
+      end
+
       def output_types
         result = Array.new(self.num_outputs)
         self.num_outputs.times do |index|
@@ -136,22 +140,29 @@ module Tensorflow
         OperationAttr.new(self, attr_name, metadata)
       end
 
-      def consumers
+      def output_consumers(index)
+        # How many consumers does this output have?
         output = FFI::Output.new
         output[:oper] = self
-        output[:index] = 0
-
+        output[:index] = index
         count = FFI.TF_OperationOutputNumConsumers(output)
-        consumers = ::FFI::MemoryPointer.new(FFI::Output, count)
-        FFI.TF_OperationOutputConsumers(output, consumers, count)
 
-        result = Array.new
-        count.times do |i|
-          pointer = consumers[i]
-          input = FFI::Input.new(pointer)
-          result << Operation.new(self.graph, input[:oper])
+        # Get the consumers
+        consumers_ptr = ::FFI::MemoryPointer.new(FFI::Input, count)
+        FFI.TF_OperationOutputConsumers(output, consumers_ptr, count)
+
+        count.times.map do |i|
+          input = FFI::Input.new(consumers_ptr[i])
+          # Need to set the index since its 0 and not equal to the output index
+          input[:index] = index
+          input
         end
-        result
+      end
+
+      def consumers
+        self.num_outputs.times.reduce(Array.new) do |result, index|
+          result.concat(self.output_consumers(index))
+        end
       end
 
       def to_s

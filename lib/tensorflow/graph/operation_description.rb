@@ -107,6 +107,8 @@ module Tensorflow
         case input
           when Operation
             self.graph.equal?(input.graph) ? input : capture(input)
+          when FFI::Output
+            input
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
@@ -125,7 +127,8 @@ module Tensorflow
       def setup_input(index, value)
         arg_def = self.op_def.input_arg[index]
 
-        checked_value = if !arg_def.number_attr.empty? || !arg_def.type_list_attr.empty?
+        # Value can be an operation with multiple outputs. For example calling PACK with an input operation of SPLIT
+        checked_value = if (!arg_def.number_attr.empty? || !arg_def.type_list_attr.empty?)  && value.is_a?(Array)
                           value.map do |sub_value|
                             self.check_input(arg_def, sub_value)
                           end
@@ -147,12 +150,14 @@ module Tensorflow
       def add_input(operation)
         # Check to see if the operation has multiple outputs, and if it does, we need to pack them together
         # to fit into one input
-        # if operation.outputs.length > 1
-        #   pack_operation = Tensorflow.pack(operation, n: operation.outputs.length)
-        #   FFI.TF_AddInput(self, pack_operation.outputs.first)
-        # else
-           FFI.TF_AddInput(self, operation.outputs.first)
-        # end
+        if operation.is_a?(FFI::Output)
+            FFI.TF_AddInput(self, operation)
+        elsif operation.num_outputs > 1
+          packed = Tensorflow.pack(operation, n: operation.num_outputs)
+          FFI.TF_AddInput(self, packed.outputs.first)
+        else
+          FFI.TF_AddInput(self, operation.outputs.first)
+        end
       end
 
       def add_input_list(operations)

@@ -95,11 +95,50 @@ module Tensorflow
 
         consumers = placeholder.consumers
         assert_equal(1, consumers.length)
-        assert_equal(add, consumers[0])
+        consumer_operation = consumers[0].operation(Graph.default)
+        assert_equal(add, consumer_operation)
 
         consumers = constant.consumers
         assert_equal(1, consumers.length)
-        assert_equal(add, consumers[0])
+        consumer_operation = consumers[0].operation(Graph.default)
+        assert_equal(add, consumer_operation)
+      end
+
+      def test_multiple_consumers
+        data = Numo::NArray[[2,2], [2,2]]
+        split = Tensorflow.split(data, 0, num_split: 2)
+        rank = Tensorflow.rank(split)
+
+        pack = rank.inputs.first.operation(Graph.default)
+
+        consumers = split.consumers
+        assert_equal(2, consumers.length)
+
+        consumer = consumers[0]
+        consumer_operation = consumer.operation(Graph.default)
+        assert_equal(pack, consumer_operation)
+        assert_equal(0, consumer[:index])
+
+        consumer = consumers[1]
+        consumer_operation = consumer.operation(Graph.default)
+        assert_equal(pack, consumer_operation)
+        assert_equal(1, consumer[:index])
+      end
+
+      def test_partial_consumers
+        data = Numo::NArray[[2,2], [2,2]]
+        split = Tensorflow.split(data, 0, num_split: 2)
+        rank = Tensorflow.rank(split[1])
+
+        pack = rank.inputs.first.operation(Graph.default)
+
+        consumers = split.consumers
+        assert_equal(1, consumers.length)
+
+        consumer = consumers[0]
+        consumer_operation = consumer.operation(Graph.default)
+        assert_equal(rank, consumer_operation)
+        assert_equal(1, consumer[:index])
       end
 
       def test_add
@@ -163,6 +202,15 @@ module Tensorflow
         session = Session.new(x.graph, SessionOptions.new)
         result = session.run([y])
         assert_equal(2, result)
+      end
+
+      def test_index
+        data = Numo::NArray[[2,2], [2,2]]
+        split = Tensorflow.split(data, 0, num_split: 2)
+        op_1 = split[1]
+        assert_kind_of(FFI::Output, op_1)
+        assert_equal(split, op_1.operation(split.graph))
+        assert_equal(1, op_1[:index])
       end
     end
   end

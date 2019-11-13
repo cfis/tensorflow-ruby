@@ -4,7 +4,7 @@ module Tensorflow
   module Graph
     class OperationDescriptionTest < Minitest::Test
       def graph
-        @graph || Graph.new
+        @graph ||= Graph.new
       end
       
       def setup
@@ -130,6 +130,34 @@ module Tensorflow
           session = Session.new(graph, SessionOptions.new)
           result = session.run(add)
           assert_equal(27, result)
+        end
+      end
+
+      def test_pack
+        self.graph.as_default do
+          data = Numo::NArray[[2,2], [2,2]]
+          split = Tensorflow.split(data, 0, num_split: 2)
+          sum = Math.reduce_sum(split)
+
+          session = Session.new(self.graph, SessionOptions.new)
+          result = session.run([sum])
+          session.close
+
+          assert_equal(8, result)
+        end
+      end
+
+      def test_single_output
+        self.graph.as_default do
+          data = Numo::NArray[[2,2], [2,2]]
+          split = Tensorflow.split(data, 0, num_split: 2)
+          sum = Math.reduce_sum(split[1])
+
+          session = Session.new(self.graph, SessionOptions.new)
+          result = session.run([sum])
+          session.close
+
+          assert_equal(4, result)
         end
       end
 

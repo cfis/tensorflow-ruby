@@ -63,24 +63,43 @@ module Tensorflow
         end
       end
 
-      def test_unused_ouput
+      def test_unused_first_output
         Graph.new.as_default do |graph|
           w = Tensorflow.constant(1.0, shape: [2, 2])
           x = Tensorflow.constant(1.0, shape: [2, 2])
 
           wx = Linalg.matmul(w, x)
           split_wx = Tensorflow.split(wx, 0, num_split: 2)
-          c = Math.reduce_sum(split_wx)
+          c = Math.reduce_sum(split_wx[1])
 
           gradients = Gradients.new(graph)
           gw = gradients.gradients(c, [w])
-
 
           session = Session.new(graph, SessionOptions.new)
           result = session.run([gw])
           session.close
 
-          assert_equal([[2.0, 2.0], [2.0, 2.0]], result)
+          assert_equal([[0.0, 0.0], [2.0, 2.0]], result)
+        end
+      end
+
+      def test_unused_last_output
+        Graph.new.as_default do |graph|
+          w = Tensorflow.constant(1.0, shape: [2, 2])
+          x = Tensorflow.constant(1.0, shape: [2, 2])
+
+          wx = Linalg.matmul(w, x)
+          split_wx = Tensorflow.split(wx, 0, num_split: 2)
+          c = Math.reduce_sum(split_wx[0])
+
+          gradients = Gradients.new(graph)
+          gw = gradients.gradients(c, [w])
+
+          session = Session.new(graph, SessionOptions.new)
+          result = session.run([gw])
+          session.close
+
+          assert_equal([[2.0, 2.0], [0.0, 0.0]], result)
         end
       end
     end

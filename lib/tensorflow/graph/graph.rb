@@ -86,8 +86,9 @@ module Tensorflow
       def forward(operation)
         def forward_internal(set, operation)
           operation.consumers.each do |consumer|
-            set << consumer
-            forward_internal(set, consumer)
+            consumer_operation = consumer.operation(self)
+            set << consumer_operation
+            forward_internal(set, consumer_operation)
           end
           set
         end

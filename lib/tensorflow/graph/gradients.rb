@@ -21,15 +21,7 @@ module Tensorflow
             operations_path = self.path(output, input)
             next if operations_path.empty?
 
-            fill_op = self.graph.as_default do
-              shape_op = Tensorflow.shape(output, :int32)
-              const_name = "grad_ys_#{i}"
-              const_type = output.output_types.first
-              constant = Tensorflow.constant(1, name: const_name, dtype: const_type)
-              Tensorflow.fill(shape_op, constant)
-            end
-
-            self.derivative(fill_op, output, stop_operations, operations_path)
+            self.derivative(nil, output, stop_operations, operations_path)
           end.flatten.compact
         end
       end
@@ -41,17 +33,22 @@ module Tensorflow
         #   x  ------>  y  (forward)
         #   dy <-----   dx (backward)
 
+        return gradient if !operations_path.include?(operation) || stop_operations.include?(operation)
+
         inputs = operation.inputs.select do |input|
           input_operation = input.operation(self.graph)
           operations_path.include?(input_operation) && !stop_operations.include?(input_operation)
         end
 
-        outputs = operation.outputs.select do |output|
-          output_operation = output.operation(self.graph)
-          operations_path.include?(output_operation) && !stop_operations.include?(output_operation)
-        end
-
         return gradient if inputs.empty?
+
+        outputs = operation.outputs.select do |output|
+          consumers = operation.output_consumers(output[:index])
+          # The last operation we are evaluating will not be hooked up to any consumers, so
+          # we want to analyze all its outputs. For operations earlier in the graph, skip any
+          # unused outputs since they are not connected to anything
+          operation == operations_path.first || consumers.count > 0
+        end
 
         # These are the outputs from the operation
         y = FFI::Output.array_to_ptr(outputs)

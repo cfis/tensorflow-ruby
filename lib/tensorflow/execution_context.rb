@@ -46,16 +46,16 @@ module Tensorflow
     end
 
     def current(inputs=[])
-      figure_from_inputs(inputs) || figure_from_context || figure_from_execution_mode
+      figure_from_context || figure_from_inputs(inputs) || figure_from_execution_mode
     end
 
     def eager?(inputs=[])
-      context = figure_from_inputs(inputs) || figure_from_context || figure_from_execution_mode
+      context = self.current(inputs)
       context.is_a?(Eager::Context)
     end
 
     def graph?(inputs=[])
-      context = figure_from_inputs(inputs) || figure_from_context || figure_from_execution_mode
+      context = self.current(inputs)
       context.is_a?(Graph::Graph)
     end
   end

@@ -276,26 +276,29 @@ module Tensorflow
     end
 
     def write_scalar(new_value)
-      @byte_size = self.class.type_size(self.dtype)
-      @pointer = self.class.ruby_xmalloc(@byte_size)
       case self.dtype
-        when :float, :double, :int32, :uint8, :int16, :int8, :int64, :uint16, :uint32, :uint64
-          self.pointer.send("write_#{self.dtype}", new_value)
-        when :bfloat16
-          byte_str = self.pointer.read_bytes(self.count * 2)
-          self.count.times.map { |i| "#{byte_str[(2 * i)..(2 * i + 1)]}\x00\x00".unpack1("g") }
-        when :complex64
-          self.pointer.write_array_of_float([new_value.real, new_value.imaginary])
-        when :complex128
-          self.pointer.write_array_of_double([new_value.real, new_value.imaginary])
         when :string
           self.write_array_of_string([new_value])
-        when :bool
-          self.pointer.write_int8(new_value ? 1 : 0)
         when :resource, :variant
           return self
         else
-          raise "Unsupported tensor data type: #{self.dtype}"
+          @byte_size = self.class.type_size(self.dtype)
+          @pointer = self.class.ruby_xmalloc(@byte_size)
+          case self.dtype
+            when :float, :double, :int32, :uint8, :int16, :int8, :int64, :uint16, :uint32, :uint64
+              self.pointer.send("write_#{self.dtype}", new_value)
+            when :bfloat16
+              byte_str = self.pointer.read_bytes(self.count * 2)
+              self.count.times.map { |i| "#{byte_str[(2 * i)..(2 * i + 1)]}\x00\x00".unpack1("g") }
+            when :complex64
+              self.pointer.write_array_of_float([new_value.real, new_value.imaginary])
+            when :complex128
+              self.pointer.write_array_of_double([new_value.real, new_value.imaginary])
+            when :bool
+              self.pointer.write_int8(new_value ? 1 : 0)
+            else
+              raise "Unsupported tensor data type: #{self.dtype}"
+          end
       end
     end
   end

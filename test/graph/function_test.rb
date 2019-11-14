@@ -16,7 +16,7 @@ module Tensorflow
         assert_equal('MyFunc', function.name)
 
         Graph.new.as_default do |host_graph|
-          host_graph.copy_function(function)
+          host_graph.add_function(function)
 
           op_desc = OperationDescription.new(host_graph, 'MyFunc', [], name: 'MyFunc_0')
           func_operation = op_desc.save
@@ -45,7 +45,7 @@ module Tensorflow
         assert_equal('MyFunc', function.name)
 
         Graph.new.as_default do |host_graph|
-          host_graph.copy_function(function)
+          host_graph.add_function(function)
 
           func_feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')
 
@@ -81,7 +81,7 @@ module Tensorflow
         assert_equal('MyFunc', function.name)
 
         Graph.new.as_default do |host_graph|
-          host_graph.copy_function(function)
+          host_graph.add_function(function)
 
           constant = Tensorflow.constant(2, name: 'scalar2')
           func_feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')
@@ -122,7 +122,7 @@ module Tensorflow
         assert_equal('MyFunc', function.name)
 
         Graph.new.as_default do |host_graph|
-          host_graph.copy_function(function)
+          host_graph.add_function(function)
 
           constant = Tensorflow.constant(2, name: 'scalar2')
           func_feed = Tensorflow.placeholder(:int32, name: 'placeholder_1')

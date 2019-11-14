@@ -174,6 +174,7 @@ module Tensorflow
         Status.check do |status|
           FFI.TF_GraphCopyFunction(self, function, gradient, status)
         end
+
       end
 
       def to_function(name, operators, input_operations, output_operations, output_names=nil)

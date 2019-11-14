@@ -26,10 +26,21 @@ module Tensorflow
         end
       end
 
+      def self.from_tensor_slices(tensors)
+        TensorSliceDataset.new(tensors)
+      end
+
       def initialize(variant_tensor)
         @variant_tensor = variant_tensor
       end
 
+      def to_ptr
+        @variant_tensor.to_ptr
+      end
+
+      def with_options(options)
+
+      end
       def batch(batch_size, drop_remainder: false)
         BatchDataset.new(self, batch_size, drop_remainder)
       end
@@ -38,12 +49,8 @@ module Tensorflow
         ShuffleDataset.new(self, buffer_size)
       end
 
-      def self.from_tensor_slices(tensors)
-        TensorSliceDataset.new(tensors)
-      end
-
-      def to_ptr
-        @variant_tensor.to_ptr
+      def make_one_shot_iterator
+        Iterator.new(self)
       end
 
       def each

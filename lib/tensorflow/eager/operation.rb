@@ -54,23 +54,15 @@ module Tensorflow
             values.write_array_of_float(attr_value)
             FFI.TFE_OpSetAttrFloatList(self, attr_name, values, num_values)
           when :shape
-            dims_ptrs =
-                attr_value.map do |shape|
-                  if shape.empty?
-                    ptr = ::FFI::MemoryPointer.new(:int64, 1)
-                    ptr.write_int64(0)
-                  else
-                    ptr = ::FFI::MemoryPointer.new(:int64, shape.size)
-                    ptr.write_array_of_int64(shape)
-                  end
-                end
-            dims = ::FFI::MemoryPointer.new(:pointer, num_values)
-            dims.write_array_of_pointer(dims_ptrs)
-
-            num_dims = ::FFI::MemoryPointer.new(:int, num_values)
-            num_dims.write_array_of_int(attr_value.map(&:size))
-
-            FFI.TFE_OpSetAttrShapeList(self, attr_name, dims, num_dims, num_values, self.status)
+            dims_pointer = ::FFI::MemoryPointer.new(:pointer, num_values)
+            num_dims_pointer = ::FFI::MemoryPointer.new(:int32, num_values)
+            attr_value.each_with_index do |shape, i|
+              dim_pointer = ::FFI::MemoryPointer.new(:int64, shape.length)
+              dim_pointer.write_array_of_int64(shape)
+              dims_pointer.put_pointer(i * ::FFI.type_size(:pointer), dim_pointer)
+              num_dims_pointer.put_int32(i * ::FFI.type_size(:int32), shape.length)
+            end
+            FFI.TFE_OpSetAttrShapeList(self, attr_name, dims_pointer, num_dims_pointer, num_values, self.status)
             self.status.check
           when :type
             values = ::FFI::MemoryPointer.new(:int, num_values)

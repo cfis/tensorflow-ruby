@@ -9,24 +9,29 @@ module Tensorflow
         @metadata = metadata
       end
 
+      def list?
+        self.metadata[:is_list] > 0
+      end
+
       def value
         case self.metadata[:type]
           when :bool
-            self.bool
+            self.list? ? self.bool_list : self.bool
           when :int
-            self.int
+            self.list? ? self.int_list : self.int
           when :float
+            self.list? ? self.float_list : self.float
             self.float
           when :func
-            self.func
+            self.list? ? self.func_list : self.func
           when :shape
-            self.shape
+            self.list? ? self.shape_list : self.shape
           when :string
-            self.string
+            self.list? ? self.string_list : self.string
           when :tensor
-            self.tensor
+            self.list? ? self.tensor_list : self.tensor
           when :type
-            self.dtype
+            self.list? ? self.dtype_list : self.dtype
           else
             raise(TensorflowError, "Unsupported attribute. #{self.name} - #{self.metadata[:type]}")
         end
@@ -41,11 +46,22 @@ module Tensorflow
       end
 
       def dtype
-        pointer = ::FFI::MemoryPointer.new(:uint8)
+        pointer = ::FFI::MemoryPointer.new(FFI::DataType.native_type)
         Status.check do |status|
           FFI.TF_OperationGetAttrType(self.operation, self.name, pointer, status)
         end
-        FFI::DataType[pointer.read_uint8]
+        value = pointer.read(FFI::DataType.native_type)
+        FFI::DataType[value]
+      end
+
+      def dtype_list
+        pointer = ::FFI::MemoryPointer.new(FFI::DataType.native_type, self.metadata[:list_size])
+        Status.check do |status|
+          FFI.TF_OperationGetAttrTypeList(self.operation, self.name, pointer, self.metadata[:list_size], status)
+        end
+        pointer.read_array_of_type(FFI::DataType.native_type, :read_uint32, self.metadata[:list_size]).map do |value|
+          FFI::DataType[value]
+        end
       end
 
       def float
@@ -57,11 +73,7 @@ module Tensorflow
       end
 
       def func
-        pointer = ::FFI::MemoryPointer.new(:float)
-        Status.check do |status|
-          FFI.TF_OperationGetAttrFloat(self.operation, self.name, pointer, status)
-        end
-        pointer.read_float
+        self.proto.func.name
       end
 
       def int
@@ -85,6 +97,25 @@ module Tensorflow
         end
       end
 
+      def shape_list
+        total_size = self.metadata[:total_size]
+        storage_ptr = ::FFI::MemoryPointer.new(:uchar, total_size)
+        dims_pointer = ::FFI::MemoryPointer.new(:pointer, self.metadata[:list_size])
+        num_dims_pointer = ::FFI::MemoryPointer.new(:int, self.metadata[:list_size])
+        Status.check do |status|
+          FFI.TF_OperationGetAttrShapeList(self.operation, self.name,
+                                           dims_pointer, num_dims_pointer,
+                                           self.metadata[:list_size],
+                                           storage_ptr, total_size, status)
+        end
+
+        num_dims = num_dims_pointer.read_array_of_int(self.metadata[:list_size])
+        num_dims.map.with_index do |dims, i|
+          shape_pointer = dims_pointer[i].read_pointer
+          shape_pointer.read_array_of_int(dims)
+        end
+      end
+
       def string
         size = self.metadata[:total_size]
         pointer = ::FFI::MemoryPointer.new(:string, size)
@@ -100,6 +131,19 @@ module Tensorflow
           FFI.TF_OperationGetAttrTensor(self.operation, self.name, pointer, status)
         end
         Tensor.from_pointer(pointer.read_pointer)
+      end
+
+      def proto
+        buffer = FFI::Buffer.new
+        Status.check do |status|
+          FFI.TF_OperationGetAttrValueProto(self.operation, self.name, buffer, status)
+        end
+        data = buffer[:data].read_string(buffer[:length])
+        AttrValue.decode(data)
+      end
+
+      def to_s
+        "#{self.name}: #{self.value}"
       end
     end
   end

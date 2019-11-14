@@ -21,6 +21,13 @@ module Tensorflow
     class Session
       attr_accessor :options
 
+      def self.run(graph)
+        session = self.new(graph, SessionOptions.new)
+        result = yield session
+        session.close
+        result
+      end
+
       def self.finalize(pointer)
         proc do
           FFI.TF_DeleteSession(pointer)

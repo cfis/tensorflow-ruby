@@ -45,6 +45,12 @@ module Tensorflow
         assert_equal(:int32, attribute.value)
       end
 
+      def test_attr_proto
+        const = Tensorflow.constant([1,2,3])
+        attr_proto = const.attr('value').proto
+        assert_kind_of(Tensorflow::AttrValue, attr_proto)
+      end
+
       def test_num_inputs
         x = Tensorflow.constant(3.0, name: 'x')
         pow = Math.pow(x, 2.0)

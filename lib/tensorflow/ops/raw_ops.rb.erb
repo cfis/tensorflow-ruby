@@ -33,7 +33,6 @@ module Tensorflow
 
     def self.<%= name %>(<%= (input_names + attributes_in).join(', ') %>)
       self.execute("<%= op_def.name %>", [<%= input_names.join(', ') %>], <%= attributes_out.join(', ') %>)
-    end
-  <% end %>
+    end<% end %>
   end
 end

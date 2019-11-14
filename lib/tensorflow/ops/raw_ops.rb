@@ -18,6452 +18,5162 @@ module Tensorflow
     def self.abort(error_msg: nil, exit_without_error: false, name: "Abort")
       self.execute("Abort", [], error_msg: error_msg, exit_without_error: exit_without_error, name: name)
     end
-  
 
     def self.abs(x, typeT: nil, name: "Abs")
       self.execute("Abs", [x], T: typeT, name: name)
     end
-  
 
     def self.accumulate_nv2(inputs, n: nil, typeT: nil, shape: nil, name: "AccumulateNV2")
       self.execute("AccumulateNV2", [inputs], N: n, T: typeT, shape: shape, name: name)
     end
-  
 
     def self.accumulator_apply_gradient(handle, local_step, gradient, dtype: nil, name: "AccumulatorApplyGradient")
       self.execute("AccumulatorApplyGradient", [handle, local_step, gradient], dtype: dtype, name: name)
     end
-  
 
     def self.accumulator_num_accumulated(handle, name: "AccumulatorNumAccumulated")
       self.execute("AccumulatorNumAccumulated", [handle], name: name)
     end
-  
 
     def self.accumulator_set_global_step(handle, new_global_step, name: "AccumulatorSetGlobalStep")
       self.execute("AccumulatorSetGlobalStep", [handle, new_global_step], name: name)
     end
-  
 
     def self.accumulator_take_gradient(handle, num_required, dtype: nil, name: "AccumulatorTakeGradient")
       self.execute("AccumulatorTakeGradient", [handle, num_required], dtype: dtype, name: name)
     end
-  
 
     def self.acos(x, typeT: nil, name: "Acos")
       self.execute("Acos", [x], T: typeT, name: name)
     end
-  
 
     def self.acosh(x, typeT: nil, name: "Acosh")
       self.execute("Acosh", [x], T: typeT, name: name)
     end
-  
 
     def self.add(x, y, typeT: nil, name: "Add")
       self.execute("Add", [x, y], T: typeT, name: name)
     end
-  
 
     def self.add_many_sparse_to_tensors_map(sparse_indices, sparse_values, sparse_shape, typeT: nil, container: nil, shared_name: nil, name: "AddManySparseToTensorsMap")
       self.execute("AddManySparseToTensorsMap", [sparse_indices, sparse_values, sparse_shape], T: typeT, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.add_n(inputs, n: nil, typeT: nil, name: "AddN")
       self.execute("AddN", [inputs], N: n, T: typeT, name: name)
     end
-  
 
     def self.add_sparse_to_tensors_map(sparse_indices, sparse_values, sparse_shape, typeT: nil, container: nil, shared_name: nil, name: "AddSparseToTensorsMap")
       self.execute("AddSparseToTensorsMap", [sparse_indices, sparse_values, sparse_shape], T: typeT, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.add_v2(x, y, typeT: nil, name: "AddV2")
       self.execute("AddV2", [x, y], T: typeT, name: name)
     end
-  
 
     def self.adjust_contrast(images, contrast_factor, min_value, max_value, typeT: nil, name: "AdjustContrast")
       self.execute("AdjustContrast", [images, contrast_factor, min_value, max_value], T: typeT, name: name)
     end
-  
 
     def self.adjust_contrastv2(images, contrast_factor, typeT: nil, name: "AdjustContrastv2")
       self.execute("AdjustContrastv2", [images, contrast_factor], T: typeT, name: name)
     end
-  
 
     def self.adjust_hue(images, delta, typeT: nil, name: "AdjustHue")
       self.execute("AdjustHue", [images, delta], T: typeT, name: name)
     end
-  
 
     def self.adjust_saturation(images, scale, typeT: nil, name: "AdjustSaturation")
       self.execute("AdjustSaturation", [images, scale], T: typeT, name: name)
     end
-  
 
     def self.all(input, reduction_indices, keep_dims: false, tidx: nil, name: "All")
       self.execute("All", [input, reduction_indices], keep_dims: keep_dims, Tidx: tidx, name: name)
     end
-  
 
     def self.all_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, seed: 0, seed2: 0, name: "AllCandidateSampler")
       self.execute("AllCandidateSampler", [true_classes], num_true: num_true, num_sampled: num_sampled, unique: unique, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.all_to_all(input, group_assignment, typeT: nil, concat_dimension: nil, split_dimension: nil, split_count: nil, name: "AllToAll")
       self.execute("AllToAll", [input, group_assignment], T: typeT, concat_dimension: concat_dimension, split_dimension: split_dimension, split_count: split_count, name: name)
     end
-  
 
     def self.angle(input, typeT: nil, tout: nil, name: "Angle")
       self.execute("Angle", [input], T: typeT, Tout: tout, name: name)
     end
-  
 
     def self.anonymous_iterator(output_types: nil, output_shapes: nil, name: "AnonymousIterator")
       self.execute("AnonymousIterator", [], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.anonymous_iterator_v2(output_types: nil, output_shapes: nil, name: "AnonymousIteratorV2")
       self.execute("AnonymousIteratorV2", [], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.anonymous_memory_cache(name: "AnonymousMemoryCache")
       self.execute("AnonymousMemoryCache", [], name: name)
     end
-  
 
     def self.anonymous_multi_device_iterator(devices: nil, output_types: nil, output_shapes: nil, name: "AnonymousMultiDeviceIterator")
       self.execute("AnonymousMultiDeviceIterator", [], devices: devices, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.anonymous_random_seed_generator(seed, seed2, name: "AnonymousRandomSeedGenerator")
       self.execute("AnonymousRandomSeedGenerator", [seed, seed2], name: name)
     end
-  
 
     def self.any(input, reduction_indices, keep_dims: false, tidx: nil, name: "Any")
       self.execute("Any", [input, reduction_indices], keep_dims: keep_dims, Tidx: tidx, name: name)
     end
-  
 
     def self.apply_ada_max(var, m, v, beta1_power, lr, beta1, beta2, epsilon, grad, typeT: nil, use_locking: false, name: "ApplyAdaMax")
       self.execute("ApplyAdaMax", [var, m, v, beta1_power, lr, beta1, beta2, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_adadelta(var, accum, accum_update, lr, rho, epsilon, grad, typeT: nil, use_locking: false, name: "ApplyAdadelta")
       self.execute("ApplyAdadelta", [var, accum, accum_update, lr, rho, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_adagrad(var, accum, lr, grad, typeT: nil, use_locking: false, update_slots: true, name: "ApplyAdagrad")
       self.execute("ApplyAdagrad", [var, accum, lr, grad], T: typeT, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.apply_adagrad_da(var, gradient_accumulator, gradient_squared_accumulator, grad, lr, l1, l2, global_step, typeT: nil, use_locking: false, name: "ApplyAdagradDA")
       self.execute("ApplyAdagradDA", [var, gradient_accumulator, gradient_squared_accumulator, grad, lr, l1, l2, global_step], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_adagrad_v2(var, accum, lr, epsilon, grad, typeT: nil, use_locking: false, update_slots: true, name: "ApplyAdagradV2")
       self.execute("ApplyAdagradV2", [var, accum, lr, epsilon, grad], T: typeT, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.apply_adam(var, m, v, beta1_power, beta2_power, lr, beta1, beta2, epsilon, grad, typeT: nil, use_locking: false, use_nesterov: false, name: "ApplyAdam")
       self.execute("ApplyAdam", [var, m, v, beta1_power, beta2_power, lr, beta1, beta2, epsilon, grad], T: typeT, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.apply_add_sign(var, m, lr, alpha, sign_decay, beta, grad, typeT: nil, use_locking: false, name: "ApplyAddSign")
       self.execute("ApplyAddSign", [var, m, lr, alpha, sign_decay, beta, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_centered_rms_prop(var, mg, ms, mom, lr, rho, momentum, epsilon, grad, typeT: nil, use_locking: false, name: "ApplyCenteredRMSProp")
       self.execute("ApplyCenteredRMSProp", [var, mg, ms, mom, lr, rho, momentum, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_ftrl(var, accum, linear, grad, lr, l1, l2, lr_power, typeT: nil, use_locking: false, name: "ApplyFtrl")
       self.execute("ApplyFtrl", [var, accum, linear, grad, lr, l1, l2, lr_power], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_ftrl_v2(var, accum, linear, grad, lr, l1, l2, l2_shrinkage, lr_power, typeT: nil, use_locking: false, name: "ApplyFtrlV2")
       self.execute("ApplyFtrlV2", [var, accum, linear, grad, lr, l1, l2, l2_shrinkage, lr_power], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_gradient_descent(var, alpha, delta, typeT: nil, use_locking: false, name: "ApplyGradientDescent")
       self.execute("ApplyGradientDescent", [var, alpha, delta], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_momentum(var, accum, lr, grad, momentum, typeT: nil, use_locking: false, use_nesterov: false, name: "ApplyMomentum")
       self.execute("ApplyMomentum", [var, accum, lr, grad, momentum], T: typeT, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.apply_power_sign(var, m, lr, logbase, sign_decay, beta, grad, typeT: nil, use_locking: false, name: "ApplyPowerSign")
       self.execute("ApplyPowerSign", [var, m, lr, logbase, sign_decay, beta, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_proximal_adagrad(var, accum, lr, l1, l2, grad, typeT: nil, use_locking: false, name: "ApplyProximalAdagrad")
       self.execute("ApplyProximalAdagrad", [var, accum, lr, l1, l2, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_proximal_gradient_descent(var, alpha, l1, l2, delta, typeT: nil, use_locking: false, name: "ApplyProximalGradientDescent")
       self.execute("ApplyProximalGradientDescent", [var, alpha, l1, l2, delta], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.apply_rms_prop(var, ms, mom, lr, rho, momentum, epsilon, grad, typeT: nil, use_locking: false, name: "ApplyRMSProp")
       self.execute("ApplyRMSProp", [var, ms, mom, lr, rho, momentum, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.approximate_equal(x, y, typeT: nil, tolerance: 9.999999747378752e-06, name: "ApproximateEqual")
       self.execute("ApproximateEqual", [x, y], T: typeT, tolerance: tolerance, name: name)
     end
-  
 
     def self.arg_max(input, dimension, typeT: nil, tidx: nil, output_type: nil, name: "ArgMax")
       self.execute("ArgMax", [input, dimension], T: typeT, Tidx: tidx, output_type: output_type, name: name)
     end
-  
 
     def self.arg_min(input, dimension, typeT: nil, tidx: nil, output_type: nil, name: "ArgMin")
       self.execute("ArgMin", [input, dimension], T: typeT, Tidx: tidx, output_type: output_type, name: name)
     end
-  
 
     def self.as_string(input, typeT: nil, precision: -1, scientific: false, shortest: false, width: -1, fill: nil, name: "AsString")
       self.execute("AsString", [input], T: typeT, precision: precision, scientific: scientific, shortest: shortest, width: width, fill: fill, name: name)
     end
-  
 
     def self.asin(x, typeT: nil, name: "Asin")
       self.execute("Asin", [x], T: typeT, name: name)
     end
-  
 
     def self.asinh(x, typeT: nil, name: "Asinh")
       self.execute("Asinh", [x], T: typeT, name: name)
     end
-  
 
     def self.assert(condition, data, typeT: nil, summarize: 3, name: "Assert")
       self.execute("Assert", [condition, data], T: typeT, summarize: summarize, name: name)
     end
-  
 
     def self.assert_next_dataset(input_dataset, transformations, output_types: nil, output_shapes: nil, name: "AssertNextDataset")
       self.execute("AssertNextDataset", [input_dataset, transformations], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.assign(ref, value, typeT: nil, validate_shape: true, use_locking: true, name: "Assign")
       self.execute("Assign", [ref, value], T: typeT, validate_shape: validate_shape, use_locking: use_locking, name: name)
     end
-  
 
     def self.assign_add(ref, value, typeT: nil, use_locking: false, name: "AssignAdd")
       self.execute("AssignAdd", [ref, value], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.assign_add_variable_op(resource, value, dtype: nil, name: "AssignAddVariableOp")
       self.execute("AssignAddVariableOp", [resource, value], dtype: dtype, name: name)
     end
-  
 
     def self.assign_sub(ref, value, typeT: nil, use_locking: false, name: "AssignSub")
       self.execute("AssignSub", [ref, value], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.assign_sub_variable_op(resource, value, dtype: nil, name: "AssignSubVariableOp")
       self.execute("AssignSubVariableOp", [resource, value], dtype: dtype, name: name)
     end
-  
 
     def self.assign_variable_op(resource, value, dtype: nil, name: "AssignVariableOp")
       self.execute("AssignVariableOp", [resource, value], dtype: dtype, name: name)
     end
-  
 
     def self.atan(x, typeT: nil, name: "Atan")
       self.execute("Atan", [x], T: typeT, name: name)
     end
-  
 
     def self.atan2(y, x, typeT: nil, name: "Atan2")
       self.execute("Atan2", [y, x], T: typeT, name: name)
     end
-  
 
     def self.atanh(x, typeT: nil, name: "Atanh")
       self.execute("Atanh", [x], T: typeT, name: name)
     end
-  
 
     def self.audio_spectrogram(input, window_size: nil, stride: nil, magnitude_squared: false, name: "AudioSpectrogram")
       self.execute("AudioSpectrogram", [input], window_size: window_size, stride: stride, magnitude_squared: magnitude_squared, name: name)
     end
-  
 
     def self.audio_summary(tag, tensor, sample_rate: nil, max_outputs: 3, name: "AudioSummary")
       self.execute("AudioSummary", [tag, tensor], sample_rate: sample_rate, max_outputs: max_outputs, name: name)
     end
-  
 
     def self.audio_summary_v2(tag, tensor, sample_rate, max_outputs: 3, name: "AudioSummaryV2")
       self.execute("AudioSummaryV2", [tag, tensor, sample_rate], max_outputs: max_outputs, name: name)
     end
-  
 
     def self.auto_shard_dataset(input_dataset, num_workers, index, auto_shard_policy: 0, output_types: nil, output_shapes: nil, name: "AutoShardDataset")
       self.execute("AutoShardDataset", [input_dataset, num_workers, index], auto_shard_policy: auto_shard_policy, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.avg_pool(value, ksize: nil, strides: nil, padding: nil, data_format: "NHWC", typeT: nil, name: "AvgPool")
       self.execute("AvgPool", [value], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.avg_pool3_d(input, ksize: nil, strides: nil, padding: nil, data_format: "NDHWC", typeT: nil, name: "AvgPool3D")
       self.execute("AvgPool3D", [input], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.avg_pool3_d_grad(orig_input_shape, grad, ksize: nil, strides: nil, padding: nil, data_format: "NDHWC", typeT: nil, name: "AvgPool3DGrad")
       self.execute("AvgPool3DGrad", [orig_input_shape, grad], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.avg_pool_grad(orig_input_shape, grad, ksize: nil, strides: nil, padding: nil, data_format: "NHWC", typeT: nil, name: "AvgPoolGrad")
       self.execute("AvgPoolGrad", [orig_input_shape, grad], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.barrier(component_types: nil, shapes: [], capacity: -1, container: nil, shared_name: nil, name: "Barrier")
       self.execute("Barrier", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.barrier_close(handle, cancel_pending_enqueues: false, name: "BarrierClose")
       self.execute("BarrierClose", [handle], cancel_pending_enqueues: cancel_pending_enqueues, name: name)
     end
-  
 
     def self.barrier_incomplete_size(handle, name: "BarrierIncompleteSize")
       self.execute("BarrierIncompleteSize", [handle], name: name)
     end
-  
 
     def self.barrier_insert_many(handle, keys, values, typeT: nil, component_index: nil, name: "BarrierInsertMany")
       self.execute("BarrierInsertMany", [handle, keys, values], T: typeT, component_index: component_index, name: name)
     end
-  
 
     def self.barrier_ready_size(handle, name: "BarrierReadySize")
       self.execute("BarrierReadySize", [handle], name: name)
     end
-  
 
     def self.barrier_take_many(handle, num_elements, component_types: nil, allow_small_batch: false, wait_for_incomplete: false, timeout_ms: -1, name: "BarrierTakeMany")
       self.execute("BarrierTakeMany", [handle, num_elements], component_types: component_types, allow_small_batch: allow_small_batch, wait_for_incomplete: wait_for_incomplete, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.batch(in_tensors, num_batch_threads: nil, max_batch_size: nil, max_enqueued_batches: 10, batch_timeout_micros: nil, allowed_batch_sizes: [], grad_timeout_micros: nil, container: nil, shared_name: nil, batching_queue: nil, typeT: nil, name: "Batch")
       self.execute("Batch", [in_tensors], num_batch_threads: num_batch_threads, max_batch_size: max_batch_size, max_enqueued_batches: max_enqueued_batches, batch_timeout_micros: batch_timeout_micros, allowed_batch_sizes: allowed_batch_sizes, grad_timeout_micros: grad_timeout_micros, container: container, shared_name: shared_name, batching_queue: batching_queue, T: typeT, name: name)
     end
-  
 
     def self.batch_cholesky(input, typeT: nil, name: "BatchCholesky")
       self.execute("BatchCholesky", [input], T: typeT, name: name)
     end
-  
 
     def self.batch_cholesky_grad(l, grad, typeT: nil, name: "BatchCholeskyGrad")
       self.execute("BatchCholeskyGrad", [l, grad], T: typeT, name: name)
     end
-  
 
     def self.batch_dataset(input_dataset, batch_size, output_types: nil, output_shapes: nil, name: "BatchDataset")
       self.execute("BatchDataset", [input_dataset, batch_size], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.batch_dataset_v2(input_dataset, batch_size, drop_remainder, parallel_copy: false, output_types: nil, output_shapes: nil, name: "BatchDatasetV2")
       self.execute("BatchDatasetV2", [input_dataset, batch_size, drop_remainder], parallel_copy: parallel_copy, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.batch_fft(input, name: "BatchFFT")
       self.execute("BatchFFT", [input], name: name)
     end
-  
 
     def self.batch_fft2_d(input, name: "BatchFFT2D")
       self.execute("BatchFFT2D", [input], name: name)
     end
-  
 
     def self.batch_fft3_d(input, name: "BatchFFT3D")
       self.execute("BatchFFT3D", [input], name: name)
     end
-  
 
     def self.batch_function(in_tensors, captured_tensors, f: nil, num_batch_threads: nil, max_batch_size: nil, batch_timeout_micros: nil, max_enqueued_batches: 10, allowed_batch_sizes: [], container: nil, shared_name: nil, batching_queue: nil, tin: nil, tcaptured: nil, tout: nil, name: "BatchFunction")
       self.execute("BatchFunction", [in_tensors, captured_tensors], f: f, num_batch_threads: num_batch_threads, max_batch_size: max_batch_size, batch_timeout_micros: batch_timeout_micros, max_enqueued_batches: max_enqueued_batches, allowed_batch_sizes: allowed_batch_sizes, container: container, shared_name: shared_name, batching_queue: batching_queue, Tin: tin, Tcaptured: tcaptured, Tout: tout, name: name)
     end
-  
 
     def self.batch_ifft(input, name: "BatchIFFT")
       self.execute("BatchIFFT", [input], name: name)
     end
-  
 
     def self.batch_ifft2_d(input, name: "BatchIFFT2D")
       self.execute("BatchIFFT2D", [input], name: name)
     end
-  
 
     def self.batch_ifft3_d(input, name: "BatchIFFT3D")
       self.execute("BatchIFFT3D", [input], name: name)
     end
-  
 
     def self.batch_mat_mul(x, y, typeT: nil, adj_x: false, adj_y: false, name: "BatchMatMul")
       self.execute("BatchMatMul", [x, y], T: typeT, adj_x: adj_x, adj_y: adj_y, name: name)
     end
-  
 
     def self.batch_mat_mul_v2(x, y, typeT: nil, adj_x: false, adj_y: false, name: "BatchMatMulV2")
       self.execute("BatchMatMulV2", [x, y], T: typeT, adj_x: adj_x, adj_y: adj_y, name: name)
     end
-  
 
     def self.batch_matrix_band_part(input, num_lower, num_upper, typeT: nil, name: "BatchMatrixBandPart")
       self.execute("BatchMatrixBandPart", [input, num_lower, num_upper], T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_determinant(input, typeT: nil, name: "BatchMatrixDeterminant")
       self.execute("BatchMatrixDeterminant", [input], T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_diag(diagonal, typeT: nil, name: "BatchMatrixDiag")
       self.execute("BatchMatrixDiag", [diagonal], T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_diag_part(input, typeT: nil, name: "BatchMatrixDiagPart")
       self.execute("BatchMatrixDiagPart", [input], T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_inverse(input, adjoint: false, typeT: nil, name: "BatchMatrixInverse")
       self.execute("BatchMatrixInverse", [input], adjoint: adjoint, T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_set_diag(input, diagonal, typeT: nil, name: "BatchMatrixSetDiag")
       self.execute("BatchMatrixSetDiag", [input, diagonal], T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_solve(matrix, rhs, adjoint: false, typeT: nil, name: "BatchMatrixSolve")
       self.execute("BatchMatrixSolve", [matrix, rhs], adjoint: adjoint, T: typeT, name: name)
     end
-  
 
     def self.batch_matrix_solve_ls(matrix, rhs, l2_regularizer, typeT: nil, fast: true, name: "BatchMatrixSolveLs")
       self.execute("BatchMatrixSolveLs", [matrix, rhs, l2_regularizer], T: typeT, fast: fast, name: name)
     end
-  
 
     def self.batch_matrix_triangular_solve(matrix, rhs, lower: true, adjoint: false, typeT: nil, name: "BatchMatrixTriangularSolve")
       self.execute("BatchMatrixTriangularSolve", [matrix, rhs], lower: lower, adjoint: adjoint, T: typeT, name: name)
     end
-  
 
     def self.batch_norm_with_global_normalization(t, m, v, beta, gamma, typeT: nil, variance_epsilon: nil, scale_after_normalization: nil, name: "BatchNormWithGlobalNormalization")
       self.execute("BatchNormWithGlobalNormalization", [t, m, v, beta, gamma], T: typeT, variance_epsilon: variance_epsilon, scale_after_normalization: scale_after_normalization, name: name)
     end
-  
 
     def self.batch_norm_with_global_normalization_grad(t, m, v, gamma, backprop, typeT: nil, variance_epsilon: nil, scale_after_normalization: nil, name: "BatchNormWithGlobalNormalizationGrad")
       self.execute("BatchNormWithGlobalNormalizationGrad", [t, m, v, gamma, backprop], T: typeT, variance_epsilon: variance_epsilon, scale_after_normalization: scale_after_normalization, name: name)
     end
-  
 
     def self.batch_self_adjoint_eig(input, typeT: nil, name: "BatchSelfAdjointEig")
       self.execute("BatchSelfAdjointEig", [input], T: typeT, name: name)
     end
-  
 
     def self.batch_self_adjoint_eig_v2(input, compute_v: true, typeT: nil, name: "BatchSelfAdjointEigV2")
       self.execute("BatchSelfAdjointEigV2", [input], compute_v: compute_v, T: typeT, name: name)
     end
-  
 
     def self.batch_svd(input, compute_uv: true, full_matrices: false, typeT: nil, name: "BatchSvd")
       self.execute("BatchSvd", [input], compute_uv: compute_uv, full_matrices: full_matrices, T: typeT, name: name)
     end
-  
 
     def self.batch_to_space(input, crops, typeT: nil, block_size: nil, tidx: nil, name: "BatchToSpace")
       self.execute("BatchToSpace", [input, crops], T: typeT, block_size: block_size, Tidx: tidx, name: name)
     end
-  
 
     def self.batch_to_space_nd(input, block_shape, crops, typeT: nil, tblock_shape: nil, tcrops: nil, name: "BatchToSpaceND")
       self.execute("BatchToSpaceND", [input, block_shape, crops], T: typeT, Tblock_shape: tblock_shape, Tcrops: tcrops, name: name)
     end
-  
 
     def self.bessel_i0e(x, typeT: nil, name: "BesselI0e")
       self.execute("BesselI0e", [x], T: typeT, name: name)
     end
-  
 
     def self.bessel_i1e(x, typeT: nil, name: "BesselI1e")
       self.execute("BesselI1e", [x], T: typeT, name: name)
     end
-  
 
     def self.betainc(a, b, x, typeT: nil, name: "Betainc")
       self.execute("Betainc", [a, b, x], T: typeT, name: name)
     end
-  
 
     def self.bias_add(value, bias, typeT: nil, data_format: "NHWC", name: "BiasAdd")
       self.execute("BiasAdd", [value, bias], T: typeT, data_format: data_format, name: name)
     end
-  
 
     def self.bias_add_grad(out_backprop, typeT: nil, data_format: "NHWC", name: "BiasAddGrad")
       self.execute("BiasAddGrad", [out_backprop], T: typeT, data_format: data_format, name: name)
     end
-  
 
     def self.bias_add_v1(value, bias, typeT: nil, name: "BiasAddV1")
       self.execute("BiasAddV1", [value, bias], T: typeT, name: name)
     end
-  
 
     def self.bincount(arr, size, weights, typeT: nil, name: "Bincount")
       self.execute("Bincount", [arr, size, weights], T: typeT, name: name)
     end
-  
 
     def self.bitcast(input, typeT: nil, type: nil, name: "Bitcast")
       self.execute("Bitcast", [input], T: typeT, type: type, name: name)
     end
-  
 
     def self.bitwise_and(x, y, typeT: nil, name: "BitwiseAnd")
       self.execute("BitwiseAnd", [x, y], T: typeT, name: name)
     end
-  
 
     def self.bitwise_or(x, y, typeT: nil, name: "BitwiseOr")
       self.execute("BitwiseOr", [x, y], T: typeT, name: name)
     end
-  
 
     def self.bitwise_xor(x, y, typeT: nil, name: "BitwiseXor")
       self.execute("BitwiseXor", [x, y], T: typeT, name: name)
     end
-  
 
     def self.block_lstm(seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b, forget_bias: 1.0, cell_clip: 3.0, use_peephole: false, typeT: nil, name: "BlockLSTM")
       self.execute("BlockLSTM", [seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b], forget_bias: forget_bias, cell_clip: cell_clip, use_peephole: use_peephole, T: typeT, name: name)
     end
-  
 
     def self.block_lstm_grad(seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b, i, cs, f, o, ci, co, h, cs_grad, h_grad, use_peephole: nil, typeT: nil, name: "BlockLSTMGrad")
       self.execute("BlockLSTMGrad", [seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b, i, cs, f, o, ci, co, h, cs_grad, h_grad], use_peephole: use_peephole, T: typeT, name: name)
     end
-  
 
     def self.block_lstm_grad_v2(seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b, i, cs, f, o, ci, co, h, cs_grad, h_grad, use_peephole: nil, typeT: nil, name: "BlockLSTMGradV2")
       self.execute("BlockLSTMGradV2", [seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b, i, cs, f, o, ci, co, h, cs_grad, h_grad], use_peephole: use_peephole, T: typeT, name: name)
     end
-  
 
     def self.block_lstmv2(seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b, cell_clip: 0.0, use_peephole: false, typeT: nil, name: "BlockLSTMV2")
       self.execute("BlockLSTMV2", [seq_len_max, x, cs_prev, h_prev, w, wci, wcf, wco, b], cell_clip: cell_clip, use_peephole: use_peephole, T: typeT, name: name)
     end
-  
 
     def self.boosted_trees_aggregate_stats(node_ids, gradients, hessians, feature, max_splits: nil, num_buckets: nil, name: "BoostedTreesAggregateStats")
       self.execute("BoostedTreesAggregateStats", [node_ids, gradients, hessians, feature], max_splits: max_splits, num_buckets: num_buckets, name: name)
     end
-  
 
     def self.boosted_trees_bucketize(float_values, bucket_boundaries, num_features: nil, name: "BoostedTreesBucketize")
       self.execute("BoostedTreesBucketize", [float_values, bucket_boundaries], num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_calculate_best_feature_split(node_id_range, stats_summary, l1, l2, tree_complexity, min_node_weight, logits_dimension: nil, split_type: "inequality", name: "BoostedTreesCalculateBestFeatureSplit")
       self.execute("BoostedTreesCalculateBestFeatureSplit", [node_id_range, stats_summary, l1, l2, tree_complexity, min_node_weight], logits_dimension: logits_dimension, split_type: split_type, name: name)
     end
-  
 
     def self.boosted_trees_calculate_best_gains_per_feature(node_id_range, stats_summary_list, l1, l2, tree_complexity, min_node_weight, max_splits: nil, num_features: nil, name: "BoostedTreesCalculateBestGainsPerFeature")
       self.execute("BoostedTreesCalculateBestGainsPerFeature", [node_id_range, stats_summary_list, l1, l2, tree_complexity, min_node_weight], max_splits: max_splits, num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_center_bias(tree_ensemble_handle, mean_gradients, mean_hessians, l1, l2, name: "BoostedTreesCenterBias")
       self.execute("BoostedTreesCenterBias", [tree_ensemble_handle, mean_gradients, mean_hessians, l1, l2], name: name)
     end
-  
 
     def self.boosted_trees_create_ensemble(tree_ensemble_handle, stamp_token, tree_ensemble_serialized, name: "BoostedTreesCreateEnsemble")
       self.execute("BoostedTreesCreateEnsemble", [tree_ensemble_handle, stamp_token, tree_ensemble_serialized], name: name)
     end
-  
 
     def self.boosted_trees_create_quantile_stream_resource(quantile_stream_resource_handle, epsilon, num_streams, max_elements: 1099511627776, name: "BoostedTreesCreateQuantileStreamResource")
       self.execute("BoostedTreesCreateQuantileStreamResource", [quantile_stream_resource_handle, epsilon, num_streams], max_elements: max_elements, name: name)
     end
-  
 
     def self.boosted_trees_deserialize_ensemble(tree_ensemble_handle, stamp_token, tree_ensemble_serialized, name: "BoostedTreesDeserializeEnsemble")
       self.execute("BoostedTreesDeserializeEnsemble", [tree_ensemble_handle, stamp_token, tree_ensemble_serialized], name: name)
     end
-  
 
     def self.boosted_trees_ensemble_resource_handle_op(container: nil, shared_name: nil, name: "BoostedTreesEnsembleResourceHandleOp")
       self.execute("BoostedTreesEnsembleResourceHandleOp", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.boosted_trees_example_debug_outputs(tree_ensemble_handle, bucketized_features, num_bucketized_features: nil, logits_dimension: nil, name: "BoostedTreesExampleDebugOutputs")
       self.execute("BoostedTreesExampleDebugOutputs", [tree_ensemble_handle, bucketized_features], num_bucketized_features: num_bucketized_features, logits_dimension: logits_dimension, name: name)
     end
-  
 
     def self.boosted_trees_flush_quantile_summaries(quantile_stream_resource_handle, num_features: nil, name: "BoostedTreesFlushQuantileSummaries")
       self.execute("BoostedTreesFlushQuantileSummaries", [quantile_stream_resource_handle], num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_get_ensemble_states(tree_ensemble_handle, name: "BoostedTreesGetEnsembleStates")
       self.execute("BoostedTreesGetEnsembleStates", [tree_ensemble_handle], name: name)
     end
-  
 
     def self.boosted_trees_make_quantile_summaries(float_values, example_weights, epsilon, num_features: nil, name: "BoostedTreesMakeQuantileSummaries")
       self.execute("BoostedTreesMakeQuantileSummaries", [float_values, example_weights, epsilon], num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_make_stats_summary(node_ids, gradients, hessians, bucketized_features_list, max_splits: nil, num_buckets: nil, num_features: nil, name: "BoostedTreesMakeStatsSummary")
       self.execute("BoostedTreesMakeStatsSummary", [node_ids, gradients, hessians, bucketized_features_list], max_splits: max_splits, num_buckets: num_buckets, num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_predict(tree_ensemble_handle, bucketized_features, num_bucketized_features: nil, logits_dimension: nil, name: "BoostedTreesPredict")
       self.execute("BoostedTreesPredict", [tree_ensemble_handle, bucketized_features], num_bucketized_features: num_bucketized_features, logits_dimension: logits_dimension, name: name)
     end
-  
 
     def self.boosted_trees_quantile_stream_resource_add_summaries(quantile_stream_resource_handle, summaries, num_features: nil, name: "BoostedTreesQuantileStreamResourceAddSummaries")
       self.execute("BoostedTreesQuantileStreamResourceAddSummaries", [quantile_stream_resource_handle, summaries], num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_quantile_stream_resource_deserialize(quantile_stream_resource_handle, bucket_boundaries, num_streams: nil, name: "BoostedTreesQuantileStreamResourceDeserialize")
       self.execute("BoostedTreesQuantileStreamResourceDeserialize", [quantile_stream_resource_handle, bucket_boundaries], num_streams: num_streams, name: name)
     end
-  
 
     def self.boosted_trees_quantile_stream_resource_flush(quantile_stream_resource_handle, num_buckets, generate_quantiles: false, name: "BoostedTreesQuantileStreamResourceFlush")
       self.execute("BoostedTreesQuantileStreamResourceFlush", [quantile_stream_resource_handle, num_buckets], generate_quantiles: generate_quantiles, name: name)
     end
-  
 
     def self.boosted_trees_quantile_stream_resource_get_bucket_boundaries(quantile_stream_resource_handle, num_features: nil, name: "BoostedTreesQuantileStreamResourceGetBucketBoundaries")
       self.execute("BoostedTreesQuantileStreamResourceGetBucketBoundaries", [quantile_stream_resource_handle], num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_quantile_stream_resource_handle_op(container: nil, shared_name: nil, name: "BoostedTreesQuantileStreamResourceHandleOp")
       self.execute("BoostedTreesQuantileStreamResourceHandleOp", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.boosted_trees_serialize_ensemble(tree_ensemble_handle, name: "BoostedTreesSerializeEnsemble")
       self.execute("BoostedTreesSerializeEnsemble", [tree_ensemble_handle], name: name)
     end
-  
 
     def self.boosted_trees_sparse_aggregate_stats(node_ids, gradients, hessians, feature_indices, feature_values, feature_shape, max_splits: nil, num_buckets: nil, name: "BoostedTreesSparseAggregateStats")
       self.execute("BoostedTreesSparseAggregateStats", [node_ids, gradients, hessians, feature_indices, feature_values, feature_shape], max_splits: max_splits, num_buckets: num_buckets, name: name)
     end
-  
 
     def self.boosted_trees_sparse_calculate_best_feature_split(node_id_range, stats_summary_indices, stats_summary_values, stats_summary_shape, l1, l2, tree_complexity, min_node_weight, logits_dimension: nil, split_type: "inequality", name: "BoostedTreesSparseCalculateBestFeatureSplit")
       self.execute("BoostedTreesSparseCalculateBestFeatureSplit", [node_id_range, stats_summary_indices, stats_summary_values, stats_summary_shape, l1, l2, tree_complexity, min_node_weight], logits_dimension: logits_dimension, split_type: split_type, name: name)
     end
-  
 
     def self.boosted_trees_training_predict(tree_ensemble_handle, cached_tree_ids, cached_node_ids, bucketized_features, num_bucketized_features: nil, logits_dimension: nil, name: "BoostedTreesTrainingPredict")
       self.execute("BoostedTreesTrainingPredict", [tree_ensemble_handle, cached_tree_ids, cached_node_ids, bucketized_features], num_bucketized_features: num_bucketized_features, logits_dimension: logits_dimension, name: name)
     end
-  
 
     def self.boosted_trees_update_ensemble(tree_ensemble_handle, feature_ids, node_ids, gains, thresholds, left_node_contribs, right_node_contribs, max_depth, learning_rate, pruning_mode: nil, num_features: nil, name: "BoostedTreesUpdateEnsemble")
       self.execute("BoostedTreesUpdateEnsemble", [tree_ensemble_handle, feature_ids, node_ids, gains, thresholds, left_node_contribs, right_node_contribs, max_depth, learning_rate], pruning_mode: pruning_mode, num_features: num_features, name: name)
     end
-  
 
     def self.boosted_trees_update_ensemble_v2(tree_ensemble_handle, feature_ids, dimension_ids, node_ids, gains, thresholds, left_node_contribs, right_node_contribs, split_types, max_depth, learning_rate, pruning_mode, num_features: nil, logits_dimension: 1, name: "BoostedTreesUpdateEnsembleV2")
       self.execute("BoostedTreesUpdateEnsembleV2", [tree_ensemble_handle, feature_ids, dimension_ids, node_ids, gains, thresholds, left_node_contribs, right_node_contribs, split_types, max_depth, learning_rate, pruning_mode], num_features: num_features, logits_dimension: logits_dimension, name: name)
     end
-  
 
     def self.broadcast_args(s0, s1, typeT: nil, name: "BroadcastArgs")
       self.execute("BroadcastArgs", [s0, s1], T: typeT, name: name)
     end
-  
 
     def self.broadcast_gradient_args(s0, s1, typeT: nil, name: "BroadcastGradientArgs")
       self.execute("BroadcastGradientArgs", [s0, s1], T: typeT, name: name)
     end
-  
 
     def self.broadcast_to(input, shape, typeT: nil, tidx: nil, name: "BroadcastTo")
       self.execute("BroadcastTo", [input, shape], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.bucketize(input, typeT: nil, boundaries: nil, name: "Bucketize")
       self.execute("Bucketize", [input], T: typeT, boundaries: boundaries, name: name)
     end
-  
 
     def self.bytes_produced_stats_dataset(input_dataset, tag, output_types: nil, output_shapes: nil, name: "BytesProducedStatsDataset")
       self.execute("BytesProducedStatsDataset", [input_dataset, tag], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.csr_sparse_matrix_components(csr_sparse_matrix, index, type: nil, name: "CSRSparseMatrixComponents")
       self.execute("CSRSparseMatrixComponents", [csr_sparse_matrix, index], type: type, name: name)
     end
-  
 
     def self.csr_sparse_matrix_to_dense(sparse_input, type: nil, name: "CSRSparseMatrixToDense")
       self.execute("CSRSparseMatrixToDense", [sparse_input], type: type, name: name)
     end
-  
 
     def self.csr_sparse_matrix_to_sparse_tensor(sparse_matrix, type: nil, name: "CSRSparseMatrixToSparseTensor")
       self.execute("CSRSparseMatrixToSparseTensor", [sparse_matrix], type: type, name: name)
     end
-  
 
     def self.csv_dataset(filenames, compression_type, buffer_size, header, field_delim, use_quote_delim, na_value, select_cols, record_defaults, output_types: nil, output_shapes: nil, name: "CSVDataset")
       self.execute("CSVDataset", [filenames, compression_type, buffer_size, header, field_delim, use_quote_delim, na_value, select_cols, record_defaults], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.ctc_beam_search_decoder(inputs, sequence_length, beam_width: nil, top_paths: nil, merge_repeated: true, typeT: nil, name: "CTCBeamSearchDecoder")
       self.execute("CTCBeamSearchDecoder", [inputs, sequence_length], beam_width: beam_width, top_paths: top_paths, merge_repeated: merge_repeated, T: typeT, name: name)
     end
-  
 
     def self.ctc_greedy_decoder(inputs, sequence_length, merge_repeated: false, typeT: nil, name: "CTCGreedyDecoder")
       self.execute("CTCGreedyDecoder", [inputs, sequence_length], merge_repeated: merge_repeated, T: typeT, name: name)
     end
-  
 
     def self.ctc_loss(inputs, labels_indices, labels_values, sequence_length, preprocess_collapse_repeated: false, ctc_merge_repeated: true, ignore_longer_outputs_than_inputs: false, typeT: nil, name: "CTCLoss")
       self.execute("CTCLoss", [inputs, labels_indices, labels_values, sequence_length], preprocess_collapse_repeated: preprocess_collapse_repeated, ctc_merge_repeated: ctc_merge_repeated, ignore_longer_outputs_than_inputs: ignore_longer_outputs_than_inputs, T: typeT, name: name)
     end
-  
 
     def self.cache_dataset(input_dataset, filename, output_types: nil, output_shapes: nil, name: "CacheDataset")
       self.execute("CacheDataset", [input_dataset, filename], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.cache_dataset_v2(input_dataset, filename, cache, output_types: nil, output_shapes: nil, name: "CacheDatasetV2")
       self.execute("CacheDatasetV2", [input_dataset, filename, cache], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.case(branch_index, input, tin: nil, tout: nil, branches: nil, output_shapes: [], name: "Case")
       self.execute("Case", [branch_index, input], Tin: tin, Tout: tout, branches: branches, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.cast(x, srct: nil, dstt: nil, truncate: false, name: "Cast")
       self.execute("Cast", [x], SrcT: srct, DstT: dstt, Truncate: truncate, name: name)
     end
-  
 
     def self.ceil(x, typeT: nil, name: "Ceil")
       self.execute("Ceil", [x], T: typeT, name: name)
     end
-  
 
     def self.check_numerics(tensor, typeT: nil, message: nil, name: "CheckNumerics")
       self.execute("CheckNumerics", [tensor], T: typeT, message: message, name: name)
     end
-  
 
     def self.cholesky(input, typeT: nil, name: "Cholesky")
       self.execute("Cholesky", [input], T: typeT, name: name)
     end
-  
 
     def self.cholesky_grad(l, grad, typeT: nil, name: "CholeskyGrad")
       self.execute("CholeskyGrad", [l, grad], T: typeT, name: name)
     end
-  
 
     def self.choose_fastest_branch_dataset(input_dataset, ratio_numerator, ratio_denominator, other_arguments, targuments: nil, num_elements_per_branch: nil, branches: nil, other_arguments_lengths: nil, output_types: nil, output_shapes: nil, name: "ChooseFastestBranchDataset")
       self.execute("ChooseFastestBranchDataset", [input_dataset, ratio_numerator, ratio_denominator, other_arguments], Targuments: targuments, num_elements_per_branch: num_elements_per_branch, branches: branches, other_arguments_lengths: other_arguments_lengths, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.choose_fastest_dataset(input_datasets, n: nil, num_experiments: nil, output_types: nil, output_shapes: nil, name: "ChooseFastestDataset")
       self.execute("ChooseFastestDataset", [input_datasets], N: n, num_experiments: num_experiments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.clip_by_value(t, clip_value_min, clip_value_max, typeT: nil, name: "ClipByValue")
       self.execute("ClipByValue", [t, clip_value_min, clip_value_max], T: typeT, name: name)
     end
-  
 
     def self.close_summary_writer(writer, name: "CloseSummaryWriter")
       self.execute("CloseSummaryWriter", [writer], name: name)
     end
-  
 
     def self.collective_bcast_recv(typeT: nil, group_size: nil, group_key: nil, instance_key: nil, shape: nil, communication_hint: "auto", name: "CollectiveBcastRecv")
       self.execute("CollectiveBcastRecv", [], T: typeT, group_size: group_size, group_key: group_key, instance_key: instance_key, shape: shape, communication_hint: communication_hint, name: name)
     end
-  
 
     def self.collective_bcast_send(input, typeT: nil, group_size: nil, group_key: nil, instance_key: nil, shape: nil, communication_hint: "auto", name: "CollectiveBcastSend")
       self.execute("CollectiveBcastSend", [input], T: typeT, group_size: group_size, group_key: group_key, instance_key: instance_key, shape: shape, communication_hint: communication_hint, name: name)
     end
-  
 
     def self.collective_gather(input, typeT: nil, group_size: nil, group_key: nil, instance_key: nil, shape: nil, communication_hint: "auto", name: "CollectiveGather")
       self.execute("CollectiveGather", [input], T: typeT, group_size: group_size, group_key: group_key, instance_key: instance_key, shape: shape, communication_hint: communication_hint, name: name)
     end
-  
 
     def self.collective_permute(input, source_target_pairs, typeT: nil, name: "CollectivePermute")
       self.execute("CollectivePermute", [input, source_target_pairs], T: typeT, name: name)
     end
-  
 
     def self.collective_reduce(input, typeT: nil, group_size: nil, group_key: nil, instance_key: nil, merge_op: nil, final_op: nil, subdiv_offsets: nil, wait_for: [], communication_hint: "auto", name: "CollectiveReduce")
       self.execute("CollectiveReduce", [input], T: typeT, group_size: group_size, group_key: group_key, instance_key: instance_key, merge_op: merge_op, final_op: final_op, subdiv_offsets: subdiv_offsets, wait_for: wait_for, communication_hint: communication_hint, name: name)
     end
-  
 
     def self.combined_non_max_suppression(boxes, scores, max_output_size_per_class, max_total_size, iou_threshold, score_threshold, pad_per_class: false, clip_boxes: true, name: "CombinedNonMaxSuppression")
       self.execute("CombinedNonMaxSuppression", [boxes, scores, max_output_size_per_class, max_total_size, iou_threshold, score_threshold], pad_per_class: pad_per_class, clip_boxes: clip_boxes, name: name)
     end
-  
 
     def self.compare_and_bitpack(input, threshold, typeT: nil, name: "CompareAndBitpack")
       self.execute("CompareAndBitpack", [input, threshold], T: typeT, name: name)
     end
-  
 
     def self.complex(real, imag, typeT: nil, tout: nil, name: "Complex")
       self.execute("Complex", [real, imag], T: typeT, Tout: tout, name: name)
     end
-  
 
     def self.complex_abs(x, typeT: nil, tout: nil, name: "ComplexAbs")
       self.execute("ComplexAbs", [x], T: typeT, Tout: tout, name: name)
     end
-  
 
     def self.compute_accidental_hits(true_classes, sampled_candidates, num_true: nil, seed: 0, seed2: 0, name: "ComputeAccidentalHits")
       self.execute("ComputeAccidentalHits", [true_classes, sampled_candidates], num_true: num_true, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.concat(concat_dim, values, n: nil, typeT: nil, name: "Concat")
       self.execute("Concat", [concat_dim, values], N: n, T: typeT, name: name)
     end
-  
 
     def self.concat_offset(concat_dim, shape, n: nil, name: "ConcatOffset")
       self.execute("ConcatOffset", [concat_dim, shape], N: n, name: name)
     end
-  
 
     def self.concat_v2(values, axis, n: nil, typeT: nil, tidx: nil, name: "ConcatV2")
       self.execute("ConcatV2", [values, axis], N: n, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.concatenate_dataset(input_dataset, another_dataset, output_types: nil, output_shapes: nil, name: "ConcatenateDataset")
       self.execute("ConcatenateDataset", [input_dataset, another_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.conditional_accumulator(dtype: nil, shape: nil, container: nil, shared_name: nil, reduction_type: "MEAN", name: "ConditionalAccumulator")
       self.execute("ConditionalAccumulator", [], dtype: dtype, shape: shape, container: container, shared_name: shared_name, reduction_type: reduction_type, name: name)
     end
-  
 
     def self.configure_distributed_tpu(embedding_config: nil, tpu_embedding_config: nil, is_global_init: false, enable_whole_mesh_compilations: false, name: "ConfigureDistributedTPU")
       self.execute("ConfigureDistributedTPU", [], embedding_config: embedding_config, tpu_embedding_config: tpu_embedding_config, is_global_init: is_global_init, enable_whole_mesh_compilations: enable_whole_mesh_compilations, name: name)
     end
-  
 
     def self.configure_tpu_embedding(config: nil, name: "ConfigureTPUEmbedding")
       self.execute("ConfigureTPUEmbedding", [], config: config, name: name)
     end
-  
 
     def self.conj(input, typeT: nil, name: "Conj")
       self.execute("Conj", [input], T: typeT, name: name)
     end
-  
 
     def self.conjugate_transpose(x, perm, typeT: nil, tperm: nil, name: "ConjugateTranspose")
       self.execute("ConjugateTranspose", [x, perm], T: typeT, Tperm: tperm, name: name)
     end
-  
 
     def self.const(value: nil, dtype: nil, name: "Const")
       self.execute("Const", [], value: value, dtype: dtype, name: name)
     end
-  
 
     def self.consume_mutex_lock(mutex_lock, name: "ConsumeMutexLock")
       self.execute("ConsumeMutexLock", [mutex_lock], name: name)
     end
-  
 
     def self.control_trigger(name: "ControlTrigger")
       self.execute("ControlTrigger", [], name: name)
     end
-  
 
     def self.conv2_d(input, filter, typeT: nil, strides: nil, use_cudnn_on_gpu: true, padding: nil, explicit_paddings: [], data_format: "NHWC", dilations: [], name: "Conv2D")
       self.execute("Conv2D", [input, filter], T: typeT, strides: strides, use_cudnn_on_gpu: use_cudnn_on_gpu, padding: padding, explicit_paddings: explicit_paddings, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.conv2_d_backprop_filter(input, filter_sizes, out_backprop, typeT: nil, strides: nil, use_cudnn_on_gpu: true, padding: nil, explicit_paddings: [], data_format: "NHWC", dilations: [], name: "Conv2DBackpropFilter")
       self.execute("Conv2DBackpropFilter", [input, filter_sizes, out_backprop], T: typeT, strides: strides, use_cudnn_on_gpu: use_cudnn_on_gpu, padding: padding, explicit_paddings: explicit_paddings, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.conv2_d_backprop_input(input_sizes, filter, out_backprop, typeT: nil, strides: nil, use_cudnn_on_gpu: true, padding: nil, explicit_paddings: [], data_format: "NHWC", dilations: [], name: "Conv2DBackpropInput")
       self.execute("Conv2DBackpropInput", [input_sizes, filter, out_backprop], T: typeT, strides: strides, use_cudnn_on_gpu: use_cudnn_on_gpu, padding: padding, explicit_paddings: explicit_paddings, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.conv3_d(input, filter, typeT: nil, strides: nil, padding: nil, data_format: "NDHWC", dilations: [], name: "Conv3D")
       self.execute("Conv3D", [input, filter], T: typeT, strides: strides, padding: padding, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.conv3_d_backprop_filter(input, filter, out_backprop, typeT: nil, strides: nil, padding: nil, dilations: [], name: "Conv3DBackpropFilter")
       self.execute("Conv3DBackpropFilter", [input, filter, out_backprop], T: typeT, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.conv3_d_backprop_filter_v2(input, filter_sizes, out_backprop, typeT: nil, strides: nil, padding: nil, data_format: "NDHWC", dilations: [], name: "Conv3DBackpropFilterV2")
       self.execute("Conv3DBackpropFilterV2", [input, filter_sizes, out_backprop], T: typeT, strides: strides, padding: padding, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.conv3_d_backprop_input(input, filter, out_backprop, typeT: nil, strides: nil, padding: nil, dilations: [], name: "Conv3DBackpropInput")
       self.execute("Conv3DBackpropInput", [input, filter, out_backprop], T: typeT, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.conv3_d_backprop_input_v2(input_sizes, filter, out_backprop, typeT: nil, strides: nil, padding: nil, data_format: "NDHWC", dilations: [], tshape: nil, name: "Conv3DBackpropInputV2")
       self.execute("Conv3DBackpropInputV2", [input_sizes, filter, out_backprop], T: typeT, strides: strides, padding: padding, data_format: data_format, dilations: dilations, Tshape: tshape, name: name)
     end
-  
 
     def self.copy(input, typeT: nil, tensor_name: nil, debug_ops_spec: [], name: "Copy")
       self.execute("Copy", [input], T: typeT, tensor_name: tensor_name, debug_ops_spec: debug_ops_spec, name: name)
     end
-  
 
     def self.copy_host(input, typeT: nil, tensor_name: nil, debug_ops_spec: [], name: "CopyHost")
       self.execute("CopyHost", [input], T: typeT, tensor_name: tensor_name, debug_ops_spec: debug_ops_spec, name: name)
     end
-  
 
     def self.cos(x, typeT: nil, name: "Cos")
       self.execute("Cos", [x], T: typeT, name: name)
     end
-  
 
     def self.cosh(x, typeT: nil, name: "Cosh")
       self.execute("Cosh", [x], T: typeT, name: name)
     end
-  
 
     def self.count_up_to(ref, limit: nil, typeT: nil, name: "CountUpTo")
       self.execute("CountUpTo", [ref], limit: limit, T: typeT, name: name)
     end
-  
 
     def self.create_summary_db_writer(writer, db_uri, experiment_name, run_name, user_name, name: "CreateSummaryDbWriter")
       self.execute("CreateSummaryDbWriter", [writer, db_uri, experiment_name, run_name, user_name], name: name)
     end
-  
 
     def self.create_summary_file_writer(writer, logdir, max_queue, flush_millis, filename_suffix, name: "CreateSummaryFileWriter")
       self.execute("CreateSummaryFileWriter", [writer, logdir, max_queue, flush_millis, filename_suffix], name: name)
     end
-  
 
     def self.crop_and_resize(image, boxes, box_ind, crop_size, typeT: nil, method: "bilinear", extrapolation_value: 0.0, name: "CropAndResize")
       self.execute("CropAndResize", [image, boxes, box_ind, crop_size], T: typeT, method: method, extrapolation_value: extrapolation_value, name: name)
     end
-  
 
     def self.crop_and_resize_grad_boxes(grads, image, boxes, box_ind, typeT: nil, method: "bilinear", name: "CropAndResizeGradBoxes")
       self.execute("CropAndResizeGradBoxes", [grads, image, boxes, box_ind], T: typeT, method: method, name: name)
     end
-  
 
     def self.crop_and_resize_grad_image(grads, boxes, box_ind, image_size, typeT: nil, method: "bilinear", name: "CropAndResizeGradImage")
       self.execute("CropAndResizeGradImage", [grads, boxes, box_ind, image_size], T: typeT, method: method, name: name)
     end
-  
 
     def self.cross(a, b, typeT: nil, name: "Cross")
       self.execute("Cross", [a, b], T: typeT, name: name)
     end
-  
 
     def self.cross_replica_sum(input, group_assignment, typeT: nil, name: "CrossReplicaSum")
       self.execute("CrossReplicaSum", [input, group_assignment], T: typeT, name: name)
     end
-  
 
     def self.cudnn_rnn(input, input_h, input_c, params, typeT: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, is_training: true, name: "CudnnRNN")
       self.execute("CudnnRNN", [input, input_h, input_c, params], T: typeT, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, is_training: is_training, name: name)
     end
-  
 
     def self.cudnn_rnn_backprop(input, input_h, input_c, params, output, output_h, output_c, output_backprop, output_h_backprop, output_c_backprop, reserve_space, typeT: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, name: "CudnnRNNBackprop")
       self.execute("CudnnRNNBackprop", [input, input_h, input_c, params, output, output_h, output_c, output_backprop, output_h_backprop, output_c_backprop, reserve_space], T: typeT, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.cudnn_rnn_backprop_v2(input, input_h, input_c, params, output, output_h, output_c, output_backprop, output_h_backprop, output_c_backprop, reserve_space, host_reserved, typeT: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, name: "CudnnRNNBackpropV2")
       self.execute("CudnnRNNBackpropV2", [input, input_h, input_c, params, output, output_h, output_c, output_backprop, output_h_backprop, output_c_backprop, reserve_space, host_reserved], T: typeT, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.cudnn_rnn_backprop_v3(input, input_h, input_c, params, sequence_lengths, output, output_h, output_c, output_backprop, output_h_backprop, output_c_backprop, reserve_space, host_reserved, typeT: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, num_proj: 0, time_major: true, name: "CudnnRNNBackpropV3")
       self.execute("CudnnRNNBackpropV3", [input, input_h, input_c, params, sequence_lengths, output, output_h, output_c, output_backprop, output_h_backprop, output_c_backprop, reserve_space, host_reserved], T: typeT, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, num_proj: num_proj, time_major: time_major, name: name)
     end
-  
 
     def self.cudnn_rnn_canonical_to_params(num_layers, num_units, input_size, weights, biases, typeT: nil, num_params: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, name: "CudnnRNNCanonicalToParams")
       self.execute("CudnnRNNCanonicalToParams", [num_layers, num_units, input_size, weights, biases], T: typeT, num_params: num_params, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.cudnn_rnn_canonical_to_params_v2(num_layers, num_units, input_size, weights, biases, typeT: nil, num_params_weights: nil, num_params_biases: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, num_proj: 0, name: "CudnnRNNCanonicalToParamsV2")
       self.execute("CudnnRNNCanonicalToParamsV2", [num_layers, num_units, input_size, weights, biases], T: typeT, num_params_weights: num_params_weights, num_params_biases: num_params_biases, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, num_proj: num_proj, name: name)
     end
-  
 
     def self.cudnn_rnn_params_size(num_layers, num_units, input_size, typeT: nil, s: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, num_proj: 0, name: "CudnnRNNParamsSize")
       self.execute("CudnnRNNParamsSize", [num_layers, num_units, input_size], T: typeT, S: s, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, num_proj: num_proj, name: name)
     end
-  
 
     def self.cudnn_rnn_params_to_canonical(num_layers, num_units, input_size, params, typeT: nil, num_params: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, name: "CudnnRNNParamsToCanonical")
       self.execute("CudnnRNNParamsToCanonical", [num_layers, num_units, input_size, params], T: typeT, num_params: num_params, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.cudnn_rnn_params_to_canonical_v2(num_layers, num_units, input_size, params, typeT: nil, num_params_weights: nil, num_params_biases: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, num_proj: 0, name: "CudnnRNNParamsToCanonicalV2")
       self.execute("CudnnRNNParamsToCanonicalV2", [num_layers, num_units, input_size, params], T: typeT, num_params_weights: num_params_weights, num_params_biases: num_params_biases, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, num_proj: num_proj, name: name)
     end
-  
 
     def self.cudnn_rnnv2(input, input_h, input_c, params, typeT: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, is_training: true, name: "CudnnRNNV2")
       self.execute("CudnnRNNV2", [input, input_h, input_c, params], T: typeT, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, is_training: is_training, name: name)
     end
-  
 
     def self.cudnn_rnnv3(input, input_h, input_c, params, sequence_lengths, typeT: nil, rnn_mode: "lstm", input_mode: "linear_input", direction: "unidirectional", dropout: 0.0, seed: 0, seed2: 0, num_proj: 0, is_training: true, time_major: true, name: "CudnnRNNV3")
       self.execute("CudnnRNNV3", [input, input_h, input_c, params, sequence_lengths], T: typeT, rnn_mode: rnn_mode, input_mode: input_mode, direction: direction, dropout: dropout, seed: seed, seed2: seed2, num_proj: num_proj, is_training: is_training, time_major: time_major, name: name)
     end
-  
 
     def self.cumprod(x, axis, exclusive: false, reverse: false, typeT: nil, tidx: nil, name: "Cumprod")
       self.execute("Cumprod", [x, axis], exclusive: exclusive, reverse: reverse, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.cumsum(x, axis, exclusive: false, reverse: false, typeT: nil, tidx: nil, name: "Cumsum")
       self.execute("Cumsum", [x, axis], exclusive: exclusive, reverse: reverse, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.cumulative_logsumexp(x, axis, exclusive: false, reverse: false, typeT: nil, tidx: nil, name: "CumulativeLogsumexp")
       self.execute("CumulativeLogsumexp", [x, axis], exclusive: exclusive, reverse: reverse, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.data_format_dim_map(x, typeT: nil, src_format: "NHWC", dst_format: "NCHW", name: "DataFormatDimMap")
       self.execute("DataFormatDimMap", [x], T: typeT, src_format: src_format, dst_format: dst_format, name: name)
     end
-  
 
     def self.data_format_vec_permute(x, typeT: nil, src_format: "NHWC", dst_format: "NCHW", name: "DataFormatVecPermute")
       self.execute("DataFormatVecPermute", [x], T: typeT, src_format: src_format, dst_format: dst_format, name: name)
     end
-  
 
     def self.dataset_cardinality(input_dataset, name: "DatasetCardinality")
       self.execute("DatasetCardinality", [input_dataset], name: name)
     end
-  
 
     def self.dataset_from_graph(graph_def, name: "DatasetFromGraph")
       self.execute("DatasetFromGraph", [graph_def], name: name)
     end
-  
 
     def self.dataset_to_graph(input_dataset, stateful_whitelist: [], allow_stateful: false, strip_device_assignment: false, name: "DatasetToGraph")
       self.execute("DatasetToGraph", [input_dataset], stateful_whitelist: stateful_whitelist, allow_stateful: allow_stateful, strip_device_assignment: strip_device_assignment, name: name)
     end
-  
 
     def self.dataset_to_graph_v2(input_dataset, external_state_policy: 0, strip_device_assignment: false, name: "DatasetToGraphV2")
       self.execute("DatasetToGraphV2", [input_dataset], external_state_policy: external_state_policy, strip_device_assignment: strip_device_assignment, name: name)
     end
-  
 
     def self.dataset_to_single_element(dataset, output_types: nil, output_shapes: nil, name: "DatasetToSingleElement")
       self.execute("DatasetToSingleElement", [dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.dataset_to_tf_record(input_dataset, filename, compression_type, name: "DatasetToTFRecord")
       self.execute("DatasetToTFRecord", [input_dataset, filename, compression_type], name: name)
     end
-  
 
     def self.debug_gradient_identity(input, typeT: nil, name: "DebugGradientIdentity")
       self.execute("DebugGradientIdentity", [input], T: typeT, name: name)
     end
-  
 
     def self.debug_gradient_ref_identity(input, typeT: nil, name: "DebugGradientRefIdentity")
       self.execute("DebugGradientRefIdentity", [input], T: typeT, name: name)
     end
-  
 
     def self.debug_identity(input, typeT: nil, device_name: nil, tensor_name: nil, debug_urls: [], gated_grpc: false, name: "DebugIdentity")
       self.execute("DebugIdentity", [input], T: typeT, device_name: device_name, tensor_name: tensor_name, debug_urls: debug_urls, gated_grpc: gated_grpc, name: name)
     end
-  
 
     def self.debug_identity_v2(input, typeT: nil, tfdbg_context_id: nil, op_name: nil, output_slot: -1, tensor_debug_mode: -1, debug_urls: [], name: "DebugIdentityV2")
       self.execute("DebugIdentityV2", [input], T: typeT, tfdbg_context_id: tfdbg_context_id, op_name: op_name, output_slot: output_slot, tensor_debug_mode: tensor_debug_mode, debug_urls: debug_urls, name: name)
     end
-  
 
     def self.debug_nan_count(input, typeT: nil, device_name: nil, tensor_name: nil, debug_urls: [], gated_grpc: false, name: "DebugNanCount")
       self.execute("DebugNanCount", [input], T: typeT, device_name: device_name, tensor_name: tensor_name, debug_urls: debug_urls, gated_grpc: gated_grpc, name: name)
     end
-  
 
     def self.debug_numeric_summary(input, typeT: nil, device_name: nil, tensor_name: nil, debug_urls: [], lower_bound: -Infinity, upper_bound: Infinity, mute_if_healthy: false, gated_grpc: false, name: "DebugNumericSummary")
       self.execute("DebugNumericSummary", [input], T: typeT, device_name: device_name, tensor_name: tensor_name, debug_urls: debug_urls, lower_bound: lower_bound, upper_bound: upper_bound, mute_if_healthy: mute_if_healthy, gated_grpc: gated_grpc, name: name)
     end
-  
 
     def self.decode_and_crop_jpeg(contents, crop_window, channels: 0, ratio: 1, fancy_upscaling: true, try_recover_truncated: false, acceptable_fraction: 1.0, dct_method: nil, name: "DecodeAndCropJpeg")
       self.execute("DecodeAndCropJpeg", [contents, crop_window], channels: channels, ratio: ratio, fancy_upscaling: fancy_upscaling, try_recover_truncated: try_recover_truncated, acceptable_fraction: acceptable_fraction, dct_method: dct_method, name: name)
     end
-  
 
     def self.decode_base64(input, name: "DecodeBase64")
       self.execute("DecodeBase64", [input], name: name)
     end
-  
 
     def self.decode_bmp(contents, channels: 0, name: "DecodeBmp")
       self.execute("DecodeBmp", [contents], channels: channels, name: name)
     end
-  
 
     def self.decode_csv(records, record_defaults, out_type: nil, field_delim: ",", use_quote_delim: true, na_value: nil, select_cols: [], name: "DecodeCSV")
       self.execute("DecodeCSV", [records, record_defaults], OUT_TYPE: out_type, field_delim: field_delim, use_quote_delim: use_quote_delim, na_value: na_value, select_cols: select_cols, name: name)
     end
-  
 
     def self.decode_compressed(bytes, compression_type: nil, name: "DecodeCompressed")
       self.execute("DecodeCompressed", [bytes], compression_type: compression_type, name: name)
     end
-  
 
     def self.decode_gif(contents, name: "DecodeGif")
       self.execute("DecodeGif", [contents], name: name)
     end
-  
 
     def self.decode_json_example(json_examples, name: "DecodeJSONExample")
       self.execute("DecodeJSONExample", [json_examples], name: name)
     end
-  
 
     def self.decode_jpeg(contents, channels: 0, ratio: 1, fancy_upscaling: true, try_recover_truncated: false, acceptable_fraction: 1.0, dct_method: nil, name: "DecodeJpeg")
       self.execute("DecodeJpeg", [contents], channels: channels, ratio: ratio, fancy_upscaling: fancy_upscaling, try_recover_truncated: try_recover_truncated, acceptable_fraction: acceptable_fraction, dct_method: dct_method, name: name)
     end
-  
 
     def self.decode_padded_raw(input_bytes, fixed_length, out_type: nil, little_endian: true, name: "DecodePaddedRaw")
       self.execute("DecodePaddedRaw", [input_bytes, fixed_length], out_type: out_type, little_endian: little_endian, name: name)
     end
-  
 
     def self.decode_png(contents, channels: 0, dtype: nil, name: "DecodePng")
       self.execute("DecodePng", [contents], channels: channels, dtype: dtype, name: name)
     end
-  
 
     def self.decode_proto_v2(bytes, message_type: nil, field_names: nil, output_types: nil, descriptor_source: "local://", message_format: "binary", sanitize: false, name: "DecodeProtoV2")
       self.execute("DecodeProtoV2", [bytes], message_type: message_type, field_names: field_names, output_types: output_types, descriptor_source: descriptor_source, message_format: message_format, sanitize: sanitize, name: name)
     end
-  
 
     def self.decode_raw(bytes, out_type: nil, little_endian: true, name: "DecodeRaw")
       self.execute("DecodeRaw", [bytes], out_type: out_type, little_endian: little_endian, name: name)
     end
-  
 
     def self.decode_wav(contents, desired_channels: -1, desired_samples: -1, name: "DecodeWav")
       self.execute("DecodeWav", [contents], desired_channels: desired_channels, desired_samples: desired_samples, name: name)
     end
-  
 
     def self.deep_copy(x, typeT: nil, name: "DeepCopy")
       self.execute("DeepCopy", [x], T: typeT, name: name)
     end
-  
 
     def self.delete_iterator(handle, deleter, name: "DeleteIterator")
       self.execute("DeleteIterator", [handle, deleter], name: name)
     end
-  
 
     def self.delete_memory_cache(handle, deleter, name: "DeleteMemoryCache")
       self.execute("DeleteMemoryCache", [handle, deleter], name: name)
     end
-  
 
     def self.delete_multi_device_iterator(multi_device_iterator, iterators, deleter, n: nil, name: "DeleteMultiDeviceIterator")
       self.execute("DeleteMultiDeviceIterator", [multi_device_iterator, iterators, deleter], N: n, name: name)
     end
-  
 
     def self.delete_random_seed_generator(handle, deleter, name: "DeleteRandomSeedGenerator")
       self.execute("DeleteRandomSeedGenerator", [handle, deleter], name: name)
     end
-  
 
     def self.delete_session_tensor(handle, name: "DeleteSessionTensor")
       self.execute("DeleteSessionTensor", [handle], name: name)
     end
-  
 
     def self.dense_to_csr_sparse_matrix(dense_input, indices, typeT: nil, name: "DenseToCSRSparseMatrix")
       self.execute("DenseToCSRSparseMatrix", [dense_input, indices], T: typeT, name: name)
     end
-  
 
     def self.dense_to_dense_set_operation(set1, set2, set_operation: nil, validate_indices: true, typeT: nil, name: "DenseToDenseSetOperation")
       self.execute("DenseToDenseSetOperation", [set1, set2], set_operation: set_operation, validate_indices: validate_indices, T: typeT, name: name)
     end
-  
 
     def self.dense_to_sparse_batch_dataset(input_dataset, batch_size, row_shape, output_types: nil, output_shapes: nil, name: "DenseToSparseBatchDataset")
       self.execute("DenseToSparseBatchDataset", [input_dataset, batch_size, row_shape], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.dense_to_sparse_set_operation(set1, set2_indices, set2_values, set2_shape, set_operation: nil, validate_indices: true, typeT: nil, name: "DenseToSparseSetOperation")
       self.execute("DenseToSparseSetOperation", [set1, set2_indices, set2_values, set2_shape], set_operation: set_operation, validate_indices: validate_indices, T: typeT, name: name)
     end
-  
 
     def self.depth_to_space(input, typeT: nil, block_size: nil, data_format: "NHWC", name: "DepthToSpace")
       self.execute("DepthToSpace", [input], T: typeT, block_size: block_size, data_format: data_format, name: name)
     end
-  
 
     def self.depthwise_conv2d_native(input, filter, typeT: nil, strides: nil, padding: nil, data_format: "NHWC", dilations: [], name: "DepthwiseConv2dNative")
       self.execute("DepthwiseConv2dNative", [input, filter], T: typeT, strides: strides, padding: padding, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.depthwise_conv2d_native_backprop_filter(input, filter_sizes, out_backprop, typeT: nil, strides: nil, padding: nil, data_format: "NHWC", dilations: [], name: "DepthwiseConv2dNativeBackpropFilter")
       self.execute("DepthwiseConv2dNativeBackpropFilter", [input, filter_sizes, out_backprop], T: typeT, strides: strides, padding: padding, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.depthwise_conv2d_native_backprop_input(input_sizes, filter, out_backprop, typeT: nil, strides: nil, padding: nil, data_format: "NHWC", dilations: [], name: "DepthwiseConv2dNativeBackpropInput")
       self.execute("DepthwiseConv2dNativeBackpropInput", [input_sizes, filter, out_backprop], T: typeT, strides: strides, padding: padding, data_format: data_format, dilations: dilations, name: name)
     end
-  
 
     def self.dequantize(input, min_range, max_range, typeT: nil, mode: "MIN_COMBINED", narrow_range: false, axis: -1, name: "Dequantize")
       self.execute("Dequantize", [input, min_range, max_range], T: typeT, mode: mode, narrow_range: narrow_range, axis: axis, name: name)
     end
-  
 
     def self.deserialize_iterator(resource_handle, serialized, name: "DeserializeIterator")
       self.execute("DeserializeIterator", [resource_handle, serialized], name: name)
     end
-  
 
     def self.deserialize_many_sparse(serialized_sparse, dtype: nil, name: "DeserializeManySparse")
       self.execute("DeserializeManySparse", [serialized_sparse], dtype: dtype, name: name)
     end
-  
 
     def self.deserialize_sparse(serialized_sparse, dtype: nil, tserialized: nil, name: "DeserializeSparse")
       self.execute("DeserializeSparse", [serialized_sparse], dtype: dtype, Tserialized: tserialized, name: name)
     end
-  
 
     def self.destroy_resource_op(resource, ignore_lookup_error: true, name: "DestroyResourceOp")
       self.execute("DestroyResourceOp", [resource], ignore_lookup_error: ignore_lookup_error, name: name)
     end
-  
 
     def self.destroy_temporary_variable(ref, typeT: nil, var_name: nil, name: "DestroyTemporaryVariable")
       self.execute("DestroyTemporaryVariable", [ref], T: typeT, var_name: var_name, name: name)
     end
-  
 
     def self.diag(diagonal, typeT: nil, name: "Diag")
       self.execute("Diag", [diagonal], T: typeT, name: name)
     end
-  
 
     def self.diag_part(input, typeT: nil, name: "DiagPart")
       self.execute("DiagPart", [input], T: typeT, name: name)
     end
-  
 
     def self.digamma(x, typeT: nil, name: "Digamma")
       self.execute("Digamma", [x], T: typeT, name: name)
     end
-  
 
     def self.dilation2_d(input, filter, typeT: nil, strides: nil, rates: nil, padding: nil, name: "Dilation2D")
       self.execute("Dilation2D", [input, filter], T: typeT, strides: strides, rates: rates, padding: padding, name: name)
     end
-  
 
     def self.dilation2_d_backprop_filter(input, filter, out_backprop, typeT: nil, strides: nil, rates: nil, padding: nil, name: "Dilation2DBackpropFilter")
       self.execute("Dilation2DBackpropFilter", [input, filter, out_backprop], T: typeT, strides: strides, rates: rates, padding: padding, name: name)
     end
-  
 
     def self.dilation2_d_backprop_input(input, filter, out_backprop, typeT: nil, strides: nil, rates: nil, padding: nil, name: "Dilation2DBackpropInput")
       self.execute("Dilation2DBackpropInput", [input, filter, out_backprop], T: typeT, strides: strides, rates: rates, padding: padding, name: name)
     end
-  
 
     def self.directed_interleave_dataset(selector_input_dataset, data_input_datasets, output_types: nil, output_shapes: nil, n: nil, name: "DirectedInterleaveDataset")
       self.execute("DirectedInterleaveDataset", [selector_input_dataset, data_input_datasets], output_types: output_types, output_shapes: output_shapes, N: n, name: name)
     end
-  
 
     def self.div(x, y, typeT: nil, name: "Div")
       self.execute("Div", [x, y], T: typeT, name: name)
     end
-  
 
     def self.div_no_nan(x, y, typeT: nil, name: "DivNoNan")
       self.execute("DivNoNan", [x, y], T: typeT, name: name)
     end
-  
 
     def self.draw_bounding_boxes(images, boxes, typeT: nil, name: "DrawBoundingBoxes")
       self.execute("DrawBoundingBoxes", [images, boxes], T: typeT, name: name)
     end
-  
 
     def self.draw_bounding_boxes_v2(images, boxes, colors, typeT: nil, name: "DrawBoundingBoxesV2")
       self.execute("DrawBoundingBoxesV2", [images, boxes, colors], T: typeT, name: name)
     end
-  
 
     def self.dynamic_partition(data, partitions, num_partitions: nil, typeT: nil, name: "DynamicPartition")
       self.execute("DynamicPartition", [data, partitions], num_partitions: num_partitions, T: typeT, name: name)
     end
-  
 
     def self.dynamic_stitch(indices, data, n: nil, typeT: nil, name: "DynamicStitch")
       self.execute("DynamicStitch", [indices, data], N: n, T: typeT, name: name)
     end
-  
 
     def self.eager_py_func(input, token: nil, is_async: false, tin: nil, tout: nil, name: "EagerPyFunc")
       self.execute("EagerPyFunc", [input], token: token, is_async: is_async, Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.edit_distance(hypothesis_indices, hypothesis_values, hypothesis_shape, truth_indices, truth_values, truth_shape, normalize: true, typeT: nil, name: "EditDistance")
       self.execute("EditDistance", [hypothesis_indices, hypothesis_values, hypothesis_shape, truth_indices, truth_values, truth_shape], normalize: normalize, T: typeT, name: name)
     end
-  
 
     def self.eig(input, compute_v: true, typeT: nil, tout: nil, name: "Eig")
       self.execute("Eig", [input], compute_v: compute_v, T: typeT, Tout: tout, name: name)
     end
-  
 
     def self.einsum(inputs, equation: nil, n: nil, typeT: nil, name: "Einsum")
       self.execute("Einsum", [inputs], equation: equation, N: n, T: typeT, name: name)
     end
-  
 
     def self.elu(features, typeT: nil, name: "Elu")
       self.execute("Elu", [features], T: typeT, name: name)
     end
-  
 
     def self.elu_grad(gradients, outputs, typeT: nil, name: "EluGrad")
       self.execute("EluGrad", [gradients, outputs], T: typeT, name: name)
     end
-  
 
     def self.empty(shape, dtype: nil, init: false, name: "Empty")
       self.execute("Empty", [shape], dtype: dtype, init: init, name: name)
     end
-  
 
     def self.empty_tensor_list(element_shape, max_num_elements, element_dtype: nil, shape_type: nil, name: "EmptyTensorList")
       self.execute("EmptyTensorList", [element_shape, max_num_elements], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.encode_base64(input, pad: false, name: "EncodeBase64")
       self.execute("EncodeBase64", [input], pad: pad, name: name)
     end
-  
 
     def self.encode_jpeg(image, format: nil, quality: 95, progressive: false, optimize_size: false, chroma_downsampling: true, density_unit: "in", x_density: 300, y_density: 300, xmp_metadata: nil, name: "EncodeJpeg")
       self.execute("EncodeJpeg", [image], format: format, quality: quality, progressive: progressive, optimize_size: optimize_size, chroma_downsampling: chroma_downsampling, density_unit: density_unit, x_density: x_density, y_density: y_density, xmp_metadata: xmp_metadata, name: name)
     end
-  
 
     def self.encode_jpeg_variable_quality(images, quality, name: "EncodeJpegVariableQuality")
       self.execute("EncodeJpegVariableQuality", [images, quality], name: name)
     end
-  
 
     def self.encode_png(image, compression: -1, typeT: nil, name: "EncodePng")
       self.execute("EncodePng", [image], compression: compression, T: typeT, name: name)
     end
-  
 
     def self.encode_proto(sizes, values, field_names: nil, message_type: nil, descriptor_source: "local://", tinput_types: nil, name: "EncodeProto")
       self.execute("EncodeProto", [sizes, values], field_names: field_names, message_type: message_type, descriptor_source: descriptor_source, Tinput_types: tinput_types, name: name)
     end
-  
 
     def self.encode_wav(audio, sample_rate, name: "EncodeWav")
       self.execute("EncodeWav", [audio, sample_rate], name: name)
     end
-  
 
     def self.enqueue_tpu_embedding_integer_batch(batch, mode_override, n: nil, device_ordinal: -1, name: "EnqueueTPUEmbeddingIntegerBatch")
       self.execute("EnqueueTPUEmbeddingIntegerBatch", [batch, mode_override], N: n, device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self.enqueue_tpu_embedding_sparse_batch(sample_indices, embedding_indices, aggregation_weights, mode_override, t1: nil, t2: nil, t3: nil, n: nil, device_ordinal: -1, combiners: [], name: "EnqueueTPUEmbeddingSparseBatch")
       self.execute("EnqueueTPUEmbeddingSparseBatch", [sample_indices, embedding_indices, aggregation_weights, mode_override], T1: t1, T2: t2, T3: t3, N: n, device_ordinal: device_ordinal, combiners: combiners, name: name)
     end
-  
 
     def self.enqueue_tpu_embedding_sparse_tensor_batch(sample_indices, embedding_indices, aggregation_weights, mode_override, t1: nil, t2: nil, t3: nil, n: nil, device_ordinal: -1, combiners: [], table_ids: nil, max_sequence_lengths: [], name: "EnqueueTPUEmbeddingSparseTensorBatch")
       self.execute("EnqueueTPUEmbeddingSparseTensorBatch", [sample_indices, embedding_indices, aggregation_weights, mode_override], T1: t1, T2: t2, T3: t3, N: n, device_ordinal: device_ordinal, combiners: combiners, table_ids: table_ids, max_sequence_lengths: max_sequence_lengths, name: name)
     end
-  
 
     def self.ensure_shape(input, shape: nil, typeT: nil, name: "EnsureShape")
       self.execute("EnsureShape", [input], shape: shape, T: typeT, name: name)
     end
-  
 
     def self.enter(data, typeT: nil, frame_name: nil, is_constant: false, parallel_iterations: 10, name: "Enter")
       self.execute("Enter", [data], T: typeT, frame_name: frame_name, is_constant: is_constant, parallel_iterations: parallel_iterations, name: name)
     end
-  
 
     def self.equal(x, y, typeT: nil, incompatible_shape_error: true, name: "Equal")
       self.execute("Equal", [x, y], T: typeT, incompatible_shape_error: incompatible_shape_error, name: name)
     end
-  
 
     def self.erf(x, typeT: nil, name: "Erf")
       self.execute("Erf", [x], T: typeT, name: name)
     end
-  
 
     def self.erfc(x, typeT: nil, name: "Erfc")
       self.execute("Erfc", [x], T: typeT, name: name)
     end
-  
 
     def self.erfinv(x, typeT: nil, name: "Erfinv")
       self.execute("Erfinv", [x], T: typeT, name: name)
     end
-  
 
     def self.euclidean_norm(input, reduction_indices, keep_dims: false, typeT: nil, tidx: nil, name: "EuclideanNorm")
       self.execute("EuclideanNorm", [input, reduction_indices], keep_dims: keep_dims, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.exit(data, typeT: nil, name: "Exit")
       self.execute("Exit", [data], T: typeT, name: name)
     end
-  
 
     def self.exp(x, typeT: nil, name: "Exp")
       self.execute("Exp", [x], T: typeT, name: name)
     end
-  
 
     def self.expand_dims(input, dim, typeT: nil, tdim: nil, name: "ExpandDims")
       self.execute("ExpandDims", [input, dim], T: typeT, Tdim: tdim, name: name)
     end
-  
 
     def self.experimental_assert_next_dataset(input_dataset, transformations, output_types: nil, output_shapes: nil, name: "ExperimentalAssertNextDataset")
       self.execute("ExperimentalAssertNextDataset", [input_dataset, transformations], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_auto_shard_dataset(input_dataset, num_workers, index, auto_shard_policy: 0, output_types: nil, output_shapes: nil, name: "ExperimentalAutoShardDataset")
       self.execute("ExperimentalAutoShardDataset", [input_dataset, num_workers, index], auto_shard_policy: auto_shard_policy, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_bytes_produced_stats_dataset(input_dataset, tag, output_types: nil, output_shapes: nil, name: "ExperimentalBytesProducedStatsDataset")
       self.execute("ExperimentalBytesProducedStatsDataset", [input_dataset, tag], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_csv_dataset(filenames, compression_type, buffer_size, header, field_delim, use_quote_delim, na_value, select_cols, record_defaults, output_types: nil, output_shapes: nil, name: "ExperimentalCSVDataset")
       self.execute("ExperimentalCSVDataset", [filenames, compression_type, buffer_size, header, field_delim, use_quote_delim, na_value, select_cols, record_defaults], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_choose_fastest_dataset(input_datasets, n: nil, num_experiments: nil, output_types: nil, output_shapes: nil, name: "ExperimentalChooseFastestDataset")
       self.execute("ExperimentalChooseFastestDataset", [input_datasets], N: n, num_experiments: num_experiments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_dataset_cardinality(input_dataset, name: "ExperimentalDatasetCardinality")
       self.execute("ExperimentalDatasetCardinality", [input_dataset], name: name)
     end
-  
 
     def self.experimental_dataset_to_tf_record(input_dataset, filename, compression_type, name: "ExperimentalDatasetToTFRecord")
       self.execute("ExperimentalDatasetToTFRecord", [input_dataset, filename, compression_type], name: name)
     end
-  
 
     def self.experimental_dense_to_sparse_batch_dataset(input_dataset, batch_size, row_shape, output_types: nil, output_shapes: nil, name: "ExperimentalDenseToSparseBatchDataset")
       self.execute("ExperimentalDenseToSparseBatchDataset", [input_dataset, batch_size, row_shape], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_directed_interleave_dataset(selector_input_dataset, data_input_datasets, output_types: nil, output_shapes: nil, n: nil, name: "ExperimentalDirectedInterleaveDataset")
       self.execute("ExperimentalDirectedInterleaveDataset", [selector_input_dataset, data_input_datasets], output_types: output_types, output_shapes: output_shapes, N: n, name: name)
     end
-  
 
     def self.experimental_group_by_reducer_dataset(input_dataset, key_func_other_arguments, init_func_other_arguments, reduce_func_other_arguments, finalize_func_other_arguments, key_func: nil, init_func: nil, reduce_func: nil, finalize_func: nil, tkey_func_other_arguments: nil, tinit_func_other_arguments: nil, treduce_func_other_arguments: nil, tfinalize_func_other_arguments: nil, output_types: nil, output_shapes: nil, name: "ExperimentalGroupByReducerDataset")
       self.execute("ExperimentalGroupByReducerDataset", [input_dataset, key_func_other_arguments, init_func_other_arguments, reduce_func_other_arguments, finalize_func_other_arguments], key_func: key_func, init_func: init_func, reduce_func: reduce_func, finalize_func: finalize_func, Tkey_func_other_arguments: tkey_func_other_arguments, Tinit_func_other_arguments: tinit_func_other_arguments, Treduce_func_other_arguments: treduce_func_other_arguments, Tfinalize_func_other_arguments: tfinalize_func_other_arguments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_group_by_window_dataset(input_dataset, key_func_other_arguments, reduce_func_other_arguments, window_size_func_other_arguments, key_func: nil, reduce_func: nil, window_size_func: nil, tkey_func_other_arguments: nil, treduce_func_other_arguments: nil, twindow_size_func_other_arguments: nil, output_types: nil, output_shapes: nil, name: "ExperimentalGroupByWindowDataset")
       self.execute("ExperimentalGroupByWindowDataset", [input_dataset, key_func_other_arguments, reduce_func_other_arguments, window_size_func_other_arguments], key_func: key_func, reduce_func: reduce_func, window_size_func: window_size_func, Tkey_func_other_arguments: tkey_func_other_arguments, Treduce_func_other_arguments: treduce_func_other_arguments, Twindow_size_func_other_arguments: twindow_size_func_other_arguments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_ignore_errors_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "ExperimentalIgnoreErrorsDataset")
       self.execute("ExperimentalIgnoreErrorsDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_iterator_get_device(resource, name: "ExperimentalIteratorGetDevice")
       self.execute("ExperimentalIteratorGetDevice", [resource], name: name)
     end
-  
 
     def self.experimental_lmdb_dataset(filenames, output_types: nil, output_shapes: nil, name: "ExperimentalLMDBDataset")
       self.execute("ExperimentalLMDBDataset", [filenames], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_latency_stats_dataset(input_dataset, tag, output_types: nil, output_shapes: nil, name: "ExperimentalLatencyStatsDataset")
       self.execute("ExperimentalLatencyStatsDataset", [input_dataset, tag], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_map_and_batch_dataset(input_dataset, other_arguments, batch_size, num_parallel_calls, drop_remainder, f: nil, targuments: nil, output_types: nil, output_shapes: nil, preserve_cardinality: false, name: "ExperimentalMapAndBatchDataset")
       self.execute("ExperimentalMapAndBatchDataset", [input_dataset, other_arguments, batch_size, num_parallel_calls, drop_remainder], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, preserve_cardinality: preserve_cardinality, name: name)
     end
-  
 
     def self.experimental_map_dataset(input_dataset, other_arguments, f: nil, targuments: nil, output_types: nil, output_shapes: nil, use_inter_op_parallelism: true, preserve_cardinality: false, name: "ExperimentalMapDataset")
       self.execute("ExperimentalMapDataset", [input_dataset, other_arguments], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, use_inter_op_parallelism: use_inter_op_parallelism, preserve_cardinality: preserve_cardinality, name: name)
     end
-  
 
     def self.experimental_matching_files_dataset(patterns, name: "ExperimentalMatchingFilesDataset")
       self.execute("ExperimentalMatchingFilesDataset", [patterns], name: name)
     end
-  
 
     def self.experimental_max_intra_op_parallelism_dataset(input_dataset, max_intra_op_parallelism, output_types: nil, output_shapes: nil, name: "ExperimentalMaxIntraOpParallelismDataset")
       self.execute("ExperimentalMaxIntraOpParallelismDataset", [input_dataset, max_intra_op_parallelism], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_non_serializable_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "ExperimentalNonSerializableDataset")
       self.execute("ExperimentalNonSerializableDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_parallel_interleave_dataset(input_dataset, other_arguments, cycle_length, block_length, sloppy, buffer_output_elements, prefetch_input_elements, f: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "ExperimentalParallelInterleaveDataset")
       self.execute("ExperimentalParallelInterleaveDataset", [input_dataset, other_arguments, cycle_length, block_length, sloppy, buffer_output_elements, prefetch_input_elements], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_parse_example_dataset(input_dataset, num_parallel_calls, dense_defaults, sparse_keys: nil, dense_keys: nil, sparse_types: nil, tdense: nil, dense_shapes: nil, output_types: nil, output_shapes: nil, sloppy: false, name: "ExperimentalParseExampleDataset")
       self.execute("ExperimentalParseExampleDataset", [input_dataset, num_parallel_calls, dense_defaults], sparse_keys: sparse_keys, dense_keys: dense_keys, sparse_types: sparse_types, Tdense: tdense, dense_shapes: dense_shapes, output_types: output_types, output_shapes: output_shapes, sloppy: sloppy, name: name)
     end
-  
 
     def self.experimental_private_thread_pool_dataset(input_dataset, num_threads, output_types: nil, output_shapes: nil, name: "ExperimentalPrivateThreadPoolDataset")
       self.execute("ExperimentalPrivateThreadPoolDataset", [input_dataset, num_threads], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_random_dataset(seed, seed2, output_types: nil, output_shapes: nil, name: "ExperimentalRandomDataset")
       self.execute("ExperimentalRandomDataset", [seed, seed2], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_rebatch_dataset(input_dataset, num_replicas, output_types: nil, output_shapes: nil, use_fallback: true, name: "ExperimentalRebatchDataset")
       self.execute("ExperimentalRebatchDataset", [input_dataset, num_replicas], output_types: output_types, output_shapes: output_shapes, use_fallback: use_fallback, name: name)
     end
-  
 
     def self.experimental_scan_dataset(input_dataset, initial_state, other_arguments, f: nil, tstate: nil, targuments: nil, output_types: nil, output_shapes: nil, preserve_cardinality: false, name: "ExperimentalScanDataset")
       self.execute("ExperimentalScanDataset", [input_dataset, initial_state, other_arguments], f: f, Tstate: tstate, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, preserve_cardinality: preserve_cardinality, name: name)
     end
-  
 
     def self.experimental_set_stats_aggregator_dataset(input_dataset, stats_aggregator, tag, counter_prefix, output_types: nil, output_shapes: nil, name: "ExperimentalSetStatsAggregatorDataset")
       self.execute("ExperimentalSetStatsAggregatorDataset", [input_dataset, stats_aggregator, tag, counter_prefix], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_sleep_dataset(input_dataset, sleep_microseconds, output_types: nil, output_shapes: nil, name: "ExperimentalSleepDataset")
       self.execute("ExperimentalSleepDataset", [input_dataset, sleep_microseconds], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_sliding_window_dataset(input_dataset, window_size, window_shift, window_stride, output_types: nil, output_shapes: nil, name: "ExperimentalSlidingWindowDataset")
       self.execute("ExperimentalSlidingWindowDataset", [input_dataset, window_size, window_shift, window_stride], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_sql_dataset(driver_name, data_source_name, query, output_types: nil, output_shapes: nil, name: "ExperimentalSqlDataset")
       self.execute("ExperimentalSqlDataset", [driver_name, data_source_name, query], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_stats_aggregator_handle(container: nil, shared_name: nil, name: "ExperimentalStatsAggregatorHandle")
       self.execute("ExperimentalStatsAggregatorHandle", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.experimental_stats_aggregator_summary(iterator, name: "ExperimentalStatsAggregatorSummary")
       self.execute("ExperimentalStatsAggregatorSummary", [iterator], name: name)
     end
-  
 
     def self.experimental_take_while_dataset(input_dataset, other_arguments, predicate: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "ExperimentalTakeWhileDataset")
       self.execute("ExperimentalTakeWhileDataset", [input_dataset, other_arguments], predicate: predicate, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_thread_pool_dataset(input_dataset, thread_pool, output_types: nil, output_shapes: nil, name: "ExperimentalThreadPoolDataset")
       self.execute("ExperimentalThreadPoolDataset", [input_dataset, thread_pool], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_thread_pool_handle(num_threads: nil, max_intra_op_parallelism: 1, display_name: nil, container: nil, shared_name: nil, name: "ExperimentalThreadPoolHandle")
       self.execute("ExperimentalThreadPoolHandle", [], num_threads: num_threads, max_intra_op_parallelism: max_intra_op_parallelism, display_name: display_name, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.experimental_unbatch_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "ExperimentalUnbatchDataset")
       self.execute("ExperimentalUnbatchDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.experimental_unique_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "ExperimentalUniqueDataset")
       self.execute("ExperimentalUniqueDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.expm1(x, typeT: nil, name: "Expm1")
       self.execute("Expm1", [x], T: typeT, name: name)
     end
-  
 
     def self.extract_glimpse(input, size, offsets, centered: true, normalized: true, uniform_noise: true, noise: "uniform", name: "ExtractGlimpse")
       self.execute("ExtractGlimpse", [input, size, offsets], centered: centered, normalized: normalized, uniform_noise: uniform_noise, noise: noise, name: name)
     end
-  
 
     def self.extract_image_patches(images, ksizes: nil, strides: nil, rates: nil, typeT: nil, padding: nil, name: "ExtractImagePatches")
       self.execute("ExtractImagePatches", [images], ksizes: ksizes, strides: strides, rates: rates, T: typeT, padding: padding, name: name)
     end
-  
 
     def self.extract_jpeg_shape(contents, output_type: nil, name: "ExtractJpegShape")
       self.execute("ExtractJpegShape", [contents], output_type: output_type, name: name)
     end
-  
 
     def self.extract_volume_patches(input, ksizes: nil, strides: nil, typeT: nil, padding: nil, name: "ExtractVolumePatches")
       self.execute("ExtractVolumePatches", [input], ksizes: ksizes, strides: strides, T: typeT, padding: padding, name: name)
     end
-  
 
     def self.fft(input, tcomplex: nil, name: "FFT")
       self.execute("FFT", [input], Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.fft2_d(input, tcomplex: nil, name: "FFT2D")
       self.execute("FFT2D", [input], Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.fft3_d(input, tcomplex: nil, name: "FFT3D")
       self.execute("FFT3D", [input], Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.fifo_queue(component_types: nil, shapes: [], capacity: -1, container: nil, shared_name: nil, name: "FIFOQueue")
       self.execute("FIFOQueue", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.fifo_queue_v2(component_types: nil, shapes: [], capacity: -1, container: nil, shared_name: nil, name: "FIFOQueueV2")
       self.execute("FIFOQueueV2", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.fact(name: "Fact")
       self.execute("Fact", [], name: name)
     end
-  
 
     def self.fake_param(dtype: nil, shape: nil, name: "FakeParam")
       self.execute("FakeParam", [], dtype: dtype, shape: shape, name: name)
     end
-  
 
     def self.fake_quant_with_min_max_args(inputs, min: -6.0, max: 6.0, num_bits: 8, narrow_range: false, name: "FakeQuantWithMinMaxArgs")
       self.execute("FakeQuantWithMinMaxArgs", [inputs], min: min, max: max, num_bits: num_bits, narrow_range: narrow_range, name: name)
     end
-  
 
     def self.fake_quant_with_min_max_args_gradient(gradients, inputs, min: -6.0, max: 6.0, num_bits: 8, narrow_range: false, name: "FakeQuantWithMinMaxArgsGradient")
       self.execute("FakeQuantWithMinMaxArgsGradient", [gradients, inputs], min: min, max: max, num_bits: num_bits, narrow_range: narrow_range, name: name)
     end
-  
 
     def self.fake_quant_with_min_max_vars(inputs, min, max, num_bits: 8, narrow_range: false, name: "FakeQuantWithMinMaxVars")
       self.execute("FakeQuantWithMinMaxVars", [inputs, min, max], num_bits: num_bits, narrow_range: narrow_range, name: name)
     end
-  
 
     def self.fake_quant_with_min_max_vars_gradient(gradients, inputs, min, max, num_bits: 8, narrow_range: false, name: "FakeQuantWithMinMaxVarsGradient")
       self.execute("FakeQuantWithMinMaxVarsGradient", [gradients, inputs, min, max], num_bits: num_bits, narrow_range: narrow_range, name: name)
     end
-  
 
     def self.fake_quant_with_min_max_vars_per_channel(inputs, min, max, num_bits: 8, narrow_range: false, name: "FakeQuantWithMinMaxVarsPerChannel")
       self.execute("FakeQuantWithMinMaxVarsPerChannel", [inputs, min, max], num_bits: num_bits, narrow_range: narrow_range, name: name)
     end
-  
 
     def self.fake_quant_with_min_max_vars_per_channel_gradient(gradients, inputs, min, max, num_bits: 8, narrow_range: false, name: "FakeQuantWithMinMaxVarsPerChannelGradient")
       self.execute("FakeQuantWithMinMaxVarsPerChannelGradient", [gradients, inputs, min, max], num_bits: num_bits, narrow_range: narrow_range, name: name)
     end
-  
 
     def self.fake_queue(resource, name: "FakeQueue")
       self.execute("FakeQueue", [resource], name: name)
     end
-  
 
     def self.fill(dims, value, typeT: nil, index_type: nil, name: "Fill")
       self.execute("Fill", [dims, value], T: typeT, index_type: index_type, name: name)
     end
-  
 
     def self.filter_by_last_component_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "FilterByLastComponentDataset")
       self.execute("FilterByLastComponentDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.filter_dataset(input_dataset, other_arguments, predicate: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "FilterDataset")
       self.execute("FilterDataset", [input_dataset, other_arguments], predicate: predicate, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.fingerprint(data, method, typeT: nil, name: "Fingerprint")
       self.execute("Fingerprint", [data, method], T: typeT, name: name)
     end
-  
 
     def self.fixed_length_record_dataset(filenames, header_bytes, record_bytes, footer_bytes, buffer_size, name: "FixedLengthRecordDataset")
       self.execute("FixedLengthRecordDataset", [filenames, header_bytes, record_bytes, footer_bytes, buffer_size], name: name)
     end
-  
 
     def self.fixed_length_record_dataset_v2(filenames, header_bytes, record_bytes, footer_bytes, buffer_size, compression_type, name: "FixedLengthRecordDatasetV2")
       self.execute("FixedLengthRecordDatasetV2", [filenames, header_bytes, record_bytes, footer_bytes, buffer_size, compression_type], name: name)
     end
-  
 
     def self.fixed_length_record_reader(header_bytes: 0, record_bytes: nil, footer_bytes: 0, hop_bytes: 0, container: nil, shared_name: nil, name: "FixedLengthRecordReader")
       self.execute("FixedLengthRecordReader", [], header_bytes: header_bytes, record_bytes: record_bytes, footer_bytes: footer_bytes, hop_bytes: hop_bytes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.fixed_length_record_reader_v2(header_bytes: 0, record_bytes: nil, footer_bytes: 0, hop_bytes: 0, container: nil, shared_name: nil, encoding: nil, name: "FixedLengthRecordReaderV2")
       self.execute("FixedLengthRecordReaderV2", [], header_bytes: header_bytes, record_bytes: record_bytes, footer_bytes: footer_bytes, hop_bytes: hop_bytes, container: container, shared_name: shared_name, encoding: encoding, name: name)
     end
-  
 
     def self.fixed_unigram_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, vocab_file: nil, distortion: 1.0, num_reserved_ids: 0, num_shards: 1, shard: 0, unigrams: [], seed: 0, seed2: 0, name: "FixedUnigramCandidateSampler")
       self.execute("FixedUnigramCandidateSampler", [true_classes], num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, vocab_file: vocab_file, distortion: distortion, num_reserved_ids: num_reserved_ids, num_shards: num_shards, shard: shard, unigrams: unigrams, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.flat_map_dataset(input_dataset, other_arguments, f: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "FlatMapDataset")
       self.execute("FlatMapDataset", [input_dataset, other_arguments], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.floor(x, typeT: nil, name: "Floor")
       self.execute("Floor", [x], T: typeT, name: name)
     end
-  
 
     def self.floor_div(x, y, typeT: nil, name: "FloorDiv")
       self.execute("FloorDiv", [x, y], T: typeT, name: name)
     end
-  
 
     def self.floor_mod(x, y, typeT: nil, name: "FloorMod")
       self.execute("FloorMod", [x, y], T: typeT, name: name)
     end
-  
 
     def self.flush_summary_writer(writer, name: "FlushSummaryWriter")
       self.execute("FlushSummaryWriter", [writer], name: name)
     end
-  
 
     def self.for(start, limit, delta, input, typeT: nil, body: nil, name: "For")
       self.execute("For", [start, limit, delta, input], T: typeT, body: body, name: name)
     end
-  
 
     def self.fractional_avg_pool(value, pooling_ratio: nil, pseudo_random: false, overlapping: false, deterministic: false, seed: 0, seed2: 0, typeT: nil, name: "FractionalAvgPool")
       self.execute("FractionalAvgPool", [value], pooling_ratio: pooling_ratio, pseudo_random: pseudo_random, overlapping: overlapping, deterministic: deterministic, seed: seed, seed2: seed2, T: typeT, name: name)
     end
-  
 
     def self.fractional_avg_pool_grad(orig_input_tensor_shape, out_backprop, row_pooling_sequence, col_pooling_sequence, overlapping: false, typeT: nil, name: "FractionalAvgPoolGrad")
       self.execute("FractionalAvgPoolGrad", [orig_input_tensor_shape, out_backprop, row_pooling_sequence, col_pooling_sequence], overlapping: overlapping, T: typeT, name: name)
     end
-  
 
     def self.fractional_max_pool(value, pooling_ratio: nil, pseudo_random: false, overlapping: false, deterministic: false, seed: 0, seed2: 0, typeT: nil, name: "FractionalMaxPool")
       self.execute("FractionalMaxPool", [value], pooling_ratio: pooling_ratio, pseudo_random: pseudo_random, overlapping: overlapping, deterministic: deterministic, seed: seed, seed2: seed2, T: typeT, name: name)
     end
-  
 
     def self.fractional_max_pool_grad(orig_input, orig_output, out_backprop, row_pooling_sequence, col_pooling_sequence, overlapping: false, typeT: nil, name: "FractionalMaxPoolGrad")
       self.execute("FractionalMaxPoolGrad", [orig_input, orig_output, out_backprop, row_pooling_sequence, col_pooling_sequence], overlapping: overlapping, T: typeT, name: name)
     end
-  
 
     def self.fused_batch_norm(x, scale, offset, mean, variance, typeT: nil, epsilon: 9.999999747378752e-05, data_format: "NHWC", is_training: true, name: "FusedBatchNorm")
       self.execute("FusedBatchNorm", [x, scale, offset, mean, variance], T: typeT, epsilon: epsilon, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self.fused_batch_norm_grad(y_backprop, x, scale, reserve_space_1, reserve_space_2, typeT: nil, epsilon: 9.999999747378752e-05, data_format: "NHWC", is_training: true, name: "FusedBatchNormGrad")
       self.execute("FusedBatchNormGrad", [y_backprop, x, scale, reserve_space_1, reserve_space_2], T: typeT, epsilon: epsilon, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self.fused_batch_norm_grad_v2(y_backprop, x, scale, reserve_space_1, reserve_space_2, typeT: nil, u: nil, epsilon: 9.999999747378752e-05, data_format: "NHWC", is_training: true, name: "FusedBatchNormGradV2")
       self.execute("FusedBatchNormGradV2", [y_backprop, x, scale, reserve_space_1, reserve_space_2], T: typeT, U: u, epsilon: epsilon, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self.fused_batch_norm_grad_v3(y_backprop, x, scale, reserve_space_1, reserve_space_2, reserve_space_3, typeT: nil, u: nil, epsilon: 9.999999747378752e-05, data_format: "NHWC", is_training: true, name: "FusedBatchNormGradV3")
       self.execute("FusedBatchNormGradV3", [y_backprop, x, scale, reserve_space_1, reserve_space_2, reserve_space_3], T: typeT, U: u, epsilon: epsilon, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self.fused_batch_norm_v2(x, scale, offset, mean, variance, typeT: nil, u: nil, epsilon: 9.999999747378752e-05, data_format: "NHWC", is_training: true, name: "FusedBatchNormV2")
       self.execute("FusedBatchNormV2", [x, scale, offset, mean, variance], T: typeT, U: u, epsilon: epsilon, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self.fused_batch_norm_v3(x, scale, offset, mean, variance, typeT: nil, u: nil, epsilon: 9.999999747378752e-05, data_format: "NHWC", is_training: true, name: "FusedBatchNormV3")
       self.execute("FusedBatchNormV3", [x, scale, offset, mean, variance], T: typeT, U: u, epsilon: epsilon, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self.fused_pad_conv2_d(input, paddings, filter, typeT: nil, mode: nil, strides: nil, padding: nil, name: "FusedPadConv2D")
       self.execute("FusedPadConv2D", [input, paddings, filter], T: typeT, mode: mode, strides: strides, padding: padding, name: name)
     end
-  
 
     def self.fused_resize_and_pad_conv2_d(input, size, paddings, filter, typeT: nil, resize_align_corners: false, mode: nil, strides: nil, padding: nil, name: "FusedResizeAndPadConv2D")
       self.execute("FusedResizeAndPadConv2D", [input, size, paddings, filter], T: typeT, resize_align_corners: resize_align_corners, mode: mode, strides: strides, padding: padding, name: name)
     end
-  
 
     def self.gru_block_cell(x, h_prev, w_ru, w_c, b_ru, b_c, typeT: nil, name: "GRUBlockCell")
       self.execute("GRUBlockCell", [x, h_prev, w_ru, w_c, b_ru, b_c], T: typeT, name: name)
     end
-  
 
     def self.gru_block_cell_grad(x, h_prev, w_ru, w_c, b_ru, b_c, r, u, c, d_h, typeT: nil, name: "GRUBlockCellGrad")
       self.execute("GRUBlockCellGrad", [x, h_prev, w_ru, w_c, b_ru, b_c, r, u, c, d_h], T: typeT, name: name)
     end
-  
 
     def self.gather(params, indices, validate_indices: true, tparams: nil, tindices: nil, name: "Gather")
       self.execute("Gather", [params, indices], validate_indices: validate_indices, Tparams: tparams, Tindices: tindices, name: name)
     end
-  
 
     def self.gather_nd(params, indices, tparams: nil, tindices: nil, name: "GatherNd")
       self.execute("GatherNd", [params, indices], Tparams: tparams, Tindices: tindices, name: name)
     end
-  
 
     def self.gather_v2(params, indices, axis, batch_dims: 0, tparams: nil, tindices: nil, taxis: nil, name: "GatherV2")
       self.execute("GatherV2", [params, indices, axis], batch_dims: batch_dims, Tparams: tparams, Tindices: tindices, Taxis: taxis, name: name)
     end
-  
 
     def self.generate_vocab_remapping(new_vocab_file, old_vocab_file, new_vocab_offset: nil, num_new_vocab: nil, old_vocab_size: -1, name: "GenerateVocabRemapping")
       self.execute("GenerateVocabRemapping", [new_vocab_file, old_vocab_file], new_vocab_offset: new_vocab_offset, num_new_vocab: num_new_vocab, old_vocab_size: old_vocab_size, name: name)
     end
-  
 
     def self.generator_dataset(init_func_other_args, next_func_other_args, finalize_func_other_args, init_func: nil, next_func: nil, finalize_func: nil, tinit_func_args: nil, tnext_func_args: nil, tfinalize_func_args: nil, output_types: nil, output_shapes: nil, name: "GeneratorDataset")
       self.execute("GeneratorDataset", [init_func_other_args, next_func_other_args, finalize_func_other_args], init_func: init_func, next_func: next_func, finalize_func: finalize_func, Tinit_func_args: tinit_func_args, Tnext_func_args: tnext_func_args, Tfinalize_func_args: tfinalize_func_args, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.get_session_handle(value, typeT: nil, name: "GetSessionHandle")
       self.execute("GetSessionHandle", [value], T: typeT, name: name)
     end
-  
 
     def self.get_session_handle_v2(value, typeT: nil, name: "GetSessionHandleV2")
       self.execute("GetSessionHandleV2", [value], T: typeT, name: name)
     end
-  
 
     def self.get_session_tensor(handle, dtype: nil, name: "GetSessionTensor")
       self.execute("GetSessionTensor", [handle], dtype: dtype, name: name)
     end
-  
 
     def self.greater(x, y, typeT: nil, name: "Greater")
       self.execute("Greater", [x, y], T: typeT, name: name)
     end
-  
 
     def self.greater_equal(x, y, typeT: nil, name: "GreaterEqual")
       self.execute("GreaterEqual", [x, y], T: typeT, name: name)
     end
-  
 
     def self.group_by_reducer_dataset(input_dataset, key_func_other_arguments, init_func_other_arguments, reduce_func_other_arguments, finalize_func_other_arguments, key_func: nil, init_func: nil, reduce_func: nil, finalize_func: nil, tkey_func_other_arguments: nil, tinit_func_other_arguments: nil, treduce_func_other_arguments: nil, tfinalize_func_other_arguments: nil, output_types: nil, output_shapes: nil, name: "GroupByReducerDataset")
       self.execute("GroupByReducerDataset", [input_dataset, key_func_other_arguments, init_func_other_arguments, reduce_func_other_arguments, finalize_func_other_arguments], key_func: key_func, init_func: init_func, reduce_func: reduce_func, finalize_func: finalize_func, Tkey_func_other_arguments: tkey_func_other_arguments, Tinit_func_other_arguments: tinit_func_other_arguments, Treduce_func_other_arguments: treduce_func_other_arguments, Tfinalize_func_other_arguments: tfinalize_func_other_arguments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.group_by_window_dataset(input_dataset, key_func_other_arguments, reduce_func_other_arguments, window_size_func_other_arguments, key_func: nil, reduce_func: nil, window_size_func: nil, tkey_func_other_arguments: nil, treduce_func_other_arguments: nil, twindow_size_func_other_arguments: nil, output_types: nil, output_shapes: nil, name: "GroupByWindowDataset")
       self.execute("GroupByWindowDataset", [input_dataset, key_func_other_arguments, reduce_func_other_arguments, window_size_func_other_arguments], key_func: key_func, reduce_func: reduce_func, window_size_func: window_size_func, Tkey_func_other_arguments: tkey_func_other_arguments, Treduce_func_other_arguments: treduce_func_other_arguments, Twindow_size_func_other_arguments: twindow_size_func_other_arguments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.guarantee_const(input, typeT: nil, name: "GuaranteeConst")
       self.execute("GuaranteeConst", [input], T: typeT, name: name)
     end
-  
 
     def self.hsv_to_rgb(images, typeT: nil, name: "HSVToRGB")
       self.execute("HSVToRGB", [images], T: typeT, name: name)
     end
-  
 
     def self.hash_table(container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, name: "HashTable")
       self.execute("HashTable", [], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, name: name)
     end
-  
 
     def self.hash_table_v2(container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, name: "HashTableV2")
       self.execute("HashTableV2", [], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, name: name)
     end
-  
 
     def self.histogram_fixed_width(values, value_range, nbins, typeT: nil, dtype: nil, name: "HistogramFixedWidth")
       self.execute("HistogramFixedWidth", [values, value_range, nbins], T: typeT, dtype: dtype, name: name)
     end
-  
 
     def self.histogram_summary(tag, values, typeT: nil, name: "HistogramSummary")
       self.execute("HistogramSummary", [tag, values], T: typeT, name: name)
     end
-  
 
     def self.host_const(value: nil, dtype: nil, name: "HostConst")
       self.execute("HostConst", [], value: value, dtype: dtype, name: name)
     end
-  
 
     def self.ifft(input, tcomplex: nil, name: "IFFT")
       self.execute("IFFT", [input], Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.ifft2_d(input, tcomplex: nil, name: "IFFT2D")
       self.execute("IFFT2D", [input], Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.ifft3_d(input, tcomplex: nil, name: "IFFT3D")
       self.execute("IFFT3D", [input], Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.irfft(input, fft_length, treal: nil, tcomplex: nil, name: "IRFFT")
       self.execute("IRFFT", [input, fft_length], Treal: treal, Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.irfft2_d(input, fft_length, treal: nil, tcomplex: nil, name: "IRFFT2D")
       self.execute("IRFFT2D", [input, fft_length], Treal: treal, Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.irfft3_d(input, fft_length, treal: nil, tcomplex: nil, name: "IRFFT3D")
       self.execute("IRFFT3D", [input, fft_length], Treal: treal, Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.identity(input, typeT: nil, name: "Identity")
       self.execute("Identity", [input], T: typeT, name: name)
     end
-  
 
     def self.identity_n(input, typeT: nil, name: "IdentityN")
       self.execute("IdentityN", [input], T: typeT, name: name)
     end
-  
 
     def self.identity_reader(container: nil, shared_name: nil, name: "IdentityReader")
       self.execute("IdentityReader", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.identity_reader_v2(container: nil, shared_name: nil, name: "IdentityReaderV2")
       self.execute("IdentityReaderV2", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.if(cond, input, tcond: nil, tin: nil, tout: nil, then_branch: nil, else_branch: nil, output_shapes: [], name: "If")
       self.execute("If", [cond, input], Tcond: tcond, Tin: tin, Tout: tout, then_branch: then_branch, else_branch: else_branch, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.igamma(a, x, typeT: nil, name: "Igamma")
       self.execute("Igamma", [a, x], T: typeT, name: name)
     end
-  
 
     def self.igamma_grad_a(a, x, typeT: nil, name: "IgammaGradA")
       self.execute("IgammaGradA", [a, x], T: typeT, name: name)
     end
-  
 
     def self.igammac(a, x, typeT: nil, name: "Igammac")
       self.execute("Igammac", [a, x], T: typeT, name: name)
     end
-  
 
     def self.ignore_errors_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "IgnoreErrorsDataset")
       self.execute("IgnoreErrorsDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.imag(input, typeT: nil, tout: nil, name: "Imag")
       self.execute("Imag", [input], T: typeT, Tout: tout, name: name)
     end
-  
 
     def self.image_summary(tag, tensor, max_images: 3, typeT: nil, bad_color: [], name: "ImageSummary")
       self.execute("ImageSummary", [tag, tensor], max_images: max_images, T: typeT, bad_color: bad_color, name: name)
     end
-  
 
     def self.immutable_const(dtype: nil, shape: nil, memory_region_name: nil, name: "ImmutableConst")
       self.execute("ImmutableConst", [], dtype: dtype, shape: shape, memory_region_name: memory_region_name, name: name)
     end
-  
 
     def self.import_event(writer, event, name: "ImportEvent")
       self.execute("ImportEvent", [writer, event], name: name)
     end
-  
 
     def self.in_top_k(predictions, targets, k: nil, typeT: nil, name: "InTopK")
       self.execute("InTopK", [predictions, targets], k: k, T: typeT, name: name)
     end
-  
 
     def self.in_top_kv2(predictions, targets, k, typeT: nil, name: "InTopKV2")
       self.execute("InTopKV2", [predictions, targets, k], T: typeT, name: name)
     end
-  
 
     def self.infeed_dequeue(dtype: nil, shape: nil, name: "InfeedDequeue")
       self.execute("InfeedDequeue", [], dtype: dtype, shape: shape, name: name)
     end
-  
 
     def self.infeed_dequeue_tuple(dtypes: nil, shapes: nil, name: "InfeedDequeueTuple")
       self.execute("InfeedDequeueTuple", [], dtypes: dtypes, shapes: shapes, name: name)
     end
-  
 
     def self.infeed_enqueue(input, dtype: nil, shape: [], layout: [], device_ordinal: -1, name: "InfeedEnqueue")
       self.execute("InfeedEnqueue", [input], dtype: dtype, shape: shape, layout: layout, device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self.infeed_enqueue_prelinearized_buffer(input, device_ordinal: -1, name: "InfeedEnqueuePrelinearizedBuffer")
       self.execute("InfeedEnqueuePrelinearizedBuffer", [input], device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self.infeed_enqueue_tuple(inputs, dtypes: nil, shapes: nil, layouts: [], device_ordinal: -1, name: "InfeedEnqueueTuple")
       self.execute("InfeedEnqueueTuple", [inputs], dtypes: dtypes, shapes: shapes, layouts: layouts, device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self.initialize_table(table_handle, keys, values, tkey: nil, tval: nil, name: "InitializeTable")
       self.execute("InitializeTable", [table_handle, keys, values], Tkey: tkey, Tval: tval, name: name)
     end
-  
 
     def self.initialize_table_from_text_file(table_handle, filename, key_index: nil, value_index: nil, vocab_size: -1, delimiter: "	", name: "InitializeTableFromTextFile")
       self.execute("InitializeTableFromTextFile", [table_handle, filename], key_index: key_index, value_index: value_index, vocab_size: vocab_size, delimiter: delimiter, name: name)
     end
-  
 
     def self.initialize_table_from_text_file_v2(table_handle, filename, key_index: nil, value_index: nil, vocab_size: -1, delimiter: "	", name: "InitializeTableFromTextFileV2")
       self.execute("InitializeTableFromTextFileV2", [table_handle, filename], key_index: key_index, value_index: value_index, vocab_size: vocab_size, delimiter: delimiter, name: name)
     end
-  
 
     def self.initialize_table_v2(table_handle, keys, values, tkey: nil, tval: nil, name: "InitializeTableV2")
       self.execute("InitializeTableV2", [table_handle, keys, values], Tkey: tkey, Tval: tval, name: name)
     end
-  
 
     def self.inplace_add(x, i, v, typeT: nil, name: "InplaceAdd")
       self.execute("InplaceAdd", [x, i, v], T: typeT, name: name)
     end
-  
 
     def self.inplace_sub(x, i, v, typeT: nil, name: "InplaceSub")
       self.execute("InplaceSub", [x, i, v], T: typeT, name: name)
     end
-  
 
     def self.inplace_update(x, i, v, typeT: nil, name: "InplaceUpdate")
       self.execute("InplaceUpdate", [x, i, v], T: typeT, name: name)
     end
-  
 
     def self.interleave_dataset(input_dataset, other_arguments, cycle_length, block_length, f: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "InterleaveDataset")
       self.execute("InterleaveDataset", [input_dataset, other_arguments, cycle_length, block_length], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.inv(x, typeT: nil, name: "Inv")
       self.execute("Inv", [x], T: typeT, name: name)
     end
-  
 
     def self.inv_grad(y, dy, typeT: nil, name: "InvGrad")
       self.execute("InvGrad", [y, dy], T: typeT, name: name)
     end
-  
 
     def self.invert(x, typeT: nil, name: "Invert")
       self.execute("Invert", [x], T: typeT, name: name)
     end
-  
 
     def self.invert_permutation(x, typeT: nil, name: "InvertPermutation")
       self.execute("InvertPermutation", [x], T: typeT, name: name)
     end
-  
 
     def self.is_boosted_trees_ensemble_initialized(tree_ensemble_handle, name: "IsBoostedTreesEnsembleInitialized")
       self.execute("IsBoostedTreesEnsembleInitialized", [tree_ensemble_handle], name: name)
     end
-  
 
     def self.is_boosted_trees_quantile_stream_resource_initialized(quantile_stream_resource_handle, name: "IsBoostedTreesQuantileStreamResourceInitialized")
       self.execute("IsBoostedTreesQuantileStreamResourceInitialized", [quantile_stream_resource_handle], name: name)
     end
-  
 
     def self.is_finite(x, typeT: nil, name: "IsFinite")
       self.execute("IsFinite", [x], T: typeT, name: name)
     end
-  
 
     def self.is_inf(x, typeT: nil, name: "IsInf")
       self.execute("IsInf", [x], T: typeT, name: name)
     end
-  
 
     def self.is_nan(x, typeT: nil, name: "IsNan")
       self.execute("IsNan", [x], T: typeT, name: name)
     end
-  
 
     def self.is_variable_initialized(ref, dtype: nil, name: "IsVariableInitialized")
       self.execute("IsVariableInitialized", [ref], dtype: dtype, name: name)
     end
-  
 
     def self.iterator(shared_name: nil, container: nil, output_types: nil, output_shapes: nil, name: "Iterator")
       self.execute("Iterator", [], shared_name: shared_name, container: container, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.iterator_from_string_handle(string_handle, output_types: [], output_shapes: [], name: "IteratorFromStringHandle")
       self.execute("IteratorFromStringHandle", [string_handle], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.iterator_from_string_handle_v2(string_handle, output_types: [], output_shapes: [], name: "IteratorFromStringHandleV2")
       self.execute("IteratorFromStringHandleV2", [string_handle], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.iterator_get_device(resource, name: "IteratorGetDevice")
       self.execute("IteratorGetDevice", [resource], name: name)
     end
-  
 
     def self.iterator_get_next(iterator, output_types: nil, output_shapes: nil, name: "IteratorGetNext")
       self.execute("IteratorGetNext", [iterator], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.iterator_get_next_as_optional(iterator, output_types: nil, output_shapes: nil, name: "IteratorGetNextAsOptional")
       self.execute("IteratorGetNextAsOptional", [iterator], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.iterator_get_next_sync(iterator, output_types: nil, output_shapes: nil, name: "IteratorGetNextSync")
       self.execute("IteratorGetNextSync", [iterator], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.iterator_to_string_handle(resource_handle, name: "IteratorToStringHandle")
       self.execute("IteratorToStringHandle", [resource_handle], name: name)
     end
-  
 
     def self.iterator_v2(shared_name: nil, container: nil, output_types: nil, output_shapes: nil, name: "IteratorV2")
       self.execute("IteratorV2", [], shared_name: shared_name, container: container, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.kmc2_chain_initialization(distances, seed, name: "KMC2ChainInitialization")
       self.execute("KMC2ChainInitialization", [distances, seed], name: name)
     end
-  
 
     def self.kmeans_plus_plus_initialization(points, num_to_sample, seed, num_retries_per_sample, name: "KmeansPlusPlusInitialization")
       self.execute("KmeansPlusPlusInitialization", [points, num_to_sample, seed, num_retries_per_sample], name: name)
     end
-  
 
     def self.l2_loss(t, typeT: nil, name: "L2Loss")
       self.execute("L2Loss", [t], T: typeT, name: name)
     end
-  
 
     def self.lmdb_dataset(filenames, output_types: nil, output_shapes: nil, name: "LMDBDataset")
       self.execute("LMDBDataset", [filenames], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.lmdb_reader(container: nil, shared_name: nil, name: "LMDBReader")
       self.execute("LMDBReader", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.lrn(input, depth_radius: 5, bias: 1.0, alpha: 1.0, beta: 0.5, typeT: nil, name: "LRN")
       self.execute("LRN", [input], depth_radius: depth_radius, bias: bias, alpha: alpha, beta: beta, T: typeT, name: name)
     end
-  
 
     def self.lrn_grad(input_grads, input_image, output_image, depth_radius: 5, bias: 1.0, alpha: 1.0, beta: 0.5, typeT: nil, name: "LRNGrad")
       self.execute("LRNGrad", [input_grads, input_image, output_image], depth_radius: depth_radius, bias: bias, alpha: alpha, beta: beta, T: typeT, name: name)
     end
-  
 
     def self.lstm_block_cell(x, cs_prev, h_prev, w, wci, wcf, wco, b, forget_bias: 1.0, cell_clip: 3.0, use_peephole: false, typeT: nil, name: "LSTMBlockCell")
       self.execute("LSTMBlockCell", [x, cs_prev, h_prev, w, wci, wcf, wco, b], forget_bias: forget_bias, cell_clip: cell_clip, use_peephole: use_peephole, T: typeT, name: name)
     end
-  
 
     def self.lstm_block_cell_grad(x, cs_prev, h_prev, w, wci, wcf, wco, b, i, cs, f, o, ci, co, cs_grad, h_grad, use_peephole: nil, typeT: nil, name: "LSTMBlockCellGrad")
       self.execute("LSTMBlockCellGrad", [x, cs_prev, h_prev, w, wci, wcf, wco, b, i, cs, f, o, ci, co, cs_grad, h_grad], use_peephole: use_peephole, T: typeT, name: name)
     end
-  
 
     def self.latency_stats_dataset(input_dataset, tag, output_types: nil, output_shapes: nil, name: "LatencyStatsDataset")
       self.execute("LatencyStatsDataset", [input_dataset, tag], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.leaky_relu(features, alpha: 0.20000000298023224, typeT: nil, name: "LeakyRelu")
       self.execute("LeakyRelu", [features], alpha: alpha, T: typeT, name: name)
     end
-  
 
     def self.leaky_relu_grad(gradients, features, alpha: 0.20000000298023224, typeT: nil, name: "LeakyReluGrad")
       self.execute("LeakyReluGrad", [gradients, features], alpha: alpha, T: typeT, name: name)
     end
-  
 
     def self.learned_unigram_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, seed: 0, seed2: 0, name: "LearnedUnigramCandidateSampler")
       self.execute("LearnedUnigramCandidateSampler", [true_classes], num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.left_shift(x, y, typeT: nil, name: "LeftShift")
       self.execute("LeftShift", [x, y], T: typeT, name: name)
     end
-  
 
     def self.less(x, y, typeT: nil, name: "Less")
       self.execute("Less", [x, y], T: typeT, name: name)
     end
-  
 
     def self.less_equal(x, y, typeT: nil, name: "LessEqual")
       self.execute("LessEqual", [x, y], T: typeT, name: name)
     end
-  
 
     def self.lgamma(x, typeT: nil, name: "Lgamma")
       self.execute("Lgamma", [x], T: typeT, name: name)
     end
-  
 
     def self.lin_space(start, stop, num, typeT: nil, tidx: nil, name: "LinSpace")
       self.execute("LinSpace", [start, stop, num], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.list_diff(x, y, typeT: nil, out_idx: nil, name: "ListDiff")
       self.execute("ListDiff", [x, y], T: typeT, out_idx: out_idx, name: name)
     end
-  
 
     def self.load_and_remap_matrix(ckpt_path, old_tensor_name, row_remapping, col_remapping, initializing_values, num_rows: nil, num_cols: nil, max_rows_in_memory: -1, name: "LoadAndRemapMatrix")
       self.execute("LoadAndRemapMatrix", [ckpt_path, old_tensor_name, row_remapping, col_remapping, initializing_values], num_rows: num_rows, num_cols: num_cols, max_rows_in_memory: max_rows_in_memory, name: name)
     end
-  
 
     def self.load_tpu_embedding_adam_parameters(parameters, momenta, velocities, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingADAMParameters")
       self.execute("LoadTPUEmbeddingADAMParameters", [parameters, momenta, velocities], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_adam_parameters_grad_accum_debug(parameters, momenta, velocities, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingADAMParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingADAMParametersGradAccumDebug", [parameters, momenta, velocities, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_adadelta_parameters(parameters, accumulators, updates, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingAdadeltaParameters")
       self.execute("LoadTPUEmbeddingAdadeltaParameters", [parameters, accumulators, updates], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_adadelta_parameters_grad_accum_debug(parameters, accumulators, updates, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingAdadeltaParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingAdadeltaParametersGradAccumDebug", [parameters, accumulators, updates, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_adagrad_parameters(parameters, accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingAdagradParameters")
       self.execute("LoadTPUEmbeddingAdagradParameters", [parameters, accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_adagrad_parameters_grad_accum_debug(parameters, accumulators, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingAdagradParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingAdagradParametersGradAccumDebug", [parameters, accumulators, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_centered_rms_prop_parameters(parameters, ms, mom, mg, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingCenteredRMSPropParameters")
       self.execute("LoadTPUEmbeddingCenteredRMSPropParameters", [parameters, ms, mom, mg], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_ftrl_parameters(parameters, accumulators, linears, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingFTRLParameters")
       self.execute("LoadTPUEmbeddingFTRLParameters", [parameters, accumulators, linears], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_ftrl_parameters_grad_accum_debug(parameters, accumulators, linears, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingFTRLParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingFTRLParametersGradAccumDebug", [parameters, accumulators, linears, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_mdl_adagrad_light_parameters(parameters, accumulators, weights, benefits, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingMDLAdagradLightParameters")
       self.execute("LoadTPUEmbeddingMDLAdagradLightParameters", [parameters, accumulators, weights, benefits], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_momentum_parameters(parameters, momenta, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingMomentumParameters")
       self.execute("LoadTPUEmbeddingMomentumParameters", [parameters, momenta], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_momentum_parameters_grad_accum_debug(parameters, momenta, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingMomentumParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingMomentumParametersGradAccumDebug", [parameters, momenta, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_proximal_adagrad_parameters(parameters, accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingProximalAdagradParameters")
       self.execute("LoadTPUEmbeddingProximalAdagradParameters", [parameters, accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_proximal_adagrad_parameters_grad_accum_debug(parameters, accumulators, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug", [parameters, accumulators, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_rms_prop_parameters(parameters, ms, mom, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingRMSPropParameters")
       self.execute("LoadTPUEmbeddingRMSPropParameters", [parameters, ms, mom], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_rms_prop_parameters_grad_accum_debug(parameters, ms, mom, gradient_accumulators, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingRMSPropParametersGradAccumDebug")
       self.execute("LoadTPUEmbeddingRMSPropParametersGradAccumDebug", [parameters, ms, mom, gradient_accumulators], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.load_tpu_embedding_stochastic_gradient_descent_parameters(parameters, table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "LoadTPUEmbeddingStochasticGradientDescentParameters")
       self.execute("LoadTPUEmbeddingStochasticGradientDescentParameters", [parameters], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.log(x, typeT: nil, name: "Log")
       self.execute("Log", [x], T: typeT, name: name)
     end
-  
 
     def self.log1p(x, typeT: nil, name: "Log1p")
       self.execute("Log1p", [x], T: typeT, name: name)
     end
-  
 
     def self.log_matrix_determinant(input, typeT: nil, name: "LogMatrixDeterminant")
       self.execute("LogMatrixDeterminant", [input], T: typeT, name: name)
     end
-  
 
     def self.log_softmax(logits, typeT: nil, name: "LogSoftmax")
       self.execute("LogSoftmax", [logits], T: typeT, name: name)
     end
-  
 
     def self.log_uniform_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, seed: 0, seed2: 0, name: "LogUniformCandidateSampler")
       self.execute("LogUniformCandidateSampler", [true_classes], num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.logical_and(x, y, name: "LogicalAnd")
       self.execute("LogicalAnd", [x, y], name: name)
     end
-  
 
     def self.logical_not(x, name: "LogicalNot")
       self.execute("LogicalNot", [x], name: name)
     end
-  
 
     def self.logical_or(x, y, name: "LogicalOr")
       self.execute("LogicalOr", [x, y], name: name)
     end
-  
 
     def self.lookup_table_export(table_handle, tkeys: nil, tvalues: nil, name: "LookupTableExport")
       self.execute("LookupTableExport", [table_handle], Tkeys: tkeys, Tvalues: tvalues, name: name)
     end
-  
 
     def self.lookup_table_export_v2(table_handle, tkeys: nil, tvalues: nil, name: "LookupTableExportV2")
       self.execute("LookupTableExportV2", [table_handle], Tkeys: tkeys, Tvalues: tvalues, name: name)
     end
-  
 
     def self.lookup_table_find(table_handle, keys, default_value, tin: nil, tout: nil, name: "LookupTableFind")
       self.execute("LookupTableFind", [table_handle, keys, default_value], Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.lookup_table_find_v2(table_handle, keys, default_value, tin: nil, tout: nil, name: "LookupTableFindV2")
       self.execute("LookupTableFindV2", [table_handle, keys, default_value], Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.lookup_table_import(table_handle, keys, values, tin: nil, tout: nil, name: "LookupTableImport")
       self.execute("LookupTableImport", [table_handle, keys, values], Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.lookup_table_import_v2(table_handle, keys, values, tin: nil, tout: nil, name: "LookupTableImportV2")
       self.execute("LookupTableImportV2", [table_handle, keys, values], Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.lookup_table_insert(table_handle, keys, values, tin: nil, tout: nil, name: "LookupTableInsert")
       self.execute("LookupTableInsert", [table_handle, keys, values], Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.lookup_table_insert_v2(table_handle, keys, values, tin: nil, tout: nil, name: "LookupTableInsertV2")
       self.execute("LookupTableInsertV2", [table_handle, keys, values], Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.lookup_table_remove_v2(table_handle, keys, tin: nil, name: "LookupTableRemoveV2")
       self.execute("LookupTableRemoveV2", [table_handle, keys], Tin: tin, name: name)
     end
-  
 
     def self.lookup_table_size(table_handle, name: "LookupTableSize")
       self.execute("LookupTableSize", [table_handle], name: name)
     end
-  
 
     def self.lookup_table_size_v2(table_handle, name: "LookupTableSizeV2")
       self.execute("LookupTableSizeV2", [table_handle], name: name)
     end
-  
 
     def self.loop_cond(input, name: "LoopCond")
       self.execute("LoopCond", [input], name: name)
     end
-  
 
     def self.lower_bound(sorted_inputs, values, typeT: nil, out_type: nil, name: "LowerBound")
       self.execute("LowerBound", [sorted_inputs, values], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.lu(input, typeT: nil, output_idx_type: nil, name: "Lu")
       self.execute("Lu", [input], T: typeT, output_idx_type: output_idx_type, name: name)
     end
-  
 
     def self.make_iterator(dataset, iterator, name: "MakeIterator")
       self.execute("MakeIterator", [dataset, iterator], name: name)
     end
-  
 
     def self.map_and_batch_dataset(input_dataset, other_arguments, batch_size, num_parallel_calls, drop_remainder, f: nil, targuments: nil, output_types: nil, output_shapes: nil, preserve_cardinality: false, name: "MapAndBatchDataset")
       self.execute("MapAndBatchDataset", [input_dataset, other_arguments, batch_size, num_parallel_calls, drop_remainder], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, preserve_cardinality: preserve_cardinality, name: name)
     end
-  
 
     def self.map_clear(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "MapClear")
       self.execute("MapClear", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.map_dataset(input_dataset, other_arguments, f: nil, targuments: nil, output_types: nil, output_shapes: nil, use_inter_op_parallelism: true, preserve_cardinality: false, name: "MapDataset")
       self.execute("MapDataset", [input_dataset, other_arguments], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, use_inter_op_parallelism: use_inter_op_parallelism, preserve_cardinality: preserve_cardinality, name: name)
     end
-  
 
     def self.map_defun(arguments, captured_inputs, targuments: nil, tcaptured: [], output_types: nil, output_shapes: nil, f: nil, max_intra_op_parallelism: 1, name: "MapDefun")
       self.execute("MapDefun", [arguments, captured_inputs], Targuments: targuments, Tcaptured: tcaptured, output_types: output_types, output_shapes: output_shapes, f: f, max_intra_op_parallelism: max_intra_op_parallelism, name: name)
     end
-  
 
     def self.map_incomplete_size(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "MapIncompleteSize")
       self.execute("MapIncompleteSize", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.map_peek(key, indices, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "MapPeek")
       self.execute("MapPeek", [key, indices], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.map_size(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "MapSize")
       self.execute("MapSize", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.map_stage(key, indices, values, capacity: 0, memory_limit: 0, dtypes: nil, fake_dtypes: nil, container: nil, shared_name: nil, name: "MapStage")
       self.execute("MapStage", [key, indices, values], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, fake_dtypes: fake_dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.map_unstage(key, indices, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "MapUnstage")
       self.execute("MapUnstage", [key, indices], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.map_unstage_no_key(indices, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "MapUnstageNoKey")
       self.execute("MapUnstageNoKey", [indices], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.mat_mul(a, b, transpose_a: false, transpose_b: false, typeT: nil, name: "MatMul")
       self.execute("MatMul", [a, b], transpose_a: transpose_a, transpose_b: transpose_b, T: typeT, name: name)
     end
-  
 
     def self.matching_files(pattern, name: "MatchingFiles")
       self.execute("MatchingFiles", [pattern], name: name)
     end
-  
 
     def self.matching_files_dataset(patterns, name: "MatchingFilesDataset")
       self.execute("MatchingFilesDataset", [patterns], name: name)
     end
-  
 
     def self.matrix_band_part(input, num_lower, num_upper, typeT: nil, tindex: nil, name: "MatrixBandPart")
       self.execute("MatrixBandPart", [input, num_lower, num_upper], T: typeT, Tindex: tindex, name: name)
     end
-  
 
     def self.matrix_determinant(input, typeT: nil, name: "MatrixDeterminant")
       self.execute("MatrixDeterminant", [input], T: typeT, name: name)
     end
-  
 
     def self.matrix_diag(diagonal, typeT: nil, name: "MatrixDiag")
       self.execute("MatrixDiag", [diagonal], T: typeT, name: name)
     end
-  
 
     def self.matrix_diag_part(input, typeT: nil, name: "MatrixDiagPart")
       self.execute("MatrixDiagPart", [input], T: typeT, name: name)
     end
-  
 
     def self.matrix_diag_part_v2(input, k, padding_value, typeT: nil, name: "MatrixDiagPartV2")
       self.execute("MatrixDiagPartV2", [input, k, padding_value], T: typeT, name: name)
     end
-  
 
     def self.matrix_diag_v2(diagonal, k, num_rows, num_cols, padding_value, typeT: nil, name: "MatrixDiagV2")
       self.execute("MatrixDiagV2", [diagonal, k, num_rows, num_cols, padding_value], T: typeT, name: name)
     end
-  
 
     def self.matrix_exponential(input, typeT: nil, name: "MatrixExponential")
       self.execute("MatrixExponential", [input], T: typeT, name: name)
     end
-  
 
     def self.matrix_inverse(input, adjoint: false, typeT: nil, name: "MatrixInverse")
       self.execute("MatrixInverse", [input], adjoint: adjoint, T: typeT, name: name)
     end
-  
 
     def self.matrix_logarithm(input, typeT: nil, name: "MatrixLogarithm")
       self.execute("MatrixLogarithm", [input], T: typeT, name: name)
     end
-  
 
     def self.matrix_set_diag(input, diagonal, typeT: nil, name: "MatrixSetDiag")
       self.execute("MatrixSetDiag", [input, diagonal], T: typeT, name: name)
     end
-  
 
     def self.matrix_set_diag_v2(input, diagonal, k, typeT: nil, name: "MatrixSetDiagV2")
       self.execute("MatrixSetDiagV2", [input, diagonal, k], T: typeT, name: name)
     end
-  
 
     def self.matrix_solve(matrix, rhs, adjoint: false, typeT: nil, name: "MatrixSolve")
       self.execute("MatrixSolve", [matrix, rhs], adjoint: adjoint, T: typeT, name: name)
     end
-  
 
     def self.matrix_solve_ls(matrix, rhs, l2_regularizer, typeT: nil, fast: true, name: "MatrixSolveLs")
       self.execute("MatrixSolveLs", [matrix, rhs, l2_regularizer], T: typeT, fast: fast, name: name)
     end
-  
 
     def self.matrix_square_root(input, typeT: nil, name: "MatrixSquareRoot")
       self.execute("MatrixSquareRoot", [input], T: typeT, name: name)
     end
-  
 
     def self.matrix_triangular_solve(matrix, rhs, lower: true, adjoint: false, typeT: nil, name: "MatrixTriangularSolve")
       self.execute("MatrixTriangularSolve", [matrix, rhs], lower: lower, adjoint: adjoint, T: typeT, name: name)
     end
-  
 
     def self.max(input, reduction_indices, keep_dims: false, typeT: nil, tidx: nil, name: "Max")
       self.execute("Max", [input, reduction_indices], keep_dims: keep_dims, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.max_intra_op_parallelism_dataset(input_dataset, max_intra_op_parallelism, output_types: nil, output_shapes: nil, name: "MaxIntraOpParallelismDataset")
       self.execute("MaxIntraOpParallelismDataset", [input_dataset, max_intra_op_parallelism], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.max_pool(input, typeT: nil, ksize: nil, strides: nil, padding: nil, data_format: "NHWC", name: "MaxPool")
       self.execute("MaxPool", [input], T: typeT, ksize: ksize, strides: strides, padding: padding, data_format: data_format, name: name)
     end
-  
 
     def self.max_pool3_d(input, ksize: nil, strides: nil, padding: nil, data_format: "NDHWC", typeT: nil, name: "MaxPool3D")
       self.execute("MaxPool3D", [input], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.max_pool3_d_grad(orig_input, orig_output, grad, ksize: nil, strides: nil, padding: nil, data_format: "NDHWC", typeT: nil, tinput: nil, name: "MaxPool3DGrad")
       self.execute("MaxPool3DGrad", [orig_input, orig_output, grad], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, TInput: tinput, name: name)
     end
-  
 
     def self.max_pool3_d_grad_grad(orig_input, orig_output, grad, ksize: nil, strides: nil, padding: nil, data_format: "NDHWC", typeT: nil, name: "MaxPool3DGradGrad")
       self.execute("MaxPool3DGradGrad", [orig_input, orig_output, grad], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.max_pool_grad(orig_input, orig_output, grad, ksize: nil, strides: nil, padding: nil, data_format: "NHWC", typeT: nil, name: "MaxPoolGrad")
       self.execute("MaxPoolGrad", [orig_input, orig_output, grad], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.max_pool_grad_grad(orig_input, orig_output, grad, ksize: nil, strides: nil, padding: nil, data_format: "NHWC", typeT: nil, name: "MaxPoolGradGrad")
       self.execute("MaxPoolGradGrad", [orig_input, orig_output, grad], ksize: ksize, strides: strides, padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.max_pool_grad_grad_v2(orig_input, orig_output, grad, ksize, strides, padding: nil, data_format: "NHWC", typeT: nil, name: "MaxPoolGradGradV2")
       self.execute("MaxPoolGradGradV2", [orig_input, orig_output, grad, ksize, strides], padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.max_pool_grad_grad_with_argmax(input, grad, argmax, ksize: nil, strides: nil, padding: nil, include_batch_in_index: false, targmax: nil, typeT: nil, name: "MaxPoolGradGradWithArgmax")
       self.execute("MaxPoolGradGradWithArgmax", [input, grad, argmax], ksize: ksize, strides: strides, padding: padding, include_batch_in_index: include_batch_in_index, Targmax: targmax, T: typeT, name: name)
     end
-  
 
     def self.max_pool_grad_v2(orig_input, orig_output, grad, ksize, strides, padding: nil, data_format: "NHWC", typeT: nil, name: "MaxPoolGradV2")
       self.execute("MaxPoolGradV2", [orig_input, orig_output, grad, ksize, strides], padding: padding, data_format: data_format, T: typeT, name: name)
     end
-  
 
     def self.max_pool_grad_with_argmax(input, grad, argmax, ksize: nil, strides: nil, padding: nil, include_batch_in_index: false, targmax: nil, typeT: nil, name: "MaxPoolGradWithArgmax")
       self.execute("MaxPoolGradWithArgmax", [input, grad, argmax], ksize: ksize, strides: strides, padding: padding, include_batch_in_index: include_batch_in_index, Targmax: targmax, T: typeT, name: name)
     end
-  
 
     def self.max_pool_v2(input, ksize, strides, typeT: nil, padding: nil, data_format: "NHWC", name: "MaxPoolV2")
       self.execute("MaxPoolV2", [input, ksize, strides], T: typeT, padding: padding, data_format: data_format, name: name)
     end
-  
 
     def self.max_pool_with_argmax(input, ksize: nil, strides: nil, targmax: nil, padding: nil, include_batch_in_index: false, typeT: nil, name: "MaxPoolWithArgmax")
       self.execute("MaxPoolWithArgmax", [input], ksize: ksize, strides: strides, Targmax: targmax, padding: padding, include_batch_in_index: include_batch_in_index, T: typeT, name: name)
     end
-  
 
     def self.maximum(x, y, typeT: nil, name: "Maximum")
       self.execute("Maximum", [x, y], T: typeT, name: name)
     end
-  
 
     def self.mean(input, reduction_indices, keep_dims: false, typeT: nil, tidx: nil, name: "Mean")
       self.execute("Mean", [input, reduction_indices], keep_dims: keep_dims, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.merge(inputs, typeT: nil, n: nil, name: "Merge")
       self.execute("Merge", [inputs], T: typeT, N: n, name: name)
     end
-  
 
     def self.merge_summary(inputs, n: nil, name: "MergeSummary")
       self.execute("MergeSummary", [inputs], N: n, name: name)
     end
-  
 
     def self.merge_v2_checkpoints(checkpoint_prefixes, destination_prefix, delete_old_dirs: true, name: "MergeV2Checkpoints")
       self.execute("MergeV2Checkpoints", [checkpoint_prefixes, destination_prefix], delete_old_dirs: delete_old_dirs, name: name)
     end
-  
 
     def self.mfcc(spectrogram, sample_rate, upper_frequency_limit: 4000.0, lower_frequency_limit: 20.0, filterbank_channel_count: 40, dct_coefficient_count: 13, name: "Mfcc")
       self.execute("Mfcc", [spectrogram, sample_rate], upper_frequency_limit: upper_frequency_limit, lower_frequency_limit: lower_frequency_limit, filterbank_channel_count: filterbank_channel_count, dct_coefficient_count: dct_coefficient_count, name: name)
     end
-  
 
     def self.min(input, reduction_indices, keep_dims: false, typeT: nil, tidx: nil, name: "Min")
       self.execute("Min", [input, reduction_indices], keep_dims: keep_dims, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.minimum(x, y, typeT: nil, name: "Minimum")
       self.execute("Minimum", [x, y], T: typeT, name: name)
     end
-  
 
     def self.mirror_pad(input, paddings, typeT: nil, tpaddings: nil, mode: nil, name: "MirrorPad")
       self.execute("MirrorPad", [input, paddings], T: typeT, Tpaddings: tpaddings, mode: mode, name: name)
     end
-  
 
     def self.mirror_pad_grad(input, paddings, typeT: nil, tpaddings: nil, mode: nil, name: "MirrorPadGrad")
       self.execute("MirrorPadGrad", [input, paddings], T: typeT, Tpaddings: tpaddings, mode: mode, name: name)
     end
-  
 
     def self.mlir_passthrough_op(inputs, mlir_module: nil, tinputs: nil, toutputs: nil, name: "MlirPassthroughOp")
       self.execute("MlirPassthroughOp", [inputs], mlir_module: mlir_module, Tinputs: tinputs, Toutputs: toutputs, name: name)
     end
-  
 
     def self.mod(x, y, typeT: nil, name: "Mod")
       self.execute("Mod", [x, y], T: typeT, name: name)
     end
-  
 
     def self.model_dataset(input_dataset, algorithm: 0, cpu_budget: 0, output_types: nil, output_shapes: nil, name: "ModelDataset")
       self.execute("ModelDataset", [input_dataset], algorithm: algorithm, cpu_budget: cpu_budget, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.mul(x, y, typeT: nil, name: "Mul")
       self.execute("Mul", [x, y], T: typeT, name: name)
     end
-  
 
     def self.mul_no_nan(x, y, typeT: nil, name: "MulNoNan")
       self.execute("MulNoNan", [x, y], T: typeT, name: name)
     end
-  
 
     def self.multi_device_iterator(devices: nil, shared_name: nil, container: nil, output_types: nil, output_shapes: nil, name: "MultiDeviceIterator")
       self.execute("MultiDeviceIterator", [], devices: devices, shared_name: shared_name, container: container, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.multi_device_iterator_from_string_handle(string_handle, output_types: [], output_shapes: [], name: "MultiDeviceIteratorFromStringHandle")
       self.execute("MultiDeviceIteratorFromStringHandle", [string_handle], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.multi_device_iterator_get_next_from_shard(multi_device_iterator, shard_num, incarnation_id, output_types: nil, output_shapes: nil, name: "MultiDeviceIteratorGetNextFromShard")
       self.execute("MultiDeviceIteratorGetNextFromShard", [multi_device_iterator, shard_num, incarnation_id], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.multi_device_iterator_init(dataset, multi_device_iterator, max_buffer_size, name: "MultiDeviceIteratorInit")
       self.execute("MultiDeviceIteratorInit", [dataset, multi_device_iterator, max_buffer_size], name: name)
     end
-  
 
     def self.multi_device_iterator_to_string_handle(multi_device_iterator, name: "MultiDeviceIteratorToStringHandle")
       self.execute("MultiDeviceIteratorToStringHandle", [multi_device_iterator], name: name)
     end
-  
 
     def self.multinomial(logits, num_samples, seed: 0, seed2: 0, typeT: nil, output_dtype: nil, name: "Multinomial")
       self.execute("Multinomial", [logits, num_samples], seed: seed, seed2: seed2, T: typeT, output_dtype: output_dtype, name: name)
     end
-  
 
     def self.mutable_dense_hash_table(empty_key, container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, value_shape: [], initial_num_buckets: 131072, max_load_factor: 0.800000011920929, name: "MutableDenseHashTable")
       self.execute("MutableDenseHashTable", [empty_key], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, value_shape: value_shape, initial_num_buckets: initial_num_buckets, max_load_factor: max_load_factor, name: name)
     end
-  
 
     def self.mutable_dense_hash_table_v2(empty_key, deleted_key, container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, value_shape: [], initial_num_buckets: 131072, max_load_factor: 0.800000011920929, name: "MutableDenseHashTableV2")
       self.execute("MutableDenseHashTableV2", [empty_key, deleted_key], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, value_shape: value_shape, initial_num_buckets: initial_num_buckets, max_load_factor: max_load_factor, name: name)
     end
-  
 
     def self.mutable_hash_table(container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, name: "MutableHashTable")
       self.execute("MutableHashTable", [], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, name: name)
     end
-  
 
     def self.mutable_hash_table_of_tensors(container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, value_shape: [], name: "MutableHashTableOfTensors")
       self.execute("MutableHashTableOfTensors", [], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, value_shape: value_shape, name: name)
     end
-  
 
     def self.mutable_hash_table_of_tensors_v2(container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, value_shape: [], name: "MutableHashTableOfTensorsV2")
       self.execute("MutableHashTableOfTensorsV2", [], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, value_shape: value_shape, name: name)
     end
-  
 
     def self.mutable_hash_table_v2(container: nil, shared_name: nil, use_node_name_sharing: false, key_dtype: nil, value_dtype: nil, name: "MutableHashTableV2")
       self.execute("MutableHashTableV2", [], container: container, shared_name: shared_name, use_node_name_sharing: use_node_name_sharing, key_dtype: key_dtype, value_dtype: value_dtype, name: name)
     end
-  
 
     def self.mutex_lock(mutex, name: "MutexLock")
       self.execute("MutexLock", [mutex], name: name)
     end
-  
 
     def self.mutex_v2(container: nil, shared_name: nil, name: "MutexV2")
       self.execute("MutexV2", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.nccl_all_reduce(input, reduction: nil, typeT: nil, num_devices: nil, shared_name: nil, name: "NcclAllReduce")
       self.execute("NcclAllReduce", [input], reduction: reduction, T: typeT, num_devices: num_devices, shared_name: shared_name, name: name)
     end
-  
 
     def self.nccl_broadcast(input, typeT: nil, shape: nil, name: "NcclBroadcast")
       self.execute("NcclBroadcast", [input], T: typeT, shape: shape, name: name)
     end
-  
 
     def self.nccl_reduce(input, reduction: nil, typeT: nil, num_devices: nil, name: "NcclReduce")
       self.execute("NcclReduce", [input], reduction: reduction, T: typeT, num_devices: num_devices, name: name)
     end
-  
 
     def self.ndtri(x, typeT: nil, name: "Ndtri")
       self.execute("Ndtri", [x], T: typeT, name: name)
     end
-  
 
     def self.nearest_neighbors(points, centers, k, name: "NearestNeighbors")
       self.execute("NearestNeighbors", [points, centers, k], name: name)
     end
-  
 
     def self.neg(x, typeT: nil, name: "Neg")
       self.execute("Neg", [x], T: typeT, name: name)
     end
-  
 
     def self.neg_train(w_in, w_out, examples, labels, lr, vocab_count: nil, num_negative_samples: nil, name: "NegTrain")
       self.execute("NegTrain", [w_in, w_out, examples, labels, lr], vocab_count: vocab_count, num_negative_samples: num_negative_samples, name: name)
     end
-  
 
     def self.next_after(x1, x2, typeT: nil, name: "NextAfter")
       self.execute("NextAfter", [x1, x2], T: typeT, name: name)
     end
-  
 
     def self.next_iteration(data, typeT: nil, name: "NextIteration")
       self.execute("NextIteration", [data], T: typeT, name: name)
     end
-  
 
     def self.no_op(name: "NoOp")
       self.execute("NoOp", [], name: name)
     end
-  
 
     def self.non_deterministic_ints(shape, dtype: nil, shape_dtype: nil, name: "NonDeterministicInts")
       self.execute("NonDeterministicInts", [shape], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.non_max_suppression(boxes, scores, max_output_size, iou_threshold: 0.5, name: "NonMaxSuppression")
       self.execute("NonMaxSuppression", [boxes, scores, max_output_size], iou_threshold: iou_threshold, name: name)
     end
-  
 
     def self.non_max_suppression_v2(boxes, scores, max_output_size, iou_threshold, typeT: nil, t_threshold: nil, name: "NonMaxSuppressionV2")
       self.execute("NonMaxSuppressionV2", [boxes, scores, max_output_size, iou_threshold], T: typeT, T_threshold: t_threshold, name: name)
     end
-  
 
     def self.non_max_suppression_v3(boxes, scores, max_output_size, iou_threshold, score_threshold, typeT: nil, t_threshold: nil, name: "NonMaxSuppressionV3")
       self.execute("NonMaxSuppressionV3", [boxes, scores, max_output_size, iou_threshold, score_threshold], T: typeT, T_threshold: t_threshold, name: name)
     end
-  
 
     def self.non_max_suppression_v4(boxes, scores, max_output_size, iou_threshold, score_threshold, typeT: nil, t_threshold: nil, pad_to_max_output_size: false, name: "NonMaxSuppressionV4")
       self.execute("NonMaxSuppressionV4", [boxes, scores, max_output_size, iou_threshold, score_threshold], T: typeT, T_threshold: t_threshold, pad_to_max_output_size: pad_to_max_output_size, name: name)
     end
-  
 
     def self.non_max_suppression_v5(boxes, scores, max_output_size, iou_threshold, score_threshold, soft_nms_sigma, typeT: nil, pad_to_max_output_size: false, name: "NonMaxSuppressionV5")
       self.execute("NonMaxSuppressionV5", [boxes, scores, max_output_size, iou_threshold, score_threshold, soft_nms_sigma], T: typeT, pad_to_max_output_size: pad_to_max_output_size, name: name)
     end
-  
 
     def self.non_max_suppression_with_overlaps(overlaps, scores, max_output_size, overlap_threshold, score_threshold, name: "NonMaxSuppressionWithOverlaps")
       self.execute("NonMaxSuppressionWithOverlaps", [overlaps, scores, max_output_size, overlap_threshold, score_threshold], name: name)
     end
-  
 
     def self.non_serializable_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "NonSerializableDataset")
       self.execute("NonSerializableDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.not_equal(x, y, typeT: nil, incompatible_shape_error: true, name: "NotEqual")
       self.execute("NotEqual", [x, y], T: typeT, incompatible_shape_error: incompatible_shape_error, name: name)
     end
-  
 
     def self.nth_element(input, n, reverse: false, typeT: nil, name: "NthElement")
       self.execute("NthElement", [input, n], reverse: reverse, T: typeT, name: name)
     end
-  
 
     def self.one_hot(indices, depth, on_value, off_value, axis: -1, typeT: nil, ti: nil, name: "OneHot")
       self.execute("OneHot", [indices, depth, on_value, off_value], axis: axis, T: typeT, TI: ti, name: name)
     end
-  
 
     def self.one_shot_iterator(dataset_factory: nil, output_types: nil, output_shapes: nil, container: nil, shared_name: nil, name: "OneShotIterator")
       self.execute("OneShotIterator", [], dataset_factory: dataset_factory, output_types: output_types, output_shapes: output_shapes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ones_like(x, typeT: nil, name: "OnesLike")
       self.execute("OnesLike", [x], T: typeT, name: name)
     end
-  
 
     def self.optimize_dataset(input_dataset, optimizations, output_types: nil, output_shapes: nil, optimization_configs: [], name: "OptimizeDataset")
       self.execute("OptimizeDataset", [input_dataset, optimizations], output_types: output_types, output_shapes: output_shapes, optimization_configs: optimization_configs, name: name)
     end
-  
 
     def self.optional_from_value(components, toutput_types: nil, name: "OptionalFromValue")
       self.execute("OptionalFromValue", [components], Toutput_types: toutput_types, name: name)
     end
-  
 
     def self.optional_get_value(optional, output_types: nil, output_shapes: nil, name: "OptionalGetValue")
       self.execute("OptionalGetValue", [optional], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.optional_has_value(optional, name: "OptionalHasValue")
       self.execute("OptionalHasValue", [optional], name: name)
     end
-  
 
     def self.optional_none(name: "OptionalNone")
       self.execute("OptionalNone", [], name: name)
     end
-  
 
     def self.ordered_map_clear(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapClear")
       self.execute("OrderedMapClear", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ordered_map_incomplete_size(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapIncompleteSize")
       self.execute("OrderedMapIncompleteSize", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ordered_map_peek(key, indices, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapPeek")
       self.execute("OrderedMapPeek", [key, indices], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ordered_map_size(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapSize")
       self.execute("OrderedMapSize", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ordered_map_stage(key, indices, values, capacity: 0, memory_limit: 0, dtypes: nil, fake_dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapStage")
       self.execute("OrderedMapStage", [key, indices, values], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, fake_dtypes: fake_dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ordered_map_unstage(key, indices, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapUnstage")
       self.execute("OrderedMapUnstage", [key, indices], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.ordered_map_unstage_no_key(indices, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "OrderedMapUnstageNoKey")
       self.execute("OrderedMapUnstageNoKey", [indices], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.outfeed_dequeue(dtype: nil, shape: nil, device_ordinal: -1, name: "OutfeedDequeue")
       self.execute("OutfeedDequeue", [], dtype: dtype, shape: shape, device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self.outfeed_dequeue_tuple(dtypes: nil, shapes: nil, device_ordinal: -1, name: "OutfeedDequeueTuple")
       self.execute("OutfeedDequeueTuple", [], dtypes: dtypes, shapes: shapes, device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self.outfeed_enqueue(input, dtype: nil, name: "OutfeedEnqueue")
       self.execute("OutfeedEnqueue", [input], dtype: dtype, name: name)
     end
-  
 
     def self.outfeed_enqueue_tuple(inputs, dtypes: nil, name: "OutfeedEnqueueTuple")
       self.execute("OutfeedEnqueueTuple", [inputs], dtypes: dtypes, name: name)
     end
-  
 
     def self.pack(values, n: nil, typeT: nil, axis: 0, name: "Pack")
       self.execute("Pack", [values], N: n, T: typeT, axis: axis, name: name)
     end
-  
 
     def self.pad(input, paddings, typeT: nil, tpaddings: nil, name: "Pad")
       self.execute("Pad", [input, paddings], T: typeT, Tpaddings: tpaddings, name: name)
     end
-  
 
     def self.pad_v2(input, paddings, constant_values, typeT: nil, tpaddings: nil, name: "PadV2")
       self.execute("PadV2", [input, paddings, constant_values], T: typeT, Tpaddings: tpaddings, name: name)
     end
-  
 
     def self.padded_batch_dataset(input_dataset, batch_size, padded_shapes, padding_values, toutput_types: nil, output_shapes: nil, n: nil, name: "PaddedBatchDataset")
       self.execute("PaddedBatchDataset", [input_dataset, batch_size, padded_shapes, padding_values], Toutput_types: toutput_types, output_shapes: output_shapes, N: n, name: name)
     end
-  
 
     def self.padded_batch_dataset_v2(input_dataset, batch_size, padded_shapes, padding_values, drop_remainder, parallel_copy: false, toutput_types: nil, output_shapes: nil, n: nil, name: "PaddedBatchDatasetV2")
       self.execute("PaddedBatchDatasetV2", [input_dataset, batch_size, padded_shapes, padding_values, drop_remainder], parallel_copy: parallel_copy, Toutput_types: toutput_types, output_shapes: output_shapes, N: n, name: name)
     end
-  
 
     def self.padding_fifo_queue(component_types: nil, shapes: [], capacity: -1, container: nil, shared_name: nil, name: "PaddingFIFOQueue")
       self.execute("PaddingFIFOQueue", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.padding_fifo_queue_v2(component_types: nil, shapes: [], capacity: -1, container: nil, shared_name: nil, name: "PaddingFIFOQueueV2")
       self.execute("PaddingFIFOQueueV2", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.parallel_concat(values, n: nil, typeT: nil, shape: nil, name: "ParallelConcat")
       self.execute("ParallelConcat", [values], N: n, T: typeT, shape: shape, name: name)
     end
-  
 
     def self.parallel_dynamic_stitch(indices, data, n: nil, typeT: nil, name: "ParallelDynamicStitch")
       self.execute("ParallelDynamicStitch", [indices, data], N: n, T: typeT, name: name)
     end
-  
 
     def self.parallel_interleave_dataset(input_dataset, other_arguments, cycle_length, block_length, sloppy, buffer_output_elements, prefetch_input_elements, f: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "ParallelInterleaveDataset")
       self.execute("ParallelInterleaveDataset", [input_dataset, other_arguments, cycle_length, block_length, sloppy, buffer_output_elements, prefetch_input_elements], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.parallel_interleave_dataset_v2(input_dataset, other_arguments, cycle_length, block_length, num_parallel_calls, f: nil, targuments: nil, output_types: nil, output_shapes: nil, sloppy: false, name: "ParallelInterleaveDatasetV2")
       self.execute("ParallelInterleaveDatasetV2", [input_dataset, other_arguments, cycle_length, block_length, num_parallel_calls], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, sloppy: sloppy, name: name)
     end
-  
 
     def self.parallel_map_dataset(input_dataset, other_arguments, num_parallel_calls, f: nil, targuments: nil, output_types: nil, output_shapes: nil, use_inter_op_parallelism: true, sloppy: false, preserve_cardinality: false, name: "ParallelMapDataset")
       self.execute("ParallelMapDataset", [input_dataset, other_arguments, num_parallel_calls], f: f, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, use_inter_op_parallelism: use_inter_op_parallelism, sloppy: sloppy, preserve_cardinality: preserve_cardinality, name: name)
     end
-  
 
     def self.parameterized_truncated_normal(shape, means, stdevs, minvals, maxvals, seed: 0, seed2: 0, dtype: nil, typeT: nil, name: "ParameterizedTruncatedNormal")
       self.execute("ParameterizedTruncatedNormal", [shape, means, stdevs, minvals, maxvals], seed: seed, seed2: seed2, dtype: dtype, T: typeT, name: name)
     end
-  
 
     def self.parse_example(serialized, names, sparse_keys, dense_keys, dense_defaults, nsparse: nil, ndense: nil, sparse_types: nil, tdense: nil, dense_shapes: nil, name: "ParseExample")
       self.execute("ParseExample", [serialized, names, sparse_keys, dense_keys, dense_defaults], Nsparse: nsparse, Ndense: ndense, sparse_types: sparse_types, Tdense: tdense, dense_shapes: dense_shapes, name: name)
     end
-  
 
     def self.parse_example_dataset(input_dataset, num_parallel_calls, dense_defaults, sparse_keys: nil, dense_keys: nil, sparse_types: nil, tdense: nil, dense_shapes: nil, output_types: nil, output_shapes: nil, sloppy: false, ragged_keys: [], ragged_value_types: [], ragged_split_types: [], name: "ParseExampleDataset")
       self.execute("ParseExampleDataset", [input_dataset, num_parallel_calls, dense_defaults], sparse_keys: sparse_keys, dense_keys: dense_keys, sparse_types: sparse_types, Tdense: tdense, dense_shapes: dense_shapes, output_types: output_types, output_shapes: output_shapes, sloppy: sloppy, ragged_keys: ragged_keys, ragged_value_types: ragged_value_types, ragged_split_types: ragged_split_types, name: name)
     end
-  
 
     def self.parse_example_v2(serialized, names, sparse_keys, dense_keys, ragged_keys, dense_defaults, tdense: nil, num_sparse: nil, sparse_types: nil, ragged_value_types: nil, ragged_split_types: nil, dense_shapes: nil, name: "ParseExampleV2")
       self.execute("ParseExampleV2", [serialized, names, sparse_keys, dense_keys, ragged_keys, dense_defaults], Tdense: tdense, num_sparse: num_sparse, sparse_types: sparse_types, ragged_value_types: ragged_value_types, ragged_split_types: ragged_split_types, dense_shapes: dense_shapes, name: name)
     end
-  
 
     def self.parse_sequence_example(serialized, debug_name, context_dense_defaults, feature_list_dense_missing_assumed_empty: nil, context_sparse_keys: nil, context_dense_keys: nil, feature_list_sparse_keys: nil, feature_list_dense_keys: nil, ncontext_sparse: 0, ncontext_dense: 0, nfeature_list_sparse: 0, nfeature_list_dense: 0, context_sparse_types: [], tcontext_dense: [], feature_list_dense_types: [], context_dense_shapes: [], feature_list_sparse_types: [], feature_list_dense_shapes: [], name: "ParseSequenceExample")
       self.execute("ParseSequenceExample", [serialized, debug_name, context_dense_defaults], feature_list_dense_missing_assumed_empty: feature_list_dense_missing_assumed_empty, context_sparse_keys: context_sparse_keys, context_dense_keys: context_dense_keys, feature_list_sparse_keys: feature_list_sparse_keys, feature_list_dense_keys: feature_list_dense_keys, Ncontext_sparse: ncontext_sparse, Ncontext_dense: ncontext_dense, Nfeature_list_sparse: nfeature_list_sparse, Nfeature_list_dense: nfeature_list_dense, context_sparse_types: context_sparse_types, Tcontext_dense: tcontext_dense, feature_list_dense_types: feature_list_dense_types, context_dense_shapes: context_dense_shapes, feature_list_sparse_types: feature_list_sparse_types, feature_list_dense_shapes: feature_list_dense_shapes, name: name)
     end
-  
 
     def self.parse_sequence_example_v2(serialized, debug_name, context_sparse_keys, context_dense_keys, context_ragged_keys, feature_list_sparse_keys, feature_list_dense_keys, feature_list_ragged_keys, feature_list_dense_missing_assumed_empty, context_dense_defaults, ncontext_sparse: 0, tcontext_dense: [], context_sparse_types: [], context_ragged_value_types: [], context_ragged_split_types: [], context_dense_shapes: [], nfeature_list_sparse: 0, nfeature_list_dense: 0, feature_list_dense_types: [], feature_list_sparse_types: [], feature_list_ragged_value_types: [], feature_list_ragged_split_types: [], feature_list_dense_shapes: [], name: "ParseSequenceExampleV2")
       self.execute("ParseSequenceExampleV2", [serialized, debug_name, context_sparse_keys, context_dense_keys, context_ragged_keys, feature_list_sparse_keys, feature_list_dense_keys, feature_list_ragged_keys, feature_list_dense_missing_assumed_empty, context_dense_defaults], Ncontext_sparse: ncontext_sparse, Tcontext_dense: tcontext_dense, context_sparse_types: context_sparse_types, context_ragged_value_types: context_ragged_value_types, context_ragged_split_types: context_ragged_split_types, context_dense_shapes: context_dense_shapes, Nfeature_list_sparse: nfeature_list_sparse, Nfeature_list_dense: nfeature_list_dense, feature_list_dense_types: feature_list_dense_types, feature_list_sparse_types: feature_list_sparse_types, feature_list_ragged_value_types: feature_list_ragged_value_types, feature_list_ragged_split_types: feature_list_ragged_split_types, feature_list_dense_shapes: feature_list_dense_shapes, name: name)
     end
-  
 
     def self.parse_single_example(serialized, dense_defaults, num_sparse: nil, sparse_keys: nil, dense_keys: nil, sparse_types: nil, tdense: nil, dense_shapes: nil, name: "ParseSingleExample")
       self.execute("ParseSingleExample", [serialized, dense_defaults], num_sparse: num_sparse, sparse_keys: sparse_keys, dense_keys: dense_keys, sparse_types: sparse_types, Tdense: tdense, dense_shapes: dense_shapes, name: name)
     end
-  
 
     def self.parse_single_sequence_example(serialized, feature_list_dense_missing_assumed_empty, context_sparse_keys, context_dense_keys, feature_list_sparse_keys, feature_list_dense_keys, context_dense_defaults, debug_name, ncontext_sparse: 0, ncontext_dense: 0, nfeature_list_sparse: 0, nfeature_list_dense: 0, context_sparse_types: [], tcontext_dense: [], feature_list_dense_types: [], context_dense_shapes: [], feature_list_sparse_types: [], feature_list_dense_shapes: [], name: "ParseSingleSequenceExample")
       self.execute("ParseSingleSequenceExample", [serialized, feature_list_dense_missing_assumed_empty, context_sparse_keys, context_dense_keys, feature_list_sparse_keys, feature_list_dense_keys, context_dense_defaults, debug_name], Ncontext_sparse: ncontext_sparse, Ncontext_dense: ncontext_dense, Nfeature_list_sparse: nfeature_list_sparse, Nfeature_list_dense: nfeature_list_dense, context_sparse_types: context_sparse_types, Tcontext_dense: tcontext_dense, feature_list_dense_types: feature_list_dense_types, context_dense_shapes: context_dense_shapes, feature_list_sparse_types: feature_list_sparse_types, feature_list_dense_shapes: feature_list_dense_shapes, name: name)
     end
-  
 
     def self.parse_tensor(serialized, out_type: nil, name: "ParseTensor")
       self.execute("ParseTensor", [serialized], out_type: out_type, name: name)
     end
-  
 
     def self.partitioned_call(args, tin: nil, tout: nil, f: nil, config: nil, config_proto: nil, executor_type: nil, name: "PartitionedCall")
       self.execute("PartitionedCall", [args], Tin: tin, Tout: tout, f: f, config: config, config_proto: config_proto, executor_type: executor_type, name: name)
     end
-  
 
     def self.placeholder(dtype: nil, shape: [], name: "Placeholder")
       self.execute("Placeholder", [], dtype: dtype, shape: shape, name: name)
     end
-  
 
     def self.placeholder_v2(dtype: nil, shape: nil, name: "PlaceholderV2")
       self.execute("PlaceholderV2", [], dtype: dtype, shape: shape, name: name)
     end
-  
 
     def self.placeholder_with_default(input, dtype: nil, shape: nil, name: "PlaceholderWithDefault")
       self.execute("PlaceholderWithDefault", [input], dtype: dtype, shape: shape, name: name)
     end
-  
 
     def self.polygamma(a, x, typeT: nil, name: "Polygamma")
       self.execute("Polygamma", [a, x], T: typeT, name: name)
     end
-  
 
     def self.population_count(x, typeT: nil, name: "PopulationCount")
       self.execute("PopulationCount", [x], T: typeT, name: name)
     end
-  
 
     def self.pow(x, y, typeT: nil, name: "Pow")
       self.execute("Pow", [x, y], T: typeT, name: name)
     end
-  
 
     def self.prefetch_dataset(input_dataset, buffer_size, output_types: nil, output_shapes: nil, slack_period: 0, legacy_autotune: true, name: "PrefetchDataset")
       self.execute("PrefetchDataset", [input_dataset, buffer_size], output_types: output_types, output_shapes: output_shapes, slack_period: slack_period, legacy_autotune: legacy_autotune, name: name)
     end
-  
 
     def self.prelinearize(input, dtype: nil, shape: [], layout: [], name: "Prelinearize")
       self.execute("Prelinearize", [input], dtype: dtype, shape: shape, layout: layout, name: name)
     end
-  
 
     def self.prelinearize_tuple(inputs, dtypes: nil, shapes: nil, layouts: [], name: "PrelinearizeTuple")
       self.execute("PrelinearizeTuple", [inputs], dtypes: dtypes, shapes: shapes, layouts: layouts, name: name)
     end
-  
 
     def self.prevent_gradient(input, typeT: nil, message: nil, name: "PreventGradient")
       self.execute("PreventGradient", [input], T: typeT, message: message, name: name)
     end
-  
 
     def self.print(input, data, typeT: nil, u: nil, message: nil, first_n: -1, summarize: 3, name: "Print")
       self.execute("Print", [input, data], T: typeT, U: u, message: message, first_n: first_n, summarize: summarize, name: name)
     end
-  
 
     def self.print_v2(input, output_stream: "stderr", stop: "
 ", name: "PrintV2")
       self.execute("PrintV2", [input], output_stream: output_stream, end: stop, name: name)
     end
-  
 
     def self.priority_queue(component_types: [], shapes: nil, capacity: -1, container: nil, shared_name: nil, name: "PriorityQueue")
       self.execute("PriorityQueue", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.priority_queue_v2(component_types: [], shapes: nil, capacity: -1, container: nil, shared_name: nil, name: "PriorityQueueV2")
       self.execute("PriorityQueueV2", [], component_types: component_types, shapes: shapes, capacity: capacity, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.private_thread_pool_dataset(input_dataset, num_threads, output_types: nil, output_shapes: nil, name: "PrivateThreadPoolDataset")
       self.execute("PrivateThreadPoolDataset", [input_dataset, num_threads], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.prod(input, reduction_indices, keep_dims: false, typeT: nil, tidx: nil, name: "Prod")
       self.execute("Prod", [input, reduction_indices], keep_dims: keep_dims, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.py_func(input, token: nil, tin: nil, tout: nil, name: "PyFunc")
       self.execute("PyFunc", [input], token: token, Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.py_func_stateless(input, token: nil, tin: nil, tout: nil, name: "PyFuncStateless")
       self.execute("PyFuncStateless", [input], token: token, Tin: tin, Tout: tout, name: name)
     end
-  
 
     def self.qr(input, full_matrices: false, typeT: nil, name: "Qr")
       self.execute("Qr", [input], full_matrices: full_matrices, T: typeT, name: name)
     end
-  
 
     def self.quantize_and_dequantize(input, signed_input: true, num_bits: 8, range_given: false, input_min: 0.0, input_max: 0.0, typeT: nil, name: "QuantizeAndDequantize")
       self.execute("QuantizeAndDequantize", [input], signed_input: signed_input, num_bits: num_bits, range_given: range_given, input_min: input_min, input_max: input_max, T: typeT, name: name)
     end
-  
 
     def self.quantize_and_dequantize_v2(input, input_min, input_max, signed_input: true, num_bits: 8, range_given: false, typeT: nil, round_mode: "HALF_TO_EVEN", narrow_range: false, axis: -1, name: "QuantizeAndDequantizeV2")
       self.execute("QuantizeAndDequantizeV2", [input, input_min, input_max], signed_input: signed_input, num_bits: num_bits, range_given: range_given, T: typeT, round_mode: round_mode, narrow_range: narrow_range, axis: axis, name: name)
     end
-  
 
     def self.quantize_and_dequantize_v3(input, input_min, input_max, num_bits, signed_input: true, range_given: true, typeT: nil, narrow_range: false, axis: -1, name: "QuantizeAndDequantizeV3")
       self.execute("QuantizeAndDequantizeV3", [input, input_min, input_max, num_bits], signed_input: signed_input, range_given: range_given, T: typeT, narrow_range: narrow_range, axis: axis, name: name)
     end
-  
 
     def self.quantize_down_and_shrink_range(input, input_min, input_max, tinput: nil, out_type: nil, name: "QuantizeDownAndShrinkRange")
       self.execute("QuantizeDownAndShrinkRange", [input, input_min, input_max], Tinput: tinput, out_type: out_type, name: name)
     end
-  
 
     def self.quantize_v2(input, min_range, max_range, typeT: nil, mode: "MIN_COMBINED", round_mode: "HALF_AWAY_FROM_ZERO", narrow_range: false, axis: -1, ensure_minimum_range: 0.009999999776482582, name: "QuantizeV2")
       self.execute("QuantizeV2", [input, min_range, max_range], T: typeT, mode: mode, round_mode: round_mode, narrow_range: narrow_range, axis: axis, ensure_minimum_range: ensure_minimum_range, name: name)
     end
-  
 
     def self.quantized_add(x, y, min_x, max_x, min_y, max_y, t1: nil, t2: nil, toutput: nil, name: "QuantizedAdd")
       self.execute("QuantizedAdd", [x, y, min_x, max_x, min_y, max_y], T1: t1, T2: t2, Toutput: toutput, name: name)
     end
-  
 
     def self.quantized_avg_pool(input, min_input, max_input, typeT: nil, ksize: nil, strides: nil, padding: nil, name: "QuantizedAvgPool")
       self.execute("QuantizedAvgPool", [input, min_input, max_input], T: typeT, ksize: ksize, strides: strides, padding: padding, name: name)
     end
-  
 
     def self.quantized_batch_norm_with_global_normalization(t, t_min, t_max, m, m_min, m_max, v, v_min, v_max, beta, beta_min, beta_max, gamma, gamma_min, gamma_max, tinput: nil, out_type: nil, variance_epsilon: nil, scale_after_normalization: nil, name: "QuantizedBatchNormWithGlobalNormalization")
       self.execute("QuantizedBatchNormWithGlobalNormalization", [t, t_min, t_max, m, m_min, m_max, v, v_min, v_max, beta, beta_min, beta_max, gamma, gamma_min, gamma_max], Tinput: tinput, out_type: out_type, variance_epsilon: variance_epsilon, scale_after_normalization: scale_after_normalization, name: name)
     end
-  
 
     def self.quantized_bias_add(input, bias, min_input, max_input, min_bias, max_bias, t1: nil, t2: nil, out_type: nil, name: "QuantizedBiasAdd")
       self.execute("QuantizedBiasAdd", [input, bias, min_input, max_input, min_bias, max_bias], T1: t1, T2: t2, out_type: out_type, name: name)
     end
-  
 
     def self.quantized_concat(concat_dim, values, input_mins, input_maxes, n: nil, typeT: nil, name: "QuantizedConcat")
       self.execute("QuantizedConcat", [concat_dim, values, input_mins, input_maxes], N: n, T: typeT, name: name)
     end
-  
 
     def self.quantized_conv2_d(input, filter, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], name: "QuantizedConv2D")
       self.execute("QuantizedConv2D", [input, filter, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.quantized_conv2_d_and_relu(input, filter, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DAndRelu")
       self.execute("QuantizedConv2DAndRelu", [input, filter, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_and_relu_and_requantize(input, filter, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DAndReluAndRequantize")
       self.execute("QuantizedConv2DAndReluAndRequantize", [input, filter, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_and_requantize(input, filter, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DAndRequantize")
       self.execute("QuantizedConv2DAndRequantize", [input, filter, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_per_channel(input, filter, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], name: "QuantizedConv2DPerChannel")
       self.execute("QuantizedConv2DPerChannel", [input, filter, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias(input, filter, bias, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBias")
       self.execute("QuantizedConv2DWithBias", [input, filter, bias, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias_and_relu(input, filter, bias, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBiasAndRelu")
       self.execute("QuantizedConv2DWithBiasAndRelu", [input, filter, bias, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias_and_relu_and_requantize(input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, tinput: nil, tfilter: nil, tbias: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBiasAndReluAndRequantize")
       self.execute("QuantizedConv2DWithBiasAndReluAndRequantize", [input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output], Tinput: tinput, Tfilter: tfilter, Tbias: tbias, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias_and_requantize(input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, tinput: nil, tfilter: nil, tbias: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBiasAndRequantize")
       self.execute("QuantizedConv2DWithBiasAndRequantize", [input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output], Tinput: tinput, Tfilter: tfilter, Tbias: tbias, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias_signed_sum_and_relu_and_requantize(input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, summand, min_summand, max_summand, tinput: nil, tfilter: nil, tbias: nil, tsummand: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBiasSignedSumAndReluAndRequantize")
       self.execute("QuantizedConv2DWithBiasSignedSumAndReluAndRequantize", [input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, summand, min_summand, max_summand], Tinput: tinput, Tfilter: tfilter, Tbias: tbias, Tsummand: tsummand, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias_sum_and_relu(input, filter, bias, min_input, max_input, min_filter, max_filter, summand, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBiasSumAndRelu")
       self.execute("QuantizedConv2DWithBiasSumAndRelu", [input, filter, bias, min_input, max_input, min_filter, max_filter, summand], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_conv2_d_with_bias_sum_and_relu_and_requantize(input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, summand, min_summand, max_summand, tinput: nil, tfilter: nil, tbias: nil, tsummand: nil, out_type: nil, strides: nil, padding: nil, dilations: [], padding_list: [], name: "QuantizedConv2DWithBiasSumAndReluAndRequantize")
       self.execute("QuantizedConv2DWithBiasSumAndReluAndRequantize", [input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, summand, min_summand, max_summand], Tinput: tinput, Tfilter: tfilter, Tbias: tbias, Tsummand: tsummand, out_type: out_type, strides: strides, padding: padding, dilations: dilations, padding_list: padding_list, name: name)
     end
-  
 
     def self.quantized_depthwise_conv2_d(input, filter, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], name: "QuantizedDepthwiseConv2D")
       self.execute("QuantizedDepthwiseConv2D", [input, filter, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.quantized_depthwise_conv2_d_with_bias(input, filter, bias, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], name: "QuantizedDepthwiseConv2DWithBias")
       self.execute("QuantizedDepthwiseConv2DWithBias", [input, filter, bias, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.quantized_depthwise_conv2_d_with_bias_and_relu(input, filter, bias, min_input, max_input, min_filter, max_filter, tinput: nil, tfilter: nil, out_type: nil, strides: nil, padding: nil, dilations: [], name: "QuantizedDepthwiseConv2DWithBiasAndRelu")
       self.execute("QuantizedDepthwiseConv2DWithBiasAndRelu", [input, filter, bias, min_input, max_input, min_filter, max_filter], Tinput: tinput, Tfilter: tfilter, out_type: out_type, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.quantized_depthwise_conv2_d_with_bias_and_relu_and_requantize(input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output, tinput: nil, tfilter: nil, tbias: nil, out_type: nil, strides: nil, padding: nil, dilations: [], name: "QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize")
       self.execute("QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize", [input, filter, bias, min_input, max_input, min_filter, max_filter, min_freezed_output, max_freezed_output], Tinput: tinput, Tfilter: tfilter, Tbias: tbias, out_type: out_type, strides: strides, padding: padding, dilations: dilations, name: name)
     end
-  
 
     def self.quantized_instance_norm(x, x_min, x_max, typeT: nil, output_range_given: false, given_y_min: 0.0, given_y_max: 0.0, variance_epsilon: 9.999999747378752e-06, min_separation: 0.0010000000474974513, name: "QuantizedInstanceNorm")
       self.execute("QuantizedInstanceNorm", [x, x_min, x_max], T: typeT, output_range_given: output_range_given, given_y_min: given_y_min, given_y_max: given_y_max, variance_epsilon: variance_epsilon, min_separation: min_separation, name: name)
     end
-  
 
     def self.quantized_mat_mul(a, b, min_a, max_a, min_b, max_b, t1: nil, t2: nil, toutput: nil, transpose_a: false, transpose_b: false, tactivation: nil, name: "QuantizedMatMul")
       self.execute("QuantizedMatMul", [a, b, min_a, max_a, min_b, max_b], T1: t1, T2: t2, Toutput: toutput, transpose_a: transpose_a, transpose_b: transpose_b, Tactivation: tactivation, name: name)
     end
-  
 
     def self.quantized_mat_mul_with_bias(a, b, bias, min_a, max_a, min_b, max_b, t1: nil, t2: nil, tbias: nil, toutput: nil, transpose_a: false, transpose_b: false, input_quant_mode: "MIN_FIRST", name: "QuantizedMatMulWithBias")
       self.execute("QuantizedMatMulWithBias", [a, b, bias, min_a, max_a, min_b, max_b], T1: t1, T2: t2, Tbias: tbias, Toutput: toutput, transpose_a: transpose_a, transpose_b: transpose_b, input_quant_mode: input_quant_mode, name: name)
     end
-  
 
     def self.quantized_mat_mul_with_bias_and_relu(a, b, bias, min_a, max_a, min_b, max_b, t1: nil, t2: nil, toutput: nil, transpose_a: false, transpose_b: false, input_quant_mode: "MIN_FIRST", name: "QuantizedMatMulWithBiasAndRelu")
       self.execute("QuantizedMatMulWithBiasAndRelu", [a, b, bias, min_a, max_a, min_b, max_b], T1: t1, T2: t2, Toutput: toutput, transpose_a: transpose_a, transpose_b: transpose_b, input_quant_mode: input_quant_mode, name: name)
     end
-  
 
     def self.quantized_mat_mul_with_bias_and_relu_and_requantize(a, b, bias, min_a, max_a, min_b, max_b, min_freezed_output, max_freezed_output, t1: nil, t2: nil, tbias: nil, toutput: nil, transpose_a: false, transpose_b: false, input_quant_mode: "MIN_FIRST", name: "QuantizedMatMulWithBiasAndReluAndRequantize")
       self.execute("QuantizedMatMulWithBiasAndReluAndRequantize", [a, b, bias, min_a, max_a, min_b, max_b, min_freezed_output, max_freezed_output], T1: t1, T2: t2, Tbias: tbias, Toutput: toutput, transpose_a: transpose_a, transpose_b: transpose_b, input_quant_mode: input_quant_mode, name: name)
     end
-  
 
     def self.quantized_max_pool(input, min_input, max_input, typeT: nil, ksize: nil, strides: nil, padding: nil, name: "QuantizedMaxPool")
       self.execute("QuantizedMaxPool", [input, min_input, max_input], T: typeT, ksize: ksize, strides: strides, padding: padding, name: name)
     end
-  
 
     def self.quantized_mul(x, y, min_x, max_x, min_y, max_y, t1: nil, t2: nil, toutput: nil, name: "QuantizedMul")
       self.execute("QuantizedMul", [x, y, min_x, max_x, min_y, max_y], T1: t1, T2: t2, Toutput: toutput, name: name)
     end
-  
 
     def self.quantized_relu(features, min_features, max_features, tinput: nil, out_type: nil, name: "QuantizedRelu")
       self.execute("QuantizedRelu", [features, min_features, max_features], Tinput: tinput, out_type: out_type, name: name)
     end
-  
 
     def self.quantized_relu6(features, min_features, max_features, tinput: nil, out_type: nil, name: "QuantizedRelu6")
       self.execute("QuantizedRelu6", [features, min_features, max_features], Tinput: tinput, out_type: out_type, name: name)
     end
-  
 
     def self.quantized_relu_x(features, max_value, min_features, max_features, tinput: nil, out_type: nil, name: "QuantizedReluX")
       self.execute("QuantizedReluX", [features, max_value, min_features, max_features], Tinput: tinput, out_type: out_type, name: name)
     end
-  
 
     def self.quantized_reshape(tensor, shape, input_min, input_max, typeT: nil, tshape: nil, name: "QuantizedReshape")
       self.execute("QuantizedReshape", [tensor, shape, input_min, input_max], T: typeT, Tshape: tshape, name: name)
     end
-  
 
     def self.quantized_resize_bilinear(images, size, min, max, typeT: nil, align_corners: false, half_pixel_centers: false, name: "QuantizedResizeBilinear")
       self.execute("QuantizedResizeBilinear", [images, size, min, max], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.queue_close(handle, cancel_pending_enqueues: false, name: "QueueClose")
       self.execute("QueueClose", [handle], cancel_pending_enqueues: cancel_pending_enqueues, name: name)
     end
-  
 
     def self.queue_close_v2(handle, cancel_pending_enqueues: false, name: "QueueCloseV2")
       self.execute("QueueCloseV2", [handle], cancel_pending_enqueues: cancel_pending_enqueues, name: name)
     end
-  
 
     def self.queue_dequeue(handle, component_types: nil, timeout_ms: -1, name: "QueueDequeue")
       self.execute("QueueDequeue", [handle], component_types: component_types, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_dequeue_many(handle, n, component_types: nil, timeout_ms: -1, name: "QueueDequeueMany")
       self.execute("QueueDequeueMany", [handle, n], component_types: component_types, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_dequeue_many_v2(handle, n, component_types: nil, timeout_ms: -1, name: "QueueDequeueManyV2")
       self.execute("QueueDequeueManyV2", [handle, n], component_types: component_types, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_dequeue_up_to(handle, n, component_types: nil, timeout_ms: -1, name: "QueueDequeueUpTo")
       self.execute("QueueDequeueUpTo", [handle, n], component_types: component_types, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_dequeue_up_to_v2(handle, n, component_types: nil, timeout_ms: -1, name: "QueueDequeueUpToV2")
       self.execute("QueueDequeueUpToV2", [handle, n], component_types: component_types, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_dequeue_v2(handle, component_types: nil, timeout_ms: -1, name: "QueueDequeueV2")
       self.execute("QueueDequeueV2", [handle], component_types: component_types, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_enqueue(handle, components, tcomponents: nil, timeout_ms: -1, name: "QueueEnqueue")
       self.execute("QueueEnqueue", [handle, components], Tcomponents: tcomponents, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_enqueue_many(handle, components, tcomponents: nil, timeout_ms: -1, name: "QueueEnqueueMany")
       self.execute("QueueEnqueueMany", [handle, components], Tcomponents: tcomponents, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_enqueue_many_v2(handle, components, tcomponents: nil, timeout_ms: -1, name: "QueueEnqueueManyV2")
       self.execute("QueueEnqueueManyV2", [handle, components], Tcomponents: tcomponents, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_enqueue_v2(handle, components, tcomponents: nil, timeout_ms: -1, name: "QueueEnqueueV2")
       self.execute("QueueEnqueueV2", [handle, components], Tcomponents: tcomponents, timeout_ms: timeout_ms, name: name)
     end
-  
 
     def self.queue_is_closed(handle, name: "QueueIsClosed")
       self.execute("QueueIsClosed", [handle], name: name)
     end
-  
 
     def self.queue_is_closed_v2(handle, name: "QueueIsClosedV2")
       self.execute("QueueIsClosedV2", [handle], name: name)
     end
-  
 
     def self.queue_size(handle, name: "QueueSize")
       self.execute("QueueSize", [handle], name: name)
     end
-  
 
     def self.queue_size_v2(handle, name: "QueueSizeV2")
       self.execute("QueueSizeV2", [handle], name: name)
     end
-  
 
     def self.rfft(input, fft_length, treal: nil, tcomplex: nil, name: "RFFT")
       self.execute("RFFT", [input, fft_length], Treal: treal, Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.rfft2_d(input, fft_length, treal: nil, tcomplex: nil, name: "RFFT2D")
       self.execute("RFFT2D", [input, fft_length], Treal: treal, Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.rfft3_d(input, fft_length, treal: nil, tcomplex: nil, name: "RFFT3D")
       self.execute("RFFT3D", [input, fft_length], Treal: treal, Tcomplex: tcomplex, name: name)
     end
-  
 
     def self.rgb_to_hsv(images, typeT: nil, name: "RGBToHSV")
       self.execute("RGBToHSV", [images], T: typeT, name: name)
     end
-  
 
     def self.ragged_gather(params_nested_splits, params_dense_values, indices, tvalues: nil, tindices: nil, tsplits: nil, params_ragged_rank: nil, output_ragged_rank: nil, name: "RaggedGather")
       self.execute("RaggedGather", [params_nested_splits, params_dense_values, indices], Tvalues: tvalues, Tindices: tindices, Tsplits: tsplits, PARAMS_RAGGED_RANK: params_ragged_rank, OUTPUT_RAGGED_RANK: output_ragged_rank, name: name)
     end
-  
 
     def self.ragged_range(starts, limits, deltas, typeT: nil, tsplits: nil, name: "RaggedRange")
       self.execute("RaggedRange", [starts, limits, deltas], T: typeT, Tsplits: tsplits, name: name)
     end
-  
 
     def self.ragged_tensor_from_variant(encoded_ragged, input_ragged_rank: nil, output_ragged_rank: nil, tvalues: nil, tsplits: nil, name: "RaggedTensorFromVariant")
       self.execute("RaggedTensorFromVariant", [encoded_ragged], input_ragged_rank: input_ragged_rank, output_ragged_rank: output_ragged_rank, Tvalues: tvalues, Tsplits: tsplits, name: name)
     end
-  
 
     def self.ragged_tensor_to_sparse(rt_nested_splits, rt_dense_values, ragged_rank: nil, typeT: nil, tsplits: nil, name: "RaggedTensorToSparse")
       self.execute("RaggedTensorToSparse", [rt_nested_splits, rt_dense_values], RAGGED_RANK: ragged_rank, T: typeT, Tsplits: tsplits, name: name)
     end
-  
 
     def self.ragged_tensor_to_tensor(shape, values, default_value, row_partition_tensors, typeT: nil, tindex: nil, tshape: nil, num_row_partition_tensors: nil, row_partition_types: nil, name: "RaggedTensorToTensor")
       self.execute("RaggedTensorToTensor", [shape, values, default_value, row_partition_tensors], T: typeT, Tindex: tindex, Tshape: tshape, num_row_partition_tensors: num_row_partition_tensors, row_partition_types: row_partition_types, name: name)
     end
-  
 
     def self.ragged_tensor_to_variant(rt_nested_splits, rt_dense_values, ragged_rank: nil, tvalues: nil, tsplits: nil, batched_input: nil, name: "RaggedTensorToVariant")
       self.execute("RaggedTensorToVariant", [rt_nested_splits, rt_dense_values], RAGGED_RANK: ragged_rank, Tvalues: tvalues, Tsplits: tsplits, batched_input: batched_input, name: name)
     end
-  
 
     def self.random_crop(image, size, typeT: nil, seed: 0, seed2: 0, name: "RandomCrop")
       self.execute("RandomCrop", [image, size], T: typeT, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.random_dataset(seed, seed2, output_types: nil, output_shapes: nil, name: "RandomDataset")
       self.execute("RandomDataset", [seed, seed2], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.random_gamma(shape, alpha, seed: 0, seed2: 0, s: nil, typeT: nil, name: "RandomGamma")
       self.execute("RandomGamma", [shape, alpha], seed: seed, seed2: seed2, S: s, T: typeT, name: name)
     end
-  
 
     def self.random_gamma_grad(alpha, sample, typeT: nil, name: "RandomGammaGrad")
       self.execute("RandomGammaGrad", [alpha, sample], T: typeT, name: name)
     end
-  
 
     def self.random_poisson(shape, rate, seed: 0, seed2: 0, s: nil, dtype: nil, name: "RandomPoisson")
       self.execute("RandomPoisson", [shape, rate], seed: seed, seed2: seed2, S: s, dtype: dtype, name: name)
     end
-  
 
     def self.random_poisson_v2(shape, rate, seed: 0, seed2: 0, s: nil, r: nil, dtype: nil, name: "RandomPoissonV2")
       self.execute("RandomPoissonV2", [shape, rate], seed: seed, seed2: seed2, S: s, R: r, dtype: dtype, name: name)
     end
-  
 
     def self.random_shuffle(value, seed: 0, seed2: 0, typeT: nil, name: "RandomShuffle")
       self.execute("RandomShuffle", [value], seed: seed, seed2: seed2, T: typeT, name: name)
     end
-  
 
     def self.random_shuffle_queue(component_types: nil, shapes: [], capacity: -1, min_after_dequeue: 0, seed: 0, seed2: 0, container: nil, shared_name: nil, name: "RandomShuffleQueue")
       self.execute("RandomShuffleQueue", [], component_types: component_types, shapes: shapes, capacity: capacity, min_after_dequeue: min_after_dequeue, seed: seed, seed2: seed2, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.random_shuffle_queue_v2(component_types: nil, shapes: [], capacity: -1, min_after_dequeue: 0, seed: 0, seed2: 0, container: nil, shared_name: nil, name: "RandomShuffleQueueV2")
       self.execute("RandomShuffleQueueV2", [], component_types: component_types, shapes: shapes, capacity: capacity, min_after_dequeue: min_after_dequeue, seed: seed, seed2: seed2, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.random_standard_normal(shape, seed: 0, seed2: 0, dtype: nil, typeT: nil, name: "RandomStandardNormal")
       self.execute("RandomStandardNormal", [shape], seed: seed, seed2: seed2, dtype: dtype, T: typeT, name: name)
     end
-  
 
     def self.random_uniform(shape, seed: 0, seed2: 0, dtype: nil, typeT: nil, name: "RandomUniform")
       self.execute("RandomUniform", [shape], seed: seed, seed2: seed2, dtype: dtype, T: typeT, name: name)
     end
-  
 
     def self.random_uniform_int(shape, minval, maxval, seed: 0, seed2: 0, tout: nil, typeT: nil, name: "RandomUniformInt")
       self.execute("RandomUniformInt", [shape, minval, maxval], seed: seed, seed2: seed2, Tout: tout, T: typeT, name: name)
     end
-  
 
     def self.range(start, limit, delta, tidx: nil, name: "Range")
       self.execute("Range", [start, limit, delta], Tidx: tidx, name: name)
     end
-  
 
     def self.range_dataset(start, stop, step, output_types: nil, output_shapes: nil, name: "RangeDataset")
       self.execute("RangeDataset", [start, stop, step], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.rank(input, typeT: nil, name: "Rank")
       self.execute("Rank", [input], T: typeT, name: name)
     end
-  
 
     def self.read_file(filename, name: "ReadFile")
       self.execute("ReadFile", [filename], name: name)
     end
-  
 
     def self.read_variable_op(resource, dtype: nil, name: "ReadVariableOp")
       self.execute("ReadVariableOp", [resource], dtype: dtype, name: name)
     end
-  
 
     def self.reader_num_records_produced(reader_handle, name: "ReaderNumRecordsProduced")
       self.execute("ReaderNumRecordsProduced", [reader_handle], name: name)
     end
-  
 
     def self.reader_num_records_produced_v2(reader_handle, name: "ReaderNumRecordsProducedV2")
       self.execute("ReaderNumRecordsProducedV2", [reader_handle], name: name)
     end
-  
 
     def self.reader_num_work_units_completed(reader_handle, name: "ReaderNumWorkUnitsCompleted")
       self.execute("ReaderNumWorkUnitsCompleted", [reader_handle], name: name)
     end
-  
 
     def self.reader_num_work_units_completed_v2(reader_handle, name: "ReaderNumWorkUnitsCompletedV2")
       self.execute("ReaderNumWorkUnitsCompletedV2", [reader_handle], name: name)
     end
-  
 
     def self.reader_read(reader_handle, queue_handle, name: "ReaderRead")
       self.execute("ReaderRead", [reader_handle, queue_handle], name: name)
     end
-  
 
     def self.reader_read_up_to(reader_handle, queue_handle, num_records, name: "ReaderReadUpTo")
       self.execute("ReaderReadUpTo", [reader_handle, queue_handle, num_records], name: name)
     end
-  
 
     def self.reader_read_up_to_v2(reader_handle, queue_handle, num_records, name: "ReaderReadUpToV2")
       self.execute("ReaderReadUpToV2", [reader_handle, queue_handle, num_records], name: name)
     end
-  
 
     def self.reader_read_v2(reader_handle, queue_handle, name: "ReaderReadV2")
       self.execute("ReaderReadV2", [reader_handle, queue_handle], name: name)
     end
-  
 
     def self.reader_reset(reader_handle, name: "ReaderReset")
       self.execute("ReaderReset", [reader_handle], name: name)
     end
-  
 
     def self.reader_reset_v2(reader_handle, name: "ReaderResetV2")
       self.execute("ReaderResetV2", [reader_handle], name: name)
     end
-  
 
     def self.reader_restore_state(reader_handle, state, name: "ReaderRestoreState")
       self.execute("ReaderRestoreState", [reader_handle, state], name: name)
     end
-  
 
     def self.reader_restore_state_v2(reader_handle, state, name: "ReaderRestoreStateV2")
       self.execute("ReaderRestoreStateV2", [reader_handle, state], name: name)
     end
-  
 
     def self.reader_serialize_state(reader_handle, name: "ReaderSerializeState")
       self.execute("ReaderSerializeState", [reader_handle], name: name)
     end
-  
 
     def self.reader_serialize_state_v2(reader_handle, name: "ReaderSerializeStateV2")
       self.execute("ReaderSerializeStateV2", [reader_handle], name: name)
     end
-  
 
     def self.real(input, typeT: nil, tout: nil, name: "Real")
       self.execute("Real", [input], T: typeT, Tout: tout, name: name)
     end
-  
 
     def self.real_div(x, y, typeT: nil, name: "RealDiv")
       self.execute("RealDiv", [x, y], T: typeT, name: name)
     end
-  
 
     def self.rebatch_dataset(input_dataset, num_replicas, output_types: nil, output_shapes: nil, use_fallback: true, name: "RebatchDataset")
       self.execute("RebatchDataset", [input_dataset, num_replicas], output_types: output_types, output_shapes: output_shapes, use_fallback: use_fallback, name: name)
     end
-  
 
     def self.reciprocal(x, typeT: nil, name: "Reciprocal")
       self.execute("Reciprocal", [x], T: typeT, name: name)
     end
-  
 
     def self.reciprocal_grad(y, dy, typeT: nil, name: "ReciprocalGrad")
       self.execute("ReciprocalGrad", [y, dy], T: typeT, name: name)
     end
-  
 
     def self.record_input(file_pattern: nil, file_random_seed: 301, file_shuffle_shift_ratio: 0.0, file_buffer_size: 10000, file_parallelism: 16, batch_size: 32, compression_type: nil, name: "RecordInput")
       self.execute("RecordInput", [], file_pattern: file_pattern, file_random_seed: file_random_seed, file_shuffle_shift_ratio: file_shuffle_shift_ratio, file_buffer_size: file_buffer_size, file_parallelism: file_parallelism, batch_size: batch_size, compression_type: compression_type, name: name)
     end
-  
 
     def self.recv(tensor_type: nil, tensor_name: nil, send_device: nil, send_device_incarnation: nil, recv_device: nil, client_terminated: false, name: "Recv")
       self.execute("Recv", [], tensor_type: tensor_type, tensor_name: tensor_name, send_device: send_device, send_device_incarnation: send_device_incarnation, recv_device: recv_device, client_terminated: client_terminated, name: name)
     end
-  
 
     def self.recv_tpu_embedding_activations(num_outputs: nil, config: nil, name: "RecvTPUEmbeddingActivations")
       self.execute("RecvTPUEmbeddingActivations", [], num_outputs: num_outputs, config: config, name: name)
     end
-  
 
     def self.reduce_dataset(input_dataset, initial_state, other_arguments, f: nil, tstate: nil, targuments: nil, output_types: nil, output_shapes: nil, use_inter_op_parallelism: true, name: "ReduceDataset")
       self.execute("ReduceDataset", [input_dataset, initial_state, other_arguments], f: f, Tstate: tstate, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, use_inter_op_parallelism: use_inter_op_parallelism, name: name)
     end
-  
 
     def self.reduce_join(inputs, reduction_indices, keep_dims: false, separator: nil, name: "ReduceJoin")
       self.execute("ReduceJoin", [inputs, reduction_indices], keep_dims: keep_dims, separator: separator, name: name)
     end
-  
 
     def self.ref_enter(data, typeT: nil, frame_name: nil, is_constant: false, parallel_iterations: 10, name: "RefEnter")
       self.execute("RefEnter", [data], T: typeT, frame_name: frame_name, is_constant: is_constant, parallel_iterations: parallel_iterations, name: name)
     end
-  
 
     def self.ref_exit(data, typeT: nil, name: "RefExit")
       self.execute("RefExit", [data], T: typeT, name: name)
     end
-  
 
     def self.ref_identity(input, typeT: nil, name: "RefIdentity")
       self.execute("RefIdentity", [input], T: typeT, name: name)
     end
-  
 
     def self.ref_merge(inputs, typeT: nil, n: nil, name: "RefMerge")
       self.execute("RefMerge", [inputs], T: typeT, N: n, name: name)
     end
-  
 
     def self.ref_next_iteration(data, typeT: nil, name: "RefNextIteration")
       self.execute("RefNextIteration", [data], T: typeT, name: name)
     end
-  
 
     def self.ref_select(index, inputs, typeT: nil, n: nil, name: "RefSelect")
       self.execute("RefSelect", [index, inputs], T: typeT, N: n, name: name)
     end
-  
 
     def self.ref_switch(data, pred, typeT: nil, name: "RefSwitch")
       self.execute("RefSwitch", [data, pred], T: typeT, name: name)
     end
-  
 
     def self.regex_full_match(input, pattern, name: "RegexFullMatch")
       self.execute("RegexFullMatch", [input, pattern], name: name)
     end
-  
 
     def self.regex_replace(input, pattern, rewrite, replace_global: true, name: "RegexReplace")
       self.execute("RegexReplace", [input, pattern, rewrite], replace_global: replace_global, name: name)
     end
-  
 
     def self.relu(features, typeT: nil, name: "Relu")
       self.execute("Relu", [features], T: typeT, name: name)
     end
-  
 
     def self.relu6(features, typeT: nil, name: "Relu6")
       self.execute("Relu6", [features], T: typeT, name: name)
     end
-  
 
     def self.relu6_grad(gradients, features, typeT: nil, name: "Relu6Grad")
       self.execute("Relu6Grad", [gradients, features], T: typeT, name: name)
     end
-  
 
     def self.relu_grad(gradients, features, typeT: nil, name: "ReluGrad")
       self.execute("ReluGrad", [gradients, features], T: typeT, name: name)
     end
-  
 
     def self.remote_call(target, args, tin: nil, tout: nil, f: nil, name: "RemoteCall")
       self.execute("RemoteCall", [target, args], Tin: tin, Tout: tout, f: f, name: name)
     end
-  
 
     def self.remote_fused_graph_execute(inputs, tinputs: nil, toutputs: nil, serialized_remote_fused_graph_execute_info: nil, name: "RemoteFusedGraphExecute")
       self.execute("RemoteFusedGraphExecute", [inputs], Tinputs: tinputs, Toutputs: toutputs, serialized_remote_fused_graph_execute_info: serialized_remote_fused_graph_execute_info, name: name)
     end
-  
 
     def self.repeat_dataset(input_dataset, count, output_types: nil, output_shapes: nil, name: "RepeatDataset")
       self.execute("RepeatDataset", [input_dataset, count], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.requantization_range(input, input_min, input_max, tinput: nil, name: "RequantizationRange")
       self.execute("RequantizationRange", [input, input_min, input_max], Tinput: tinput, name: name)
     end
-  
 
     def self.requantization_range_per_channel(input, input_min, input_max, typeT: nil, clip_value_max: nil, name: "RequantizationRangePerChannel")
       self.execute("RequantizationRangePerChannel", [input, input_min, input_max], T: typeT, clip_value_max: clip_value_max, name: name)
     end
-  
 
     def self.requantize(input, input_min, input_max, requested_output_min, requested_output_max, tinput: nil, out_type: nil, name: "Requantize")
       self.execute("Requantize", [input, input_min, input_max, requested_output_min, requested_output_max], Tinput: tinput, out_type: out_type, name: name)
     end
-  
 
     def self.requantize_per_channel(input, input_min, input_max, requested_output_min, requested_output_max, typeT: nil, out_type: nil, name: "RequantizePerChannel")
       self.execute("RequantizePerChannel", [input, input_min, input_max, requested_output_min, requested_output_max], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.reshape(tensor, shape, typeT: nil, tshape: nil, name: "Reshape")
       self.execute("Reshape", [tensor, shape], T: typeT, Tshape: tshape, name: name)
     end
-  
 
     def self.resize_area(images, size, typeT: nil, align_corners: false, name: "ResizeArea")
       self.execute("ResizeArea", [images, size], T: typeT, align_corners: align_corners, name: name)
     end
-  
 
     def self.resize_bicubic(images, size, typeT: nil, align_corners: false, half_pixel_centers: false, name: "ResizeBicubic")
       self.execute("ResizeBicubic", [images, size], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.resize_bicubic_grad(grads, original_image, typeT: nil, align_corners: false, half_pixel_centers: false, name: "ResizeBicubicGrad")
       self.execute("ResizeBicubicGrad", [grads, original_image], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.resize_bilinear(images, size, typeT: nil, align_corners: false, half_pixel_centers: false, name: "ResizeBilinear")
       self.execute("ResizeBilinear", [images, size], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.resize_bilinear_grad(grads, original_image, typeT: nil, align_corners: false, half_pixel_centers: false, name: "ResizeBilinearGrad")
       self.execute("ResizeBilinearGrad", [grads, original_image], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.resize_nearest_neighbor(images, size, typeT: nil, align_corners: false, half_pixel_centers: false, name: "ResizeNearestNeighbor")
       self.execute("ResizeNearestNeighbor", [images, size], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.resize_nearest_neighbor_grad(grads, size, typeT: nil, align_corners: false, half_pixel_centers: false, name: "ResizeNearestNeighborGrad")
       self.execute("ResizeNearestNeighborGrad", [grads, size], T: typeT, align_corners: align_corners, half_pixel_centers: half_pixel_centers, name: name)
     end
-  
 
     def self.resource_accumulator_apply_gradient(handle, local_step, gradient, dtype: nil, name: "ResourceAccumulatorApplyGradient")
       self.execute("ResourceAccumulatorApplyGradient", [handle, local_step, gradient], dtype: dtype, name: name)
     end
-  
 
     def self.resource_accumulator_num_accumulated(handle, name: "ResourceAccumulatorNumAccumulated")
       self.execute("ResourceAccumulatorNumAccumulated", [handle], name: name)
     end
-  
 
     def self.resource_accumulator_set_global_step(handle, new_global_step, name: "ResourceAccumulatorSetGlobalStep")
       self.execute("ResourceAccumulatorSetGlobalStep", [handle, new_global_step], name: name)
     end
-  
 
     def self.resource_accumulator_take_gradient(handle, num_required, dtype: nil, name: "ResourceAccumulatorTakeGradient")
       self.execute("ResourceAccumulatorTakeGradient", [handle, num_required], dtype: dtype, name: name)
     end
-  
 
     def self.resource_apply_ada_max(var, m, v, beta1_power, lr, beta1, beta2, epsilon, grad, typeT: nil, use_locking: false, name: "ResourceApplyAdaMax")
       self.execute("ResourceApplyAdaMax", [var, m, v, beta1_power, lr, beta1, beta2, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_adadelta(var, accum, accum_update, lr, rho, epsilon, grad, typeT: nil, use_locking: false, name: "ResourceApplyAdadelta")
       self.execute("ResourceApplyAdadelta", [var, accum, accum_update, lr, rho, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_adagrad(var, accum, lr, grad, typeT: nil, use_locking: false, update_slots: true, name: "ResourceApplyAdagrad")
       self.execute("ResourceApplyAdagrad", [var, accum, lr, grad], T: typeT, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.resource_apply_adagrad_da(var, gradient_accumulator, gradient_squared_accumulator, grad, lr, l1, l2, global_step, typeT: nil, use_locking: false, name: "ResourceApplyAdagradDA")
       self.execute("ResourceApplyAdagradDA", [var, gradient_accumulator, gradient_squared_accumulator, grad, lr, l1, l2, global_step], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_adagrad_v2(var, accum, lr, epsilon, grad, typeT: nil, use_locking: false, update_slots: true, name: "ResourceApplyAdagradV2")
       self.execute("ResourceApplyAdagradV2", [var, accum, lr, epsilon, grad], T: typeT, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.resource_apply_adam(var, m, v, beta1_power, beta2_power, lr, beta1, beta2, epsilon, grad, typeT: nil, use_locking: false, use_nesterov: false, name: "ResourceApplyAdam")
       self.execute("ResourceApplyAdam", [var, m, v, beta1_power, beta2_power, lr, beta1, beta2, epsilon, grad], T: typeT, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.resource_apply_adam_with_amsgrad(var, m, v, vhat, beta1_power, beta2_power, lr, beta1, beta2, epsilon, grad, typeT: nil, use_locking: false, name: "ResourceApplyAdamWithAmsgrad")
       self.execute("ResourceApplyAdamWithAmsgrad", [var, m, v, vhat, beta1_power, beta2_power, lr, beta1, beta2, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_add_sign(var, m, lr, alpha, sign_decay, beta, grad, typeT: nil, use_locking: false, name: "ResourceApplyAddSign")
       self.execute("ResourceApplyAddSign", [var, m, lr, alpha, sign_decay, beta, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_centered_rms_prop(var, mg, ms, mom, lr, rho, momentum, epsilon, grad, typeT: nil, use_locking: false, name: "ResourceApplyCenteredRMSProp")
       self.execute("ResourceApplyCenteredRMSProp", [var, mg, ms, mom, lr, rho, momentum, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_ftrl(var, accum, linear, grad, lr, l1, l2, lr_power, typeT: nil, use_locking: false, name: "ResourceApplyFtrl")
       self.execute("ResourceApplyFtrl", [var, accum, linear, grad, lr, l1, l2, lr_power], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_ftrl_v2(var, accum, linear, grad, lr, l1, l2, l2_shrinkage, lr_power, typeT: nil, use_locking: false, name: "ResourceApplyFtrlV2")
       self.execute("ResourceApplyFtrlV2", [var, accum, linear, grad, lr, l1, l2, l2_shrinkage, lr_power], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_gradient_descent(var, alpha, delta, typeT: nil, use_locking: false, name: "ResourceApplyGradientDescent")
       self.execute("ResourceApplyGradientDescent", [var, alpha, delta], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_keras_momentum(var, accum, lr, grad, momentum, typeT: nil, use_locking: false, use_nesterov: false, name: "ResourceApplyKerasMomentum")
       self.execute("ResourceApplyKerasMomentum", [var, accum, lr, grad, momentum], T: typeT, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.resource_apply_momentum(var, accum, lr, grad, momentum, typeT: nil, use_locking: false, use_nesterov: false, name: "ResourceApplyMomentum")
       self.execute("ResourceApplyMomentum", [var, accum, lr, grad, momentum], T: typeT, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.resource_apply_power_sign(var, m, lr, logbase, sign_decay, beta, grad, typeT: nil, use_locking: false, name: "ResourceApplyPowerSign")
       self.execute("ResourceApplyPowerSign", [var, m, lr, logbase, sign_decay, beta, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_proximal_adagrad(var, accum, lr, l1, l2, grad, typeT: nil, use_locking: false, name: "ResourceApplyProximalAdagrad")
       self.execute("ResourceApplyProximalAdagrad", [var, accum, lr, l1, l2, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_proximal_gradient_descent(var, alpha, l1, l2, delta, typeT: nil, use_locking: false, name: "ResourceApplyProximalGradientDescent")
       self.execute("ResourceApplyProximalGradientDescent", [var, alpha, l1, l2, delta], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_apply_rms_prop(var, ms, mom, lr, rho, momentum, epsilon, grad, typeT: nil, use_locking: false, name: "ResourceApplyRMSProp")
       self.execute("ResourceApplyRMSProp", [var, ms, mom, lr, rho, momentum, epsilon, grad], T: typeT, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_conditional_accumulator(dtype: nil, shape: nil, container: nil, shared_name: nil, reduction_type: "MEAN", name: "ResourceConditionalAccumulator")
       self.execute("ResourceConditionalAccumulator", [], dtype: dtype, shape: shape, container: container, shared_name: shared_name, reduction_type: reduction_type, name: name)
     end
-  
 
     def self.resource_count_up_to(resource, limit: nil, typeT: nil, name: "ResourceCountUpTo")
       self.execute("ResourceCountUpTo", [resource], limit: limit, T: typeT, name: name)
     end
-  
 
     def self.resource_gather(resource, indices, batch_dims: 0, validate_indices: true, dtype: nil, tindices: nil, name: "ResourceGather")
       self.execute("ResourceGather", [resource, indices], batch_dims: batch_dims, validate_indices: validate_indices, dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_gather_nd(resource, indices, dtype: nil, tindices: nil, name: "ResourceGatherNd")
       self.execute("ResourceGatherNd", [resource, indices], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_add(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterAdd")
       self.execute("ResourceScatterAdd", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_div(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterDiv")
       self.execute("ResourceScatterDiv", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_max(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterMax")
       self.execute("ResourceScatterMax", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_min(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterMin")
       self.execute("ResourceScatterMin", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_mul(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterMul")
       self.execute("ResourceScatterMul", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_nd_add(ref, indices, updates, typeT: nil, tindices: nil, use_locking: true, name: "ResourceScatterNdAdd")
       self.execute("ResourceScatterNdAdd", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_scatter_nd_sub(ref, indices, updates, typeT: nil, tindices: nil, use_locking: true, name: "ResourceScatterNdSub")
       self.execute("ResourceScatterNdSub", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_scatter_nd_update(ref, indices, updates, typeT: nil, tindices: nil, use_locking: true, name: "ResourceScatterNdUpdate")
       self.execute("ResourceScatterNdUpdate", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_scatter_sub(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterSub")
       self.execute("ResourceScatterSub", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_scatter_update(resource, indices, updates, dtype: nil, tindices: nil, name: "ResourceScatterUpdate")
       self.execute("ResourceScatterUpdate", [resource, indices, updates], dtype: dtype, Tindices: tindices, name: name)
     end
-  
 
     def self.resource_sparse_apply_adadelta(var, accum, accum_update, lr, rho, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyAdadelta")
       self.execute("ResourceSparseApplyAdadelta", [var, accum, accum_update, lr, rho, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_adagrad(var, accum, lr, grad, indices, typeT: nil, tindices: nil, use_locking: false, update_slots: true, name: "ResourceSparseApplyAdagrad")
       self.execute("ResourceSparseApplyAdagrad", [var, accum, lr, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.resource_sparse_apply_adagrad_da(var, gradient_accumulator, gradient_squared_accumulator, grad, indices, lr, l1, l2, global_step, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyAdagradDA")
       self.execute("ResourceSparseApplyAdagradDA", [var, gradient_accumulator, gradient_squared_accumulator, grad, indices, lr, l1, l2, global_step], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_adagrad_v2(var, accum, lr, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, update_slots: true, name: "ResourceSparseApplyAdagradV2")
       self.execute("ResourceSparseApplyAdagradV2", [var, accum, lr, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.resource_sparse_apply_centered_rms_prop(var, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyCenteredRMSProp")
       self.execute("ResourceSparseApplyCenteredRMSProp", [var, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_ftrl(var, accum, linear, grad, indices, lr, l1, l2, lr_power, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyFtrl")
       self.execute("ResourceSparseApplyFtrl", [var, accum, linear, grad, indices, lr, l1, l2, lr_power], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_ftrl_v2(var, accum, linear, grad, indices, lr, l1, l2, l2_shrinkage, lr_power, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyFtrlV2")
       self.execute("ResourceSparseApplyFtrlV2", [var, accum, linear, grad, indices, lr, l1, l2, l2_shrinkage, lr_power], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_keras_momentum(var, accum, lr, grad, indices, momentum, typeT: nil, tindices: nil, use_locking: false, use_nesterov: false, name: "ResourceSparseApplyKerasMomentum")
       self.execute("ResourceSparseApplyKerasMomentum", [var, accum, lr, grad, indices, momentum], T: typeT, Tindices: tindices, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.resource_sparse_apply_momentum(var, accum, lr, grad, indices, momentum, typeT: nil, tindices: nil, use_locking: false, use_nesterov: false, name: "ResourceSparseApplyMomentum")
       self.execute("ResourceSparseApplyMomentum", [var, accum, lr, grad, indices, momentum], T: typeT, Tindices: tindices, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.resource_sparse_apply_proximal_adagrad(var, accum, lr, l1, l2, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyProximalAdagrad")
       self.execute("ResourceSparseApplyProximalAdagrad", [var, accum, lr, l1, l2, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_proximal_gradient_descent(var, alpha, l1, l2, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyProximalGradientDescent")
       self.execute("ResourceSparseApplyProximalGradientDescent", [var, alpha, l1, l2, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_sparse_apply_rms_prop(var, ms, mom, lr, rho, momentum, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "ResourceSparseApplyRMSProp")
       self.execute("ResourceSparseApplyRMSProp", [var, ms, mom, lr, rho, momentum, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.resource_strided_slice_assign(ref, start, stop, strides, value, typeT: nil, index: nil, begin_mask: 0, end_mask: 0, ellipsis_mask: 0, new_axis_mask: 0, shrink_axis_mask: 0, name: "ResourceStridedSliceAssign")
       self.execute("ResourceStridedSliceAssign", [ref, start, stop, strides, value], T: typeT, Index: index, begin_mask: begin_mask, end_mask: end_mask, ellipsis_mask: ellipsis_mask, new_axis_mask: new_axis_mask, shrink_axis_mask: shrink_axis_mask, name: name)
     end
-  
 
     def self.restore(file_pattern, tensor_name, dt: nil, preferred_shard: -1, name: "Restore")
       self.execute("Restore", [file_pattern, tensor_name], dt: dt, preferred_shard: preferred_shard, name: name)
     end
-  
 
     def self.restore_slice(file_pattern, tensor_name, shape_and_slice, dt: nil, preferred_shard: -1, name: "RestoreSlice")
       self.execute("RestoreSlice", [file_pattern, tensor_name, shape_and_slice], dt: dt, preferred_shard: preferred_shard, name: name)
     end
-  
 
     def self.restore_v2(prefix, tensor_names, shape_and_slices, dtypes: nil, name: "RestoreV2")
       self.execute("RestoreV2", [prefix, tensor_names, shape_and_slices], dtypes: dtypes, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_adam_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingADAMParameters")
       self.execute("RetrieveTPUEmbeddingADAMParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_adam_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingADAMParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingADAMParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_adadelta_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingAdadeltaParameters")
       self.execute("RetrieveTPUEmbeddingAdadeltaParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_adadelta_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_adagrad_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingAdagradParameters")
       self.execute("RetrieveTPUEmbeddingAdagradParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_adagrad_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingAdagradParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingAdagradParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_centered_rms_prop_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingCenteredRMSPropParameters")
       self.execute("RetrieveTPUEmbeddingCenteredRMSPropParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_ftrl_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingFTRLParameters")
       self.execute("RetrieveTPUEmbeddingFTRLParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_ftrl_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingFTRLParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingFTRLParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_mdl_adagrad_light_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingMDLAdagradLightParameters")
       self.execute("RetrieveTPUEmbeddingMDLAdagradLightParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_momentum_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingMomentumParameters")
       self.execute("RetrieveTPUEmbeddingMomentumParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_momentum_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingMomentumParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingMomentumParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_proximal_adagrad_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingProximalAdagradParameters")
       self.execute("RetrieveTPUEmbeddingProximalAdagradParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_proximal_adagrad_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_rms_prop_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingRMSPropParameters")
       self.execute("RetrieveTPUEmbeddingRMSPropParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_rms_prop_parameters_grad_accum_debug(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug")
       self.execute("RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.retrieve_tpu_embedding_stochastic_gradient_descent_parameters(table_id: -1, table_name: nil, num_shards: nil, shard_id: nil, config: nil, name: "RetrieveTPUEmbeddingStochasticGradientDescentParameters")
       self.execute("RetrieveTPUEmbeddingStochasticGradientDescentParameters", [], table_id: table_id, table_name: table_name, num_shards: num_shards, shard_id: shard_id, config: config, name: name)
     end
-  
 
     def self.reverse(tensor, dims, typeT: nil, name: "Reverse")
       self.execute("Reverse", [tensor, dims], T: typeT, name: name)
     end
-  
 
     def self.reverse_sequence(input, seq_lengths, seq_dim: nil, batch_dim: 0, typeT: nil, tlen: nil, name: "ReverseSequence")
       self.execute("ReverseSequence", [input, seq_lengths], seq_dim: seq_dim, batch_dim: batch_dim, T: typeT, Tlen: tlen, name: name)
     end
-  
 
     def self.reverse_v2(tensor, axis, tidx: nil, typeT: nil, name: "ReverseV2")
       self.execute("ReverseV2", [tensor, axis], Tidx: tidx, T: typeT, name: name)
     end
-  
 
     def self.right_shift(x, y, typeT: nil, name: "RightShift")
       self.execute("RightShift", [x, y], T: typeT, name: name)
     end
-  
 
     def self.rint(x, typeT: nil, name: "Rint")
       self.execute("Rint", [x], T: typeT, name: name)
     end
-  
 
     def self.rng_skip(resource, algorithm, delta, name: "RngSkip")
       self.execute("RngSkip", [resource, algorithm, delta], name: name)
     end
-  
 
     def self.roll(input, shift, axis, typeT: nil, tshift: nil, taxis: nil, name: "Roll")
       self.execute("Roll", [input, shift, axis], T: typeT, Tshift: tshift, Taxis: taxis, name: name)
     end
-  
 
     def self.round(x, typeT: nil, name: "Round")
       self.execute("Round", [x], T: typeT, name: name)
     end
-  
 
     def self.rpc(address, method, request, protocol: nil, fail_fast: true, timeout_in_ms: 0, name: "Rpc")
       self.execute("Rpc", [address, method, request], protocol: protocol, fail_fast: fail_fast, timeout_in_ms: timeout_in_ms, name: name)
     end
-  
 
     def self.rsqrt(x, typeT: nil, name: "Rsqrt")
       self.execute("Rsqrt", [x], T: typeT, name: name)
     end
-  
 
     def self.rsqrt_grad(y, dy, typeT: nil, name: "RsqrtGrad")
       self.execute("RsqrtGrad", [y, dy], T: typeT, name: name)
     end
-  
 
     def self.sample_distorted_bounding_box(image_size, bounding_boxes, typeT: nil, seed: 0, seed2: 0, min_object_covered: 0.10000000149011612, aspect_ratio_range: [], area_range: [], max_attempts: 100, use_image_if_no_bounding_boxes: false, name: "SampleDistortedBoundingBox")
       self.execute("SampleDistortedBoundingBox", [image_size, bounding_boxes], T: typeT, seed: seed, seed2: seed2, min_object_covered: min_object_covered, aspect_ratio_range: aspect_ratio_range, area_range: area_range, max_attempts: max_attempts, use_image_if_no_bounding_boxes: use_image_if_no_bounding_boxes, name: name)
     end
-  
 
     def self.sample_distorted_bounding_box_v2(image_size, bounding_boxes, min_object_covered, typeT: nil, seed: 0, seed2: 0, aspect_ratio_range: [], area_range: [], max_attempts: 100, use_image_if_no_bounding_boxes: false, name: "SampleDistortedBoundingBoxV2")
       self.execute("SampleDistortedBoundingBoxV2", [image_size, bounding_boxes, min_object_covered], T: typeT, seed: seed, seed2: seed2, aspect_ratio_range: aspect_ratio_range, area_range: area_range, max_attempts: max_attempts, use_image_if_no_bounding_boxes: use_image_if_no_bounding_boxes, name: name)
     end
-  
 
     def self.sampling_dataset(input_dataset, rate, seed, seed2, output_types: nil, output_shapes: nil, name: "SamplingDataset")
       self.execute("SamplingDataset", [input_dataset, rate, seed, seed2], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.save(filename, tensor_names, data, typeT: nil, name: "Save")
       self.execute("Save", [filename, tensor_names, data], T: typeT, name: name)
     end
-  
 
     def self.save_slices(filename, tensor_names, shapes_and_slices, data, typeT: nil, name: "SaveSlices")
       self.execute("SaveSlices", [filename, tensor_names, shapes_and_slices, data], T: typeT, name: name)
     end
-  
 
     def self.save_v2(prefix, tensor_names, shape_and_slices, tensors, dtypes: nil, name: "SaveV2")
       self.execute("SaveV2", [prefix, tensor_names, shape_and_slices, tensors], dtypes: dtypes, name: name)
     end
-  
 
     def self.scalar_summary(tags, values, typeT: nil, name: "ScalarSummary")
       self.execute("ScalarSummary", [tags, values], T: typeT, name: name)
     end
-  
 
     def self.scale_and_translate(images, size, scale, translation, typeT: nil, kernel_type: "lanczos3", antialias: true, name: "ScaleAndTranslate")
       self.execute("ScaleAndTranslate", [images, size, scale, translation], T: typeT, kernel_type: kernel_type, antialias: antialias, name: name)
     end
-  
 
     def self.scale_and_translate_grad(grads, original_image, scale, translation, typeT: nil, kernel_type: "lanczos3", antialias: true, name: "ScaleAndTranslateGrad")
       self.execute("ScaleAndTranslateGrad", [grads, original_image, scale, translation], T: typeT, kernel_type: kernel_type, antialias: antialias, name: name)
     end
-  
 
     def self.scan_dataset(input_dataset, initial_state, other_arguments, f: nil, tstate: nil, targuments: nil, output_types: nil, output_shapes: nil, preserve_cardinality: false, use_default_device: true, name: "ScanDataset")
       self.execute("ScanDataset", [input_dataset, initial_state, other_arguments], f: f, Tstate: tstate, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, preserve_cardinality: preserve_cardinality, use_default_device: use_default_device, name: name)
     end
-  
 
     def self.scatter_add(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterAdd")
       self.execute("ScatterAdd", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_div(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterDiv")
       self.execute("ScatterDiv", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_max(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterMax")
       self.execute("ScatterMax", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_min(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterMin")
       self.execute("ScatterMin", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_mul(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterMul")
       self.execute("ScatterMul", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_nd(indices, updates, shape, typeT: nil, tindices: nil, name: "ScatterNd")
       self.execute("ScatterNd", [indices, updates, shape], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.scatter_nd_add(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterNdAdd")
       self.execute("ScatterNdAdd", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_nd_non_aliasing_add(input, indices, updates, typeT: nil, tindices: nil, name: "ScatterNdNonAliasingAdd")
       self.execute("ScatterNdNonAliasingAdd", [input, indices, updates], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.scatter_nd_sub(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterNdSub")
       self.execute("ScatterNdSub", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_nd_update(ref, indices, updates, typeT: nil, tindices: nil, use_locking: true, name: "ScatterNdUpdate")
       self.execute("ScatterNdUpdate", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_sub(ref, indices, updates, typeT: nil, tindices: nil, use_locking: false, name: "ScatterSub")
       self.execute("ScatterSub", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.scatter_update(ref, indices, updates, typeT: nil, tindices: nil, use_locking: true, name: "ScatterUpdate")
       self.execute("ScatterUpdate", [ref, indices, updates], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sdca_fprint(input, name: "SdcaFprint")
       self.execute("SdcaFprint", [input], name: name)
     end
-  
 
     def self.sdca_optimizer(sparse_example_indices, sparse_feature_indices, sparse_feature_values, dense_features, example_weights, example_labels, sparse_indices, sparse_weights, dense_weights, example_state_data, loss_type: nil, adaptative: false, num_sparse_features: nil, num_sparse_features_with_values: nil, num_dense_features: nil, l1: nil, l2: nil, num_loss_partitions: nil, num_inner_iterations: nil, name: "SdcaOptimizer")
       self.execute("SdcaOptimizer", [sparse_example_indices, sparse_feature_indices, sparse_feature_values, dense_features, example_weights, example_labels, sparse_indices, sparse_weights, dense_weights, example_state_data], loss_type: loss_type, adaptative: adaptative, num_sparse_features: num_sparse_features, num_sparse_features_with_values: num_sparse_features_with_values, num_dense_features: num_dense_features, l1: l1, l2: l2, num_loss_partitions: num_loss_partitions, num_inner_iterations: num_inner_iterations, name: name)
     end
-  
 
     def self.sdca_optimizer_v2(sparse_example_indices, sparse_feature_indices, sparse_feature_values, dense_features, example_weights, example_labels, sparse_indices, sparse_weights, dense_weights, example_state_data, loss_type: nil, adaptive: false, num_sparse_features: nil, num_sparse_features_with_values: nil, num_dense_features: nil, l1: nil, l2: nil, num_loss_partitions: nil, num_inner_iterations: nil, name: "SdcaOptimizerV2")
       self.execute("SdcaOptimizerV2", [sparse_example_indices, sparse_feature_indices, sparse_feature_values, dense_features, example_weights, example_labels, sparse_indices, sparse_weights, dense_weights, example_state_data], loss_type: loss_type, adaptive: adaptive, num_sparse_features: num_sparse_features, num_sparse_features_with_values: num_sparse_features_with_values, num_dense_features: num_dense_features, l1: l1, l2: l2, num_loss_partitions: num_loss_partitions, num_inner_iterations: num_inner_iterations, name: name)
     end
-  
 
     def self.sdca_shrink_l1(weights, num_features: nil, l1: nil, l2: nil, name: "SdcaShrinkL1")
       self.execute("SdcaShrinkL1", [weights], num_features: num_features, l1: l1, l2: l2, name: name)
     end
-  
 
     def self.segment_max(data, segment_ids, typeT: nil, tindices: nil, name: "SegmentMax")
       self.execute("SegmentMax", [data, segment_ids], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.segment_mean(data, segment_ids, typeT: nil, tindices: nil, name: "SegmentMean")
       self.execute("SegmentMean", [data, segment_ids], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.segment_min(data, segment_ids, typeT: nil, tindices: nil, name: "SegmentMin")
       self.execute("SegmentMin", [data, segment_ids], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.segment_prod(data, segment_ids, typeT: nil, tindices: nil, name: "SegmentProd")
       self.execute("SegmentProd", [data, segment_ids], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.segment_sum(data, segment_ids, typeT: nil, tindices: nil, name: "SegmentSum")
       self.execute("SegmentSum", [data, segment_ids], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.select(condition, t, e, typeT: nil, name: "Select")
       self.execute("Select", [condition, t, e], T: typeT, name: name)
     end
-  
 
     def self.select_v2(condition, t, e, typeT: nil, name: "SelectV2")
       self.execute("SelectV2", [condition, t, e], T: typeT, name: name)
     end
-  
 
     def self.self_adjoint_eig(input, typeT: nil, name: "SelfAdjointEig")
       self.execute("SelfAdjointEig", [input], T: typeT, name: name)
     end
-  
 
     def self.self_adjoint_eig_v2(input, compute_v: true, typeT: nil, name: "SelfAdjointEigV2")
       self.execute("SelfAdjointEigV2", [input], compute_v: compute_v, T: typeT, name: name)
     end
-  
 
     def self.selu(features, typeT: nil, name: "Selu")
       self.execute("Selu", [features], T: typeT, name: name)
     end
-  
 
     def self.selu_grad(gradients, outputs, typeT: nil, name: "SeluGrad")
       self.execute("SeluGrad", [gradients, outputs], T: typeT, name: name)
     end
-  
 
     def self.send(tensor, typeT: nil, tensor_name: nil, send_device: nil, send_device_incarnation: nil, recv_device: nil, client_terminated: false, name: "Send")
       self.execute("Send", [tensor], T: typeT, tensor_name: tensor_name, send_device: send_device, send_device_incarnation: send_device_incarnation, recv_device: recv_device, client_terminated: client_terminated, name: name)
     end
-  
 
     def self.send_tpu_embedding_gradients(inputs, learning_rates, n: nil, nn: 0, config: nil, name: "SendTPUEmbeddingGradients")
       self.execute("SendTPUEmbeddingGradients", [inputs, learning_rates], N: n, NN: nn, config: config, name: name)
     end
-  
 
     def self.serialize_iterator(resource_handle, name: "SerializeIterator")
       self.execute("SerializeIterator", [resource_handle], name: name)
     end
-  
 
     def self.serialize_many_sparse(sparse_indices, sparse_values, sparse_shape, typeT: nil, out_type: nil, name: "SerializeManySparse")
       self.execute("SerializeManySparse", [sparse_indices, sparse_values, sparse_shape], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.serialize_sparse(sparse_indices, sparse_values, sparse_shape, typeT: nil, out_type: nil, name: "SerializeSparse")
       self.execute("SerializeSparse", [sparse_indices, sparse_values, sparse_shape], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.serialize_tensor(tensor, typeT: nil, name: "SerializeTensor")
       self.execute("SerializeTensor", [tensor], T: typeT, name: name)
     end
-  
 
     def self.set_size(set_indices, set_values, set_shape, validate_indices: true, typeT: nil, name: "SetSize")
       self.execute("SetSize", [set_indices, set_values, set_shape], validate_indices: validate_indices, T: typeT, name: name)
     end
-  
 
     def self.set_stats_aggregator_dataset(input_dataset, stats_aggregator, tag, counter_prefix, output_types: nil, output_shapes: nil, name: "SetStatsAggregatorDataset")
       self.execute("SetStatsAggregatorDataset", [input_dataset, stats_aggregator, tag, counter_prefix], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.shape(input, typeT: nil, out_type: nil, name: "Shape")
       self.execute("Shape", [input], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.shape_n(input, n: nil, typeT: nil, out_type: nil, name: "ShapeN")
       self.execute("ShapeN", [input], N: n, T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.shard_dataset(input_dataset, num_shards, index, require_non_empty: false, output_types: nil, output_shapes: nil, name: "ShardDataset")
       self.execute("ShardDataset", [input_dataset, num_shards, index], require_non_empty: require_non_empty, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.sharded_filename(basename, shard, num_shards, name: "ShardedFilename")
       self.execute("ShardedFilename", [basename, shard, num_shards], name: name)
     end
-  
 
     def self.sharded_filespec(basename, num_shards, name: "ShardedFilespec")
       self.execute("ShardedFilespec", [basename, num_shards], name: name)
     end
-  
 
     def self.shuffle_and_repeat_dataset(input_dataset, buffer_size, seed, seed2, count, output_types: nil, output_shapes: nil, name: "ShuffleAndRepeatDataset")
       self.execute("ShuffleAndRepeatDataset", [input_dataset, buffer_size, seed, seed2, count], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.shuffle_dataset(input_dataset, buffer_size, seed, seed2, reshuffle_each_iteration: true, output_types: nil, output_shapes: nil, name: "ShuffleDataset")
       self.execute("ShuffleDataset", [input_dataset, buffer_size, seed, seed2], reshuffle_each_iteration: reshuffle_each_iteration, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.shuffle_dataset_v2(input_dataset, buffer_size, seed_generator, output_types: nil, output_shapes: nil, name: "ShuffleDatasetV2")
       self.execute("ShuffleDatasetV2", [input_dataset, buffer_size, seed_generator], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.shutdown_distributed_tpu(name: "ShutdownDistributedTPU")
       self.execute("ShutdownDistributedTPU", [], name: name)
     end
-  
 
     def self.sigmoid(x, typeT: nil, name: "Sigmoid")
       self.execute("Sigmoid", [x], T: typeT, name: name)
     end
-  
 
     def self.sigmoid_grad(y, dy, typeT: nil, name: "SigmoidGrad")
       self.execute("SigmoidGrad", [y, dy], T: typeT, name: name)
     end
-  
 
     def self.sign(x, typeT: nil, name: "Sign")
       self.execute("Sign", [x], T: typeT, name: name)
     end
-  
 
     def self.sin(x, typeT: nil, name: "Sin")
       self.execute("Sin", [x], T: typeT, name: name)
     end
-  
 
     def self.sinh(x, typeT: nil, name: "Sinh")
       self.execute("Sinh", [x], T: typeT, name: name)
     end
-  
 
     def self.size(input, typeT: nil, out_type: nil, name: "Size")
       self.execute("Size", [input], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.skip_dataset(input_dataset, count, output_types: nil, output_shapes: nil, name: "SkipDataset")
       self.execute("SkipDataset", [input_dataset, count], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.skipgram(filename: nil, batch_size: nil, window_size: 5, min_count: 5, subsample: 0.0010000000474974513, name: "Skipgram")
       self.execute("Skipgram", [], filename: filename, batch_size: batch_size, window_size: window_size, min_count: min_count, subsample: subsample, name: name)
     end
-  
 
     def self.sleep_dataset(input_dataset, sleep_microseconds, output_types: nil, output_shapes: nil, name: "SleepDataset")
       self.execute("SleepDataset", [input_dataset, sleep_microseconds], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.slice(input, start, size, typeT: nil, index: nil, name: "Slice")
       self.execute("Slice", [input, start, size], T: typeT, Index: index, name: name)
     end
-  
 
     def self.sliding_window_dataset(input_dataset, window_size, window_shift, window_stride, output_types: nil, output_shapes: nil, name: "SlidingWindowDataset")
       self.execute("SlidingWindowDataset", [input_dataset, window_size, window_shift, window_stride], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.snapshot(input, typeT: nil, name: "Snapshot")
       self.execute("Snapshot", [input], T: typeT, name: name)
     end
-  
 
     def self.snapshot_dataset(input_dataset, path, output_types: nil, output_shapes: nil, compression: nil, reader_path_prefix: nil, writer_path_prefix: nil, shard_size_bytes: 10737418240, pending_snapshot_expiry_seconds: 86400, num_reader_threads: 1, reader_buffer_size: 1, num_writer_threads: 1, writer_buffer_size: 1, shuffle_on_read: false, seed: 0, seed2: 0, name: "SnapshotDataset")
       self.execute("SnapshotDataset", [input_dataset, path], output_types: output_types, output_shapes: output_shapes, compression: compression, reader_path_prefix: reader_path_prefix, writer_path_prefix: writer_path_prefix, shard_size_bytes: shard_size_bytes, pending_snapshot_expiry_seconds: pending_snapshot_expiry_seconds, num_reader_threads: num_reader_threads, reader_buffer_size: reader_buffer_size, num_writer_threads: num_writer_threads, writer_buffer_size: writer_buffer_size, shuffle_on_read: shuffle_on_read, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.softmax(logits, typeT: nil, name: "Softmax")
       self.execute("Softmax", [logits], T: typeT, name: name)
     end
-  
 
     def self.softmax_cross_entropy_with_logits(features, labels, typeT: nil, name: "SoftmaxCrossEntropyWithLogits")
       self.execute("SoftmaxCrossEntropyWithLogits", [features, labels], T: typeT, name: name)
     end
-  
 
     def self.softplus(features, typeT: nil, name: "Softplus")
       self.execute("Softplus", [features], T: typeT, name: name)
     end
-  
 
     def self.softplus_grad(gradients, features, typeT: nil, name: "SoftplusGrad")
       self.execute("SoftplusGrad", [gradients, features], T: typeT, name: name)
     end
-  
 
     def self.softsign(features, typeT: nil, name: "Softsign")
       self.execute("Softsign", [features], T: typeT, name: name)
     end
-  
 
     def self.softsign_grad(gradients, features, typeT: nil, name: "SoftsignGrad")
       self.execute("SoftsignGrad", [gradients, features], T: typeT, name: name)
     end
-  
 
     def self.space_to_batch(input, paddings, typeT: nil, tpaddings: nil, block_size: nil, name: "SpaceToBatch")
       self.execute("SpaceToBatch", [input, paddings], T: typeT, Tpaddings: tpaddings, block_size: block_size, name: name)
     end
-  
 
     def self.space_to_batch_nd(input, block_shape, paddings, typeT: nil, tblock_shape: nil, tpaddings: nil, name: "SpaceToBatchND")
       self.execute("SpaceToBatchND", [input, block_shape, paddings], T: typeT, Tblock_shape: tblock_shape, Tpaddings: tpaddings, name: name)
     end
-  
 
     def self.space_to_depth(input, typeT: nil, block_size: nil, data_format: "NHWC", name: "SpaceToDepth")
       self.execute("SpaceToDepth", [input], T: typeT, block_size: block_size, data_format: data_format, name: name)
     end
-  
 
     def self.sparse_accumulator_apply_gradient(handle, local_step, gradient_indices, gradient_values, gradient_shape, dtype: nil, has_known_shape: nil, name: "SparseAccumulatorApplyGradient")
       self.execute("SparseAccumulatorApplyGradient", [handle, local_step, gradient_indices, gradient_values, gradient_shape], dtype: dtype, has_known_shape: has_known_shape, name: name)
     end
-  
 
     def self.sparse_accumulator_take_gradient(handle, num_required, dtype: nil, name: "SparseAccumulatorTakeGradient")
       self.execute("SparseAccumulatorTakeGradient", [handle, num_required], dtype: dtype, name: name)
     end
-  
 
     def self.sparse_add(a_indices, a_values, a_shape, b_indices, b_values, b_shape, thresh, typeT: nil, treal: nil, name: "SparseAdd")
       self.execute("SparseAdd", [a_indices, a_values, a_shape, b_indices, b_values, b_shape, thresh], T: typeT, Treal: treal, name: name)
     end
-  
 
     def self.sparse_add_grad(backprop_val_grad, a_indices, b_indices, sum_indices, typeT: nil, name: "SparseAddGrad")
       self.execute("SparseAddGrad", [backprop_val_grad, a_indices, b_indices, sum_indices], T: typeT, name: name)
     end
-  
 
     def self.sparse_apply_adadelta(var, accum, accum_update, lr, rho, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyAdadelta")
       self.execute("SparseApplyAdadelta", [var, accum, accum_update, lr, rho, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_adagrad(var, accum, lr, grad, indices, typeT: nil, tindices: nil, use_locking: false, update_slots: true, name: "SparseApplyAdagrad")
       self.execute("SparseApplyAdagrad", [var, accum, lr, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.sparse_apply_adagrad_da(var, gradient_accumulator, gradient_squared_accumulator, grad, indices, lr, l1, l2, global_step, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyAdagradDA")
       self.execute("SparseApplyAdagradDA", [var, gradient_accumulator, gradient_squared_accumulator, grad, indices, lr, l1, l2, global_step], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_adagrad_v2(var, accum, lr, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, update_slots: true, name: "SparseApplyAdagradV2")
       self.execute("SparseApplyAdagradV2", [var, accum, lr, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, update_slots: update_slots, name: name)
     end
-  
 
     def self.sparse_apply_centered_rms_prop(var, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyCenteredRMSProp")
       self.execute("SparseApplyCenteredRMSProp", [var, mg, ms, mom, lr, rho, momentum, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_ftrl(var, accum, linear, grad, indices, lr, l1, l2, lr_power, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyFtrl")
       self.execute("SparseApplyFtrl", [var, accum, linear, grad, indices, lr, l1, l2, lr_power], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_ftrl_v2(var, accum, linear, grad, indices, lr, l1, l2, l2_shrinkage, lr_power, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyFtrlV2")
       self.execute("SparseApplyFtrlV2", [var, accum, linear, grad, indices, lr, l1, l2, l2_shrinkage, lr_power], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_momentum(var, accum, lr, grad, indices, momentum, typeT: nil, tindices: nil, use_locking: false, use_nesterov: false, name: "SparseApplyMomentum")
       self.execute("SparseApplyMomentum", [var, accum, lr, grad, indices, momentum], T: typeT, Tindices: tindices, use_locking: use_locking, use_nesterov: use_nesterov, name: name)
     end
-  
 
     def self.sparse_apply_proximal_adagrad(var, accum, lr, l1, l2, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyProximalAdagrad")
       self.execute("SparseApplyProximalAdagrad", [var, accum, lr, l1, l2, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_proximal_gradient_descent(var, alpha, l1, l2, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyProximalGradientDescent")
       self.execute("SparseApplyProximalGradientDescent", [var, alpha, l1, l2, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_apply_rms_prop(var, ms, mom, lr, rho, momentum, epsilon, grad, indices, typeT: nil, tindices: nil, use_locking: false, name: "SparseApplyRMSProp")
       self.execute("SparseApplyRMSProp", [var, ms, mom, lr, rho, momentum, epsilon, grad, indices], T: typeT, Tindices: tindices, use_locking: use_locking, name: name)
     end
-  
 
     def self.sparse_concat(indices, values, shapes, concat_dim: nil, n: nil, typeT: nil, name: "SparseConcat")
       self.execute("SparseConcat", [indices, values, shapes], concat_dim: concat_dim, N: n, T: typeT, name: name)
     end
-  
 
     def self.sparse_conditional_accumulator(dtype: nil, shape: nil, container: nil, shared_name: nil, reduction_type: "MEAN", name: "SparseConditionalAccumulator")
       self.execute("SparseConditionalAccumulator", [], dtype: dtype, shape: shape, container: container, shared_name: shared_name, reduction_type: reduction_type, name: name)
     end
-  
 
     def self.sparse_cross(indices, values, shapes, dense_inputs, n: nil, hashed_output: nil, num_buckets: nil, hash_key: nil, sparse_types: nil, dense_types: nil, out_type: nil, internal_type: nil, name: "SparseCross")
       self.execute("SparseCross", [indices, values, shapes, dense_inputs], N: n, hashed_output: hashed_output, num_buckets: num_buckets, hash_key: hash_key, sparse_types: sparse_types, dense_types: dense_types, out_type: out_type, internal_type: internal_type, name: name)
     end
-  
 
     def self.sparse_dense_cwise_add(sp_indices, sp_values, sp_shape, dense, typeT: nil, name: "SparseDenseCwiseAdd")
       self.execute("SparseDenseCwiseAdd", [sp_indices, sp_values, sp_shape, dense], T: typeT, name: name)
     end
-  
 
     def self.sparse_dense_cwise_div(sp_indices, sp_values, sp_shape, dense, typeT: nil, name: "SparseDenseCwiseDiv")
       self.execute("SparseDenseCwiseDiv", [sp_indices, sp_values, sp_shape, dense], T: typeT, name: name)
     end
-  
 
     def self.sparse_dense_cwise_mul(sp_indices, sp_values, sp_shape, dense, typeT: nil, name: "SparseDenseCwiseMul")
       self.execute("SparseDenseCwiseMul", [sp_indices, sp_values, sp_shape, dense], T: typeT, name: name)
     end
-  
 
     def self.sparse_fill_empty_rows(indices, values, dense_shape, default_value, typeT: nil, name: "SparseFillEmptyRows")
       self.execute("SparseFillEmptyRows", [indices, values, dense_shape, default_value], T: typeT, name: name)
     end
-  
 
     def self.sparse_fill_empty_rows_grad(reverse_index_map, grad_values, typeT: nil, name: "SparseFillEmptyRowsGrad")
       self.execute("SparseFillEmptyRowsGrad", [reverse_index_map, grad_values], T: typeT, name: name)
     end
-  
 
     def self.sparse_mat_mul(a, b, transpose_a: false, transpose_b: false, a_is_sparse: false, b_is_sparse: false, ta: nil, tb: nil, name: "SparseMatMul")
       self.execute("SparseMatMul", [a, b], transpose_a: transpose_a, transpose_b: transpose_b, a_is_sparse: a_is_sparse, b_is_sparse: b_is_sparse, Ta: ta, Tb: tb, name: name)
     end
-  
 
     def self.sparse_matrix_add(a, b, alpha, beta, typeT: nil, name: "SparseMatrixAdd")
       self.execute("SparseMatrixAdd", [a, b, alpha, beta], T: typeT, name: name)
     end
-  
 
     def self.sparse_matrix_mat_mul(a, b, typeT: nil, transpose_a: false, transpose_b: false, adjoint_a: false, adjoint_b: false, transpose_output: false, conjugate_output: false, name: "SparseMatrixMatMul")
       self.execute("SparseMatrixMatMul", [a, b], T: typeT, transpose_a: transpose_a, transpose_b: transpose_b, adjoint_a: adjoint_a, adjoint_b: adjoint_b, transpose_output: transpose_output, conjugate_output: conjugate_output, name: name)
     end
-  
 
     def self.sparse_matrix_mul(a, b, typeT: nil, name: "SparseMatrixMul")
       self.execute("SparseMatrixMul", [a, b], T: typeT, name: name)
     end
-  
 
     def self.sparse_matrix_nnz(sparse_matrix, name: "SparseMatrixNNZ")
       self.execute("SparseMatrixNNZ", [sparse_matrix], name: name)
     end
-  
 
     def self.sparse_matrix_ordering_amd(input, name: "SparseMatrixOrderingAMD")
       self.execute("SparseMatrixOrderingAMD", [input], name: name)
     end
-  
 
     def self.sparse_matrix_softmax(logits, type: nil, name: "SparseMatrixSoftmax")
       self.execute("SparseMatrixSoftmax", [logits], type: type, name: name)
     end
-  
 
     def self.sparse_matrix_softmax_grad(softmax, grad_softmax, type: nil, name: "SparseMatrixSoftmaxGrad")
       self.execute("SparseMatrixSoftmaxGrad", [softmax, grad_softmax], type: type, name: name)
     end
-  
 
     def self.sparse_matrix_sparse_cholesky(input, permutation, type: nil, name: "SparseMatrixSparseCholesky")
       self.execute("SparseMatrixSparseCholesky", [input, permutation], type: type, name: name)
     end
-  
 
     def self.sparse_matrix_sparse_mat_mul(a, b, type: nil, transpose_a: false, transpose_b: false, adjoint_a: false, adjoint_b: false, name: "SparseMatrixSparseMatMul")
       self.execute("SparseMatrixSparseMatMul", [a, b], type: type, transpose_a: transpose_a, transpose_b: transpose_b, adjoint_a: adjoint_a, adjoint_b: adjoint_b, name: name)
     end
-  
 
     def self.sparse_matrix_transpose(input, conjugate: false, type: nil, name: "SparseMatrixTranspose")
       self.execute("SparseMatrixTranspose", [input], conjugate: conjugate, type: type, name: name)
     end
-  
 
     def self.sparse_matrix_zeros(dense_shape, type: nil, name: "SparseMatrixZeros")
       self.execute("SparseMatrixZeros", [dense_shape], type: type, name: name)
     end
-  
 
     def self.sparse_reduce_max(input_indices, input_values, input_shape, reduction_axes, keep_dims: false, typeT: nil, name: "SparseReduceMax")
       self.execute("SparseReduceMax", [input_indices, input_values, input_shape, reduction_axes], keep_dims: keep_dims, T: typeT, name: name)
     end
-  
 
     def self.sparse_reduce_max_sparse(input_indices, input_values, input_shape, reduction_axes, keep_dims: false, typeT: nil, name: "SparseReduceMaxSparse")
       self.execute("SparseReduceMaxSparse", [input_indices, input_values, input_shape, reduction_axes], keep_dims: keep_dims, T: typeT, name: name)
     end
-  
 
     def self.sparse_reduce_sum(input_indices, input_values, input_shape, reduction_axes, keep_dims: false, typeT: nil, name: "SparseReduceSum")
       self.execute("SparseReduceSum", [input_indices, input_values, input_shape, reduction_axes], keep_dims: keep_dims, T: typeT, name: name)
     end
-  
 
     def self.sparse_reduce_sum_sparse(input_indices, input_values, input_shape, reduction_axes, keep_dims: false, typeT: nil, name: "SparseReduceSumSparse")
       self.execute("SparseReduceSumSparse", [input_indices, input_values, input_shape, reduction_axes], keep_dims: keep_dims, T: typeT, name: name)
     end
-  
 
     def self.sparse_reorder(input_indices, input_values, input_shape, typeT: nil, name: "SparseReorder")
       self.execute("SparseReorder", [input_indices, input_values, input_shape], T: typeT, name: name)
     end
-  
 
     def self.sparse_reshape(input_indices, input_shape, new_shape, name: "SparseReshape")
       self.execute("SparseReshape", [input_indices, input_shape, new_shape], name: name)
     end
-  
 
     def self.sparse_segment_mean(data, indices, segment_ids, typeT: nil, tidx: nil, name: "SparseSegmentMean")
       self.execute("SparseSegmentMean", [data, indices, segment_ids], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.sparse_segment_mean_grad(grad, indices, segment_ids, output_dim0, typeT: nil, tidx: nil, name: "SparseSegmentMeanGrad")
       self.execute("SparseSegmentMeanGrad", [grad, indices, segment_ids, output_dim0], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.sparse_segment_mean_with_num_segments(data, indices, segment_ids, num_segments, typeT: nil, tidx: nil, tnumsegments: nil, name: "SparseSegmentMeanWithNumSegments")
       self.execute("SparseSegmentMeanWithNumSegments", [data, indices, segment_ids, num_segments], T: typeT, Tidx: tidx, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.sparse_segment_sqrt_n(data, indices, segment_ids, typeT: nil, tidx: nil, name: "SparseSegmentSqrtN")
       self.execute("SparseSegmentSqrtN", [data, indices, segment_ids], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.sparse_segment_sqrt_n_grad(grad, indices, segment_ids, output_dim0, typeT: nil, tidx: nil, name: "SparseSegmentSqrtNGrad")
       self.execute("SparseSegmentSqrtNGrad", [grad, indices, segment_ids, output_dim0], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.sparse_segment_sqrt_n_with_num_segments(data, indices, segment_ids, num_segments, typeT: nil, tidx: nil, tnumsegments: nil, name: "SparseSegmentSqrtNWithNumSegments")
       self.execute("SparseSegmentSqrtNWithNumSegments", [data, indices, segment_ids, num_segments], T: typeT, Tidx: tidx, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.sparse_segment_sum(data, indices, segment_ids, typeT: nil, tidx: nil, name: "SparseSegmentSum")
       self.execute("SparseSegmentSum", [data, indices, segment_ids], T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.sparse_segment_sum_with_num_segments(data, indices, segment_ids, num_segments, typeT: nil, tidx: nil, tnumsegments: nil, name: "SparseSegmentSumWithNumSegments")
       self.execute("SparseSegmentSumWithNumSegments", [data, indices, segment_ids, num_segments], T: typeT, Tidx: tidx, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.sparse_slice(indices, values, shape, start, size, typeT: nil, name: "SparseSlice")
       self.execute("SparseSlice", [indices, values, shape, start, size], T: typeT, name: name)
     end
-  
 
     def self.sparse_slice_grad(backprop_val_grad, input_indices, input_start, output_indices, typeT: nil, name: "SparseSliceGrad")
       self.execute("SparseSliceGrad", [backprop_val_grad, input_indices, input_start, output_indices], T: typeT, name: name)
     end
-  
 
     def self.sparse_softmax(sp_indices, sp_values, sp_shape, typeT: nil, name: "SparseSoftmax")
       self.execute("SparseSoftmax", [sp_indices, sp_values, sp_shape], T: typeT, name: name)
     end
-  
 
     def self.sparse_softmax_cross_entropy_with_logits(features, labels, typeT: nil, tlabels: nil, name: "SparseSoftmaxCrossEntropyWithLogits")
       self.execute("SparseSoftmaxCrossEntropyWithLogits", [features, labels], T: typeT, Tlabels: tlabels, name: name)
     end
-  
 
     def self.sparse_sparse_maximum(a_indices, a_values, a_shape, b_indices, b_values, b_shape, typeT: nil, name: "SparseSparseMaximum")
       self.execute("SparseSparseMaximum", [a_indices, a_values, a_shape, b_indices, b_values, b_shape], T: typeT, name: name)
     end
-  
 
     def self.sparse_sparse_minimum(a_indices, a_values, a_shape, b_indices, b_values, b_shape, typeT: nil, name: "SparseSparseMinimum")
       self.execute("SparseSparseMinimum", [a_indices, a_values, a_shape, b_indices, b_values, b_shape], T: typeT, name: name)
     end
-  
 
     def self.sparse_split(split_dim, indices, values, shape, num_split: nil, typeT: nil, name: "SparseSplit")
       self.execute("SparseSplit", [split_dim, indices, values, shape], num_split: num_split, T: typeT, name: name)
     end
-  
 
     def self.sparse_tensor_dense_add(a_indices, a_values, a_shape, b, typeT: nil, tindices: nil, name: "SparseTensorDenseAdd")
       self.execute("SparseTensorDenseAdd", [a_indices, a_values, a_shape, b], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.sparse_tensor_dense_mat_mul(a_indices, a_values, a_shape, b, typeT: nil, tindices: nil, adjoint_a: false, adjoint_b: false, name: "SparseTensorDenseMatMul")
       self.execute("SparseTensorDenseMatMul", [a_indices, a_values, a_shape, b], T: typeT, Tindices: tindices, adjoint_a: adjoint_a, adjoint_b: adjoint_b, name: name)
     end
-  
 
     def self.sparse_tensor_slice_dataset(indices, values, dense_shape, tvalues: nil, name: "SparseTensorSliceDataset")
       self.execute("SparseTensorSliceDataset", [indices, values, dense_shape], Tvalues: tvalues, name: name)
     end
-  
 
     def self.sparse_tensor_to_csr_sparse_matrix(indices, values, dense_shape, typeT: nil, name: "SparseTensorToCSRSparseMatrix")
       self.execute("SparseTensorToCSRSparseMatrix", [indices, values, dense_shape], T: typeT, name: name)
     end
-  
 
     def self.sparse_to_dense(sparse_indices, output_shape, sparse_values, default_value, validate_indices: true, typeT: nil, tindices: nil, name: "SparseToDense")
       self.execute("SparseToDense", [sparse_indices, output_shape, sparse_values, default_value], validate_indices: validate_indices, T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.sparse_to_sparse_set_operation(set1_indices, set1_values, set1_shape, set2_indices, set2_values, set2_shape, set_operation: nil, validate_indices: true, typeT: nil, name: "SparseToSparseSetOperation")
       self.execute("SparseToSparseSetOperation", [set1_indices, set1_values, set1_shape, set2_indices, set2_values, set2_shape], set_operation: set_operation, validate_indices: validate_indices, T: typeT, name: name)
     end
-  
 
     def self.split(split_dim, value, num_split: nil, typeT: nil, name: "Split")
       self.execute("Split", [split_dim, value], num_split: num_split, T: typeT, name: name)
     end
-  
 
     def self.split_v(value, size_splits, split_dim, num_split: nil, typeT: nil, tlen: nil, name: "SplitV")
       self.execute("SplitV", [value, size_splits, split_dim], num_split: num_split, T: typeT, Tlen: tlen, name: name)
     end
-  
 
     def self.sql_dataset(driver_name, data_source_name, query, output_types: nil, output_shapes: nil, name: "SqlDataset")
       self.execute("SqlDataset", [driver_name, data_source_name, query], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.sqrt(x, typeT: nil, name: "Sqrt")
       self.execute("Sqrt", [x], T: typeT, name: name)
     end
-  
 
     def self.sqrt_grad(y, dy, typeT: nil, name: "SqrtGrad")
       self.execute("SqrtGrad", [y, dy], T: typeT, name: name)
     end
-  
 
     def self.square(x, typeT: nil, name: "Square")
       self.execute("Square", [x], T: typeT, name: name)
     end
-  
 
     def self.squared_difference(x, y, typeT: nil, name: "SquaredDifference")
       self.execute("SquaredDifference", [x, y], T: typeT, name: name)
     end
-  
 
     def self.squeeze(input, typeT: nil, squeeze_dims: [], name: "Squeeze")
       self.execute("Squeeze", [input], T: typeT, squeeze_dims: squeeze_dims, name: name)
     end
-  
 
     def self.stack(elem_type: nil, stack_name: nil, name: "Stack")
       self.execute("Stack", [], elem_type: elem_type, stack_name: stack_name, name: name)
     end
-  
 
     def self.stack_close(handle, name: "StackClose")
       self.execute("StackClose", [handle], name: name)
     end
-  
 
     def self.stack_close_v2(handle, name: "StackCloseV2")
       self.execute("StackCloseV2", [handle], name: name)
     end
-  
 
     def self.stack_pop(handle, elem_type: nil, name: "StackPop")
       self.execute("StackPop", [handle], elem_type: elem_type, name: name)
     end
-  
 
     def self.stack_pop_v2(handle, elem_type: nil, name: "StackPopV2")
       self.execute("StackPopV2", [handle], elem_type: elem_type, name: name)
     end
-  
 
     def self.stack_push(handle, elem, typeT: nil, swap_memory: false, name: "StackPush")
       self.execute("StackPush", [handle, elem], T: typeT, swap_memory: swap_memory, name: name)
     end
-  
 
     def self.stack_push_v2(handle, elem, typeT: nil, swap_memory: false, name: "StackPushV2")
       self.execute("StackPushV2", [handle, elem], T: typeT, swap_memory: swap_memory, name: name)
     end
-  
 
     def self.stack_v2(max_size, elem_type: nil, stack_name: nil, name: "StackV2")
       self.execute("StackV2", [max_size], elem_type: elem_type, stack_name: stack_name, name: name)
     end
-  
 
     def self.stage(values, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "Stage")
       self.execute("Stage", [values], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.stage_clear(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "StageClear")
       self.execute("StageClear", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.stage_peek(index, capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "StagePeek")
       self.execute("StagePeek", [index], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.stage_size(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "StageSize")
       self.execute("StageSize", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.stateful_partitioned_call(args, tin: nil, tout: nil, f: nil, config: nil, config_proto: nil, executor_type: nil, name: "StatefulPartitionedCall")
       self.execute("StatefulPartitionedCall", [args], Tin: tin, Tout: tout, f: f, config: config, config_proto: config_proto, executor_type: executor_type, name: name)
     end
-  
 
     def self.stateful_random_binomial(resource, algorithm, shape, counts, probs, s: nil, typeT: nil, dtype: nil, name: "StatefulRandomBinomial")
       self.execute("StatefulRandomBinomial", [resource, algorithm, shape, counts, probs], S: s, T: typeT, dtype: dtype, name: name)
     end
-  
 
     def self.stateful_standard_normal(resource, shape, dtype: nil, shape_dtype: nil, name: "StatefulStandardNormal")
       self.execute("StatefulStandardNormal", [resource, shape], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.stateful_standard_normal_v2(resource, algorithm, shape, dtype: nil, shape_dtype: nil, name: "StatefulStandardNormalV2")
       self.execute("StatefulStandardNormalV2", [resource, algorithm, shape], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.stateful_truncated_normal(resource, algorithm, shape, dtype: nil, shape_dtype: nil, name: "StatefulTruncatedNormal")
       self.execute("StatefulTruncatedNormal", [resource, algorithm, shape], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.stateful_uniform(resource, algorithm, shape, dtype: nil, shape_dtype: nil, name: "StatefulUniform")
       self.execute("StatefulUniform", [resource, algorithm, shape], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.stateful_uniform_full_int(resource, algorithm, shape, dtype: nil, shape_dtype: nil, name: "StatefulUniformFullInt")
       self.execute("StatefulUniformFullInt", [resource, algorithm, shape], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.stateful_uniform_int(resource, algorithm, shape, minval, maxval, dtype: nil, shape_dtype: nil, name: "StatefulUniformInt")
       self.execute("StatefulUniformInt", [resource, algorithm, shape, minval, maxval], dtype: dtype, shape_dtype: shape_dtype, name: name)
     end
-  
 
     def self.stateless_if(cond, input, tcond: nil, tin: nil, tout: nil, then_branch: nil, else_branch: nil, output_shapes: [], name: "StatelessIf")
       self.execute("StatelessIf", [cond, input], Tcond: tcond, Tin: tin, Tout: tout, then_branch: then_branch, else_branch: else_branch, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.stateless_multinomial(logits, num_samples, seed, typeT: nil, tseed: nil, output_dtype: nil, name: "StatelessMultinomial")
       self.execute("StatelessMultinomial", [logits, num_samples, seed], T: typeT, Tseed: tseed, output_dtype: output_dtype, name: name)
     end
-  
 
     def self.stateless_random_normal(shape, seed, dtype: nil, typeT: nil, tseed: nil, name: "StatelessRandomNormal")
       self.execute("StatelessRandomNormal", [shape, seed], dtype: dtype, T: typeT, Tseed: tseed, name: name)
     end
-  
 
     def self.stateless_random_uniform(shape, seed, dtype: nil, typeT: nil, tseed: nil, name: "StatelessRandomUniform")
       self.execute("StatelessRandomUniform", [shape, seed], dtype: dtype, T: typeT, Tseed: tseed, name: name)
     end
-  
 
     def self.stateless_random_uniform_int(shape, seed, minval, maxval, dtype: nil, typeT: nil, tseed: nil, name: "StatelessRandomUniformInt")
       self.execute("StatelessRandomUniformInt", [shape, seed, minval, maxval], dtype: dtype, T: typeT, Tseed: tseed, name: name)
     end
-  
 
     def self.stateless_truncated_normal(shape, seed, dtype: nil, typeT: nil, tseed: nil, name: "StatelessTruncatedNormal")
       self.execute("StatelessTruncatedNormal", [shape, seed], dtype: dtype, T: typeT, Tseed: tseed, name: name)
     end
-  
 
     def self.stateless_while(input, typeT: nil, cond: nil, body: nil, output_shapes: [], parallel_iterations: 10, name: "StatelessWhile")
       self.execute("StatelessWhile", [input], T: typeT, cond: cond, body: body, output_shapes: output_shapes, parallel_iterations: parallel_iterations, name: name)
     end
-  
 
     def self.static_regex_full_match(input, pattern: nil, name: "StaticRegexFullMatch")
       self.execute("StaticRegexFullMatch", [input], pattern: pattern, name: name)
     end
-  
 
     def self.static_regex_replace(input, pattern: nil, rewrite: nil, replace_global: true, name: "StaticRegexReplace")
       self.execute("StaticRegexReplace", [input], pattern: pattern, rewrite: rewrite, replace_global: replace_global, name: name)
     end
-  
 
     def self.stats_aggregator_handle(container: nil, shared_name: nil, name: "StatsAggregatorHandle")
       self.execute("StatsAggregatorHandle", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.stats_aggregator_handle_v2(container: nil, shared_name: nil, name: "StatsAggregatorHandleV2")
       self.execute("StatsAggregatorHandleV2", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.stats_aggregator_set_summary_writer(stats_aggregator, summary, name: "StatsAggregatorSetSummaryWriter")
       self.execute("StatsAggregatorSetSummaryWriter", [stats_aggregator, summary], name: name)
     end
-  
 
     def self.stats_aggregator_summary(iterator, name: "StatsAggregatorSummary")
       self.execute("StatsAggregatorSummary", [iterator], name: name)
     end
-  
 
     def self.stop_gradient(input, typeT: nil, name: "StopGradient")
       self.execute("StopGradient", [input], T: typeT, name: name)
     end
-  
 
     def self.strided_slice(input, start, stop, strides, typeT: nil, index: nil, begin_mask: 0, end_mask: 0, ellipsis_mask: 0, new_axis_mask: 0, shrink_axis_mask: 0, name: "StridedSlice")
       self.execute("StridedSlice", [input, start, stop, strides], T: typeT, Index: index, begin_mask: begin_mask, end_mask: end_mask, ellipsis_mask: ellipsis_mask, new_axis_mask: new_axis_mask, shrink_axis_mask: shrink_axis_mask, name: name)
     end
-  
 
     def self.strided_slice_assign(ref, start, stop, strides, value, typeT: nil, index: nil, begin_mask: 0, end_mask: 0, ellipsis_mask: 0, new_axis_mask: 0, shrink_axis_mask: 0, name: "StridedSliceAssign")
       self.execute("StridedSliceAssign", [ref, start, stop, strides, value], T: typeT, Index: index, begin_mask: begin_mask, end_mask: end_mask, ellipsis_mask: ellipsis_mask, new_axis_mask: new_axis_mask, shrink_axis_mask: shrink_axis_mask, name: name)
     end
-  
 
     def self.strided_slice_grad(shape, start, stop, strides, dy, typeT: nil, index: nil, begin_mask: 0, end_mask: 0, ellipsis_mask: 0, new_axis_mask: 0, shrink_axis_mask: 0, name: "StridedSliceGrad")
       self.execute("StridedSliceGrad", [shape, start, stop, strides, dy], T: typeT, Index: index, begin_mask: begin_mask, end_mask: end_mask, ellipsis_mask: ellipsis_mask, new_axis_mask: new_axis_mask, shrink_axis_mask: shrink_axis_mask, name: name)
     end
-  
 
     def self.string_format(inputs, typeT: nil, template: "%s", placeholder: "%s", summarize: 3, name: "StringFormat")
       self.execute("StringFormat", [inputs], T: typeT, template: template, placeholder: placeholder, summarize: summarize, name: name)
     end
-  
 
     def self.string_join(inputs, n: nil, separator: nil, name: "StringJoin")
       self.execute("StringJoin", [inputs], N: n, separator: separator, name: name)
     end
-  
 
     def self.string_length(input, unit: "BYTE", name: "StringLength")
       self.execute("StringLength", [input], unit: unit, name: name)
     end
-  
 
     def self.string_lower(input, encoding: nil, name: "StringLower")
       self.execute("StringLower", [input], encoding: encoding, name: name)
     end
-  
 
     def self.string_n_grams(data, data_splits, separator: nil, ngram_widths: nil, left_pad: nil, right_pad: nil, pad_width: nil, preserve_short_sequences: nil, tsplits: nil, name: "StringNGrams")
       self.execute("StringNGrams", [data, data_splits], separator: separator, ngram_widths: ngram_widths, left_pad: left_pad, right_pad: right_pad, pad_width: pad_width, preserve_short_sequences: preserve_short_sequences, Tsplits: tsplits, name: name)
     end
-  
 
     def self.string_split(input, delimiter, skip_empty: true, name: "StringSplit")
       self.execute("StringSplit", [input, delimiter], skip_empty: skip_empty, name: name)
     end
-  
 
     def self.string_split_v2(input, sep, maxsplit: -1, name: "StringSplitV2")
       self.execute("StringSplitV2", [input, sep], maxsplit: maxsplit, name: name)
     end
-  
 
     def self.string_strip(input, name: "StringStrip")
       self.execute("StringStrip", [input], name: name)
     end
-  
 
     def self.string_to_hash_bucket(string_tensor, num_buckets: nil, name: "StringToHashBucket")
       self.execute("StringToHashBucket", [string_tensor], num_buckets: num_buckets, name: name)
     end
-  
 
     def self.string_to_hash_bucket_fast(input, num_buckets: nil, name: "StringToHashBucketFast")
       self.execute("StringToHashBucketFast", [input], num_buckets: num_buckets, name: name)
     end
-  
 
     def self.string_to_hash_bucket_strong(input, num_buckets: nil, key: nil, name: "StringToHashBucketStrong")
       self.execute("StringToHashBucketStrong", [input], num_buckets: num_buckets, key: key, name: name)
     end
-  
 
     def self.string_to_number(string_tensor, out_type: nil, name: "StringToNumber")
       self.execute("StringToNumber", [string_tensor], out_type: out_type, name: name)
     end
-  
 
     def self.string_upper(input, encoding: nil, name: "StringUpper")
       self.execute("StringUpper", [input], encoding: encoding, name: name)
     end
-  
 
     def self.sub(x, y, typeT: nil, name: "Sub")
       self.execute("Sub", [x, y], T: typeT, name: name)
     end
-  
 
     def self.substr(input, pos, len, typeT: nil, unit: "BYTE", name: "Substr")
       self.execute("Substr", [input, pos, len], T: typeT, unit: unit, name: name)
     end
-  
 
     def self.sum(input, reduction_indices, keep_dims: false, typeT: nil, tidx: nil, name: "Sum")
       self.execute("Sum", [input, reduction_indices], keep_dims: keep_dims, T: typeT, Tidx: tidx, name: name)
     end
-  
 
     def self.summary_writer(shared_name: nil, container: nil, name: "SummaryWriter")
       self.execute("SummaryWriter", [], shared_name: shared_name, container: container, name: name)
     end
-  
 
     def self.svd(input, compute_uv: true, full_matrices: false, typeT: nil, name: "Svd")
       self.execute("Svd", [input], compute_uv: compute_uv, full_matrices: full_matrices, T: typeT, name: name)
     end
-  
 
     def self.switch(data, pred, typeT: nil, name: "Switch")
       self.execute("Switch", [data, pred], T: typeT, name: name)
     end
-  
 
     def self.symbolic_gradient(input, tin: nil, tout: nil, f: nil, name: "SymbolicGradient")
       self.execute("SymbolicGradient", [input], Tin: tin, Tout: tout, f: f, name: name)
     end
-  
 
     def self.tf_record_dataset(filenames, compression_type, buffer_size, name: "TFRecordDataset")
       self.execute("TFRecordDataset", [filenames, compression_type, buffer_size], name: name)
     end
-  
 
     def self.tf_record_reader(container: nil, shared_name: nil, compression_type: nil, name: "TFRecordReader")
       self.execute("TFRecordReader", [], container: container, shared_name: shared_name, compression_type: compression_type, name: name)
     end
-  
 
     def self.tf_record_reader_v2(container: nil, shared_name: nil, compression_type: nil, name: "TFRecordReaderV2")
       self.execute("TFRecordReaderV2", [], container: container, shared_name: shared_name, compression_type: compression_type, name: name)
     end
-  
 
     def self.tpu_compilation_result(name: "TPUCompilationResult")
       self.execute("TPUCompilationResult", [], name: name)
     end
-  
 
     def self.tpu_embedding_activations(embedding_variable, sliced_activations, table_id: nil, lookup_id: nil, name: "TPUEmbeddingActivations")
       self.execute("TPUEmbeddingActivations", [embedding_variable, sliced_activations], table_id: table_id, lookup_id: lookup_id, name: name)
     end
-  
 
     def self.tpu_ordinal_selector(name: "TPUOrdinalSelector")
       self.execute("TPUOrdinalSelector", [], name: name)
     end
-  
 
     def self.tpu_partitioned_call(args, device_ordinal, tin: nil, tout: nil, f: nil, autotuner_thresh: 0, name: "TPUPartitionedCall")
       self.execute("TPUPartitionedCall", [args, device_ordinal], Tin: tin, Tout: tout, f: f, autotuner_thresh: autotuner_thresh, name: name)
     end
-  
 
     def self.tpu_replicate_metadata(num_replicas: nil, num_cores_per_replica: 1, topology: nil, use_tpu: true, device_assignment: [], computation_shape: [], host_compute_core: [], padding_map: [], step_marker_location: "STEP_MARK_AT_ENTRY", allow_soft_placement: false, name: "TPUReplicateMetadata")
       self.execute("TPUReplicateMetadata", [], num_replicas: num_replicas, num_cores_per_replica: num_cores_per_replica, topology: topology, use_tpu: use_tpu, device_assignment: device_assignment, computation_shape: computation_shape, host_compute_core: host_compute_core, padding_map: padding_map, step_marker_location: step_marker_location, allow_soft_placement: allow_soft_placement, name: name)
     end
-  
 
     def self.tpu_replicated_input(inputs, n: nil, typeT: nil, is_mirrored_variable: false, index: -1, name: "TPUReplicatedInput")
       self.execute("TPUReplicatedInput", [inputs], N: n, T: typeT, is_mirrored_variable: is_mirrored_variable, index: index, name: name)
     end
-  
 
     def self.tpu_replicated_output(input, num_replicas: nil, typeT: nil, name: "TPUReplicatedOutput")
       self.execute("TPUReplicatedOutput", [input], num_replicas: num_replicas, T: typeT, name: name)
     end
-  
 
     def self.take_dataset(input_dataset, count, output_types: nil, output_shapes: nil, name: "TakeDataset")
       self.execute("TakeDataset", [input_dataset, count], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.take_many_sparse_from_tensors_map(sparse_handles, dtype: nil, container: nil, shared_name: nil, name: "TakeManySparseFromTensorsMap")
       self.execute("TakeManySparseFromTensorsMap", [sparse_handles], dtype: dtype, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.take_while_dataset(input_dataset, other_arguments, predicate: nil, targuments: nil, output_types: nil, output_shapes: nil, name: "TakeWhileDataset")
       self.execute("TakeWhileDataset", [input_dataset, other_arguments], predicate: predicate, Targuments: targuments, output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.tan(x, typeT: nil, name: "Tan")
       self.execute("Tan", [x], T: typeT, name: name)
     end
-  
 
     def self.tanh(x, typeT: nil, name: "Tanh")
       self.execute("Tanh", [x], T: typeT, name: name)
     end
-  
 
     def self.tanh_grad(y, dy, typeT: nil, name: "TanhGrad")
       self.execute("TanhGrad", [y, dy], T: typeT, name: name)
     end
-  
 
     def self.temporary_variable(shape: nil, dtype: nil, var_name: nil, name: "TemporaryVariable")
       self.execute("TemporaryVariable", [], shape: shape, dtype: dtype, var_name: var_name, name: name)
     end
-  
 
     def self.tensor_array(size, dtype: nil, dynamic_size: false, clear_after_read: true, tensor_array_name: nil, element_shape: [], name: "TensorArray")
       self.execute("TensorArray", [size], dtype: dtype, dynamic_size: dynamic_size, clear_after_read: clear_after_read, tensor_array_name: tensor_array_name, element_shape: element_shape, name: name)
     end
-  
 
     def self.tensor_array_close(handle, name: "TensorArrayClose")
       self.execute("TensorArrayClose", [handle], name: name)
     end
-  
 
     def self.tensor_array_close_v2(handle, name: "TensorArrayCloseV2")
       self.execute("TensorArrayCloseV2", [handle], name: name)
     end
-  
 
     def self.tensor_array_close_v3(handle, name: "TensorArrayCloseV3")
       self.execute("TensorArrayCloseV3", [handle], name: name)
     end
-  
 
     def self.tensor_array_concat(handle, flow_in, dtype: nil, element_shape_except0: [], name: "TensorArrayConcat")
       self.execute("TensorArrayConcat", [handle, flow_in], dtype: dtype, element_shape_except0: element_shape_except0, name: name)
     end
-  
 
     def self.tensor_array_concat_v2(handle, flow_in, dtype: nil, element_shape_except0: [], name: "TensorArrayConcatV2")
       self.execute("TensorArrayConcatV2", [handle, flow_in], dtype: dtype, element_shape_except0: element_shape_except0, name: name)
     end
-  
 
     def self.tensor_array_concat_v3(handle, flow_in, dtype: nil, element_shape_except0: [], name: "TensorArrayConcatV3")
       self.execute("TensorArrayConcatV3", [handle, flow_in], dtype: dtype, element_shape_except0: element_shape_except0, name: name)
     end
-  
 
     def self.tensor_array_gather(handle, indices, flow_in, dtype: nil, element_shape: [], name: "TensorArrayGather")
       self.execute("TensorArrayGather", [handle, indices, flow_in], dtype: dtype, element_shape: element_shape, name: name)
     end
-  
 
     def self.tensor_array_gather_v2(handle, indices, flow_in, dtype: nil, element_shape: [], name: "TensorArrayGatherV2")
       self.execute("TensorArrayGatherV2", [handle, indices, flow_in], dtype: dtype, element_shape: element_shape, name: name)
     end
-  
 
     def self.tensor_array_gather_v3(handle, indices, flow_in, dtype: nil, element_shape: [], name: "TensorArrayGatherV3")
       self.execute("TensorArrayGatherV3", [handle, indices, flow_in], dtype: dtype, element_shape: element_shape, name: name)
     end
-  
 
     def self.tensor_array_grad(handle, flow_in, source: nil, name: "TensorArrayGrad")
       self.execute("TensorArrayGrad", [handle, flow_in], source: source, name: name)
     end
-  
 
     def self.tensor_array_grad_v2(handle, flow_in, source: nil, name: "TensorArrayGradV2")
       self.execute("TensorArrayGradV2", [handle, flow_in], source: source, name: name)
     end
-  
 
     def self.tensor_array_grad_v3(handle, flow_in, source: nil, name: "TensorArrayGradV3")
       self.execute("TensorArrayGradV3", [handle, flow_in], source: source, name: name)
     end
-  
 
     def self.tensor_array_grad_with_shape(handle, flow_in, shape_to_prepend, source: nil, name: "TensorArrayGradWithShape")
       self.execute("TensorArrayGradWithShape", [handle, flow_in, shape_to_prepend], source: source, name: name)
     end
-  
 
     def self.tensor_array_pack(handle, flow_in, dtype: nil, element_shape: [], name: "TensorArrayPack")
       self.execute("TensorArrayPack", [handle, flow_in], dtype: dtype, element_shape: element_shape, name: name)
     end
-  
 
     def self.tensor_array_read(handle, index, flow_in, dtype: nil, name: "TensorArrayRead")
       self.execute("TensorArrayRead", [handle, index, flow_in], dtype: dtype, name: name)
     end
-  
 
     def self.tensor_array_read_v2(handle, index, flow_in, dtype: nil, name: "TensorArrayReadV2")
       self.execute("TensorArrayReadV2", [handle, index, flow_in], dtype: dtype, name: name)
     end
-  
 
     def self.tensor_array_read_v3(handle, index, flow_in, dtype: nil, name: "TensorArrayReadV3")
       self.execute("TensorArrayReadV3", [handle, index, flow_in], dtype: dtype, name: name)
     end
-  
 
     def self.tensor_array_scatter(handle, indices, value, flow_in, typeT: nil, name: "TensorArrayScatter")
       self.execute("TensorArrayScatter", [handle, indices, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_scatter_v2(handle, indices, value, flow_in, typeT: nil, name: "TensorArrayScatterV2")
       self.execute("TensorArrayScatterV2", [handle, indices, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_scatter_v3(handle, indices, value, flow_in, typeT: nil, name: "TensorArrayScatterV3")
       self.execute("TensorArrayScatterV3", [handle, indices, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_size(handle, flow_in, name: "TensorArraySize")
       self.execute("TensorArraySize", [handle, flow_in], name: name)
     end
-  
 
     def self.tensor_array_size_v2(handle, flow_in, name: "TensorArraySizeV2")
       self.execute("TensorArraySizeV2", [handle, flow_in], name: name)
     end
-  
 
     def self.tensor_array_size_v3(handle, flow_in, name: "TensorArraySizeV3")
       self.execute("TensorArraySizeV3", [handle, flow_in], name: name)
     end
-  
 
     def self.tensor_array_split(handle, value, lengths, flow_in, typeT: nil, name: "TensorArraySplit")
       self.execute("TensorArraySplit", [handle, value, lengths, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_split_v2(handle, value, lengths, flow_in, typeT: nil, name: "TensorArraySplitV2")
       self.execute("TensorArraySplitV2", [handle, value, lengths, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_split_v3(handle, value, lengths, flow_in, typeT: nil, name: "TensorArraySplitV3")
       self.execute("TensorArraySplitV3", [handle, value, lengths, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_unpack(handle, value, flow_in, typeT: nil, name: "TensorArrayUnpack")
       self.execute("TensorArrayUnpack", [handle, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_v2(size, dtype: nil, element_shape: [], dynamic_size: false, clear_after_read: true, tensor_array_name: nil, name: "TensorArrayV2")
       self.execute("TensorArrayV2", [size], dtype: dtype, element_shape: element_shape, dynamic_size: dynamic_size, clear_after_read: clear_after_read, tensor_array_name: tensor_array_name, name: name)
     end
-  
 
     def self.tensor_array_v3(size, dtype: nil, element_shape: [], dynamic_size: false, clear_after_read: true, identical_element_shapes: false, tensor_array_name: nil, name: "TensorArrayV3")
       self.execute("TensorArrayV3", [size], dtype: dtype, element_shape: element_shape, dynamic_size: dynamic_size, clear_after_read: clear_after_read, identical_element_shapes: identical_element_shapes, tensor_array_name: tensor_array_name, name: name)
     end
-  
 
     def self.tensor_array_write(handle, index, value, flow_in, typeT: nil, name: "TensorArrayWrite")
       self.execute("TensorArrayWrite", [handle, index, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_write_v2(handle, index, value, flow_in, typeT: nil, name: "TensorArrayWriteV2")
       self.execute("TensorArrayWriteV2", [handle, index, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_array_write_v3(handle, index, value, flow_in, typeT: nil, name: "TensorArrayWriteV3")
       self.execute("TensorArrayWriteV3", [handle, index, value, flow_in], T: typeT, name: name)
     end
-  
 
     def self.tensor_dataset(components, toutput_types: nil, output_shapes: nil, name: "TensorDataset")
       self.execute("TensorDataset", [components], Toutput_types: toutput_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.tensor_forest_create_tree_variable(tree_handle, tree_config, name: "TensorForestCreateTreeVariable")
       self.execute("TensorForestCreateTreeVariable", [tree_handle, tree_config], name: name)
     end
-  
 
     def self.tensor_forest_tree_deserialize(tree_handle, tree_config, name: "TensorForestTreeDeserialize")
       self.execute("TensorForestTreeDeserialize", [tree_handle, tree_config], name: name)
     end
-  
 
     def self.tensor_forest_tree_is_initialized_op(tree_handle, name: "TensorForestTreeIsInitializedOp")
       self.execute("TensorForestTreeIsInitializedOp", [tree_handle], name: name)
     end
-  
 
     def self.tensor_forest_tree_predict(tree_handle, dense_features, logits_dimension: nil, name: "TensorForestTreePredict")
       self.execute("TensorForestTreePredict", [tree_handle, dense_features], logits_dimension: logits_dimension, name: name)
     end
-  
 
     def self.tensor_forest_tree_resource_handle_op(container: nil, shared_name: nil, name: "TensorForestTreeResourceHandleOp")
       self.execute("TensorForestTreeResourceHandleOp", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.tensor_forest_tree_serialize(tree_handle, name: "TensorForestTreeSerialize")
       self.execute("TensorForestTreeSerialize", [tree_handle], name: name)
     end
-  
 
     def self.tensor_forest_tree_size(tree_handle, name: "TensorForestTreeSize")
       self.execute("TensorForestTreeSize", [tree_handle], name: name)
     end
-  
 
     def self.tensor_list_concat(input_handle, element_dtype: nil, element_shape: [], name: "TensorListConcat")
       self.execute("TensorListConcat", [input_handle], element_dtype: element_dtype, element_shape: element_shape, name: name)
     end
-  
 
     def self.tensor_list_concat_lists(input_a, input_b, element_dtype: nil, name: "TensorListConcatLists")
       self.execute("TensorListConcatLists", [input_a, input_b], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_concat_v2(input_handle, element_shape, leading_dims, element_dtype: nil, shape_type: nil, name: "TensorListConcatV2")
       self.execute("TensorListConcatV2", [input_handle, element_shape, leading_dims], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_element_shape(input_handle, shape_type: nil, name: "TensorListElementShape")
       self.execute("TensorListElementShape", [input_handle], shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_from_tensor(tensor, element_shape, element_dtype: nil, shape_type: nil, name: "TensorListFromTensor")
       self.execute("TensorListFromTensor", [tensor, element_shape], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_gather(input_handle, indices, element_shape, element_dtype: nil, name: "TensorListGather")
       self.execute("TensorListGather", [input_handle, indices, element_shape], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_get_item(input_handle, index, element_shape, element_dtype: nil, name: "TensorListGetItem")
       self.execute("TensorListGetItem", [input_handle, index, element_shape], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_length(input_handle, name: "TensorListLength")
       self.execute("TensorListLength", [input_handle], name: name)
     end
-  
 
     def self.tensor_list_pop_back(input_handle, element_shape, element_dtype: nil, name: "TensorListPopBack")
       self.execute("TensorListPopBack", [input_handle, element_shape], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_push_back(input_handle, tensor, element_dtype: nil, name: "TensorListPushBack")
       self.execute("TensorListPushBack", [input_handle, tensor], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_push_back_batch(input_handles, tensor, element_dtype: nil, name: "TensorListPushBackBatch")
       self.execute("TensorListPushBackBatch", [input_handles, tensor], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_reserve(element_shape, num_elements, element_dtype: nil, shape_type: nil, name: "TensorListReserve")
       self.execute("TensorListReserve", [element_shape, num_elements], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_resize(input_handle, size, name: "TensorListResize")
       self.execute("TensorListResize", [input_handle, size], name: name)
     end
-  
 
     def self.tensor_list_scatter(tensor, indices, element_shape, element_dtype: nil, shape_type: nil, name: "TensorListScatter")
       self.execute("TensorListScatter", [tensor, indices, element_shape], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_scatter_into_existing_list(input_handle, tensor, indices, element_dtype: nil, name: "TensorListScatterIntoExistingList")
       self.execute("TensorListScatterIntoExistingList", [input_handle, tensor, indices], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_scatter_v2(tensor, indices, element_shape, num_elements, element_dtype: nil, shape_type: nil, name: "TensorListScatterV2")
       self.execute("TensorListScatterV2", [tensor, indices, element_shape, num_elements], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_set_item(input_handle, index, item, element_dtype: nil, name: "TensorListSetItem")
       self.execute("TensorListSetItem", [input_handle, index, item], element_dtype: element_dtype, name: name)
     end
-  
 
     def self.tensor_list_split(tensor, element_shape, lengths, element_dtype: nil, shape_type: nil, name: "TensorListSplit")
       self.execute("TensorListSplit", [tensor, element_shape, lengths], element_dtype: element_dtype, shape_type: shape_type, name: name)
     end
-  
 
     def self.tensor_list_stack(input_handle, element_shape, element_dtype: nil, num_elements: -1, name: "TensorListStack")
       self.execute("TensorListStack", [input_handle, element_shape], element_dtype: element_dtype, num_elements: num_elements, name: name)
     end
-  
 
     def self.tensor_scatter_add(tensor, indices, updates, typeT: nil, tindices: nil, name: "TensorScatterAdd")
       self.execute("TensorScatterAdd", [tensor, indices, updates], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.tensor_scatter_sub(tensor, indices, updates, typeT: nil, tindices: nil, name: "TensorScatterSub")
       self.execute("TensorScatterSub", [tensor, indices, updates], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.tensor_scatter_update(tensor, indices, updates, typeT: nil, tindices: nil, name: "TensorScatterUpdate")
       self.execute("TensorScatterUpdate", [tensor, indices, updates], T: typeT, Tindices: tindices, name: name)
     end
-  
 
     def self.tensor_slice_dataset(components, toutput_types: nil, output_shapes: nil, name: "TensorSliceDataset")
       self.execute("TensorSliceDataset", [components], Toutput_types: toutput_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.tensor_strided_slice_update(input, start, stop, strides, value, typeT: nil, index: nil, begin_mask: 0, end_mask: 0, ellipsis_mask: 0, new_axis_mask: 0, shrink_axis_mask: 0, name: "TensorStridedSliceUpdate")
       self.execute("TensorStridedSliceUpdate", [input, start, stop, strides, value], T: typeT, Index: index, begin_mask: begin_mask, end_mask: end_mask, ellipsis_mask: ellipsis_mask, new_axis_mask: new_axis_mask, shrink_axis_mask: shrink_axis_mask, name: name)
     end
-  
 
     def self.tensor_summary(tensor, typeT: nil, description: nil, labels: [], display_name: nil, name: "TensorSummary")
       self.execute("TensorSummary", [tensor], T: typeT, description: description, labels: labels, display_name: display_name, name: name)
     end
-  
 
     def self.tensor_summary_v2(tag, tensor, serialized_summary_metadata, typeT: nil, name: "TensorSummaryV2")
       self.execute("TensorSummaryV2", [tag, tensor, serialized_summary_metadata], T: typeT, name: name)
     end
-  
 
     def self.text_line_dataset(filenames, compression_type, buffer_size, name: "TextLineDataset")
       self.execute("TextLineDataset", [filenames, compression_type, buffer_size], name: name)
     end
-  
 
     def self.text_line_reader(skip_header_lines: 0, container: nil, shared_name: nil, name: "TextLineReader")
       self.execute("TextLineReader", [], skip_header_lines: skip_header_lines, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.text_line_reader_v2(skip_header_lines: 0, container: nil, shared_name: nil, name: "TextLineReaderV2")
       self.execute("TextLineReaderV2", [], skip_header_lines: skip_header_lines, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.thread_pool_dataset(input_dataset, thread_pool, output_types: nil, output_shapes: nil, name: "ThreadPoolDataset")
       self.execute("ThreadPoolDataset", [input_dataset, thread_pool], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.thread_pool_handle(num_threads: nil, max_intra_op_parallelism: 1, display_name: nil, container: nil, shared_name: nil, name: "ThreadPoolHandle")
       self.execute("ThreadPoolHandle", [], num_threads: num_threads, max_intra_op_parallelism: max_intra_op_parallelism, display_name: display_name, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.thread_unsafe_unigram_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, seed: 0, seed2: 0, name: "ThreadUnsafeUnigramCandidateSampler")
       self.execute("ThreadUnsafeUnigramCandidateSampler", [true_classes], num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.tile(input, multiples, typeT: nil, tmultiples: nil, name: "Tile")
       self.execute("Tile", [input, multiples], T: typeT, Tmultiples: tmultiples, name: name)
     end
-  
 
     def self.tile_grad(input, multiples, typeT: nil, name: "TileGrad")
       self.execute("TileGrad", [input, multiples], T: typeT, name: name)
     end
-  
 
     def self.timestamp(name: "Timestamp")
       self.execute("Timestamp", [], name: name)
     end
-  
 
     def self.top_k(input, k: nil, sorted: true, typeT: nil, name: "TopK")
       self.execute("TopK", [input], k: k, sorted: sorted, T: typeT, name: name)
     end
-  
 
     def self.top_kv2(input, k, sorted: true, typeT: nil, name: "TopKV2")
       self.execute("TopKV2", [input, k], sorted: sorted, T: typeT, name: name)
     end
-  
 
     def self.transpose(x, perm, typeT: nil, tperm: nil, name: "Transpose")
       self.execute("Transpose", [x, perm], T: typeT, Tperm: tperm, name: name)
     end
-  
 
     def self.tridiagonal_mat_mul(superdiag, maindiag, subdiag, rhs, typeT: nil, name: "TridiagonalMatMul")
       self.execute("TridiagonalMatMul", [superdiag, maindiag, subdiag, rhs], T: typeT, name: name)
     end
-  
 
     def self.tridiagonal_solve(diagonals, rhs, partial_pivoting: true, typeT: nil, name: "TridiagonalSolve")
       self.execute("TridiagonalSolve", [diagonals, rhs], partial_pivoting: partial_pivoting, T: typeT, name: name)
     end
-  
 
     def self.truncate_div(x, y, typeT: nil, name: "TruncateDiv")
       self.execute("TruncateDiv", [x, y], T: typeT, name: name)
     end
-  
 
     def self.truncate_mod(x, y, typeT: nil, name: "TruncateMod")
       self.execute("TruncateMod", [x, y], T: typeT, name: name)
     end
-  
 
     def self.truncated_normal(shape, seed: 0, seed2: 0, dtype: nil, typeT: nil, name: "TruncatedNormal")
       self.execute("TruncatedNormal", [shape], seed: seed, seed2: seed2, dtype: dtype, T: typeT, name: name)
     end
-  
 
     def self.try_rpc(address, method, request, protocol: nil, fail_fast: true, timeout_in_ms: 0, name: "TryRpc")
       self.execute("TryRpc", [address, method, request], protocol: protocol, fail_fast: fail_fast, timeout_in_ms: timeout_in_ms, name: name)
     end
-  
 
     def self.unbatch(batched_tensor, batch_index, id, timeout_micros: nil, container: nil, shared_name: nil, typeT: nil, name: "Unbatch")
       self.execute("Unbatch", [batched_tensor, batch_index, id], timeout_micros: timeout_micros, container: container, shared_name: shared_name, T: typeT, name: name)
     end
-  
 
     def self.unbatch_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "UnbatchDataset")
       self.execute("UnbatchDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.unbatch_grad(original_input, batch_index, grad, id, container: nil, shared_name: nil, typeT: nil, name: "UnbatchGrad")
       self.execute("UnbatchGrad", [original_input, batch_index, grad, id], container: container, shared_name: shared_name, T: typeT, name: name)
     end
-  
 
     def self.unicode_decode(input, input_encoding: nil, errors: "replace", replacement_char: 65533, replace_control_characters: false, tsplits: nil, name: "UnicodeDecode")
       self.execute("UnicodeDecode", [input], input_encoding: input_encoding, errors: errors, replacement_char: replacement_char, replace_control_characters: replace_control_characters, Tsplits: tsplits, name: name)
     end
-  
 
     def self.unicode_decode_with_offsets(input, input_encoding: nil, errors: "replace", replacement_char: 65533, replace_control_characters: false, tsplits: nil, name: "UnicodeDecodeWithOffsets")
       self.execute("UnicodeDecodeWithOffsets", [input], input_encoding: input_encoding, errors: errors, replacement_char: replacement_char, replace_control_characters: replace_control_characters, Tsplits: tsplits, name: name)
     end
-  
 
     def self.unicode_encode(input_values, input_splits, errors: "replace", output_encoding: nil, replacement_char: 65533, tsplits: nil, name: "UnicodeEncode")
       self.execute("UnicodeEncode", [input_values, input_splits], errors: errors, output_encoding: output_encoding, replacement_char: replacement_char, Tsplits: tsplits, name: name)
     end
-  
 
     def self.unicode_script(input, name: "UnicodeScript")
       self.execute("UnicodeScript", [input], name: name)
     end
-  
 
     def self.unicode_transcode(input, input_encoding: nil, output_encoding: nil, errors: "replace", replacement_char: 65533, replace_control_characters: false, name: "UnicodeTranscode")
       self.execute("UnicodeTranscode", [input], input_encoding: input_encoding, output_encoding: output_encoding, errors: errors, replacement_char: replacement_char, replace_control_characters: replace_control_characters, name: name)
     end
-  
 
     def self.uniform_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, seed: 0, seed2: 0, name: "UniformCandidateSampler")
       self.execute("UniformCandidateSampler", [true_classes], num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, seed: seed, seed2: seed2, name: name)
     end
-  
 
     def self.unique(x, typeT: nil, out_idx: nil, name: "Unique")
       self.execute("Unique", [x], T: typeT, out_idx: out_idx, name: name)
     end
-  
 
     def self.unique_dataset(input_dataset, output_types: nil, output_shapes: nil, name: "UniqueDataset")
       self.execute("UniqueDataset", [input_dataset], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.unique_v2(x, axis, typeT: nil, taxis: nil, out_idx: nil, name: "UniqueV2")
       self.execute("UniqueV2", [x, axis], T: typeT, Taxis: taxis, out_idx: out_idx, name: name)
     end
-  
 
     def self.unique_with_counts(x, typeT: nil, out_idx: nil, name: "UniqueWithCounts")
       self.execute("UniqueWithCounts", [x], T: typeT, out_idx: out_idx, name: name)
     end
-  
 
     def self.unique_with_counts_v2(x, axis, typeT: nil, taxis: nil, out_idx: nil, name: "UniqueWithCountsV2")
       self.execute("UniqueWithCountsV2", [x, axis], T: typeT, Taxis: taxis, out_idx: out_idx, name: name)
     end
-  
 
     def self.unpack(value, num: nil, typeT: nil, axis: 0, name: "Unpack")
       self.execute("Unpack", [value], num: num, T: typeT, axis: axis, name: name)
     end
-  
 
     def self.unravel_index(indices, dims, tidx: nil, name: "UnravelIndex")
       self.execute("UnravelIndex", [indices, dims], Tidx: tidx, name: name)
     end
-  
 
     def self.unsorted_segment_join(inputs, segment_ids, num_segments, separator: nil, tindices: nil, tnumsegments: nil, name: "UnsortedSegmentJoin")
       self.execute("UnsortedSegmentJoin", [inputs, segment_ids, num_segments], separator: separator, Tindices: tindices, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.unsorted_segment_max(data, segment_ids, num_segments, typeT: nil, tindices: nil, tnumsegments: nil, name: "UnsortedSegmentMax")
       self.execute("UnsortedSegmentMax", [data, segment_ids, num_segments], T: typeT, Tindices: tindices, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.unsorted_segment_min(data, segment_ids, num_segments, typeT: nil, tindices: nil, tnumsegments: nil, name: "UnsortedSegmentMin")
       self.execute("UnsortedSegmentMin", [data, segment_ids, num_segments], T: typeT, Tindices: tindices, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.unsorted_segment_prod(data, segment_ids, num_segments, typeT: nil, tindices: nil, tnumsegments: nil, name: "UnsortedSegmentProd")
       self.execute("UnsortedSegmentProd", [data, segment_ids, num_segments], T: typeT, Tindices: tindices, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.unsorted_segment_sum(data, segment_ids, num_segments, typeT: nil, tindices: nil, tnumsegments: nil, name: "UnsortedSegmentSum")
       self.execute("UnsortedSegmentSum", [data, segment_ids, num_segments], T: typeT, Tindices: tindices, Tnumsegments: tnumsegments, name: name)
     end
-  
 
     def self.unstage(capacity: 0, memory_limit: 0, dtypes: nil, container: nil, shared_name: nil, name: "Unstage")
       self.execute("Unstage", [], capacity: capacity, memory_limit: memory_limit, dtypes: dtypes, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.unwrap_dataset_variant(input_handle, name: "UnwrapDatasetVariant")
       self.execute("UnwrapDatasetVariant", [input_handle], name: name)
     end
-  
 
     def self.upper_bound(sorted_inputs, values, typeT: nil, out_type: nil, name: "UpperBound")
       self.execute("UpperBound", [sorted_inputs, values], T: typeT, out_type: out_type, name: name)
     end
-  
 
     def self.var_handle_op(container: nil, shared_name: nil, dtype: nil, shape: nil, name: "VarHandleOp")
       self.execute("VarHandleOp", [], container: container, shared_name: shared_name, dtype: dtype, shape: shape, name: name)
     end
-  
 
     def self.var_is_initialized_op(resource, name: "VarIsInitializedOp")
       self.execute("VarIsInitializedOp", [resource], name: name)
     end
-  
 
     def self.variable(shape: nil, dtype: nil, container: nil, shared_name: nil, name: "Variable")
       self.execute("Variable", [], shape: shape, dtype: dtype, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.variable_shape(input, out_type: nil, name: "VariableShape")
       self.execute("VariableShape", [input], out_type: out_type, name: name)
     end
-  
 
     def self.variable_v2(shape: nil, dtype: nil, container: nil, shared_name: nil, name: "VariableV2")
       self.execute("VariableV2", [], shape: shape, dtype: dtype, container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.where(input, typeT: nil, name: "Where")
       self.execute("Where", [input], T: typeT, name: name)
     end
-  
 
     def self.while(input, typeT: nil, cond: nil, body: nil, output_shapes: [], parallel_iterations: 10, name: "While")
       self.execute("While", [input], T: typeT, cond: cond, body: body, output_shapes: output_shapes, parallel_iterations: parallel_iterations, name: name)
     end
-  
 
     def self.whole_file_reader(container: nil, shared_name: nil, name: "WholeFileReader")
       self.execute("WholeFileReader", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.whole_file_reader_v2(container: nil, shared_name: nil, name: "WholeFileReaderV2")
       self.execute("WholeFileReaderV2", [], container: container, shared_name: shared_name, name: name)
     end
-  
 
     def self.window_dataset(input_dataset, size, shift, stride, drop_remainder, output_types: nil, output_shapes: nil, name: "WindowDataset")
       self.execute("WindowDataset", [input_dataset, size, shift, stride, drop_remainder], output_types: output_types, output_shapes: output_shapes, name: name)
     end
-  
 
     def self.worker_heartbeat(request, name: "WorkerHeartbeat")
       self.execute("WorkerHeartbeat", [request], name: name)
     end
-  
 
     def self.wrap_dataset_variant(input_handle, name: "WrapDatasetVariant")
       self.execute("WrapDatasetVariant", [input_handle], name: name)
     end
-  
 
     def self.write_audio_summary(writer, step, tag, tensor, sample_rate, max_outputs: 3, name: "WriteAudioSummary")
       self.execute("WriteAudioSummary", [writer, step, tag, tensor, sample_rate], max_outputs: max_outputs, name: name)
     end
-  
 
     def self.write_file(filename, contents, name: "WriteFile")
       self.execute("WriteFile", [filename, contents], name: name)
     end
-  
 
     def self.write_graph_summary(writer, step, tensor, name: "WriteGraphSummary")
       self.execute("WriteGraphSummary", [writer, step, tensor], name: name)
     end
-  
 
     def self.write_histogram_summary(writer, step, tag, values, typeT: nil, name: "WriteHistogramSummary")
       self.execute("WriteHistogramSummary", [writer, step, tag, values], T: typeT, name: name)
     end
-  
 
     def self.write_image_summary(writer, step, tag, tensor, bad_color, max_images: 3, typeT: nil, name: "WriteImageSummary")
       self.execute("WriteImageSummary", [writer, step, tag, tensor, bad_color], max_images: max_images, T: typeT, name: name)
     end
-  
 
     def self.write_raw_proto_summary(writer, step, tensor, name: "WriteRawProtoSummary")
       self.execute("WriteRawProtoSummary", [writer, step, tensor], name: name)
     end
-  
 
     def self.write_scalar_summary(writer, step, tag, value, typeT: nil, name: "WriteScalarSummary")
       self.execute("WriteScalarSummary", [writer, step, tag, value], T: typeT, name: name)
     end
-  
 
     def self.write_summary(writer, step, tensor, tag, summary_metadata, typeT: nil, name: "WriteSummary")
       self.execute("WriteSummary", [writer, step, tensor, tag, summary_metadata], T: typeT, name: name)
     end
-  
 
     def self.xdivy(x, y, typeT: nil, name: "Xdivy")
       self.execute("Xdivy", [x, y], T: typeT, name: name)
     end
-  
 
     def self.xlogy(x, y, typeT: nil, name: "Xlogy")
       self.execute("Xlogy", [x, y], T: typeT, name: name)
     end
-  
 
     def self.zeros_like(x, typeT: nil, name: "ZerosLike")
       self.execute("ZerosLike", [x], T: typeT, name: name)
     end
-  
 
     def self.zeta(x, q, typeT: nil, name: "Zeta")
       self.execute("Zeta", [x, q], T: typeT, name: name)
     end
-  
 
     def self.zip_dataset(input_datasets, output_types: nil, output_shapes: nil, n: nil, name: "ZipDataset")
       self.execute("ZipDataset", [input_datasets], output_types: output_types, output_shapes: output_shapes, N: n, name: name)
     end
-  
 
     def self._arg(typeT: nil, index: nil, name: "_Arg")
       self.execute("_Arg", [], T: typeT, index: index, name: name)
     end
-  
 
     def self._array_to_list(input, typeT: nil, n: nil, out_types: nil, name: "_ArrayToList")
       self.execute("_ArrayToList", [input], T: typeT, N: n, out_types: out_types, name: name)
     end
-  
 
     def self._configure_distributed_tpu(inputs, n: nil, enable_whole_mesh_compilations: false, name: "_ConfigureDistributedTPU")
       self.execute("_ConfigureDistributedTPU", [inputs], N: n, enable_whole_mesh_compilations: enable_whole_mesh_compilations, name: name)
     end
-  
 
     def self._device_arg(typeT: nil, index: nil, name: "_DeviceArg")
       self.execute("_DeviceArg", [], T: typeT, index: index, name: name)
     end
-  
 
     def self._device_retval(input, typeT: nil, index: nil, name: "_DeviceRetval")
       self.execute("_DeviceRetval", [input], T: typeT, index: index, name: name)
     end
-  
 
     def self._disconnect_host_from_distributed_tpu_system(name: "_DisconnectHostFromDistributedTPUSystem")
       self.execute("_DisconnectHostFromDistributedTPUSystem", [], name: name)
     end
-  
 
     def self._fused_batch_norm_ex(x, scale, offset, mean, variance, side_input, typeT: nil, u: nil, epsilon: 9.999999747378752e-05, num_side_inputs: 0, activation_mode: "Identity", data_format: "NHWC", is_training: true, name: "_FusedBatchNormEx")
       self.execute("_FusedBatchNormEx", [x, scale, offset, mean, variance, side_input], T: typeT, U: u, epsilon: epsilon, num_side_inputs: num_side_inputs, activation_mode: activation_mode, data_format: data_format, is_training: is_training, name: name)
     end
-  
 
     def self._fused_conv2_d(input, filter, args, typeT: nil, num_args: nil, strides: nil, padding: nil, explicit_paddings: [], data_format: "NHWC", dilations: [], use_cudnn_on_gpu: true, fused_ops: [], epsilon: 9.999999747378752e-05, name: "_FusedConv2D")
       self.execute("_FusedConv2D", [input, filter, args], T: typeT, num_args: num_args, strides: strides, padding: padding, explicit_paddings: explicit_paddings, data_format: data_format, dilations: dilations, use_cudnn_on_gpu: use_cudnn_on_gpu, fused_ops: fused_ops, epsilon: epsilon, name: name)
     end
-  
 
     def self._fused_mat_mul(a, b, args, transpose_a: false, transpose_b: false, typeT: nil, num_args: nil, fused_ops: [], epsilon: 9.999999747378752e-05, name: "_FusedMatMul")
       self.execute("_FusedMatMul", [a, b, args], transpose_a: transpose_a, transpose_b: transpose_b, T: typeT, num_args: num_args, fused_ops: fused_ops, epsilon: epsilon, name: name)
     end
-  
 
     def self._host_cast(x, srct: nil, dstt: nil, truncate: false, name: "_HostCast")
       self.execute("_HostCast", [x], SrcT: srct, DstT: dstt, Truncate: truncate, name: name)
     end
-  
 
     def self._host_recv(tensor_type: nil, tensor_name: nil, send_device: nil, send_device_incarnation: nil, recv_device: nil, client_terminated: false, name: "_HostRecv")
       self.execute("_HostRecv", [], tensor_type: tensor_type, tensor_name: tensor_name, send_device: send_device, send_device_incarnation: send_device_incarnation, recv_device: recv_device, client_terminated: client_terminated, name: name)
     end
-  
 
     def self._host_send(tensor, typeT: nil, tensor_name: nil, send_device: nil, send_device_incarnation: nil, recv_device: nil, client_terminated: false, name: "_HostSend")
       self.execute("_HostSend", [tensor], T: typeT, tensor_name: tensor_name, send_device: send_device, send_device_incarnation: send_device_incarnation, recv_device: recv_device, client_terminated: client_terminated, name: name)
     end
-  
 
     def self._if(cond, input, tcond: nil, tin: nil, tout: nil, then_branch: nil, else_branch: nil, name: "_If")
       self.execute("_If", [cond, input], Tcond: tcond, Tin: tin, Tout: tout, then_branch: then_branch, else_branch: else_branch, name: name)
     end
-  
 
     def self._initialize_host_for_distributed_tpu(input, enable_whole_mesh_compilations: false, name: "_InitializeHostForDistributedTPU")
       self.execute("_InitializeHostForDistributedTPU", [input], enable_whole_mesh_compilations: enable_whole_mesh_compilations, name: name)
     end
-  
 
     def self._list_to_array(input, tin: nil, typeT: nil, n: nil, name: "_ListToArray")
       self.execute("_ListToArray", [input], Tin: tin, T: typeT, N: n, name: name)
     end
-  
 
     def self._mkl_maximum(x, y, mkl_x, mkl_y, typeT: nil, name: "_MklMaximum")
       self.execute("_MklMaximum", [x, y, mkl_x, mkl_y], T: typeT, name: name)
     end
-  
 
     def self._mkl_mul(x, y, mkl_x, mkl_y, typeT: nil, name: "_MklMul")
       self.execute("_MklMul", [x, y, mkl_x, mkl_y], T: typeT, name: name)
     end
-  
 
     def self._mkl_squared_difference(x, y, mkl_x, mkl_y, typeT: nil, name: "_MklSquaredDifference")
       self.execute("_MklSquaredDifference", [x, y, mkl_x, mkl_y], T: typeT, name: name)
     end
-  
 
     def self._mkl_sub(x, y, mkl_x, mkl_y, typeT: nil, name: "_MklSub")
       self.execute("_MklSub", [x, y, mkl_x, mkl_y], T: typeT, name: name)
     end
-  
 
     def self._nccl_broadcast_recv(shape, typeT: nil, num_devices: nil, shared_name: nil, name: "_NcclBroadcastRecv")
       self.execute("_NcclBroadcastRecv", [shape], T: typeT, num_devices: num_devices, shared_name: shared_name, name: name)
     end
-  
 
     def self._nccl_broadcast_send(input, typeT: nil, num_devices: nil, shared_name: nil, name: "_NcclBroadcastSend")
       self.execute("_NcclBroadcastSend", [input], T: typeT, num_devices: num_devices, shared_name: shared_name, name: name)
     end
-  
 
     def self._nccl_reduce_recv(input, reduction: nil, typeT: nil, num_devices: nil, shared_name: nil, name: "_NcclReduceRecv")
       self.execute("_NcclReduceRecv", [input], reduction: reduction, T: typeT, num_devices: num_devices, shared_name: shared_name, name: name)
     end
-  
 
     def self._nccl_reduce_send(input, reduction: nil, typeT: nil, num_devices: nil, shared_name: nil, name: "_NcclReduceSend")
       self.execute("_NcclReduceSend", [input], reduction: reduction, T: typeT, num_devices: num_devices, shared_name: shared_name, name: name)
     end
-  
 
     def self._parallel_concat_start(shape: nil, dtype: nil, name: "_ParallelConcatStart")
       self.execute("_ParallelConcatStart", [], shape: shape, dtype: dtype, name: name)
     end
-  
 
     def self._parallel_concat_update(value, update, typeT: nil, loc: nil, name: "_ParallelConcatUpdate")
       self.execute("_ParallelConcatUpdate", [value, update], T: typeT, loc: loc, name: name)
     end
-  
 
     def self._read_variables_op(resources, n: nil, dtypes: nil, name: "_ReadVariablesOp")
       self.execute("_ReadVariablesOp", [resources], N: n, dtypes: dtypes, name: name)
     end
-  
 
     def self._recv(tensor_type: nil, tensor_name: nil, send_device: nil, send_device_incarnation: nil, recv_device: nil, client_terminated: false, name: "_Recv")
       self.execute("_Recv", [], tensor_type: tensor_type, tensor_name: tensor_name, send_device: send_device, send_device_incarnation: send_device_incarnation, recv_device: recv_device, client_terminated: client_terminated, name: name)
     end
-  
 
     def self._retval(input, typeT: nil, index: nil, name: "_Retval")
       self.execute("_Retval", [input], T: typeT, index: index, name: name)
     end
-  
 
     def self._scoped_allocator(shapes: nil, shape: nil, typeT: nil, sa_name: nil, id: nil, expected_call_count: nil, name: "_ScopedAllocator")
       self.execute("_ScopedAllocator", [], shapes: shapes, shape: shape, T: typeT, sa_name: sa_name, id: id, expected_call_count: expected_call_count, name: name)
     end
-  
 
     def self._scoped_allocator_concat(backing, inputs, shape: nil, typeT: nil, reshape: false, sa_name: nil, id: nil, n: nil, name: "_ScopedAllocatorConcat")
       self.execute("_ScopedAllocatorConcat", [backing, inputs], shape: shape, T: typeT, reshape: reshape, sa_name: sa_name, id: id, N: n, name: name)
     end
-  
 
     def self._scoped_allocator_split(concat, split, typeT: nil, sa_name: nil, id: nil, n: nil, shapes: nil, name: "_ScopedAllocatorSplit")
       self.execute("_ScopedAllocatorSplit", [concat, split], T: typeT, sa_name: sa_name, id: id, N: n, shapes: shapes, name: name)
     end
-  
 
     def self._send(tensor, typeT: nil, tensor_name: nil, send_device: nil, send_device_incarnation: nil, recv_device: nil, client_terminated: false, name: "_Send")
       self.execute("_Send", [tensor], T: typeT, tensor_name: tensor_name, send_device: send_device, send_device_incarnation: send_device_incarnation, recv_device: recv_device, client_terminated: client_terminated, name: name)
     end
-  
 
     def self._set_global_tpu_array(topology, name: "_SetGlobalTPUArray")
       self.execute("_SetGlobalTPUArray", [topology], name: name)
     end
-  
 
     def self._shutdown_distributed_tpu(name: "_ShutdownDistributedTPU")
       self.execute("_ShutdownDistributedTPU", [], name: name)
     end
-  
 
     def self._switch_n(data, output_index, num_outs: nil, typeT: nil, name: "_SwitchN")
       self.execute("_SwitchN", [data, output_index], num_outs: num_outs, T: typeT, name: name)
     end
-  
 
     def self._tpu_replicate(inputs, broadcast_inputs, variables, guaranteed_constants, computation: nil, num_replicas: nil, num_cores_per_replica: 1, topology: nil, use_tpu: true, device_assignment: [], host_compute_core: [], tinputs: nil, tbroadcast_inputs: nil, numvariables: nil, tguaranteed_constants: nil, output_types: nil, padding_map: [], step_marker_location: "STEP_MARK_AT_ENTRY", allow_soft_placement: false, name: "_TPUReplicate")
       self.execute("_TPUReplicate", [inputs, broadcast_inputs, variables, guaranteed_constants], computation: computation, num_replicas: num_replicas, num_cores_per_replica: num_cores_per_replica, topology: topology, use_tpu: use_tpu, device_assignment: device_assignment, host_compute_core: host_compute_core, Tinputs: tinputs, Tbroadcast_inputs: tbroadcast_inputs, NumVariables: numvariables, Tguaranteed_constants: tguaranteed_constants, output_types: output_types, padding_map: padding_map, step_marker_location: step_marker_location, allow_soft_placement: allow_soft_placement, name: name)
     end
-  
 
     def self._unary_ops_composition(x, typeT: nil, op_names: nil, name: "_UnaryOpsComposition")
       self.execute("_UnaryOpsComposition", [x], T: typeT, op_names: op_names, name: name)
     end
-  
 
     def self._var_handles_op(containers: nil, shared_names: nil, n: nil, dtypes: nil, shapes: nil, name: "_VarHandlesOp")
       self.execute("_VarHandlesOp", [], containers: containers, shared_names: shared_names, N: n, dtypes: dtypes, shapes: shapes, name: name)
     end
-  
 
     def self._wait_for_distributed_tpu(inputs, startup_timeout_sec: 20, n: nil, name: "_WaitForDistributedTPU")
       self.execute("_WaitForDistributedTPU", [inputs], startup_timeout_sec: startup_timeout_sec, N: n, name: name)
     end
-  
 
     def self._while(input, typeT: nil, cond: nil, body: nil, name: "_While")
       self.execute("_While", [input], T: typeT, cond: cond, body: body, name: name)
     end
-  
 
     def self._xla_recv_at_host(dynamic_key, toutputs: nil, key: nil, device_ordinal: nil, name: "_XlaRecvAtHost")
       self.execute("_XlaRecvAtHost", [dynamic_key], Toutputs: toutputs, key: key, device_ordinal: device_ordinal, name: name)
     end
-  
 
     def self._xla_send_from_host(inputs, dynamic_key, tinputs: nil, key: nil, device_ordinal: nil, name: "_XlaSendFromHost")
       self.execute("_XlaSendFromHost", [inputs, dynamic_key], Tinputs: tinputs, key: key, device_ordinal: device_ordinal, name: name)
     end
-  
   end
 end

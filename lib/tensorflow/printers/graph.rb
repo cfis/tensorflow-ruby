@@ -18,7 +18,7 @@ module Tensorflow
 
       def print(io_stream=STDOUT)
         #io_stream << ERB.new(self.template, nil, trim_mode: "<>").result_with_hash(:graph => self.graph)
-        raw =  Erubi::Engine.new(self.template)
+        raw = Erubi::Engine.new(self.template, filename: 'graph.erb')
         io_stream << eval(raw.src)
       end
     end

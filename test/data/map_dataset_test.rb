@@ -5,6 +5,7 @@ module Tensorflow
     class MapDatasetTest < Minitest::Test
       def setup
         Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+        #Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       end
 
       def test_simple
@@ -17,9 +18,13 @@ module Tensorflow
           func_graph.to_function('MyFunc', nil, [x], [square], ['out1'])
         end
 
-        Eager::Context.default.add_function(function)
+        ExecutionContext.current.add_function(function)
 
         map_dataset = MapDataset.new(dataset, function, output_types: [:int32], output_shapes: [[2, 3]])
+
+        # session = Graph::Session.new(ExecutionContext.current, Graph::SessionOptions.new)
+        # result = session.run(map_dataset)
+        # session.close
 
         map_dataset.each_with_index do |slice, i|
           assert_equal(components[0][0] ** 2, slice.value[0])

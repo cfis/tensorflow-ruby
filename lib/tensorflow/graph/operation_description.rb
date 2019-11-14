@@ -90,10 +90,15 @@ module Tensorflow
         end
 
         # Recursively work through inputs
-        new_inputs = operation.inputs.map do |input|
-          input_operation = input.operation(self.graph)
-          self.capture(input_operation)
-        end
+        new_inputs = if operation.num_inputs == 0
+                       []
+                     else
+                       input_operations = operation.inputs.map do |input|
+                                            input_operation = input.operation(self.graph)
+                                            self.capture(input_operation)
+                       end
+                       [input_operations]
+                     end
 
         attrs = operation.attributes.reduce(Hash.new) do |hash, attr|
           hash[attr.name.to_sym] = attr.value

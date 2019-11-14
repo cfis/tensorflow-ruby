@@ -15,5 +15,7 @@ n_outputs = 10
 mnist.train_dataset
 
 
-Tensorflow.disable_eager_execution
+Tf.disable_eager_execution
+
+
 

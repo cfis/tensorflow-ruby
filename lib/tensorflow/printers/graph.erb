@@ -15,8 +15,8 @@ node {
   attr {
     key: "<%= attr_def.name %>"
     value {
-  <% case attr.metadata[:type]  %>
-    <% when :tensor %>
+  <% case attr.metadata[:type]
+     when :tensor %>
       tensor {
         dtype: DT_<%= attr.tensor.dtype.upcase %>
         tensor_shape {
@@ -27,24 +27,47 @@ node {
           <% end %>
         }
         <%= attr.tensor.dtype %>_val: <%= attr.tensor.value.is_a?(Numo::NArray) ? attr.tensor.value.to_a : attr.tensor.value %>
+        tensor_content: <%= attr.proto.tensor.tensor_content.dump %>
       }
     <% when :type %>
-      type: DT_<%= attr.dtype.to_s.upcase %>
+      <% if attr.list? %>
+      list {
+        <% attr.value.each do |list_value| %>
+        type: DT_<%= list_value.to_s.upcase %>
+        <% end %>
+      }
+      <% else %>
+      type: DT_<%= attr.value.to_s.upcase %>
+      <% end %>
     <% when :bool %>
       b: <%= attr.value ? 'true' : 'false' %>
     <% when :int %>
       i: <%= attr.value %>
     <% when :shape %>
-      <% if attr.shape.empty? %>
-      shape {
-      }
+      <% if attr.list? %>
+        list {
+        <% attr.value.each do |list_value| %>
+          shape: {
+            dim {
+              size: <%= list_value.join(', ') %>
+            }
+
+        <% end %>
+        }
+      <% elsif attr.value.empty? %>
+        shape {
+        }
       <% else %>
       shape {
-        <%= attr.shape %>
+        <%= attr.value.join(', ') %>
       }
       <% end %>
     <% when :string %>
       s: "<%= attr.value %>"
+    <% when :func %>
+      func {
+        name: "<%= attr.value %>"
+      }
     <% end %>
     }
   }

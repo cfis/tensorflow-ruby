@@ -24,11 +24,11 @@ module Tensorflow
 
       def as_default
         raise(TensorflowError, "Must provide block") unless block_given?
-        ExecutionContext.stack.push(self)
+        ExecutionContext.push(self)
         begin
           yield self
         ensure
-          ExecutionContext.stack.pop
+          ExecutionContext.pop
         end
       end
 

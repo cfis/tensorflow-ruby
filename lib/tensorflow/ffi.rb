@@ -132,6 +132,7 @@ module Tensorflow
     attach_function :TF_OperationGetAttrTensor, [:pointer, :string, :pointer, :pointer], :void
     attach_function :TF_OperationGetAttrType, [:pointer, :string, :pointer, :pointer], :void
     attach_function :TF_OperationGetAttrTypeList, [:pointer, :string, :pointer, :int, :pointer], :void
+    attach_function :TF_OperationGetAttrValueProto, [:pointer, :string, :pointer, :pointer], :void
 
     attach_function :TF_GraphOperationByName, [:pointer, :string], :pointer
     attach_function :TF_GraphNextOperation, [:pointer, :pointer], :pointer

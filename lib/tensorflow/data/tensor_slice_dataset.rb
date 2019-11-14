@@ -7,8 +7,7 @@ module Tensorflow
         @output_shapes = @tensors.map do |tensor|
           tensor.shape[1..]
         end
-
-        variant_tensor = RawOps.tensor_slice_dataset(@tensors, output_shapes: @output_shapes)
+        variant_tensor = RawOps.tensor_slice_dataset(@tensors, toutput_types: @output_types, output_shapes: @output_shapes)
         super(variant_tensor)
       end
     end

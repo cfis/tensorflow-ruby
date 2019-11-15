@@ -79,9 +79,8 @@ class RawOpHelper
                         when :tensor
                           []
                         when :type
-                          'nil'
-                          # value = self.convert_type(attr_def.default_value[attr_def.default_value.value.to_s])
-                          # ":#{value.downcase}"
+                          value = self.convert_type(attr_def.default_value[attr_def.default_value.value.to_s])
+                          ":#{value.downcase}"
                         else
                           attr_def.default_value[attr_def.default_value.value.to_s]
                         end

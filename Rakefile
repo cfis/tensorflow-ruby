@@ -67,11 +67,7 @@ class RawOpHelper
                     else
                       case attr_def.default_value.value
                         when :s
-                          if attr_def.default_value['s'].empty?
-                            'nil'
-                          else
-                            "\"#{attr_def.default_value['s']}\""
-                          end
+                          "\"#{attr_def.default_value['s']}\""
                         when :list
                           []
                         when :shape
@@ -83,7 +79,7 @@ class RawOpHelper
                           ":#{value.downcase}"
                         else
                           attr_def.default_value[attr_def.default_value.value.to_s]
-                        end
+                      end
                     end
 
     "#{name}: #{default_value}"

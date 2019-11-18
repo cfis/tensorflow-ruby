@@ -38,7 +38,7 @@ module Tensorflow
           define_method(original_name) do |*args|
             function = this.build_function(self)
             ExecutionContext.current.add_function(function)
-            ExecutionContext.current.create_operation(function.name, args, name: function.name)
+            function
           end
         end
       end 
@@ -54,7 +54,7 @@ module Tensorflow
           bound_method = self.ruby_method.bind(object)
           result = bound_method.call(*placeholders)
 
-          graph.to_function(self.ruby_method.original_name.to_s, nil, placeholders, [result])
+          graph.to_function(self.ruby_method.original_name.to_s, nil, placeholders, Array(result))
         end
       end
     end

@@ -33,6 +33,10 @@ module Tensorflow
         FFI.TF_OperationOpType(self)
       end
 
+      def op_def
+        self.graph.op_def(self.op_type)
+      end
+
       def device
         FFI.TF_OperationDevice(self)
       end
@@ -126,8 +130,7 @@ module Tensorflow
       end
 
       def attributes
-        op_def = self.graph.op_def(self.op_type)
-        op_def.attr.map do |attr_def|
+        self.op_def.attr.map do |attr_def|
           self.attr(attr_def.name)
         end
       end
@@ -159,6 +162,7 @@ module Tensorflow
       def consumers
         self.num_outputs.times.reduce(Array.new) do |result, index|
           result.concat(self.output_consumers(index))
+          result
         end
       end
 

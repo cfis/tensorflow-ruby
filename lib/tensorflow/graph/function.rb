@@ -21,7 +21,7 @@ module Tensorflow
         end
         buffer = FFI::Buffer.new(buffer_ptr)
         string = buffer[:data].read_string(buffer[:length])
-        FunctionDef.decode(string)
+        Tensorflow::FunctionDef.decode(string)
       ensure
         FFI.TF_DeleteBuffer(buffer)
       end

@@ -18,8 +18,6 @@ module Tensorflow
     end
 
     def test_set_mode
-      assert_equal(Tensorflow::EAGER_MODE, Tensorflow.execution_mode)
-
       Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       assert_equal(Tensorflow::GRAPH_MODE, Tensorflow.execution_mode)
 

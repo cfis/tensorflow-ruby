@@ -5,10 +5,17 @@ module Tensorflow
 
       def initialize(graph, op_type, inputs, attrs)
         @graph = graph
-        @op_def = self.get_op_def(op_type)
-        raw_name = attrs.delete(:name).to_s
+        @op_def = case op_type
+                    when Function
+                      op_type.function_def.signature
+                    else
+                      self.get_op_def(op_type)
+                  end
+        raise(TensorflowError, "Invalid op type: #{op_type}") unless @op_def
+
+        raw_name = attrs.delete(:name)&.to_s || self.op_def.name
         @name = self.graph.scoped_name(raw_name)
-        @pointer = FFI.TF_NewOperation(graph, op_type, @name)
+        @pointer = FFI.TF_NewOperation(graph, self.op_def.name, @name)
 
         inputs = Array(inputs)
         @guessed_dtype = figure_dtype(attrs, inputs)
@@ -82,6 +89,40 @@ module Tensorflow
         FFI.TF_AddControlInput(self, control_input)
       end
 
+      def capture_inputs(operation, attrs)
+        # First capture the inputs
+        inputs = operation.inputs.map do |input|
+          input_operation = input.operation(self.graph)
+          self.capture(input_operation)
+        end
+
+        # We now have to group the inputs together. For example, a TensorSlice dataset has 1 input argument
+        # which a list. But the number of inputs returned by the operation is actually the number of items in
+        # the list, so its usually more than one. We need to group them into one array to be able to call
+        # the operation to create a captured copy.
+        i = 0
+        operation.op_def.input_arg.reduce(Array.new) do |result, input_arg|
+          if !input_arg.number_attr.empty?
+            input_len = attrs[input_arg.number_attr.to_sym].length
+            is_sequence = true
+          elsif !input_arg.type_list_attr.empty?
+            input_len = attrs[input_arg.type_list_attr.to_sym].length
+            is_sequence = true
+          else
+            input_len = 1
+            is_sequence = false
+          end
+
+          if is_sequence
+            result << inputs[i..i+input_len]
+          else
+            result << inputs[i]
+          end
+          i += input_len
+          result
+        end
+      end
+
       def capture(operation)
         if self.op_def.is_stateful
           raise(TensorflowError, "Cannot capture a stateful node (name: #{operation.name}, type: #{operation.op_type})")
@@ -89,23 +130,14 @@ module Tensorflow
           raise(TensorflowError, "Cannot capture a placeholder by value (name: #{operation.name}, type: #{operation.op_type})")
         end
 
-        # Recursively work through inputs
-        new_inputs = if operation.num_inputs == 0
-                       []
-                     else
-                       input_operations = operation.inputs.map do |input|
-                                            input_operation = input.operation(self.graph)
-                                            self.capture(input_operation)
-                       end
-                       [input_operations]
-                     end
-
         attrs = operation.attributes.reduce(Hash.new) do |hash, attr|
           hash[attr.name.to_sym] = attr.value
           hash
         end
         attrs[:name] = operation.name
-        self.graph.create_operation(operation.op_type, new_inputs, **attrs)
+
+        captured_inputs = self.capture_inputs(operation, attrs)
+        self.graph.create_operation(operation.op_type, captured_inputs, **attrs)
       end
 
       def check_input(arg_def, input)

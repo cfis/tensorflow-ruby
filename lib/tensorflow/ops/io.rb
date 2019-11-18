@@ -43,7 +43,7 @@ module Tensorflow
     # end
 
     def self.decode_raw(bytes, out_type, little_endian: nil)
-      RawOps.decode_raw(bytes: bytes, out_type: out_type, little_endian: little_endian)
+      RawOps.decode_raw(bytes, out_type: out_type, little_endian: little_endian)
     end
 
     def self.deserialize_many_sparse(serialized_sparse, dtype: nil)

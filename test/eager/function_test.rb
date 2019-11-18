@@ -42,7 +42,7 @@ module Tensorflow
         function = create_function
         context.add_function(function)
 
-        operation = context.create_operation(function.name)
+        operation = context.create_operation(function)
         result = context.execute(operation)
         assert_equal(10, result.value)
       end

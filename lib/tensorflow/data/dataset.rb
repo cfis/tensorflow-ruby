@@ -83,9 +83,9 @@ module Tensorflow
         end
       end
 
-      # def map(&block)
-      #   MapDataset.new(self, nil, block)
-      # end
+      def map_func(func)
+        MapDataset.new(self, func)
+      end
 
       def repeat(count)
         RepeatDataset.new(self, 3)

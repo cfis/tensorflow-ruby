@@ -35,6 +35,7 @@ module Tensorflow
                     tensor_shape {
                     }
                     float_val: 3.0
+                    tensor_content: ""
                   }
                 }
               }
@@ -56,6 +57,7 @@ module Tensorflow
                     tensor_shape {
                     }
                     float_val: 2.0
+                    tensor_content: ""
                   }
                 }
               }

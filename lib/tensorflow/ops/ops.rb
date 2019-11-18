@@ -49,7 +49,7 @@ module Tensorflow
     end
 
     def reshape(tensor, shape)
-      RawOps.reshape(tensor, shape)
+      RawOps.reshape(tensor, shape, typeT: tensor.output_types.first)
     end
 
     def shape(input, out_type)

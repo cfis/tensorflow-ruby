@@ -5,9 +5,16 @@ module Tensorflow
 
       def initialize(context, op_type, inputs, attrs)
         @context = context
-        @op_def = Tensorflow.op_def(op_type)
+        @op_def = case op_type
+                    when Graph::Function
+                      op_type.function_def.signature
+                    else
+                      Tensorflow.op_def(op_type)
+                  end
+        raise(TensorflowError, "Invalid op type: #{op_type}") unless @op_def
+
         @status = Status.new
-        @pointer = FFI.TFE_NewOp(context, op_type, self.status)
+        @pointer = FFI.TFE_NewOp(context, self.op_def.name, self.status)
         name = attrs.delete(:name) || op_type
 
         setup_attrs(attrs)
@@ -106,7 +113,6 @@ module Tensorflow
             case attr_value
               when Graph::Function
                 FFI.TFE_OpSetAttrFunctionName(self, attr_name, attr_value.name, attr_value.name.length)
-                #FFI.TFE_OpSetAttrFunction(self, attr_name, attr_value)
               when String
                 FFI.TFE_OpSetAttrFunctionName(self, attr_name, attr_value, attr_value.length)
               else

@@ -70,13 +70,10 @@ module Tensorflow
         RawOps.lu(input: input, output_idx_type: output_idx_type)
       end
 
-      # def self.matmul(a, b, transpose_a: false, transpose_b: false)
-      #   RawOps.mat_mul(a, b, transpose_a: transpose_a, transpose_b: transpose_b)
-      # end
-
       def self.matmul(a, b, transpose_a: false, transpose_b: false)
         RawOps.mat_mul(a, b, transpose_a: transpose_a, transpose_b: transpose_b)
       end
+
       # def self.matrix_transpose
       # end
 

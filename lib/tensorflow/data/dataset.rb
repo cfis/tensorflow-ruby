@@ -15,7 +15,7 @@ module Tensorflow
             [Tensor.new(values)]
           when Tensor
             [values]
-          else
+          when Array
             values.to_a.map do |v|
               if v.is_a?(Tensor)
                 v
@@ -23,7 +23,15 @@ module Tensorflow
                 Tensor.new(v)
               end
             end
+          when Graph::Operation
+            [values]
+          else
+            raise(TensorflowError, "Unsupported dataset element: #{values}")
         end
+      end
+
+      def self.from_tensors(tensors)
+        TensorDataset.new(tensors)
       end
 
       def self.from_tensor_slices(tensors)
@@ -50,7 +58,7 @@ module Tensorflow
       end
 
       def make_one_shot_iterator
-        Iterator.new(self)
+        OneShotIterator.new(self)
       end
 
       def each

@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class VariableTest < Minitest::Test
+  class VariableTest < BaseTest
     def setup
       Tensorflow.execution_mode = Tensorflow::EAGER_MODE
     end
@@ -92,18 +92,13 @@ module Tensorflow
     end
 
     def test_shape_graph
-      Graph::Graph.new.as_default do |graph|
+      self.eager_and_graph do |context|
         v = Variable.new([[[0, 1, 2],
                           [3, 4, 5]],
                          [[6, 7, 8],
                           [9, 10, 11]]])
 
-        assert_equal([], v.shape)
-
-        session = Graph::Session.new(graph, Graph::SessionOptions.new)
-        session.run(v.initializer)
-
-        assert_equal([], v.shape)
+        assert_equal([2, 2, 3], v.shape)
       end
     end
 
@@ -192,6 +187,11 @@ module Tensorflow
         result = session.run(operation)
         assert_equal(15, result)
       end
+    end
+
+    def test_variable_name
+      variable = Variable.new([1,2,3], name: 'test_name')
+      assert_equal('test_name', variable.name)
     end
 
     def test_global_variables

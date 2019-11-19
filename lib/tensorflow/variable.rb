@@ -2,9 +2,9 @@ module Tensorflow
   class Variable
     include Operators
 
-    attr_reader :handle, :dtype
+    attr_reader :handle, :dtype, :name
 
-    def initialize(initial_value = nil, dtype: nil, shape: nil, shared_name: nil, name: 'Variable', trainable: false)
+    def initialize(initial_value = nil, dtype: nil, shape: nil, shared_name: nil, name: 'Variable', trainable: true)
       initial_value = case initial_value
                       when NilClass
                         @dtype = dtype
@@ -29,6 +29,7 @@ module Tensorflow
       shared_name = shared_name&.to_s
       unique_name = ExecutionContext.current.unique_name(name || shared_name)
       shared_name ||= unique_name
+      @name = unique_name
 
       collections = [Graph::GraphKeys::GLOBAL_VARIABLES]
       if trainable
@@ -86,12 +87,7 @@ module Tensorflow
     end
 
     def shape
-      case self.handle
-        when Eager::TensorHandle
-          self.value_handle.shape
-        else
-          self.handle.graph.tensor_get_shape(self.handle)
-      end
+      self.value_handle.shape
     end
 
     def tensor
@@ -115,14 +111,16 @@ module Tensorflow
       RawOps.assign_sub_variable_op(self.handle, value, dtype: self.dtype)
     end
 
-    # def to_s
-    #   inspect
-    # end
-    #
-    # def inspect
-    #   value = value_handle
-    #   inspection = %w(shape dtype).map { |v| "#{v}: #{value.send(v).inspect}"}
-    #   "#<#{self.class} #{inspection.join(", ")}>"
-    # end
+    def to_s
+      inspect
+    end
+
+    def inspect
+      inspection = []
+      inspection << ["name: #{self.handle.name}"]
+      inspection << ["shape: #{self.value_handle.shape}"]
+      inspection << ["dtype: #{self.value_handle.dtype}"]
+      "#<#{self.class} #{inspection.join(", ")}>"
+    end
   end
 end

@@ -1,32 +1,57 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
-class StringsTest < Minitest::Test
-  def setup
-    Tensorflow.execution_mode = Tensorflow::EAGER_MODE
-  end
+module Tensorflow
+  class StringsTest < BaseTest
+    def test_join
+      self.eager_and_graph do |context|
+        op = Strings.join(["hello", "world"])
+        result = self.result(context, op)
+        assert_equal("helloworld", result)
 
-  def test_join
-    assert_equal("helloworld", Tensorflow::Strings.join(["hello", "world"]).value)
-    assert_equal("hello world", Tensorflow::Strings.join(["hello", "world"], separator: " ").value)
-  end
+        op = Strings.join(["hello", "world"], separator: " ")
+        result = self.result(context, op)
+        assert_equal("hello world", result)
+      end
+    end
 
-  def test_length
-    assert_equal(5, Tensorflow::Strings.length("hello").value)
-  end
+    def test_length
+      self.eager_and_graph do |context|
+        op = Strings.length("hello")
+        result = self.result(context, op)
+        assert_equal(5, result)
+      end
+    end
 
-  def test_lower
-    assert_equal("hello", Tensorflow::Strings.lower("HELLO").value)
-  end
+    def test_lower
+      self.eager_and_graph do |context|
+        op = Strings.lower("HELLO")
+        result = self.result(context, op)
+        assert_equal("hello", result)
+      end
+    end
 
-  def test_to_number
-    assert_equal(123, Tensorflow::Strings.to_number("123").value)
-  end
+    def test_to_number
+      self.eager_and_graph do |context|
+        op = Strings.to_number("123")
+        result = self.result(context, op)
+        assert_equal(123, result)
+      end
+    end
 
-  def test_strip
-    assert_equal("hello", Tensorflow::Strings.strip(" hello ").value)
-  end
+    def test_strip
+      self.eager_and_graph do |context|
+        op = Strings.strip(" hello ")
+        result = self.result(context, op)
+        assert_equal("hello", result)
+      end
+    end
 
-  def test_upper
-    assert_equal("HELLO", Tensorflow::Strings.upper("hello").value)
+    def test_upper
+      self.eager_and_graph do |context|
+        op = Strings.upper("hello")
+        result = self.result(context, op)
+        assert_equal("HELLO", result)
+      end
+    end
   end
 end

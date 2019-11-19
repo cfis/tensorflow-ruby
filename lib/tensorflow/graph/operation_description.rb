@@ -172,11 +172,11 @@ module Tensorflow
                           self.check_input(arg_def, value, dtype)
                         end
 
-        if !arg_def.number_attr.empty?
-          # This input is a homogeneous list
-          self.add_input_list(checked_value)
-        elsif !arg_def.type_list_attr.empty?
+        if !arg_def.type_list_attr.empty?
           # This input is a heterogeneous list
+          self.add_input_list(checked_value)
+        elsif !arg_def.number_attr.empty?
+          # This input is a homogeneous list
           self.add_input_list(checked_value)
         else
           # This input is a single item

@@ -9,9 +9,9 @@ module Tensorflow
         Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       end
 
-      @tf.function
-      def oneop_oneinput_oneoutput(placeholder)
-        Math.negative(placeholder)
+      @tf.function([[:int32]])
+      def oneop_oneinput_oneoutput(x)
+        Math.negative(x)
       end
 
       def test_oneop_oneinput_oneoutput

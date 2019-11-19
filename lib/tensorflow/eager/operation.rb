@@ -179,12 +179,17 @@ module Tensorflow
                           self.check_input(arg_def, value, dtype)
                         end
 
-        if !arg_def.number_attr.empty?
-          # This input is a homogeneous list
-          self.add_input_list(checked_value)
-        elsif !arg_def.type_list_attr.empty?
+        if !arg_def.type_list_attr.empty?
           # This input is a heterogeneous list
           self.add_input_list(checked_value)
+        elsif !arg_def.number_attr.empty? && !arg_def.type_attr.empty?
+          # This input is a homogeneous list
+          self.add_input_list(checked_value)
+        elsif !arg_def.number_attr.empty?
+          # This is a list but we have to set it up one input at a time
+          checked_value.each do |sub_checked_value|
+            self.add_input(sub_checked_value)
+          end
         else
           # This input is a single item
           self.add_input(checked_value)
@@ -204,9 +209,9 @@ module Tensorflow
       end
 
       def add_input_list(values)
-        input_ptr = ::FFI::MemoryPointer.new(:pointer, values.size)
+        input_ptr = ::FFI::MemoryPointer.new(:pointer, values.length)
         input_ptr.write_array_of_pointer(values)
-        FFI.TFE_OpAddInputList(self, input_ptr, values.size, self.status)
+        FFI.TFE_OpAddInputList(self, input_ptr, values.length, self.status)
         self.status.check
       end
     end

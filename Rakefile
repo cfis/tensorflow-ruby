@@ -45,44 +45,60 @@ class RawOpHelper
 
   def self.process_attribute(attr_def)
     name = self.check_attribute_name(attr_def)
-    default_value = if attr_def.default_value.nil? && !attr_def.allowed_values
-                      'nil'
-                    elsif attr_def.default_value.nil? && attr_def.allowed_values
-                      'nil'
-                      # case attr_def.type
-                      #   when 'type', 'list(type)'
-                      #     values = attr_def.allowed_values.list.type
-                      #     value = if values.include?(:DT_INT32)
-                      #               'DT_INT32'
-                      #             else
-                      #               values.first
-                      #             end
-                      #     ":#{self.convert_type(value)}"
-                      #   when 'string'
-                      #     values = attr_def.allowed_values.list.s
-                      #     values.first
-                      #   else
-                      #     raise('Unsupported allowed value')
-                      # end
-                    else
-                      case attr_def.default_value.value
-                        when :s
-                          "\"#{attr_def.default_value['s']}\""
-                        when :list
-                          []
-                        when :shape
-                          []
-                        when :tensor
-                          []
-                        when :type
-                          value = self.convert_type(attr_def.default_value[attr_def.default_value.value.to_s])
-                          ":#{value.downcase}"
-                        else
-                          attr_def.default_value[attr_def.default_value.value.to_s]
-                      end
-                    end
+    value = if attr_def.default_value.nil?
+              self.attribute_value(attr_def)
+            else
+              self.attribute_default_value(attr_def)
+            end
+    "#{name}: #{value}"
+  end
 
-    "#{name}: #{default_value}"
+  def self.attribute_value(attr_def)
+    if attr_def.allowed_values
+      case attr_def.type
+        when 'type', 'list(type)'
+          'nil'
+          # values = attr_def.allowed_values.list.type
+          # value = if values.include?(:DT_INT32)
+          #           'DT_INT32'
+          #         else
+          #           values.first
+          #         end
+          # ":#{self.convert_type(value)}"
+        when 'string'
+          'nil'
+          #values = attr_def.allowed_values.list.s
+          #values.first
+        else
+          # Never gets triggered
+          'nil'
+      end
+    else
+      case attr_def.type
+        when 'string'
+          '""'
+        else
+          'nil'
+      end
+    end
+  end
+
+  def self.attribute_default_value(attr_def)
+    case attr_def.default_value.value
+      when :s
+        "\"#{attr_def.default_value['s']}\""
+      when :list
+        []
+      when :shape
+        []
+      when :tensor
+        []
+      when :type
+        value = self.convert_type(attr_def.default_value[attr_def.default_value.value.to_s])
+        ":#{value.downcase}"
+      else
+        attr_def.default_value[attr_def.default_value.value.to_s]
+    end
   end
 end
 

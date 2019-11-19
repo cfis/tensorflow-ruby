@@ -45,12 +45,16 @@ module Tensorflow
       session.close
     end
 
-    def result_context(context, operation)
-      case operation
+    def result_context(context, result)
+      case result
         when Data::Dataset
-          operation.data
+          result.data
         when Eager::TensorHandle
-          operation.value
+          result.value
+        when Array
+          result.map do |sub_result|
+            sub_result.value
+          end
       end
     end
   end

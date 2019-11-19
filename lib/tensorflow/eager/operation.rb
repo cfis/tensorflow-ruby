@@ -1,7 +1,7 @@
 module Tensorflow
   module Eager
     class Operation
-      attr_reader :context, :op_def, :status
+      attr_reader :context, :guessed_dtype, :op_def, :status
 
       def initialize(context, op_type, inputs, attrs)
         @context = context
@@ -17,8 +17,11 @@ module Tensorflow
         @pointer = FFI.TFE_NewOp(context, self.op_def.name, self.status)
         name = attrs.delete(:name) || op_type
 
+        inputs = Array(inputs)
+        @guessed_dtype = figure_dtype(attrs, inputs)
+
+        setup_inputs(inputs, attrs)
         setup_attrs(attrs)
-        setup_inputs(inputs)
       end
 
       def to_ptr
@@ -28,6 +31,25 @@ module Tensorflow
       def dtype
         list_ptr = ::FFI::MemoryPointer.new(:int)
         FFI.TFE_OpGetAttrType(self, 'dtype', list_ptr, self.status)
+      end
+
+      def figure_dtype(attrs, inputs)
+        attr_def = self.op_def.attr.detect do |attr_def|
+          attr_def.type == 'type'
+        end
+
+        result = attr_def ? attrs[attr_def.name.to_sym] : nil
+        unless result
+          inputs.each do |input|
+            case input
+              when Operation
+                return input.output_types.first
+              when Variable
+                return input.dtype
+            end
+          end
+        end
+        result
       end
 
       def setup_attrs(attrs)
@@ -124,54 +146,67 @@ module Tensorflow
         self.status.check
       end
 
-      def setup_inputs(inputs)
+      def setup_inputs(inputs, attrs)
         inputs.each_with_index do |input, index|
-          setup_input(index, input)
+          setup_input(index, input, attrs)
         end
       end
 
-      def setup_input(index, value)
+      def check_input(arg_def, input, dtype)
+        case input
+          when Variable
+            arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
+          else
+            TensorHandle.from_value(self.context, input, dtype: dtype)
+        end
+      end
+
+      def setup_input(index, value, attrs)
         if value.nil?
           self.status.set(:tf_invalid_argument, "Argument is unset. Index: #{index}")
           self.status.check
         end
 
         arg_def = self.op_def.input_arg[index]
+        dtype = attrs[arg_def.type_attr.to_sym]
+
+        # Value can be an operation with multiple outputs. For example calling PACK with an input operation of SPLIT
+        checked_value = if (!arg_def.number_attr.empty? || !arg_def.type_list_attr.empty?)  && value.is_a?(Array)
+                          value.map do |sub_value|
+                            self.check_input(arg_def, sub_value, dtype)
+                          end
+                        else
+                          self.check_input(arg_def, value, dtype)
+                        end
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list
-        #  value = TensorHandle.from_value(self.context, value)
-          value.each do |a_value|
-            a_value = TensorHandle.from_value(self.context, a_value)
-            FFI.TFE_OpAddInput(self, a_value, self.status)
-            self.status.check
-          end
+          self.add_input_list(checked_value)
         elsif !arg_def.type_list_attr.empty?
-          # This input is a heterogeneous list.
-          #value = TensorHandle.from_value(self.context, value)
-          #FFI.TFE_OpAddInput(self, value, self.status)
-          # values = value.map do |a_value|
-          #            Eager::TensorHandle.from_value(self.context, a_value)
-          #          end
-
-          value = value.map do |a_value|
-            TensorHandle.from_value(self.context, a_value)
-          end
-          input_ptr = ::FFI::MemoryPointer.new(:pointer, value.size)
-          input_ptr.write_array_of_pointer(value)
-          FFI.TFE_OpAddInputList(self, input_ptr, value.size, self.status)
+          # This input is a heterogeneous list
+          self.add_input_list(checked_value)
         else
-          # This should be a single item
-          value = if value.is_a?(Array) && !value.empty?
-                    value = value.map do |a_value|
-                      TensorHandle.from_value(self.context, a_value)
-                    end
-                    value = Tensorflow.pack(value)
-                  else
-                    TensorHandle.from_value(self.context, value)
-                  end
+          # This input is a single item
+          self.add_input(checked_value)
+        end
+      end
+
+      def add_input(value)
+        # Check to see if the operation has multiple outputs, and if it does, we need to pack them together
+        # to fit into one input
+        if value.is_a?(Array) && value.length > 1
+          packed = Tensorflow.pack(value)
+          FFI.TFE_OpAddInput(self, packed, self.status)
+        else
           FFI.TFE_OpAddInput(self, value, self.status)
         end
+        self.status.check
+      end
+
+      def add_input_list(values)
+        input_ptr = ::FFI::MemoryPointer.new(:pointer, values.size)
+        input_ptr.write_array_of_pointer(values)
+        FFI.TFE_OpAddInputList(self, input_ptr, values.size, self.status)
         self.status.check
       end
     end

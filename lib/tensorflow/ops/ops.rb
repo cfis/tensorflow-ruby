@@ -22,8 +22,8 @@ module Tensorflow
       RawOps.identity(input)
     end
 
-    def ones(dims)
-      fill(dims, 1)
+    def ones(dims, dtype: :float)
+      fill(dims, 1, dtype: dtype)
     end
 
     def pack(values, n: nil, typeT: nil, axis: 0)
@@ -78,8 +78,7 @@ module Tensorflow
     end
 
     def zeros(dims, dtype: :float)
-      const = self.constant(0, dtype: dtype)
-      fill(dims, const, dtype: dtype)
+      fill(dims, 0, dtype: dtype)
     end
 
     def zeros_like(x)

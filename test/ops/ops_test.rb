@@ -1,63 +1,71 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
-  class OpsTest < Minitest::Test
-    def setup
-      Tensorflow.execution_mode = Tensorflow::EAGER_MODE
-    end
-
-    def test_const_graph
-      Graph::Graph.default.as_default do |graph|
-        const = Tensorflow.constant(33)
-        assert_kind_of(Graph::Operation, const)
-        result = graph.execute(const)
+  class OpsTest < BaseTest
+    def test_const
+      self.eager_and_graph do |context|
+        op = Tensorflow.constant(33)
+        result = self.result(context, op)
         assert_equal(33, result)
       end
     end
 
-    def test_const_eager
-      const = Tensorflow.constant(33)
-      assert_kind_of(Eager::TensorHandle, const)
-      assert_equal(:int32, const.dtype)
-      assert_equal(33, const.value)
-    end
-
     def test_eye
-      assert_equal([[1, 0], [0, 1]], Tensorflow.eye(2).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.eye(2)
+        result = self.result(context, op)
+        assert_equal([[1.0, 0.0], [0.0, 1.0]], result)
+      end
     end
 
     def test_fill
-      assert_equal([[9, 9, 9], [9, 9, 9]], Tensorflow.fill([2, 3], 9).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.fill([2, 3], 9)
+        result = self.result(context, op)
+        assert_equal([[9, 9, 9], [9, 9, 9]], result)
+      end
     end
 
     def test_identity
       [:float, :double, :int32, :uint8, :int16, :int8, :int64, :uint16, :uint32, :uint64, :bool, :string, :complex64, :complex128].each do |dtype|
-        value =
-          case dtype
-          when :string
-            ["hello", "world"]
-          when :bool
-            [1, 0]
-          when :complex64
-            [Complex(2, 3), Complex(1, 2)]
-          when :complex128
-            [Complex(2e52, 3), Complex(1, 2)]
-          when :float
-            [2.5, 3.5]
-          when :double
-            [2.5e48, 3.5e48]
-          else
-            [1, 2]
-          end
+        value = case dtype
+                  when :string
+                    ["hello", "world"]
+                  when :bool
+                    [1, 0]
+                  when :complex64
+                    [Complex(2.0, 3.0), Complex(1.0, 2.0)]
+                  when :complex128
+                    [Complex(2.0e52, 3.0), Complex(1.0, 2.0)]
+                  when :float
+                    [2.5, 3.5]
+                  when :double
+                    [2.5e48, 3.5e48]
+                  else
+                    [1, 2]
+                  end
 
-        tensor = Tensorflow.identity(Tensorflow::Tensor.new(value, dtype: dtype))
-        assert_equal(dtype, tensor.dtype)
-        assert_equal(value, tensor.value.to_a)
+        tensor = Tensor.new(value, dtype: dtype)
+
+        self.eager_and_graph do |context|
+          op = Tensorflow.identity(tensor)
+          assert_equal(dtype, tensor.dtype)
+          result = self.result(context, op)
+          assert_equal(value, result)
+        end
       end
     end
 
     def test_ones
-      assert_equal([[1, 1, 1], [1, 1, 1]], Tensorflow.ones([2, 3]).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.ones([2, 3])
+        result = self.result(context, op)
+        assert_equal([[1.0, 1.0, 1.0], [1.0, 1.0, 1.0]], result)
+
+        op = Tensorflow.ones([2, 3], dtype: :int32)
+        result = self.result(context, op)
+        assert_equal([[1, 1, 1], [1, 1, 1]], result)
+      end
     end
 
     def test_pack
@@ -65,15 +73,29 @@ module Tensorflow
       y = [2, 5]
       z = [3, 6]
 
-      assert_equal([[1, 4], [2, 5], [3, 6]], Tensorflow.pack([x, y, z]).value)
-      assert_equal([[1, 2, 3], [4, 5, 6]], Tensorflow.pack([x, y, z], axis: 1).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.pack([x, y, z])
+        result = self.result(context, op)
+        assert_equal([[1, 4], [2, 5], [3, 6]], result)
+
+        op = Tensorflow.pack([x, y, z], axis: 1)
+        result = self.result(context, op)
+        assert_equal([[1, 2, 3], [4, 5, 6]], result)
+      end
 
       x = Tensor.new([1, 4])
       y = Tensor.new([2, 5])
       z = Tensor.new([3, 6])
 
-      assert_equal([[1, 4], [2, 5], [3, 6]], Tensorflow.pack([x, y, z]).value)
-      assert_equal([[1, 2, 3], [4, 5, 6]], Tensorflow.pack([x, y, z], axis: 1).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.pack([x, y, z])
+        result = self.result(context, op)
+        assert_equal([[1, 4], [2, 5], [3, 6]], result)
+
+        op = Tensorflow.pack([x, y, z], axis: 1)
+        result = self.result(context, op)
+        assert_equal([[1, 2, 3], [4, 5, 6]], result)
+      end
     end
 
     def test_placeholder
@@ -87,63 +109,113 @@ module Tensorflow
     end
 
     def test_rank
-      assert_equal(0, Tensorflow.rank(1).value)
-      assert_equal(1, Tensorflow.rank([1]).value)
-      assert_equal(1, Tensorflow.rank([1,2]).value)
-      assert_equal(2, Tensorflow.rank([[1]]).value)
-      assert_equal(2, Tensorflow.rank([[1, 1], [2,2]]).value)
-      assert_equal(2, Tensorflow.rank([Tensor.new([1, 1]), Tensor.new([2,2])]).value)
-     end
+      self.eager_and_graph do |context|
+        op = Tensorflow.rank(1)
+        result = self.result(context, op)
+        assert_equal(0, result)
+
+        op = Tensorflow.rank([1])
+        result = self.result(context, op)
+        assert_equal(1, result)
+
+        op = Tensorflow.rank([1, 2])
+        result = self.result(context, op)
+        assert_equal(1, result)
+
+        op = Tensorflow.rank([[1]])
+        result = self.result(context, op)
+        assert_equal(2, result)
+
+        op = Tensorflow.rank([[1, 1], [2,2]])
+        result = self.result(context, op)
+        assert_equal(2, result)
+      end
+    end
 
     def test_range
-      assert_equal([0, 1, 2], Tensorflow.range(3).value)
-      assert_equal([3, 6, 9, 12, 15], Tensorflow.range(3, 18, 3).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.range(3)
+        result = self.result(context, op)
+        assert_equal([0, 1, 2], result)
+
+        op = Tensorflow.range(3, 18, 3)
+        result = self.result(context, op)
+        assert_equal([3, 6, 9, 12, 15], result)
+      end
     end
 
     def test_split
       value = Numo::Int32.new([5, 30]).seq
-      split0, split1, split2 = Tensorflow.split(value, 1, num_split: 3)
-      assert_equal([5, 10], split0.shape)
-      assert_equal([5, 10], split1.shape)
-      assert_equal([5, 10], split2.shape)
+
+      self.eager_and_graph do |context|
+        op = Tensorflow.split(value, 1, num_split: 3)
+        result = self.result(context, op)
+        assert_equal(3, result.length)
+        assert_equal([5, 10], result[0].shape)
+        assert_equal([5, 10], result[1].shape)
+        assert_equal([5, 10], result[2].shape)
+      end
     end
 
     def test_split_v
       value = Numo::Int32.new([5, 30]).seq
-      split0, split1, split2 = Tensorflow.split_v(value, [4, 15, 11], 1)
-      assert_equal([5, 4], split0.shape)
-      assert_equal([5, 15], split1.shape)
-      assert_equal([5, 11], split2.shape)
+
+      self.eager_and_graph do |context|
+        op = Tensorflow.split_v(value, [4, 15, 11], 1)
+        result = self.result(context, op)
+        assert_equal(3, result.length)
+        assert_equal([5, 4], result[0].shape)
+        assert_equal([5, 15], result[1].shape)
+        assert_equal([5, 11], result[2].shape)
+      end
     end
 
     def test_timestamp
-      assert_in_delta Time.now.to_f, Tensorflow.timestamp.value, 1
+      self.eager_and_graph do |context|
+        op = Tensorflow.timestamp
+        result = self.result(context, op)
+        assert_in_delta(Time.now.to_f, result, 1)
+      end
     end
 
     def test_transpose
-      assert_equal([[1, 4], [2, 5], [3, 6]], Tensorflow.transpose([[1, 2, 3], [4, 5, 6]]).value)
+      self.eager_and_graph do |context|
+        op = Tensorflow.transpose([[1, 2, 3], [4, 5, 6]])
+        result = self.result(context, op)
+        assert_equal([[1, 4], [2, 5], [3, 6]], result)
+      end
     end
 
     def test_zeros
-      zeros = Tensorflow.zeros([2, 3])
-      assert_equal([[0, 0, 0], [0, 0, 0]], zeros.value)
-      assert_equal(:int32, zeros.dtype)
-    end
+      self.eager_and_graph do |context|
+        op = Tensorflow.zeros([2, 3])
+        assert_equal(:float, op.dtype)
+        result = self.result(context, op)
+        assert_equal([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], result)
 
-    def test_zeros_int64
-      zeros = Tensorflow.zeros([2, 3], dtype: :int64)
-      assert_equal([[0, 0, 0], [0, 0, 0]], zeros.value)
-      assert_equal(:int64, zeros.dtype)
+        op = Tensorflow.zeros([2, 3], dtype: :int64)
+        assert_equal(:int64, op.dtype)
+        result = self.result(context, op)
+        assert_equal([[0, 0, 0], [0, 0, 0]], result)
+      end
     end
 
     def test_zeros_no_shape
-      zeros = Tensorflow.zeros([], dtype: :int64)
-      assert_equal(0, zeros.value)
-      assert_equal(:int64, zeros.dtype)
+      self.eager_and_graph do |context|
+        op = Tensorflow.zeros([], dtype: :int64)
+        result = self.result(context, op)
+        assert_equal(0, result)
+        assert_equal(:int64, op.dtype)
+      end
     end
 
     def test_zeros_like
-      assert_equal([[0, 0, 0], [0, 0, 0]], Tensorflow.zeros_like(Tensorflow.ones([2, 3])).value)
+      self.eager_and_graph do |context|
+        ones = Tensorflow.ones([2, 3])
+        op = Tensorflow.zeros_like(ones)
+        result = self.result(context, op)
+        assert_equal([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], result)
+      end
     end
   end
 end

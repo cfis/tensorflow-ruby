@@ -1,7 +1,7 @@
 module Tensorflow
   module Graph
     class OperationDescription
-      attr_reader :graph, :name, :op_def, :guessed_dtype
+      attr_reader :graph, :name, :op_def
 
       def initialize(graph, op_type, inputs, attrs)
         @graph = graph
@@ -18,8 +18,7 @@ module Tensorflow
         @pointer = FFI.TF_NewOperation(graph, self.op_def.name, @name)
 
         inputs = Array(inputs)
-        @guessed_dtype = figure_dtype(attrs, inputs)
-        setup_inputs(inputs)
+        setup_inputs(inputs, attrs)
         setup_control_inputs(graph.control_inputs)
         setup_attrs(**attrs)
       end
@@ -52,7 +51,7 @@ module Tensorflow
             end
           end
         end
-        nil
+        result
       end
 
       def to_ptr
@@ -140,7 +139,7 @@ module Tensorflow
         self.graph.create_operation(operation.op_type, captured_inputs, **attrs)
       end
 
-      def check_input(arg_def, input)
+      def check_input(arg_def, input, dtype)
         case input
           when Operation
             self.graph.equal?(input.graph) ? input : capture(input)
@@ -149,34 +148,35 @@ module Tensorflow
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
-            dtype = arg_def.dtype || self.guessed_dtype
             input_name = "#{self.name}/#{arg_def.name}"
             Tensorflow.constant(input, name: input_name, dtype: dtype)
         end
       end
 
-      def setup_inputs(inputs)
+      def setup_inputs(inputs, attrs)
         inputs.each_with_index do |input, index|
-          self.setup_input(index, input)
+          self.setup_input(index, input, attrs)
         end
       end
 
-      def setup_input(index, value)
+      def setup_input(index, value, attrs)
         arg_def = self.op_def.input_arg[index]
+        dtype = attrs[arg_def.type_attr.to_sym]
 
         # Value can be an operation with multiple outputs. For example calling PACK with an input operation of SPLIT
         checked_value = if (!arg_def.number_attr.empty? || !arg_def.type_list_attr.empty?)  && value.is_a?(Array)
                           value.map do |sub_value|
-                            self.check_input(arg_def, sub_value)
+                            self.check_input(arg_def, sub_value, dtype)
                           end
                         else
-                          self.check_input(arg_def, value)
+                          self.check_input(arg_def, value, dtype)
                         end
 
         if !arg_def.number_attr.empty?
           # This input is a homogeneous list
           self.add_input_list(checked_value)
         elsif !arg_def.type_list_attr.empty?
+          # This input is a heterogeneous list
           self.add_input_list(checked_value)
         else
           # This input is a single item

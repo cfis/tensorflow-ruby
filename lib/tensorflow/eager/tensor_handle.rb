@@ -22,15 +22,8 @@ module Tensorflow
             TensorHandle.new(context, value)
           when Variable
             value.value_handle
-          # when Array
-          #   value.map do |a_value|
-          #     #new_value =
-          #     self.from_value(a_value)
-          #   end
-          # when Array
-          #   value
           else
-            TensorHandle.new(context, Tensor.new(value))
+            TensorHandle.new(context, Tensor.new(value, dtype: dtype))
         end
       end
 

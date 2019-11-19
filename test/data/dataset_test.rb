@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+ require_relative "../base_test"
 
 module Tensorflow
   module Data
-    class DatasetTest < Minitest::Test
+    class DatasetTest < BaseTest
       def test_from_tensor_slices
         skip
         mnist = Tensorflow::Keras::Datasets::MNIST

@@ -6,13 +6,8 @@ module Tensorflow
         @output_types = input_dataset.output_types
         @output_shapes = input_dataset.output_shapes.map { |s| [batch_size] + s }
 
-        variant_tensor = RawOps.batch_dataset_v2(
-          input_dataset: input_dataset,
-          batch_size: batch_size,
-          drop_remainder: drop_remainder,
-          output_types: @output_types,
-          output_shapes: @output_shapes
-        )
+        variant_tensor = RawOps.batch_dataset_v2(input_dataset, batch_size, drop_remainder,
+                                                 output_types: @output_types, output_shapes: @output_shapes)
         super(variant_tensor)
       end
     end

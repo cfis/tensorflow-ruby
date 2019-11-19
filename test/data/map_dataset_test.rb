@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+ require_relative "../base_test"
 
 module Tensorflow
   module Data
-    class MapDatasetTest < Minitest::Test
+    class MapDatasetTest < BaseTest
       extend Decorator
 
       def three_components
@@ -20,32 +20,16 @@ module Tensorflow
             end
       end
 
-      def test_function_no_parameters_eager
-        Eager::Context.default.as_default do |context|
+      def test_function_no_parameter
+        self.eager_and_graph do |context|
           components = Numo::NArray[[1, 2, 3]]
           dataset = TensorDataset.new(components)
 
           ExecutionContext.current.add_function(self.function_no_parameters)
           map_dataset = MapDataset.new(dataset, self.function_no_parameters)
-          assert_equal([42], map_dataset.data)
-        end
-      end
 
-      def test_function_no_parameters_graph
-        Graph::Graph.new.as_default do |graph|
-          components = [[1, 2, 3]]
-          dataset = TensorDataset.new(components)
-
-          graph.add_function(self.function_no_parameters)
-          map_dataset = MapDataset.new(dataset, self.function_no_parameters)#, output_types: [:int32], output_shapes: [[1]])
-          iterator = map_dataset.make_one_shot_iterator
-          next_element = iterator.get_next
-
-          result = Graph::Session.run(graph) do |session|
-                      session.run(next_element)
-                    end
-
-          assert_equal(42, result)
+          result = self.result(context, map_dataset)
+          assert_equal([42], result)
         end
       end
 
@@ -58,39 +42,21 @@ module Tensorflow
           end
       end
 
-      def test_function_one_parameter_eager
-        Eager::Context.default.as_default do |context|
+      def test_function_one_parameter
+        self.eager_and_graph do |context|
           components = [[1, 2, 3]]
           dataset = TensorDataset.new(components)
 
           ExecutionContext.current.add_function(self.function_one_parameter)
 
           map_dataset = MapDataset.new(dataset, self.function_one_parameter)
-          map_dataset.each_with_index do |record, index|
-            assert_equal(components[0][0] ** 2, record.value[0])
-            assert_equal(components[0][1] ** 2, record.value[1])
-            assert_equal(components[0][2] ** 2, record.value[2])
+          result = self.result(context, map_dataset)
+
+          result.each_with_index do |record, index|
+            assert_equal(components[0][0] ** 2, record[0])
+            assert_equal(components[0][1] ** 2, record[1])
+            assert_equal(components[0][2] ** 2, record[2])
           end
-        end
-      end
-
-      def test_function_one_parameter_graph
-        Graph::Graph.new.as_default do |graph|
-          components = [[1, 2, 3]]
-          dataset = TensorDataset.new(components)
-
-          ExecutionContext.current.add_function(self.function_one_parameter)
-          map_dataset = MapDataset.new(dataset, self.function_one_parameter)
-          iterator = map_dataset.make_one_shot_iterator
-          next_element = iterator.get_next
-
-          result = Graph::Session.run(graph) do |session|
-            session.run(next_element)
-          end
-
-          assert_equal(components[0][0] ** 2, result[0])
-          assert_equal(components[0][1] ** 2, result[1])
-          assert_equal(components[0][2] ** 2, result[2])
         end
       end
 
@@ -99,16 +65,18 @@ module Tensorflow
         Math.square(x)
       end
 
-      def test_one_parameter_eager
-        Eager::Context.default.as_default do |context|
+      def test_one_parameter
+        self.eager_and_graph do |context|
           components = [[1, 2, 3]]
           dataset = TensorDataset.new(components)
 
           map_dataset = MapDataset.new(dataset, self.one_parameter)
-          map_dataset.each_with_index do |record, index|
-            assert_equal(components[0][0] ** 2, record.value[0])
-            assert_equal(components[0][1] ** 2, record.value[1])
-            assert_equal(components[0][2] ** 2, record.value[2])
+          result = self.result(context, map_dataset)
+
+          result.each_with_index do |record, index|
+            assert_equal(components[0][0] ** 2, record[0])
+            assert_equal(components[0][1] ** 2, record[1])
+            assert_equal(components[0][2] ** 2, record[2])
           end
         end
       end
@@ -127,38 +95,15 @@ module Tensorflow
             end
       end
 
-      def test_function_three_parameters_eager
-        Eager::Context.default.as_default do |context|
+      def test_function_three_parameters
+        self.eager_and_graph do |context|
           dataset = TensorSliceDataset.new(self.three_components)
           dataset = TensorSliceDataset.new(self.three_components)
 
           ExecutionContext.current.add_function(self.function_three_parameters)
 
           map_dataset = MapDataset.new(dataset, self.function_three_parameters)
-
-          map_dataset.each_with_index do |record, index|
-            assert_equal(self.three_components[0][index] ** 2, record[0].value)
-            assert_equal(self.three_components[1][index, true] ** 2, record[1].value)
-            assert_equal(self.three_components[2][index] ** 2, record[2].value)
-          end
-        end
-      end
-
-      def test_function_three_parameters_graph
-        columns = 7
-        Graph::Graph.new.as_default do |graph|
-          dataset = TensorSliceDataset.new(self.three_components)
-          ExecutionContext.current.add_function(self.function_three_parameters)
-
-          map_dataset = MapDataset.new(dataset, self.function_three_parameters)
-          iterator = map_dataset.make_one_shot_iterator
-          next_element = iterator.get_next
-
-          result = Graph::Session.run(graph) do |session|
-            columns.times.map do
-              session.run(next_element)
-            end
-          end
+          result = self.result(context, map_dataset)
 
           result.each_with_index do |record, index|
             assert_equal(self.three_components[0][index] ** 2, record[0])
@@ -173,32 +118,11 @@ module Tensorflow
         [Math.square(x), Math.square(y), Math.square(z)]
       end
 
-      def test_three_parameters_eager
-        Eager::Context.default.as_default do |context|
+      def test_three_parameters
+        self.eager_and_graph do |context|
           dataset = TensorSliceDataset.new(self.three_components)
           map_dataset = MapDataset.new(dataset, self.three_parameters)
-
-          map_dataset.each_with_index do |record, index|
-            assert_equal(self.three_components[0][index] ** 2, record[0].value)
-            assert_equal(self.three_components[1][index, true] ** 2, record[1].value)
-            assert_equal(self.three_components[2][index] ** 2, record[2].value)
-          end
-        end
-      end
-
-      def test_three_parameters_graph
-        columns = 7
-        Graph::Graph.new.as_default do |graph|
-          dataset = TensorSliceDataset.new(self.three_components)
-          map_dataset = MapDataset.new(dataset, self.three_parameters)
-          iterator = map_dataset.make_one_shot_iterator
-          next_element = iterator.get_next
-
-          result = Graph::Session.run(graph) do |session|
-            columns.times.map do
-              session.run(next_element)
-            end
-          end
+          result = self.result(context, map_dataset)
 
           result.each_with_index do |record, index|
             assert_equal(self.three_components[0][index] ** 2, record[0])

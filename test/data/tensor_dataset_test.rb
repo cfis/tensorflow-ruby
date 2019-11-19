@@ -1,21 +1,22 @@
-require_relative "../test_helper"
+ require_relative "../base_test"
 
 module Tensorflow
   module Data
-    class TensorDatasetTest < Minitest::Test
-      def setup
-        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
-      end
-
+    class TensorDatasetTest < BaseTest
       def test_simple
-        components = [1,
-                      Numo::NArray[1, 2, 3],
-                      37]
+        self.eager_and_graph do |context|
+          components = [1,
+                        Numo::NArray[1, 2, 3],
+                        37]
 
-        dataset = TensorDataset.new(components)
-        assert_equal([:int32, :int32 , :int32], dataset.output_types)
-        assert_equal([[], [3], []], dataset.output_shapes)
-        assert_equal([[1, [1, 2, 3], 37]], dataset.data)
+          dataset = TensorDataset.new(components)
+
+          assert_equal([:int32, :int32 , :int32], dataset.output_types)
+          assert_equal([[], [3], []], dataset.output_shapes)
+
+          result = self.result(context, dataset)
+          assert_equal([[1, [1, 2, 3], 37]], result)
+        end
       end
     end
   end

@@ -1,47 +1,47 @@
-require_relative "../test_helper"
+ require_relative "../base_test"
 
 module Tensorflow
   module Data
-    class ZipDatasetTest < Minitest::Test
-      def setup
-        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
-      end
-
+    class ZipDatasetTest < BaseTest
       def test_equal_length_components
-        components = [Numo::NArray[[1], [2], [3], [4]].tile(20),
-                      Numo::NArray[[12], [13], [14], [15]].tile(22),
-                      Numo::NArray[37.0, 38.0, 39.0, 40.0]]
+        self.eager_and_graph do |context|
+          components = [Numo::NArray[[1], [2], [3], [4]].tile(20),
+                        Numo::NArray[[12], [13], [14], [15]].tile(22),
+                        Numo::NArray[37.0, 38.0, 39.0, 40.0]]
 
-        datasets = components.map do |component|
-          TensorSliceDataset.new(component)
-        end
+          datasets = components.map do |component|
+            TensorSliceDataset.new(component)
+          end
 
-        dataset = Data::ZipDataset.new(datasets)
+          dataset = Data::ZipDataset.new(datasets)
+          result = self.result(context, dataset)
 
-        dataset.each_with_index do |slice, i|
-          assert_equal(components[0].to_a[i], slice[0].value)
-          assert_equal(components[1].to_a[i], slice[1].value)
-          assert_equal(components[2].to_a[i], slice[2].value)
+          result.each_with_index do |slice, i|
+            assert_equal(components[0].to_a[i], slice[0])
+            assert_equal(components[1].to_a[i], slice[1])
+            assert_equal(components[2].to_a[i], slice[2])
+          end
         end
       end
-
 
       def test_variable_length_components
-        skip
-        components = [[1, 2, 3, 4],
-                      [1, 2, 3, 4, 5],
-                      [1.0, 2.0]]
+        self.eager_and_graph do |context|
+          components = [Numo::NArray[1, 2, 3, 4],
+                        Numo::NArray[1, 2, 3, 4, 5],
+                        Numo::NArray[1.0, 2.0]]
 
-        datasets = components.map do |component|
-          TensorSliceDataset.new(component)
-        end
+          datasets = components.map do |component|
+            TensorSliceDataset.new(component)
+          end
 
-        dataset = Data::ZipDataset.new(datasets)
+          dataset = Data::ZipDataset.new(datasets)
+          result = self.result(context, dataset)
 
-        dataset.each_with_index do |slice, i|
-          assert_equal(components[0].to_a[i], slice[0].value)
-          assert_equal(components[1].to_a[i], slice[1].value)
-          assert_equal(components[2].to_a[i], slice[2].value)
+          result.each_with_index do |slice, i|
+            assert_equal(components[0].to_a[i], slice[0])
+            assert_equal(components[1].to_a[i], slice[1])
+            assert_equal(components[2].to_a[i], slice[2])
+          end
         end
       end
     end

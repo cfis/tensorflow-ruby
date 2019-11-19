@@ -103,7 +103,7 @@ module Tensorflow
         i = 0
         operation.op_def.input_arg.reduce(Array.new) do |result, input_arg|
           if !input_arg.number_attr.empty?
-            input_len = attrs[input_arg.number_attr.to_sym].length
+            input_len = attrs[input_arg.number_attr.to_sym]
             is_sequence = true
           elsif !input_arg.type_list_attr.empty?
             input_len = attrs[input_arg.type_list_attr.to_sym].length

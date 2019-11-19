@@ -4,16 +4,19 @@ module Tensorflow
 
     attr_reader :handle, :dtype
 
-    def initialize(initial_value = nil, dtype: nil, shape: [], shared_name: nil, name: 'Variable', trainable: false)
+    def initialize(initial_value = nil, dtype: nil, shape: nil, shared_name: nil, name: 'Variable', trainable: false)
       initial_value = case initial_value
                       when NilClass
                         @dtype = dtype
+                        shape = []
                         initial_value
                       when Graph::Operation
-                        @dtype = dtype
+                        @dtype = dtype || initial_value.dtype
+                        shape = shape || initial_value.shape
                         initial_value
                       when Tensor
-                        @dtype = tensor.dtype
+                        @dtype = initial_value.dtype
+                        shape = shape || initial_value.shape
                         initial_value
                       else
                         tensor = Tensor.from_value(initial_value, dtype: dtype)

@@ -255,5 +255,19 @@ module Tensorflow
         assert_equal(1, result[1])
       end
     end
+
+    def test_operation_shape
+      shape = [100, 200]
+      normal = Random.normal(shape)
+      variable = Variable.new(normal)
+      assert_equal(shape, variable.shape)
+    end
+
+    def test_operation_tensor
+      shape = [100, 200]
+      data = Numo::Int32.new(20_000).seq.reshape(*shape)
+      variable = Variable.new(data)
+      assert_equal(shape, variable.shape)
+    end
   end
 end

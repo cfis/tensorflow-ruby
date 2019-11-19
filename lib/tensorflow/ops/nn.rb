@@ -2,7 +2,7 @@ module Tensorflow
   module NN
     class << self
       def all_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, seed: nil, seed2: nil)
-        RawOps.all_candidate_sampler(true_classes: true_classes, num_true: num_true, num_sampled: num_sampled, unique: unique, seed: seed, seed2: seed2)
+        RawOps.all_candidate_sampler(true_classes, num_true: num_true, num_sampled: num_sampled, unique: unique, seed: seed, seed2: seed2)
       end
 
       # def atrous_conv2d
@@ -12,7 +12,7 @@ module Tensorflow
       # end
 
       def avg_pool(value, ksize: nil, strides: nil, padding: nil, data_format: nil)
-        RawOps.avg_pool(value: value, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
+        RawOps.avg_pool(value, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
       end
 
       # def avg_pool1d
@@ -22,7 +22,7 @@ module Tensorflow
       # end
 
       def avg_pool3d(input, ksize: nil, strides: nil, padding: nil, data_format: nil)
-        RawOps.avg_pool3d(input: input, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
+        RawOps.avg_pool3_d(input, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
       end
 
       def batch_norm_with_global_normalization(t, m, v, beta, gamma, variance_epsilon: nil, scale_after_normalization: nil)
@@ -53,14 +53,14 @@ module Tensorflow
       # end
 
       def conv2d(input, filter, strides: nil, use_cudnn_on_gpu: nil, padding: nil, explicit_paddings: nil, data_format: nil, dilations: nil)
-        RawOps.conv2d(input: input, filter: filter, strides: strides, use_cudnn_on_gpu: use_cudnn_on_gpu, padding: padding, explicit_paddings: explicit_paddings, data_format: data_format, dilations: dilations)
+        RawOps.conv2d(input, filter, strides: strides, use_cudnn_on_gpu: use_cudnn_on_gpu, padding: padding, explicit_paddings: explicit_paddings, data_format: data_format, dilations: dilations)
       end
 
       # def conv2d_transpose
       # end
 
       def conv3d(input, filter, strides: nil, padding: nil, data_format: nil, dilations: nil)
-        RawOps.conv3d(input: input, filter: filter, strides: strides, padding: padding, data_format: data_format, dilations: dilations)
+        RawOps.conv3d(input, filter, strides: strides, padding: padding, data_format: data_format, dilations: dilations)
       end
 
       # def conv3d_transpose
@@ -91,7 +91,7 @@ module Tensorflow
       # end
 
       def depth_to_space(input, block_size: nil, data_format: nil)
-        RawOps.depth_to_space(input: input, block_size: block_size, data_format: data_format)
+        RawOps.depth_to_space(input, block_size: block_size, data_format: data_format)
       end
 
       # def depthwise_conv2d
@@ -104,14 +104,14 @@ module Tensorflow
       # end
 
       def dilation2d(input, filter, strides: nil, rates: nil, padding: nil)
-        RawOps.dilation2d(input: input, filter: filter, strides: strides, rates: rates, padding: padding)
+        RawOps.dilation2d(input, filter, strides: strides, rates: rates, padding: padding)
       end
 
       # def dropout
       # end
 
       def elu(features)
-        RawOps.elu(features: features)
+        RawOps.elu(features)
       end
 
       # def embedding_lookup
@@ -124,15 +124,15 @@ module Tensorflow
       # end
 
       def fixed_unigram_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, vocab_file: nil, distortion: nil, num_reserved_ids: nil, num_shards: nil, shard: nil, unigrams: nil, seed: nil, seed2: nil)
-        RawOps.fixed_unigram_candidate_sampler(true_classes: true_classes, num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, vocab_file: vocab_file, distortion: distortion, num_reserved_ids: num_reserved_ids, num_shards: num_shards, shard: shard, unigrams: unigrams, seed: seed, seed2: seed2)
+        RawOps.fixed_unigram_candidate_sampler(true_classes, num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, vocab_file: vocab_file, distortion: distortion, num_reserved_ids: num_reserved_ids, num_shards: num_shards, shard: shard, unigrams: unigrams, seed: seed, seed2: seed2)
       end
 
       def fractional_avg_pool(value, pooling_ratio: nil, pseudo_random: nil, overlapping: nil, deterministic: nil, seed: nil, seed2: nil)
-        RawOps.fractional_avg_pool(value: value, pooling_ratio: pooling_ratio, pseudo_random: pseudo_random, overlapping: overlapping, deterministic: deterministic, seed: seed, seed2: seed2)
+        RawOps.fractional_avg_pool(value, pooling_ratio: pooling_ratio, pseudo_random: pseudo_random, overlapping: overlapping, deterministic: deterministic, seed: seed, seed2: seed2)
       end
 
       def fractional_max_pool(value, pooling_ratio: nil, pseudo_random: nil, overlapping: nil, deterministic: nil, seed: nil, seed2: nil)
-        RawOps.fractional_max_pool(value: value, pooling_ratio: pooling_ratio, pseudo_random: pseudo_random, overlapping: overlapping, deterministic: deterministic, seed: seed, seed2: seed2)
+        RawOps.fractional_max_pool(value, pooling_ratio: pooling_ratio, pseudo_random: pseudo_random, overlapping: overlapping, deterministic: deterministic, seed: seed, seed2: seed2)
       end
 
       def in_top_k(predictions, targets, k: nil)
@@ -147,11 +147,11 @@ module Tensorflow
       # end
 
       def leaky_relu(features, alpha: nil)
-        RawOps.leaky_relu(features: features, alpha: alpha)
+        RawOps.leaky_relu(features, alpha: alpha)
       end
 
       def learned_unigram_candidate_sampler(true_classes, num_true: nil, num_sampled: nil, unique: nil, range_max: nil, seed: nil, seed2: nil)
-        RawOps.learned_unigram_candidate_sampler(true_classes: true_classes, num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, seed: seed, seed2: seed2)
+        RawOps.learned_unigram_candidate_sampler(true_classes, num_true: num_true, num_sampled: num_sampled, unique: unique, range_max: range_max, seed: seed, seed2: seed2)
       end
 
       # def local_response_normalization
@@ -161,15 +161,15 @@ module Tensorflow
       # end
 
       def log_softmax(logits)
-        RawOps.log_softmax(logits: logits)
+        RawOps.log_softmax(logits)
       end
 
       def lrn(input, depth_radius: nil, bias: nil, alpha: nil, beta: nil)
-        RawOps.lrn(input: input, depth_radius: depth_radius, bias: bias, alpha: alpha, beta: beta)
+        RawOps.lrn(input, depth_radius: depth_radius, bias: bias, alpha: alpha, beta: beta)
       end
 
       def max_pool(input, ksize: nil, strides: nil, padding: nil, data_format: nil)
-        RawOps.max_pool(input: input, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
+        RawOps.max_pool(input, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
       end
 
       # def max_pool1d
@@ -179,11 +179,11 @@ module Tensorflow
       # end
 
       def max_pool3d(input, ksize: nil, strides: nil, padding: nil, data_format: nil)
-        RawOps.max_pool3d(input: input, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
+        RawOps.max_pool3d(input, ksize: ksize, strides: strides, padding: padding, data_format: data_format)
       end
 
       def max_pool_with_argmax(input, ksize: nil, strides: nil, padding: nil, include_batch_in_index: nil)
-        RawOps.max_pool_with_argmax(input: input, ksize: ksize, strides: strides, padding: padding, include_batch_in_index: include_batch_in_index)
+        RawOps.max_pool_with_argmax(input, ksize: ksize, strides: strides, padding: padding, include_batch_in_index: include_batch_in_index)
       end
 
       # def moments
@@ -203,7 +203,7 @@ module Tensorflow
       end
 
       def relu6(features)
-        RawOps.relu6(features: features)
+        RawOps.relu6(features)
       end
 
       # def safe_embedding_lookup_sparse
@@ -216,21 +216,21 @@ module Tensorflow
       # end
 
       def selu(features)
-        RawOps.selu(features: features)
+        RawOps.selu(features)
       end
 
       # def separable_conv2d
       # end
 
       def sigmoid(x)
-        RawOps.sigmoid(x: x)
+        RawOps.sigmoid(x)
       end
 
       # def sigmoid_cross_entropy_with_logits
       # end
 
       def softmax(logits)
-        RawOps.softmax(logits: logits)
+        RawOps.softmax(logits)
       end
 
       def softmax_cross_entropy_with_logits(features, labels)
@@ -238,11 +238,11 @@ module Tensorflow
       end
 
       def softplus(features)
-        RawOps.softplus(features: features)
+        RawOps.softplus(features)
       end
 
       def softsign(features)
-        RawOps.softsign(features: features)
+        RawOps.softsign(features)
       end
 
       def space_to_batch(input, paddings, block_size: nil)
@@ -250,7 +250,7 @@ module Tensorflow
       end
 
       def space_to_depth(input, block_size: nil, data_format: nil)
-        RawOps.space_to_depth(input: input, block_size: block_size, data_format: data_format)
+        RawOps.space_to_depth(input, block_size: block_size, data_format: data_format)
       end
 
       def sparse_softmax_cross_entropy_with_logits(features, labels)
@@ -261,11 +261,11 @@ module Tensorflow
       # end
 
       def tanh(x)
-        RawOps.tanh(x: x)
+        RawOps.tanh(x)
       end
 
       def top_k(input, k: nil, sorted: nil)
-        RawOps.top_k(input: input, k: k, sorted: sorted)
+        RawOps.top_k(input, k: k, sorted: sorted)
       end
 
       # def weighted_cross_entropy_with_logits

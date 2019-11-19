@@ -199,7 +199,7 @@ module Tensorflow
       # end
 
       def relu(features)
-        RawOps.relu(features: features)
+        RawOps.relu(features)
       end
 
       def relu6(features)

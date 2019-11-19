@@ -100,20 +100,44 @@ module Tensorflow
       end
 
       def output_types
-        result = Array.new(self.num_outputs)
-        self.num_outputs.times do |index|
+        self.num_outputs.times.map do |index|
           output = FFI::Output.new
           output[:oper] = self.to_ptr
           output[:index] = index
-          result[index] = FFI.TF_OperationOutputType(output)
+          FFI.TF_OperationOutputType(output)
         end
-        result
+      end
+
+      def dtype
+        self.output_types.first
       end
 
       def output_list_length(arg_name)
         Status.check do |status|
           FFI.TF_OperationOutputListLength(self, arg_name, status)
         end
+      end
+
+      def output_shapes
+        self.num_outputs.times.map do |index|
+          output = FFI::Output.new
+          output[:oper] = self.to_ptr
+          output[:index] = index
+
+          num_dims = Status.check do |status|
+            FFI.TF_GraphGetTensorNumDims(self.graph, output, status)
+          end
+
+          dims_ptr = ::FFI::MemoryPointer.new(:int64, num_dims)
+          Status.check do |status|
+            FFI.TF_GraphGetTensorShape(self.graph, output, dims_ptr, num_dims, status)
+          end
+          dims_ptr.read_array_of_int64(num_dims)
+        end
+      end
+
+      def shape
+        self.output_shapes.first
       end
 
       def num_control_inputs

@@ -64,8 +64,8 @@ module Tensorflow
     attach_function :TF_NewGraph, [], :pointer
     attach_function :TF_DeleteGraph, [:pointer], :pointer
     attach_function :TF_GraphGetOpDef, [:pointer, :string, :pointer, :pointer], :void
-    attach_function :TF_GraphGetTensorNumDims, [:pointer, Output, :pointer], :int
 
+    attach_function :TF_GraphGetTensorNumDims, [:pointer, Output, :pointer], :int
     attach_function :TF_GraphGetTensorShape, [:pointer, Output, :pointer, :int, :pointer], :void
     attach_function :TF_GraphSetTensorShape, [:pointer, Output, :pointer, :int, :pointer], :void
 

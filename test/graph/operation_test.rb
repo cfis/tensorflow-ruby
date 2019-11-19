@@ -81,9 +81,24 @@ module Tensorflow
         assert_equal([:int32], operation.output_types)
       end
 
+      def test_dtype
+        operation = Tensorflow.placeholder(:int32)
+        assert_equal(:int32, operation.dtype)
+      end
+
       def test_output_list_length
         operation = Tensorflow.placeholder(:int32)
         assert_equal(1, operation.output_list_length('output'))
+      end
+
+      def test_output_shapes
+        operation = Tensorflow.placeholder(:int32, shape: [12, 32])
+        assert_equal([[12, 32]], operation.output_shapes)
+      end
+
+      def test_shape
+        operation = Tensorflow.placeholder(:int32, shape: [12, 32])
+        assert_equal([12, 32], operation.shape)
       end
 
       def test_consumers

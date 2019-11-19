@@ -160,8 +160,8 @@ module Tensorflow
     @mode = value
   end
 
-  def self.name_scope(base_name)
-    ExecutionContext.current.name_scope(base_name)
+  def self.name_scope(base_name, &block)
+    ExecutionContext.current.name_scope(base_name, &block)
   end
 
   extend PythonCompatability

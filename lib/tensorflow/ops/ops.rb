@@ -77,7 +77,7 @@ module Tensorflow
       RawOps.transpose(x, perm)
     end
 
-    def zeros(dims, dtype: nil)
+    def zeros(dims, dtype: :float)
       const = self.constant(0, dtype: dtype)
       fill(dims, const, dtype: dtype)
     end

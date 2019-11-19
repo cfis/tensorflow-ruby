@@ -160,6 +160,10 @@ module Tensorflow
     @mode = value
   end
 
+  def self.name_scope(base_name)
+    ExecutionContext.current.name_scope(base_name)
+  end
+
   extend PythonCompatability
   class << self
     extend Forwardable

@@ -58,10 +58,12 @@ module Tensorflow
         # Gather up all the outputs for each operation
         outputs = operations.map do |operation|
           case operation
-            when Operation
+            when Operation, Variable
               operation.outputs
             when FFI::Output
               operation
+            else
+              raise(TensorflowError, "Unsupported operation type: #{operation}")
           end
         end.flatten
 
@@ -71,10 +73,12 @@ module Tensorflow
         # Gather up all the targets
         targets = operations.map do |operation|
           case operation
-            when Operation
+            when Operation, Variable
               operation
             when FFI::Output
               operation.operation(self.graph)
+            else
+              raise("Unsupported target: #{operation}")
           end
         end
         targets_ptr = ::FFI::MemoryPointer.new(:pointer, targets.length)

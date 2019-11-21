@@ -19,7 +19,7 @@ module Tensorflow
     end
 
     class Session
-      attr_accessor :options
+      attr_accessor :graph, :options
 
       def self.run(graph)
         session = self.new(graph, SessionOptions.new)
@@ -35,6 +35,7 @@ module Tensorflow
       end
 
       def initialize(graph, options)
+        @graph = graph
         Status.check do |status|
           @pointer = FFI.TF_NewSession(graph, options, status)
         end
@@ -55,13 +56,29 @@ module Tensorflow
         values_ptr.write_array_of_pointer(values)
 
         # Gather up all the outputs for each operation
-        outputs = operations.map(&:outputs).flatten
+        outputs = operations.map do |operation|
+          case operation
+            when Operation
+              operation.outputs
+            when FFI::Output
+              operation
+          end
+        end.flatten
+
         outputs_ptr = FFI::Output.array_to_ptr(outputs)
         result_ptr = ::FFI::MemoryPointer.new(:pointer, outputs.length)
 
-        # Create a pointer to each operation
-        targets_ptr = ::FFI::MemoryPointer.new(:pointer, operations.length)
-        targets_ptr.write_array_of_pointer(operations)
+        # Gather up all the targets
+        targets = operations.map do |operation|
+          case operation
+            when Operation
+              operation
+            when FFI::Output
+              operation.operation(self.graph)
+          end
+        end
+        targets_ptr = ::FFI::MemoryPointer.new(:pointer, targets.length)
+        targets_ptr.write_array_of_pointer(targets)
 
         run_options = nil
         metadata = nil
@@ -98,14 +115,15 @@ module Tensorflow
 
       def values_to_tensors(values)
         values.map do |key, value|
-          if value.is_a?(Tensor)
-            value
-          else
-            # The value dtype needs to match the key dtype
-            raise(TensorflowError, "Cannot determine dtype: #{key}") if key.num_outputs != 1
-            dtype = key.output_types.first
-            Tensor.new(value, dtype: dtype)
-          end
+          case value
+            when Tensor
+              value
+            else
+              # The value dtype needs to match the key dtype
+              raise(TensorflowError, "Cannot determine dtype: #{key}") if key.num_outputs != 1
+              dtype = key.output_types.first
+              Tensor.new(value, dtype: dtype)
+            end
         end
       end
     end

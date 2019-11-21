@@ -146,7 +146,7 @@ module Tensorflow
       end
 
       def to_s
-        "#{self.name}"#": #{self.value}"
+        "#{self.name}: #{self.value}"
       end
     end
   end

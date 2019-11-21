@@ -44,9 +44,11 @@ start_time = Time.now
   end
 
   if (epoch + 1) % display_step == 0
-    c = session.run(cost, {x_value => train_x, y_value => train_y})
-    puts("Epoch:", "%04d" % (epoch + 1), "cost=", c, \
-      "W=", session.run(weight), "b=", session.run(bias))
+    current_cost = session.run(cost, {x_value => train_x, y_value => train_y})
+    current_weight = session.run(weight)
+    current_bias = session.run(bias)
+
+    puts("Epoch:", "%04d" % (epoch + 1), "cost=", current_cost, "W=", current_weight, "b=", current_bias)
   end
 end
 

@@ -7,7 +7,7 @@ module Tensorflow
   # the tensor is released you get a GC (this can happen even if a Ruby tensor object keeps a reference to the pointer at
   # GC time).
   #
-  # Thus this class creates its own memory and fress the memory only after being called bcak by tensorflow.
+  # Thus this class creates its own memory and frees the memory only after being called bcak by tensorflow.
 
   class TensorData
     extend ::FFI::Library

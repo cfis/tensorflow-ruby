@@ -13,6 +13,10 @@ module Tensorflow
         @non_slots = {}
       end
 
+      def graph
+        ExecutionContext.current
+      end
+
       def minimize(loss, var_list: nil, grad_loss: nil, global_step: nil, name: nil)
         grads_and_vars = compute_gradients(loss, var_list: var_list, grad_loss: grad_loss)
         if grads_and_vars.empty?
@@ -43,8 +47,7 @@ module Tensorflow
       end
 
       def compute_gradients(loss, var_list: nil, grad_loss: nil)
-        graph = loss.graph
-        trainable_vars = var_list || graph.get_collection_ref(Tensorflow::Graph::GraphKeys::TRAINABLE_VARIABLES)
+        trainable_vars = var_list || self.graph.get_collection_ref(Tensorflow::Graph::GraphKeys::TRAINABLE_VARIABLES)
 
         if trainable_vars.nil? || trainable_vars.empty?
           raise(TensorflowError, 'There are no variables to train for the loss function')

@@ -134,12 +134,15 @@ module Tensorflow
       end
 
       def proto
-        buffer = FFI::Buffer.new
+        buffer_ptr = FFI.TF_NewBuffer
         Status.check do |status|
-          FFI.TF_OperationGetAttrValueProto(self.operation, self.name, buffer, status)
+          FFI.TF_OperationGetAttrValueProto(self.operation, self.name, buffer_ptr, status)
         end
-        data = buffer[:data].read_string(buffer[:length])
+        buffer = FFI::Buffer.new(buffer_ptr)
+        string = buffer[:data].read_string(buffer[:length])
         AttrValue.decode(data)
+      ensure
+        FFI.TF_DeleteBuffer(buffer)
       end
 
       def to_s

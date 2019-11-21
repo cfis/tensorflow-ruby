@@ -74,13 +74,16 @@ module Tensorflow
         end
       end
 
-      def op_def(name)
-        buffer = FFI::Buffer.new
+      def op_def(op_type)
+        buffer_ptr = FFI.TF_NewBuffer
         Status.check do |status|
-          FFI.TF_GraphGetOpDef(self, name, buffer, status)
+          FFI.TF_GraphGetOpDef(self, op_type, buffer_ptr, status)
         end
+        buffer = FFI::Buffer.new(buffer_ptr)
         string = buffer[:data].read_string(buffer[:length])
-        ops = OpDef.decode(string)
+        OpDef.decode(string)
+      ensure
+        FFI.TF_DeleteBuffer(buffer)
       end
 
       def forward(operation)
@@ -212,7 +215,7 @@ module Tensorflow
                                  output_names_ptr,
                                  options, description, status)
         end
-        Function.new(func)
+        Function.new(func, output_operations.map(&:output_types).flatten, output_operations.map(&:shape))
       end
 
       def as_graph_def

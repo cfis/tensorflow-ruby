@@ -9,7 +9,7 @@ module Tensorflow
                     when Function
                       op_type.function_def.signature
                     else
-                      self.get_op_def(op_type)
+                      self.graph.op_def(op_type)
                   end
         raise(TensorflowError, "Invalid op type: #{op_type}") unless @op_def
 
@@ -21,18 +21,6 @@ module Tensorflow
         setup_inputs(inputs, attrs)
         setup_control_inputs(graph.control_inputs)
         setup_attrs(**attrs)
-      end
-
-      def get_op_def(op_type)
-        buffer_ptr = FFI.TF_NewBuffer
-        Status.check do |status|
-          FFI.TF_GraphGetOpDef(self.graph, op_type, buffer_ptr, status)
-        end
-        buffer = FFI::Buffer.new(buffer_ptr)
-        string = buffer[:data].read_string(buffer[:length])
-        OpDef.decode(string)
-      ensure
-        FFI.TF_DeleteBuffer(buffer)
       end
 
       def figure_dtype(attrs, inputs)

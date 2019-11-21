@@ -42,12 +42,15 @@ module Tensorflow
       end
 
       def node_def
-        buffer = FFI::Buffer.new
+        buffer_ptr = FFI.TF_NewBuffer
         Status.check do |status|
-          FFI.TF_OperationToNodeDef(self, buffer, status)
+          FFI.TF_OperationToNodeDef(self, buffer_ptr, status)
         end
+        buffer = FFI::Buffer.new(buffer_ptr)
         string = buffer[:data].read_string(buffer[:length])
-        ops = NodeDef.decode(string)
+        NodeDef.decode(string)
+      ensure
+        FFI.TF_DeleteBuffer(buffer)
       end
 
       def to_output
@@ -128,11 +131,15 @@ module Tensorflow
             FFI.TF_GraphGetTensorNumDims(self.graph, output, status)
           end
 
-          dims_ptr = ::FFI::MemoryPointer.new(:int64, num_dims)
-          Status.check do |status|
-            FFI.TF_GraphGetTensorShape(self.graph, output, dims_ptr, num_dims, status)
+          if num_dims == -1
+            []
+          else
+            dims_ptr = ::FFI::MemoryPointer.new(:int64, num_dims)
+            Status.check do |status|
+              FFI.TF_GraphGetTensorShape(self.graph, output, dims_ptr, num_dims, status)
+            end
+            dims_ptr.read_array_of_int64(num_dims)
           end
-          dims_ptr.read_array_of_int64(num_dims)
         end
       end
 

@@ -49,6 +49,7 @@ module Tensorflow
       def with_options(options)
 
       end
+
       def batch(batch_size, drop_remainder: false)
         BatchDataset.new(self, batch_size, drop_remainder)
       end
@@ -59,6 +60,10 @@ module Tensorflow
 
       def make_one_shot_iterator
         OneShotIterator.new(self)
+      end
+
+      def make_initializable_iterator(shared_name: '')
+        InitializableIterator.new(self, shared_name: shared_name)
       end
 
       def each

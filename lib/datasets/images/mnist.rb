@@ -24,29 +24,28 @@ module Tensorflow
         @tf.function(input_signature=[[:string]])
         def decode_label(label)
           # tf.string -> [Tf.uint8]
-          label = Tf.decode_raw(label, Tf.uint8)
+          label = Tf::IO.decode_raw(label, Tf.uint8)
           label = Tf.reshape(label, [])  # label is a scalar
           Tf.cast(label, Tf.int32)
         end
 
         def dataset(images_file, labels_file)
-          download_manager = Tensorflow::Datasets::DownloadManager.new
+          download_manager = Datasets::DownloadManager.new
           urls = ["#{BASE_URL}/#{images_file}",
                   "#{BASE_URL}/#{labels_file}"]
 
           resources = download_manager.download(urls)
 
-          #images = Tensorflow::Data::FixedLengthRecordDataset.new(resources.first.path, 28 * 28, header_bytes: 16, compression_type: 'GZIP')
-          images = Tensorflow::Data::FixedLengthRecordDataset.new(resources.first.path, 28 * 28, header_bytes: 16, compression_type: 'GZIP').map_func(self.decode_image)
-          #labels = Tensorflow::Data::FixedLengthRecordDataset.new(labels.path, 1, header_bytes: 8, compression_type: 'GZIP').map(self.decode_image)
-          #zipped = Tensorflow::Data::ZipDataset.new(images, labels)
+          images = Data::FixedLengthRecordDataset.new(resources.first.path, 28 * 28, header_bytes: 16, compression_type: 'GZIP').map_func(self.decode_image)
+          labels = Data::FixedLengthRecordDataset.new(resources.last.path, 1, header_bytes: 8, compression_type: 'GZIP').map_func(self.decode_label)
+          Data::ZipDataset.new(images, labels)
         end
 
-        def train_dataset
+        def train
           dataset('train-images-idx3-ubyte.gz', 'train-labels-idx1-ubyte.gz')
         end
 
-        def test_dataset
+        def test
           dataset('t10k-images-idx3-ubyte', 't10k-labels-idx1-ubyte')
         end
       end

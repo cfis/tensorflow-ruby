@@ -131,6 +131,23 @@ module Tensorflow
           end
         end
       end
+
+      @tf.function([[:string]])
+      def change_output_type_and_shape(value)
+        Tf.reshape(Tf.cast(value, :int32), [2, 2])
+      end
+
+      def test_change_output_type_and_shape
+        components = Numo::NArray[['1', '2', '3', '4']]
+        dataset = TensorSliceDataset.new(components)
+        assert_equal([["1", "2", "3", "4"]], dataset.data)
+        assert_equal([:string], dataset.output_types)
+        assert_equal([[4]], dataset.output_shapes)
+
+        map_dataset = dataset.map_func(change_output_type_and_shape)
+        assert_equal([:int32], map_dataset.output_types)
+        assert_equal([[4]], dataset.output_shapes)
+      end
     end
   end
 end

@@ -6,7 +6,9 @@ require "tensorflow/extensions/array"
 module Tensorflow
   class BaseTest < Minitest::Test
     def eager_and_graph(&block)
-      [Eager::Context.new, Graph::Graph.new].each do |context|
+      #[Eager::Context.new].each do |context|
+      [Graph::Graph.new].each do |context|
+      #[Eager::Context.new, Graph::Graph.new].each do |context|
         context.as_default do
           yield context
         end
@@ -30,8 +32,10 @@ module Tensorflow
           session.run(operation)
         when Data::Dataset
           iterator = operation.make_one_shot_iterator
+          #iterator = operation.make_initializable_iterator
           next_element = iterator.get_next
 
+          #session.run(iterator.initializer)
           result = []
           while true
             begin

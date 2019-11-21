@@ -2,6 +2,11 @@ module Tensorflow
   module Data
     class Iterator
       attr_reader :output_types, :output_shapes
+
+      def self.from_structure(output_types, output_shapes=[])
+        InitializableIterator.new(output_types, output_shapes)
+      end
+
       def initialize(output_types, output_shapes=[])
         @output_types = output_types
         @output_shapes = output_shapes
@@ -15,15 +20,15 @@ module Tensorflow
     class OneShotIterator < Iterator
       def initialize(dataset)
         super(dataset.output_types, dataset.output_shapes)
-        @iterator = one_shot_iterator(dataset)
+        create_one_shot_iterator(dataset)
       end
 
       private
 
-      def one_shot_iterator(dataset)
+      def create_one_shot_iterator(dataset)
         function = make_dataset_function(dataset)
         ExecutionContext.current.add_function(function)
-        RawOps.one_shot_iterator(dataset_factory: function, output_types: self.output_types, output_shapes: self.output_shapes)
+        @iterator = RawOps.one_shot_iterator(dataset_factory: function, output_types: self.output_types, output_shapes: self.output_shapes)
       end
 
       def make_dataset_function(dataset)
@@ -36,9 +41,25 @@ module Tensorflow
     end
 
     class InitializableIterator < Iterator
+      attr_reader :initializer
+
+      def initialize(dataset, shared_name: '')
+        super(dataset.output_types, dataset.output_shapes)
+        create_initializable_iterator(dataset, shared_name)
+      end
+
+      private
+
+      def create_initializable_iterator(dataset, shared_name)
+        @iterator = RawOps.iterator_v2(shared_name: shared_name, output_types: self.output_types, output_shapes: self.output_shapes)
+        @initializer = RawOps.make_iterator(dataset.variant_tensor, @iterator)
+      end
+    end
+
+    class ReinitializableIterator < Iterator
       def initialize(output_types, output_shapes, shared_name: '')
         super(output_types, output_shapes)
-        @iterator = iterator_from_structure(shared_name)
+        create_iterator_from_structure(shared_name)
       end
 
       def make_initializer(dataset)
@@ -47,8 +68,8 @@ module Tensorflow
 
       private
 
-      def iterator_from_structure(shared_name)
-        RawOps.iterator_v2(shared_name: shared_name, output_types: self.output_types, output_shapes: self.output_shapes)
+      def create_iterator_from_structure(shared_name)
+        @iterator = RawOps.iterator_v2(shared_name: shared_name, output_types: self.output_types, output_shapes: self.output_shapes)
       end
     end
   end

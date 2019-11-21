@@ -36,6 +36,10 @@ module Tensorflow
       RawOps.placeholder(dtype: dtype, shape: shape, name: name)
     end
 
+    def prevent_gradient(input, typeT: nil, message: "")
+      RawOps.prevent_gradient(input, typeT: typeT, message: message, name: "PreventGradient")
+    end
+
     def rank(input, typeT: nil)
       RawOps.rank(input, typeT: typeT)
     end

@@ -71,6 +71,10 @@ require "tensorflow/graph/operation_attr"
 require "tensorflow/graph/operation_description"
 require "tensorflow/graph/session"
 
+# Ugly - now require the op gradients
+require "tensorflow/ops/gradients"
+
+
 # specs
 require "tensorflow/type_spec"
 require "tensorflow/batchable_type_spec"

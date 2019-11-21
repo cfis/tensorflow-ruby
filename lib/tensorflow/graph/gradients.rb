@@ -5,6 +5,17 @@ module Tensorflow
     class Gradients
       attr_reader :graph
 
+      def self.gradients
+        @gradients ||= begin
+          default = self.instance_method(:add_api_gradients)
+          Hash.new(default)
+        end
+      end
+
+      def self.register(op_type, &block)
+        self.gradients[op_type] = block
+      end
+
       def initialize(graph)
         @graph = graph
       end
@@ -15,13 +26,23 @@ module Tensorflow
         forwards.intersection(backwards)
       end
 
+      def default_gradient(operation)
+        operation.outputs.map.with_index do |output, i|
+          shape_op = Tensorflow.shape(output, :int32)
+          constant = Tensorflow.constant(1, name: "grad_ys_#{i}", dtype: operation.output_types[i])
+          Tensorflow.fill(shape_op, constant)
+        end
+      end
+
       def gradients(output, inputs, grad_ys: nil, name: "gradients", stop_operations: Set.new)
+        grad_ys ||= default_gradient(output).first
+
         self.graph.name_scope(name) do
           inputs.map.with_index do |input, i|
             operations_path = self.path(output, input)
             next if operations_path.empty?
 
-            self.derivative(nil, output, stop_operations, operations_path)
+            self.derivative(grad_ys, output, stop_operations, operations_path)
           end.flatten.compact
         end
       end
@@ -50,6 +71,26 @@ module Tensorflow
           operation == operations_path.first || consumers.count > 0
         end
 
+        gradient_func = self.class.gradients[operation.op_type]
+
+        dy = if gradient_func.is_a?(UnboundMethod)
+               gradient_func.bind(self).call(gradient, outputs, inputs)
+             else
+               gradient_func.call(gradient, outputs, inputs)
+             end
+
+        # We are done with this operation, so backpropagate to the input operations
+        inputs.map.with_index do |input, i|
+          dy_output = dy[i]
+          unless dy_output[:oper].null?
+            input_operation = Operation.new(self.graph, input[:oper])
+            dy_operation = Operation.new(self.graph, dy_output[:oper])
+            self.derivative(dy_operation, input_operation, stop_operations, operations_path)
+          end
+        end
+      end
+
+      def add_api_gradients(gradient, outputs, inputs)
         # These are the outputs from the operation
         y = FFI::Output.array_to_ptr(outputs)
 
@@ -71,14 +112,8 @@ module Tensorflow
                               dx, status, dy)
         end
 
-        # We are done with this operation, so backpropagate to the input operations
-        inputs.map.with_index do |input, i|
-          dy_output = FFI::Output.new(dy[i])
-          unless dy_output[:oper].null?
-            input_operation = Operation.new(self.graph, input[:oper])
-            dy_operation = Operation.new(self.graph, dy_output[:oper])
-            self.derivative(dy_operation, input_operation, stop_operations, operations_path)
-          end
+        inputs.length.times.map do |i|
+          FFI::Output.new(dy[i])
         end
       end
     end

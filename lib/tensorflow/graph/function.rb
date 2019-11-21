@@ -1,8 +1,11 @@
 module Tensorflow
   module Graph
     class Function
-      def initialize(pointer)
+      attr_reader :output_types, :output_shapes
+      def initialize(pointer, output_types, output_shapes)
         @pointer = pointer
+        @output_types = output_types
+        @output_shapes = output_shapes
       end
 
       def to_ptr

@@ -99,7 +99,7 @@ module Tensorflow
 
       def shape_list
         total_size = self.metadata[:total_size]
-        storage_ptr = ::FFI::MemoryPointer.new(:uchar, total_size)
+        storage_ptr = ::FFI::MemoryPointer.new(:int64, total_size)
         dims_pointer = ::FFI::MemoryPointer.new(:pointer, self.metadata[:list_size])
         num_dims_pointer = ::FFI::MemoryPointer.new(:int, self.metadata[:list_size])
         Status.check do |status|
@@ -112,7 +112,7 @@ module Tensorflow
         num_dims = num_dims_pointer.read_array_of_int(self.metadata[:list_size])
         num_dims.map.with_index do |dims, i|
           shape_pointer = dims_pointer[i].read_pointer
-          shape_pointer.read_array_of_int(dims)
+          shape_pointer.read_array_of_int64(dims)
         end
       end
 
@@ -146,7 +146,7 @@ module Tensorflow
       end
 
       def to_s
-        "#{self.name}: #{self.value}"
+        "#{self.name}"#": #{self.value}"
       end
     end
   end

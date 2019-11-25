@@ -140,7 +140,7 @@ module Tensorflow
         end
         buffer = FFI::Buffer.new(buffer_ptr)
         string = buffer[:data].read_string(buffer[:length])
-        AttrValue.decode(data)
+        AttrValue.decode(string)
       ensure
         FFI.TF_DeleteBuffer(buffer)
       end

@@ -1,0 +1,109 @@
+<% graph_def.node.each do |node_def| %>
+node {
+  name: "<%= node_def.name %>"
+  op: "<%= node_def.op %>"
+  device: "<%= node_def.device %>"
+  <% node_def.input.each do |input| %>
+  input: "<%= input %>"
+  <% end %>
+  <% node_def.attr.sort_by {|key, value| key}.each do |key, attr_def| %>
+  attr {
+    key: "<%= key %>"
+    value {
+  <% case attr_def.value
+     when :tensor %>
+      tensor {
+        dtype: <%= attr_def.tensor.dtype %>
+        tensor_shape {
+          <% attr_def.tensor.tensor_shape.dim.each do |dim| %>
+          dim {
+            size: <%= dim %>
+          }
+          <% end %>
+        }
+        <% value_method = "#{attr_def.tensor.dtype[3..-1].downcase}_val" %>
+        <%= value_method %>: <%= attr_def.tensor.send(value_method.to_sym) %>
+      }
+    <% when :type %>
+      type: <%= attr_def.type %>
+    <% when :list %>
+      list {
+      <% case  %>
+        <% when !attr_def.list.type.empty? %>
+          <% attr_def.list.type.each do |type| %>
+        type: <%= type %>
+          <% end %>
+        <% when !attr_def.list.shape.empty? %>
+          <% attr_def.list.shape.each do |shape| %>
+        shape {
+            <% shape.dim.each do |dim| %>
+          dim {
+            size: <%= dim.size %>
+          }
+            <% end %>
+        }
+          <% end %>
+      <% end %>
+      }
+    <% when :b %>
+      b: <%= attr_def.b %>
+    <% when :int %>
+      i: <%= attr_def.i %>
+    <%# when :shape %>
+      <%# if attr.list? %>
+<!--      list {-->
+        <%# attr.value.each do |list_value| %>
+<!--        shape {-->
+          <%# list_value.each do |sub_list_value| %>
+<!--          dim {-->
+<!--            size: <%#= sub_list_value %>-->
+<!--          }-->
+          <%# end %>
+<!--        }-->
+        <%# end %>
+<!--      }-->
+      <%# elsif attr.value.empty? %>
+<!--      shape {-->
+<!--      }-->
+      <%# else %>
+<!--      shape {-->
+        <%#= attr.value.join(', ') %>
+<!--      }-->
+      <%# end %>
+    <% when :s %>
+      s: "<%= attr_def.s %>"
+    <% when :func %>
+      func {
+        name: "<%= attr_def.func.name %>"
+      }
+    <% end %>
+    }
+  }
+  <% end %>
+}
+<% end %>
+library {
+<% graph_def.library.function.each do |function_def| %>
+  function {
+    signature {
+      name: "<%= function_def.signature.name %>"
+      <% function_def.signature.input_arg.each do |arg_def| %>
+      input_arg {
+        name: "<%= arg_def.name %>"
+        type: <%= arg_def.type %>
+      }
+      <% end %>
+      <% function_def.signature.output_arg.each do |arg_def| %>
+      output_arg {
+        name: "<%= arg_def.name %>"
+        type: <%= arg_def.type %>
+      }
+  <% end %>
+    }
+  }
+<% end %>
+}
+versions {
+  producer: <%= graph_def.versions.producer %>
+  min_consumer: <%= graph_def.versions.min_consumer %>
+}

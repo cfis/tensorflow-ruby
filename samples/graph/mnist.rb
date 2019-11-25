@@ -3,8 +3,6 @@ $LOAD_PATH.unshift(File.expand_path('../../lib', __dir__))
 require "tensorflow"
 require_relative "../../lib/datasets/images/mnist"
 
-#Tf.disable_eager_execution
-
 module Tensorflow
   module Samples
     class Mnist

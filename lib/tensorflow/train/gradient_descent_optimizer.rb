@@ -23,7 +23,7 @@ module Tensorflow
         learning_rate = if @learning_rate_tensor.output_types.first == dtype
                           @learning_rate_tensor
                         else
-                          Tensorflow.cast(@learning_rate_tensor, destination_dtype: dtype)
+                          Tensorflow.cast(@learning_rate_tensor, dtype)
                         end
 
         RawOps.resource_apply_gradient_descent(var, learning_rate, grad)

@@ -1,27 +1,27 @@
 module Tensorflow
   module Operators
     def +(other)
-      Math.add(self, other)
+      Math.add(self, other, dtype: self.dtype)
     end
 
     def -(other)
-      Math.subtract(self, other)
+      Math.subtract(self, other, dtype: self.dtype)
     end
 
     def *(other)
-      Math.multiply(self, other)
+      Math.multiply(self, other, dtype: self.dtype)
     end
 
     def **(other)
-      Math.pow(self, other)
+      Math.pow(self, other, dtype: self.dtype)
     end
 
     def /(other)
-      Math.divide(self, other)
+      Math.divide(self, other, dtype: self.dtype)
     end
 
     def %(other)
-      Math.floormod(self, other)
+      Math.floormod(self, other, dtype: self.dtype)
     end
 
     def -@

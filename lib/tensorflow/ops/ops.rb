@@ -81,6 +81,16 @@ module Tensorflow
       RawOps.transpose(x, perm)
     end
 
+    def where(condition, x: nil, y: nil)
+      if x.nil? && y.nil?
+        RawOps.where(condition)
+      elsif x && y
+        RawOps.select_v2(condition, x, y)
+      else
+        raise(TensorflowError, "x and y must both be non nil or both be nil")
+      end
+    end
+
     def zeros(dims, dtype: :float)
       fill(dims, 0, dtype: dtype)
     end

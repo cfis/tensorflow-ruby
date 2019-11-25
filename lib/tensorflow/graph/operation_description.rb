@@ -132,8 +132,6 @@ module Tensorflow
             self.graph.equal?(input.graph) ? input : capture(input)
           when OperationOutput
             input
-          when FFI::Output
-            raise(Error::UnknownError, "shouldn't get here")
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else

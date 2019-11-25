@@ -60,7 +60,7 @@ module Tensorflow
           case operation
             when Operation, Variable
               operation.outputs
-            when OutputOperation
+            when OperationOutput
               operation
             else
               raise(Error::UnimplementedError, "Unsupported operation type: #{operation}")
@@ -75,8 +75,8 @@ module Tensorflow
           case operation
             when Operation, Variable
               operation
-            when FFI::Output
-              operation.operation(self.graph)
+            when OperationOutput
+              operation.operation
             else
               raise("Unsupported target: #{operation}")
           end
@@ -107,7 +107,13 @@ module Tensorflow
         # For each operation we want to return a single result
         start = 0
         result = operations.reduce(Array.new) do |array, operation|
-          length = operation.outputs.length
+          length = case operation
+                     when Operation
+                       operation.outputs.length
+                     when OperationOutput
+                       1
+                   end
+
           if length == 0
             array << nil
           else

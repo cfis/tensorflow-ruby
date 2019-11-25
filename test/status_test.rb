@@ -43,7 +43,7 @@ module Tensorflow
       buffer = FFI::Buffer.new
       FFI.TF_GraphGetOpDef(graph, "NotAOp", buffer, status)
 
-      error = assert_raises(Error::InvalidArgumentError) do
+      error = assert_raises(Error::NotFoundError) do
         status.check
       end
       assert_match(/^Op type not registered 'NotAOp' in binary running on.*Make sure the Op and Kernel are registered in the binary running in this process/, error.message)
@@ -54,7 +54,7 @@ module Tensorflow
       ptr = ::FFI::MemoryPointer.new(:pointer)
       buffer = FFI::Buffer.new
 
-      error = assert_raises(Error::InvalidArgumentError) do
+      error = assert_raises(Error::NotFoundError) do
         Status.check do |status|
           FFI.TF_GraphGetOpDef(graph, "NotAOp", buffer, status)
         end

@@ -225,7 +225,7 @@ module Tensorflow
       end
 
       def log_sigmoid(x, dtype: nil)
-        negative(RawOps.softplus(-x, dtype: nil), typeT: dtype)
+        negative(RawOps.softplus(-x, typeT: nil), dtype: dtype)
       end
 
       def log_softmax(logits, dtype: nil)
@@ -233,19 +233,19 @@ module Tensorflow
       end
 
       def logical_and(x, y, dtype: nil)
-        RawOps.logical_and(x, y, typeT: dtype)
+        RawOps.logical_and(x, y)
       end
 
       def logical_not(x, dtype: nil)
-        RawOps.logical_not(x, typeT: dtype)
+        RawOps.logical_not(x)
       end
 
       def logical_or(x, y, dtype: nil)
-        RawOps.logical_or(x, y, typeT: dtype)
+        RawOps.logical_or(x, y)
       end
 
       def logical_xor(x, y, dtype: nil)
-        logical_and(logical_or(x, y, dtype: nil), logical_not(logical_and(x, y, dtype: nil), dtype: nil), typeT: dtype)
+        logical_and(logical_or(x, y, dtype: nil), logical_not(logical_and(x, y, dtype: nil), dtype: nil))
       end
 
       def maximum(x, y, dtype: nil)
@@ -305,8 +305,8 @@ module Tensorflow
       # end
 
       def reduce_any(input, axis: nil, keepdims: false, dtype: nil)
-        axis ||= reduction_dims(input, typeT: dtype)
-        RawOps.any(input, axis, keep_dims: keepdims, typeT: dtype)
+        axis ||= reduction_dims(input, dtype: dtype)
+        RawOps.any(input, axis, keep_dims: keepdims)
       end
 
       # def reduce_euclidean_norm
@@ -316,39 +316,39 @@ module Tensorflow
       # end
 
       def reduce_max(input, axis: nil, keepdims: false, dtype: nil)
-        axis ||= reduction_dims(input, typeT: dtype)
+        axis ||= reduction_dims(input, dtype: dtype)
         RawOps.max(input, axis, keep_dims: keepdims, typeT: dtype)
       end
 
       def reduce_mean(input, axis: nil, keepdims: false, dtype: nil)
-        axis ||= reduction_dims(input, typeT: dtype)
+        axis ||= reduction_dims(input, dtype: dtype)
         RawOps.mean(input, axis, keep_dims: keepdims, typeT: dtype)
       end
 
       def reduce_min(input, axis: nil, keepdims: false, dtype: nil)
-        axis ||= reduction_dims(input, typeT: dtype)
+        axis ||= reduction_dims(input, dtype: dtype)
         RawOps.min(input, axis, keep_dims: keepdims, typeT: dtype)
       end
 
       def reduce_prod(input, axis: nil, keepdims: false, dtype: nil)
-        axis ||= reduction_dims(input, typeT: dtype)
+        axis ||= reduction_dims(input, dtype: dtype)
         RawOps.prod(input, axis, keep_dims: keepdims, typeT: dtype)
       end
 
       def reduce_std(input, axis: nil, keepdims: false, dtype: nil)
-        variance = reduce_variance(input, axis: axis, keepdims: keepdims, typeT: dtype)
-        sqrt(variance, typeT: dtype)
+        variance = reduce_variance(input, axis: axis, keepdims: keepdims, dtype: dtype)
+        sqrt(variance, dtype: dtype)
       end
 
       def reduce_sum(input, axis: nil, keepdims: false, dtype: nil)
-        axis ||= reduction_dims(input, typeT: dtype)
+        axis ||= reduction_dims(input, dtype: dtype)
         RawOps.sum(input, axis, keep_dims: keepdims, typeT: dtype)
       end
 
       def reduce_variance(input, axis: nil, keepdims: false, dtype: nil)
-        means = reduce_mean(input, axis: axis, keepdims: true, typeT: dtype)
+        means = reduce_mean(input, axis: axis, keepdims: true, dtype: dtype)
         squared_deviations = RawOps.square(input - means, typeT: dtype)
-        reduce_mean(squared_deviations, axis: axis, keepdims: keepdims, typeT: dtype)
+        reduce_mean(squared_deviations, axis: axis, keepdims: keepdims, dtype: dtype)
       end
 
       def rint(x, dtype: nil)
@@ -486,7 +486,7 @@ module Tensorflow
 
       def reduction_dims(input, dtype: nil)
         rank = Tensorflow.rank(input, typeT: dtype)
-        range = Tensorflow.range(0, rank, typeT: dtype)
+        range = Tensorflow.range(0, rank)
       end
     end
   end

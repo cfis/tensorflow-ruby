@@ -10,7 +10,7 @@ module Tensorflow
       def setup
         begin
           op_def = self.graph.op_def('CApiAttributesTestOpString')
-        rescue Error::InvalidArgumentError
+        rescue Error::NotFoundError
           # Registering placeholder as type causes an exception
           types = FFI::AttrType.symbols.map(&:to_s) - ['placeholder']
           types.each do |name|

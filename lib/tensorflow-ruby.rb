@@ -96,6 +96,7 @@ require "tensorflow/data/repeat_dataset"
 require "tensorflow/data/shuffle_dataset"
 require "tensorflow/data/tensor_dataset"
 require "tensorflow/data/tensor_slice_dataset"
+require "tensorflow/data/tf_record_dataset"
 require "tensorflow/data/zip_dataset"
 
 # keras

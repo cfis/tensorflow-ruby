@@ -7,8 +7,8 @@ module Tensorflow
   class BaseTest < Minitest::Test
     def eager_and_graph(&block)
       #[Eager::Context.new].each do |context|
-      [Graph::Graph.new].each do |context|
-      #[Eager::Context.new, Graph::Graph.new].each do |context|
+      #[Graph::Graph.new].each do |context|
+      [Eager::Context.new, Graph::Graph.new].each do |context|
         context.as_default do
           yield context
         end

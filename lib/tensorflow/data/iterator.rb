@@ -3,8 +3,8 @@ module Tensorflow
     class Iterator
       attr_reader :output_types, :output_shapes
 
-      def self.from_structure(output_types, output_shapes=[])
-        InitializableIterator.new(output_types, output_shapes)
+      def self.from_structure(output_types, output_shapes=[], shared_name: '')
+        ReinitializableIterator.new(output_types, output_shapes, shared_name: shared_name)
       end
 
       def initialize(output_types, output_shapes=[])

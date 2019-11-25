@@ -1,7 +1,13 @@
 module Tensorflow
   module Random
     def self.normal(shape, mean: 0.0, stddev: 1.0, dtype: :float, seed: nil, name: nil)
-      random = RawOps.random_standard_normal(shape, seed: nil, seed2: nil, dtype: dtype)
+      seed ||= ::Random.rand
+      random = RawOps.random_standard_normal(shape, seed: seed, seed2: seed, dtype: dtype)
+      mul = (random * stddev) + mean
+    end
+
+    def self.truncated_normal(shape, mean: 0.0, stddev: 1.0, dtype: :float, seed: nil, name: nil)
+      random = RawOps.truncated_normal(shape, seed: seed, seed2: seed, dtype: dtype)
       mul = (random * stddev) + mean
     end
 

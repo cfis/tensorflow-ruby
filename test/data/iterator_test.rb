@@ -14,12 +14,11 @@ module Tensorflow
 
           result = []
           Graph::Session.run(graph) do |session|
-            while true
-              begin
+            begin
+              loop do
                 result << session.run(next_element)
-              rescue TensorflowError => exception
-                break
               end
+            rescue Error::OutOfRangeError
             end
           end
           assert_equal([[1, "a"], [2, "b"], [3, "c"]], result)
@@ -38,14 +37,12 @@ module Tensorflow
           result_1 = []
           result_2 = []
           Graph::Session.run(graph) do |session|
-            while true
-              begin
+            begin
+              loop do
                 result_1 << session.run(next_element[0])
                 result_2 << session.run(next_element[1])
-              rescue TensorflowError => exception
-                a = 1
-                break
               end
+            rescue Error::OutOfRangeError
             end
           end
           assert_equal([1, 3], result_1)

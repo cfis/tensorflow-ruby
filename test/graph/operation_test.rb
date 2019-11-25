@@ -63,12 +63,10 @@ module Tensorflow
 
         inputs = pow.inputs
         assert_equal(2, inputs.length)
-        operation = inputs[0].operation(x.graph)
-        assert_equal(x, operation)
+        assert_equal(x, inputs[0].operation)
 
         powy = x.graph.operation('Pow/y')
-        operation = inputs[1].operation(x.graph)
-        assert_equal(powy, operation)
+        assert_equal(powy, inputs[1].operation)
       end
 
       def test_num_outputs
@@ -116,12 +114,12 @@ module Tensorflow
 
         consumers = placeholder.consumers
         assert_equal(1, consumers.length)
-        consumer_operation = consumers[0].operation(Graph.default)
+        consumer_operation = consumers[0].operation
         assert_equal(add, consumer_operation)
 
         consumers = constant.consumers
         assert_equal(1, consumers.length)
-        consumer_operation = consumers[0].operation(Graph.default)
+        consumer_operation = consumers[0].operation
         assert_equal(add, consumer_operation)
       end
 
@@ -130,20 +128,20 @@ module Tensorflow
         split = Tensorflow.split(data, 0, num_split: 2)
         rank = Tensorflow.rank(split)
 
-        pack = rank.inputs.first.operation(Graph.default)
+        pack = rank.inputs.first.operation
 
         consumers = split.consumers
         assert_equal(2, consumers.length)
 
         consumer = consumers[0]
-        consumer_operation = consumer.operation(Graph.default)
+        consumer_operation = consumer.operation
         assert_equal(pack, consumer_operation)
-        assert_equal(0, consumer[:index])
+        assert_equal(0, consumer.index)
 
         consumer = consumers[1]
-        consumer_operation = consumer.operation(Graph.default)
+        consumer_operation = consumer.operation
         assert_equal(pack, consumer_operation)
-        assert_equal(1, consumer[:index])
+        assert_equal(1, consumer.index)
       end
 
       def test_partial_consumers
@@ -151,15 +149,15 @@ module Tensorflow
         split = Tensorflow.split(data, 0, num_split: 2)
         rank = Tensorflow.rank(split[1])
 
-        pack = rank.inputs.first.operation(Graph.default)
+        pack = rank.inputs.first.operation
 
         consumers = split.consumers
         assert_equal(1, consumers.length)
 
         consumer = consumers[0]
-        consumer_operation = consumer.operation(Graph.default)
+        consumer_operation = consumer.operation
         assert_equal(rank, consumer_operation)
-        assert_equal(0, consumer[:index])
+        assert_equal(0, consumer.index)
       end
 
       def test_add
@@ -229,9 +227,9 @@ module Tensorflow
         data = Numo::NArray[[2,2], [2,2]]
         split = Tensorflow.split(data, 0, num_split: 2)
         op_1 = split[1]
-        assert_kind_of(FFI::Output, op_1)
-        assert_equal(split, op_1.operation(split.graph))
-        assert_equal(1, op_1[:index])
+        assert_kind_of(OperationOutput, op_1)
+        assert_equal(split, op_1.operation)
+        assert_equal(1, op_1.index)
       end
     end
   end

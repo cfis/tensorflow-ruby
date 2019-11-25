@@ -95,24 +95,21 @@ module Tensorflow
 
       def test_tensor_num_dimensions
         placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
-        dims = Graph.default.tensor_num_dims(placeholder)
-        assert_equal(-1, dims)
+        dims = Graph.default.output_shapes(placeholder)
+        assert_equal([[]], dims)
       end
 
       def test_tensor_get_shape
         placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
-        shape = Graph.default.tensor_get_shape(placeholder)
-        assert_equal([-1], shape)
+        shape = Graph.default.output_shapes(placeholder)
+        assert_equal([[]], shape)
       end
 
       def test_tensor_set_shape
         placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
         Graph.default.tensor_set_shape(placeholder, [2, -1])
-        dims = Graph.default.tensor_num_dims(placeholder)
-        assert_equal(2, dims)
-
-        shape = Graph.default.tensor_get_shape(placeholder)
-        assert_equal([2, -1], shape)
+        shapes = Graph.default.output_shapes(placeholder)
+        assert_equal([[2, -1]], shapes)
       end
 
       def test_make_graph

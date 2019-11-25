@@ -103,8 +103,8 @@ module Tensorflow
         placeholder = Tensorflow.placeholder(:int32, name: 'placeholder_1')
         assert_equal('placeholder_1', placeholder.name)
         assert_equal('Placeholder', placeholder.op_type)
-        dims = graph.tensor_num_dims(placeholder)
-        assert_equal(-1, dims)
+        shapes = graph.output_shapes(placeholder)
+        assert_equal([[]], shapes)
       end
     end
 

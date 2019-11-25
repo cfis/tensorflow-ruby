@@ -10,7 +10,7 @@ module Tensorflow
       def setup
         begin
           op_def = self.graph.op_def('CApiAttributesTestOpString')
-        rescue TensorflowError
+        rescue Error::InvalidArgumentError
           # Registering placeholder as type causes an exception
           types = FFI::AttrType.symbols.map(&:to_s) - ['placeholder']
           types.each do |name|
@@ -187,7 +187,7 @@ module Tensorflow
 
         # Create graph 2 and negate the value
         Graph.new.as_default do |graph|
-          exception = assert_raises(TensorflowError) do
+          exception = assert_raises(Error::InvalidArgumentError) do
             Math.negative(placeholder)
           end
           assert_equal("Cannot capture a placeholder by value (name: CaptureMe, type: Placeholder)", exception.message)

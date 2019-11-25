@@ -229,7 +229,7 @@ module Tensorflow
 
         session = Graph::Session.new(graph, Graph::SessionOptions.new)
 
-        exception = assert_raises(TensorflowError) do
+        exception = assert_raises(Error::FailedPreconditionError) do
           result = session.run(v.value)
         end
         assert_match(/This could mean that the variable was uninitialized/, exception.to_s)

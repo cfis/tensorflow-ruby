@@ -37,12 +37,12 @@ module Tensorflow
 
           #session.run(iterator.initializer)
           result = []
-          while true
-            begin
+          begin
+            loop do
               result << session.run(next_element)
-            rescue TensorflowError => exception
-              return result
             end
+          rescue Error::OutOfRangeError
+            return result
           end
       end
     ensure

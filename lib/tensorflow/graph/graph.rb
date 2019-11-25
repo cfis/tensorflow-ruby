@@ -156,16 +156,16 @@ module Tensorflow
         end
       end
 
-      # def tensor_set_shape(operation, shape)
-      #   ptr = ::FFI::MemoryPointer.new(:int64, shape.length)
-      #   ptr.write_array_of_int64(shape)
-      #   output = FFI::Output.new
-      #   output[:oper] = operation
-      #   output[:index] = 0
-      #   Status.check do |status|
-      #     FFI.TF_GraphSetTensorShape(self, output, ptr, shape.length, status)
-      #   end
-      # end
+      def tensor_set_shape(operation, shape)
+        ptr = ::FFI::MemoryPointer.new(:int64, shape.length)
+        ptr.write_array_of_int64(shape)
+        output = FFI::Output.new
+        output[:oper] = operation
+        output[:index] = 0
+        Status.check do |status|
+          FFI.TF_GraphSetTensorShape(self, output, ptr, shape.length, status)
+        end
+      end
 
       def add_function(function, gradient=nil)
         Status.check do |status|

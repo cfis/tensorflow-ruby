@@ -23,7 +23,8 @@ module Tensorflow
 
       def loss(logits, labels)
         labels = Tf.cast(labels, :int64)
-        loss = NN.sparse_softmax_cross_entropy_with_logits(logits, labels)
+        xentropy = NN.sparse_softmax_cross_entropy_with_logits(logits, labels)
+        Math.reduce_mean(xentropy)
       end
 
       def optimizer(loss)
@@ -33,7 +34,7 @@ module Tensorflow
       end
 
       def evaluation(logits, labels)
-        correct = Math.in_top_k(logits, labels, k: 1)
+        correct = Math.in_top_k(logits, labels, 1)
         Tf.reduce_sum(Tf.cast(correct, :int32))
       end
 
@@ -41,7 +42,7 @@ module Tensorflow
         # Hidden layer 1
         hidden_1 = Tf.name_scope('hidden_1') do
           stddev = 1.0/::Math.sqrt(IMAGE_PIXELS)
-          normal = Random.normal([IMAGE_PIXELS, hidden_1_units], stddev: stddev)
+          normal = Random.truncated_normal([IMAGE_PIXELS, hidden_1_units], stddev: stddev, seed: 10.0)
           weights = Variable.new(normal, name: 'weights')
 
           zeros = Tf.zeros([hidden_1_units])
@@ -54,7 +55,7 @@ module Tensorflow
         # Hidden layer 2
         hidden_2 = Tf.name_scope('hidden_2') do
           stddev = 1.0/::Math.sqrt(hidden_1_units)
-          normal = Random.normal([hidden_1_units, hidden_2_units], stddev: stddev)
+          normal = Random.truncated_normal([hidden_1_units, hidden_2_units], stddev: stddev, seed: 10.0)
           weights = Variable.new(normal, name: 'weights')
 
           zeros = Tf.zeros([hidden_2_units])
@@ -66,8 +67,8 @@ module Tensorflow
 
         # Linear
         Tf.name_scope('softmax_linear') do
-          stddev = ::Math.sqrt(hidden_2_units)
-          normal = Random.normal([hidden_2_units, NUM_CLASSES], stddev: stddev)
+          stddev = 1.0/::Math.sqrt(hidden_2_units)
+          normal = Random.truncated_normal([hidden_2_units, NUM_CLASSES], stddev: stddev, seed: 10.0)
           weights = Variable.new(normal, name: 'weights')
 
           zeros = Tf.zeros([NUM_CLASSES])
@@ -78,34 +79,67 @@ module Tensorflow
         end
       end
 
-      def train
+      def train(session, iterator, optimizer, loss)
+        ds = self.dataset.train.batch(1)
+        iterator_initializer = iterator.make_initializer(ds)
+        session.run(iterator_initializer)
+
+        step = 0
+        start = Time.now
+
+        begin
+          loop do
+            _, loss_value = session.run([optimizer, loss])
+            if step % 1000 == 0
+              puts "Step: #{step}, Duration: #{Time.now - start}, loss: #{loss_value}"
+            end
+            step += 1
+          end
+        rescue Error::OutOfRangeError => e
+          puts e
+        end
+      end
+
+      def test(session, iterator, accuracy)
+        ds = self.dataset.test.batch(1)
+        iterator_initializer = iterator.make_initializer(ds)
+        session.run(iterator_initializer)
+
+        step = 0
+        start = Time.now
+        true_count = 0
+
+        begin
+          loop do
+            true_count += session.run(accuracy)
+            if step % 100 == 0
+              puts "Step: #{step}, Duration: #{Time.now - start}, true_count: #{true_count}, accuracy: #{true_count/step.to_f}"
+            end
+            step += 1
+          end
+        rescue Error::OutOfRangeError => e
+          puts e
+        end
+
+        STDOUT << "True: " <<  true_count << "\n"
+        STDOUT << "Accuracy: " <<  true_count/step.to_f << "\n"
+      end
+
+      def run
         Graph::Graph.default.as_default do |graph|
-          ds = self.dataset.train.batch(1000)
-          iterator = ds.make_initializable_iterator
+          train_ds = self.dataset.train.batch(1)
+          iterator = Data::Iterator.from_structure(train_ds.output_types, train_ds.output_shapes)
           next_element = iterator.get_next
-          #training_init = iterator.make_initializer(self.dataset.train)
-          #training_init = iterator.make_initializer(self.dataset.train)
 
           logits = self.model(next_element[0], 128, 32)
           loss = self.loss(logits, next_element[1])
           optimizer = self.optimizer(loss)
-          eval_correct = self.evaluation(logits, next_element[1])
+          accuracy = self.evaluation(logits, next_element[1])
 
           Graph::Session.run(graph) do |session|
             session.run(Tf.global_variables_initializer)
-            session.run(iterator.initializer)
-
-            self.max_steps.times do |step|
-              result = session.run([loss, optimizer])
-              # if i % 50 == 0:
-              #     print("Epoch: {}, loss: {:.3f}, training accuracy: {:.2f}%".format(i, l, acc * 100))
-              # now setup the validation run
-              #
-              # Write the summaries and print an overview fairly often.
-              if step % 100 == 0
-                STDOUT << "Step #{step}: loss = #{result}" << "\n"
-              end
-            end
+            self.train(session, iterator, optimizer, loss)
+            self.test(session, iterator, accuracy)
           end
         end
       end
@@ -114,4 +148,4 @@ module Tensorflow
 end
 
 mnist = Tf::Samples::Mnist.new
-mnist.train
+mnist.run

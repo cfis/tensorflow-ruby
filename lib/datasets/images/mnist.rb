@@ -46,7 +46,7 @@ module Tensorflow
         end
 
         def test
-          dataset('t10k-images-idx3-ubyte', 't10k-labels-idx1-ubyte')
+          dataset('t10k-images-idx3-ubyte.gz', 't10k-labels-idx1-ubyte.gz')
         end
       end
     end

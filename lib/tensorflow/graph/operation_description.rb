@@ -79,8 +79,7 @@ module Tensorflow
       def capture_inputs(operation, attrs)
         # First capture the inputs
         inputs = operation.inputs.map do |input|
-          input_operation = input.operation(self.graph)
-          self.capture(input_operation)
+          self.capture(input.operation)
         end
 
         # We now have to group the inputs together. For example, a TensorSlice dataset has 1 input argument

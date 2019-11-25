@@ -23,7 +23,7 @@ module Tensorflow
       end
 
       def as_default
-        raise(TensorflowError, "Must provide block") unless block_given?
+        raise(Error::InvalidArgumentError, "Must provide block") unless block_given?
         ExecutionContext.push(self)
         begin
           yield self

@@ -26,7 +26,7 @@ module Tensorflow
           when Graph::Operation
             [values]
           else
-            raise(TensorflowError, "Unsupported dataset element: #{values}")
+            raise(Error::UnimplementedError, "Unsupported dataset element: #{values}")
         end
       end
 
@@ -74,9 +74,6 @@ module Tensorflow
             values = RawOps.iterator_get_next_sync(iterator, output_types: @output_types, output_shapes: @output_shapes)
             yield values
           end
-        rescue ::TensorflowError => e
-          # iterate until end of sequence error
-          raise e unless e.message == "End of sequence"
         end
       ensure
         RawOps.delete_iterator(iterator, deleter) if iterator

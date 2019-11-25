@@ -11,7 +11,7 @@ module Tensorflow
                     else
                       self.graph.op_def(op_type)
                   end
-        raise(TensorflowError, "Invalid op type: #{op_type}") unless @op_def
+        raise(Error::InvalidArgumentError, "Invalid op type: #{op_type}") unless @op_def
 
         raw_name = attrs.delete(:name)&.to_s || self.op_def.name
         @name = self.graph.scoped_name(raw_name)
@@ -70,7 +70,7 @@ module Tensorflow
                           when Variable
                             control_input.handle
                           else
-                            raise(TensorflowError, "Invalid control input")
+                            raise(Error::InvalidArgumentError, "Invalid control input")
                           end
 
         FFI.TF_AddControlInput(self, control_input)
@@ -112,9 +112,9 @@ module Tensorflow
 
       def capture(operation)
         if self.op_def.is_stateful
-          raise(TensorflowError, "Cannot capture a stateful node (name: #{operation.name}, type: #{operation.op_type})")
+          raise(Error::InvalidArgumentError, "Cannot capture a stateful node (name: #{operation.name}, type: #{operation.op_type})")
         elsif operation.op_type == "Placeholder"
-          raise(TensorflowError, "Cannot capture a placeholder by value (name: #{operation.name}, type: #{operation.op_type})")
+          raise(Error::InvalidArgumentError, "Cannot capture a placeholder by value (name: #{operation.name}, type: #{operation.op_type})")
         end
 
         attrs = operation.attributes.reduce(Hash.new) do |hash, attr|
@@ -134,7 +134,7 @@ module Tensorflow
           when OperationOutput
             input
           when FFI::Output
-            raise(TensorflowError, "shouldn't get here")
+            raise(Error::UnknownError, "shouldn't get here")
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
@@ -205,7 +205,7 @@ module Tensorflow
           name.to_s == attr_def.name
         end
         unless attr_def
-          raise(::TensorflowError, "Unknown attribute: #{name}")
+          raise(Error::UnknownError, "Unknown attribute: #{name}")
         end
 
         case attr_def.type
@@ -250,7 +250,7 @@ module Tensorflow
             end
             FFI.TF_SetAttrTypeList(self, attr_def.name, value_ptr, value.count)
           else
-            raise(TensorflowError, "Unsupported attribute. #{self.op_def.name} - #{attr_def.name}")
+            raise(Error::UnimplementedError, "Unsupported attribute. #{self.op_def.name} - #{attr_def.name}")
         end
       end
     end

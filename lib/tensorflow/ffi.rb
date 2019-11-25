@@ -166,7 +166,7 @@ module Tensorflow
                       :tf_permission_denied, 7,
                       :tf_unauthenticated, 16,
                       :tf_resource_exhausted, 8,
-                      :tf_failed_precondtion, 9,
+                      :tf_failed_precondition, 9,
                       :tf_aborted, 10,
                       :tf_out_of_range, 11,
                       :tf_unimplemented, 12,

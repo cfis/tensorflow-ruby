@@ -39,7 +39,9 @@ module Tensorflow
 
     def check
       if self.code != :tf_ok
-        raise(::TensorflowError, self.message)
+        camel_case = self.code[3..-1].capitalize.gsub!(/(?:_|(\/))([a-z\d]*)/i) {"#{$1}#{$2.capitalize}"}
+        error_klass = Tensorflow::Error.const_get("#{camel_case}Error")
+        raise(error_klass, self.message)
       end
     end
   end

@@ -33,7 +33,7 @@ module Tensorflow
           when :type
             self.list? ? self.dtype_list : self.dtype
           else
-            raise(TensorflowError, "Unsupported attribute. #{self.name} - #{self.metadata[:type]}")
+            raise(Error::UnimplementedError, "Unsupported attribute. #{self.name} - #{self.metadata[:type]}")
         end
       end
 

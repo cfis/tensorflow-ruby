@@ -88,7 +88,7 @@ module Tensorflow
     end
 
     def tensor
-      raise(TensorflowError, "Only supported in eager execution mode") if Tensorflow.execution_mode == Tensorflow::GRAPH_MODE
+      raise(Error::UnavailableError, "Only supported in eager execution mode") if Tensorflow.execution_mode == Tensorflow::GRAPH_MODE
       self.value_handle.tensor
     end
 

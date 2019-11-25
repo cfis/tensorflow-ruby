@@ -7,7 +7,7 @@ module Tensorflow
       def initialize(name: nil, use_locking: false)
         @name = name
         @use_locking = use_locking
-        raise(TensorflowError, "Must specify the optimizer name") unless name
+        raise(Error::InvalidArgumentError, "Must specify the optimizer name") unless name
 
         @slots = {}
         @non_slots = {}
@@ -20,7 +20,7 @@ module Tensorflow
       def minimize(loss, var_list: nil, grad_loss: nil, global_step: nil, name: nil)
         grads_and_vars = compute_gradients(loss, var_list: var_list, grad_loss: grad_loss)
         if grads_and_vars.empty?
-          raise(TensorflowError, "No gradients provided for any variable, check your graph for ops that do not support gradients")
+          raise(Error::InvalidArgumentError, "No gradients provided for any variable, check your graph for ops that do not support gradients")
         end
         apply_gradients(grads_and_vars, global_step: global_step, name: name)
       end
@@ -50,7 +50,7 @@ module Tensorflow
         trainable_vars = var_list || self.graph.get_collection_ref(Tensorflow::Graph::GraphKeys::TRAINABLE_VARIABLES)
 
         if trainable_vars.nil? || trainable_vars.empty?
-          raise(TensorflowError, 'There are no variables to train for the loss function')
+          raise(Error::InvalidArgumentError, 'There are no variables to train for the loss function')
         end
         gradients = Graph::Gradients.new(graph)
         grads = gradients.gradients(loss, trainable_vars, grad_ys: grad_loss)
@@ -84,7 +84,7 @@ module Tensorflow
       end
 
       def apply_dense(_grad, _var)
-        raise(TensorflowError, "Not implemented")
+        raise(Error::UnimplementedError, "Not implemented")
       end
 
       ##

@@ -13,7 +13,7 @@ module Tensorflow
 
       def process_signatures(ruby_method, input_signatures)
         if input_signatures.length != ruby_method.parameters.length
-          raise(TensorflowError, "Must specify input signature for each method parameter")
+          raise(Error::InvalidArgumentError, "Must specify input signature for each method parameter")
         end
 
         @signatures = input_signatures.map do |dtype, shape|

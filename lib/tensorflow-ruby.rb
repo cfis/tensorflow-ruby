@@ -35,6 +35,7 @@ require "tensorflow/ops/raw_ops"
 # Core
 require "tensorflow/ffi"
 require "tensorflow/decorators"
+require "tensorflow/error"
 require "tensorflow/execution_context"
 require "tensorflow/name_scope"
 require "tensorflow/op_def_builder"
@@ -120,10 +121,6 @@ require "tensorflow/keras/optimizers/adam"
 require "tensorflow/keras/preprocessing/image"
 
 require 'tensorflow/python_compatiblity'
-
-# We can't use Tensorflow::Error because a protobuf message annoyingly assigns that as a module
-class TensorflowError < StandardError
-end
 
 module Tensorflow
   extend Ops

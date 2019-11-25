@@ -63,7 +63,7 @@ module Tensorflow
             when OutputOperation
               operation
             else
-              raise(TensorflowError, "Unsupported operation type: #{operation}")
+              raise(Error::UnimplementedError, "Unsupported operation type: #{operation}")
           end
         end.flatten
 
@@ -137,7 +137,7 @@ module Tensorflow
               value
             else
               # The value dtype needs to match the key dtype
-              raise(TensorflowError, "Cannot determine dtype: #{key}") if key.num_outputs != 1
+              raise(Error::UnknownError, "Cannot determine dtype: #{key}") if key.num_outputs != 1
               dtype = key.output_types.first
               Tensor.new(value, dtype: dtype)
             end

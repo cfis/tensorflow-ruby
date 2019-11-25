@@ -87,7 +87,7 @@ module Tensorflow
       elsif x && y
         RawOps.select_v2(condition, x, y)
       else
-        raise(TensorflowError, "x and y must both be non nil or both be nil")
+        raise(Error::InvalidArgumentError, "x and y must both be non nil or both be nil")
       end
     end
 

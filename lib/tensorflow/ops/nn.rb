@@ -254,7 +254,9 @@ module Tensorflow
       end
 
       def sparse_softmax_cross_entropy_with_logits(features, labels)
-        RawOps.sparse_softmax_cross_entropy_with_logits(features, labels)
+        op = RawOps.sparse_softmax_cross_entropy_with_logits(features, labels)
+        # Keep the first output, toss the 2nd (which is what the Python code does)
+        op.outputs[0]
       end
 
       # def sufficient_statistics

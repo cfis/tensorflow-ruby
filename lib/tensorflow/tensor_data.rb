@@ -74,7 +74,7 @@ module Tensorflow
         when Eager::TensorHandle
           value.dtype
         else
-          raise(::TensorflowError, "Unsupported type: #{value.class}")
+          raise(Error::InvalidArgumentError, "Unsupported type: #{value.class}")
       end
     end
 
@@ -115,7 +115,7 @@ module Tensorflow
         when Numo::NArray
           self.write_narray(value)
         when Array
-          raise(TensorflowError, "TensorData does not support Arrays. Please use a Numo::NArray")
+          raise(Error::InvalidArgumentError, "TensorData does not support Arrays. Please use a Numo::NArray")
         else
           self.write_scalar(value)
       end

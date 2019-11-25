@@ -39,7 +39,7 @@ module Tensorflow
             # We need to keep the tensor live so that it is not freed!
             @tensor = value
           else
-            raise(TensorflowError, "Invalid value passed to tensor_handle: #{value}")
+            raise(Error::InvalidArgumentError, "Invalid value passed to tensor_handle: #{value}")
         end
 
         ObjectSpace.define_finalizer(self, self.class.finalize(@pointer))

@@ -1,7 +1,8 @@
 module Tensorflow
   module Data
     class FixedLengthRecordDataset < Dataset
-      def initialize(filenames, record_bytes, header_bytes: 0, footer_bytes: 0, buffer_size: DEFAULT_READER_BUFFER_SIZE_BYTES, compression_type: '')
+      def initialize(filenames, record_bytes, header_bytes: 0, footer_bytes: 0,
+                     buffer_size: DEFAULT_READER_BUFFER_SIZE_BYTES, compression_type: '', num_parallel_reads: 0)
         @output_types = [:string]
         @output_shapes = [[]]
 
@@ -19,6 +20,8 @@ module Tensorflow
 
         super(variant_tensor)
       end
+
+
     end
   end
 end

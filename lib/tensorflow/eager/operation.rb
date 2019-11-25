@@ -11,7 +11,7 @@ module Tensorflow
                     else
                       Tensorflow.op_def(op_type)
                   end
-        raise(TensorflowError, "Invalid op type: #{op_type}") unless @op_def
+        raise(Error::InvalidArgumentError, "Invalid op type: #{op_type}") unless @op_def
 
         @status = Status.new
         @pointer = FFI.TFE_NewOp(context, self.op_def.name, self.status)

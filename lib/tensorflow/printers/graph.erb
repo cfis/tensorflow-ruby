@@ -4,8 +4,7 @@ node {
   name: "<%= operation.name %>"
   op: "<%= operation.op_type %>"
   <% operation.inputs.each do |input| %>
-    <% input_operation = Tensorflow::Graph::Operation.new(self.graph, input[:oper]) %>
-  input: "<%= input_operation.name %><%= input[:index] > 0 ? ":#{input[:index]}" : "" %>"
+  input: "<%= input.operation.name %><%= input.index > 0 ? ":#{input.index}" : "" %>"
   <% end %>
   <% operation.control_inputs.each do |control_input| %>
   input: "^<%= control_input.name %>"
@@ -45,18 +44,20 @@ node {
       i: <%= attr.value %>
     <% when :shape %>
       <% if attr.list? %>
-        list {
+      list {
         <% attr.value.each do |list_value| %>
-          shape: {
-            dim {
-              size: <%= list_value.join(', ') %>
-            }
-
-        <% end %>
-        }
-      <% elsif attr.value.empty? %>
         shape {
+          <% list_value.each do |sub_list_value| %>
+          dim {
+            size: <%= sub_list_value %>
+          }
+          <% end %>
         }
+        <% end %>
+      }
+      <% elsif attr.value.empty? %>
+      shape {
+      }
       <% else %>
       shape {
         <%= attr.value.join(', ') %>

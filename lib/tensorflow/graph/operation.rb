@@ -53,13 +53,6 @@ module Tensorflow
         FFI.TF_DeleteBuffer(buffer)
       end
 
-      def to_output
-        output = FFI::Output.new
-        output[:oper] = self
-        output[:index]  = 0
-        output
-      end
-
       def num_inputs
         FFI.TF_OperationNumInputs(self)
       end
@@ -68,7 +61,7 @@ module Tensorflow
         pointer = ::FFI::MemoryPointer.new(FFI::Output, self.num_inputs)
         FFI.TF_OperationAllInputs(self, pointer, self.num_inputs)
         self.num_inputs.times.map do |index|
-          FFI::Output.new(pointer[index])
+          OperationOutput.from_graph(self.graph, pointer[index])
         end
       end
 
@@ -91,10 +84,7 @@ module Tensorflow
 
       def outputs
         self.num_outputs.times.map do |i|
-          output = FFI::Output.new
-          output[:oper] = self
-          output[:index] = i
-          output
+          OperationOutput.from_index(self, i)
         end
       end
 
@@ -103,12 +93,17 @@ module Tensorflow
       end
 
       def output_types
-        self.num_outputs.times.map do |index|
-          output = FFI::Output.new
-          output[:oper] = self.to_ptr
-          output[:index] = index
+        self.outputs.map do |output|
           FFI.TF_OperationOutputType(output)
         end
+      end
+
+      def output_shapes
+        self.graph.output_shapes(self)
+      end
+
+      def shape
+        self.output_shapes.first
       end
 
       def dtype
@@ -119,32 +114,6 @@ module Tensorflow
         Status.check do |status|
           FFI.TF_OperationOutputListLength(self, arg_name, status)
         end
-      end
-
-      def output_shapes
-        self.num_outputs.times.map do |index|
-          output = FFI::Output.new
-          output[:oper] = self.to_ptr
-          output[:index] = index
-
-          num_dims = Status.check do |status|
-            FFI.TF_GraphGetTensorNumDims(self.graph, output, status)
-          end
-
-          if num_dims == -1
-            []
-          else
-            dims_ptr = ::FFI::MemoryPointer.new(:int64, num_dims)
-            Status.check do |status|
-              FFI.TF_GraphGetTensorShape(self.graph, output, dims_ptr, num_dims, status)
-            end
-            dims_ptr.read_array_of_int64(num_dims)
-          end
-        end
-      end
-
-      def shape
-        self.output_shapes.first
       end
 
       def num_control_inputs
@@ -174,11 +143,8 @@ module Tensorflow
         OperationAttr.new(self, attr_name, metadata)
       end
 
-      def output_consumers(index)
+      def output_consumers(output)
         # How many consumers does this output have?
-        output = FFI::Output.new
-        output[:oper] = self
-        output[:index] = index
         count = FFI.TF_OperationOutputNumConsumers(output)
 
         # Get the consumers
@@ -186,19 +152,24 @@ module Tensorflow
         FFI.TF_OperationOutputConsumers(output, consumers_ptr, count)
 
         count.times.map do |i|
-          FFI::Input.new(consumers_ptr[i])
+          OperationOutput.from_graph(self.graph, consumers_ptr[i])
         end
       end
 
       def consumers
-        self.num_outputs.times.reduce(Array.new) do |result, index|
-          result.concat(self.output_consumers(index))
+        self.outputs.reduce(Array.new) do |result, output|
+          result.concat(self.output_consumers(output))
           result
         end
       end
 
       def to_s
-        "#{self.op_type}, name: #{self.name}"
+        result = [self.op_type]
+        result << "name=#{self.name}"
+        outputs.length.times do |index|
+          result << "#{index}:(shape=#{self.output_shapes[index]}, dtype=#{self.output_types[index]})"
+        end
+        result.join(', ')
       end
     end
   end

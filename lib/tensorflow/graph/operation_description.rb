@@ -131,8 +131,10 @@ module Tensorflow
         case input
           when Operation
             self.graph.equal?(input.graph) ? input : capture(input)
-          when FFI::Output
+          when OperationOutput
             input
+          when FFI::Output
+            raise(TensorflowError, "shouldn't get here")
           when Variable
             arg_def.type == :DT_RESOURCE ? input.handle : input.value_handle
           else
@@ -175,8 +177,8 @@ module Tensorflow
       def add_input(operation)
         # Check to see if the operation has multiple outputs, and if it does, we need to pack them together
         # to fit into one input
-        if operation.is_a?(FFI::Output)
-            FFI.TF_AddInput(self, operation)
+        if operation.is_a?(OperationOutput)
+          FFI.TF_AddInput(self, operation)
         elsif operation.num_outputs > 1
           packed = Tensorflow.pack(operation, n: operation.num_outputs)
           FFI.TF_AddInput(self, packed.outputs.first)
@@ -188,7 +190,7 @@ module Tensorflow
       def add_input_list(operations)
         # Operation can represent multiple operations *or* one operation with multiple outputs (like SPLIT)
         outputs = Array(operations).map(&:outputs).flatten
-        outputs_ptr = FFI::Output.array_to_ptr(outputs)
+        outputs_ptr = FFI::Output.array_to_ptr(outputs.map(&:output))
         FFI.TF_AddInputList(self, outputs_ptr, outputs.length)
       end
 

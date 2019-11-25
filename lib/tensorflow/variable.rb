@@ -12,7 +12,7 @@ module Tensorflow
                         initial_value
                       when Graph::Operation
                         @dtype = dtype || initial_value.dtype
-                        shape = shape || initial_value.shape
+                        shape = shape || initial_value.output_shapes.first
                         initial_value
                       when Tensor
                         @dtype = initial_value.dtype
@@ -76,10 +76,7 @@ module Tensorflow
 
     # This enables executing variables to get the values in a session
     def outputs
-      output = FFI::Output.new
-      output[:oper] = self.value_handle
-      output[:index] = 0
-      [output]
+      [Graph::OperationOutput.from_index(self.value_handle, 0)]
     end
 
     def to_ptr

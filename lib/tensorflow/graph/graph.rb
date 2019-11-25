@@ -89,9 +89,8 @@ module Tensorflow
       def forward(operation)
         def forward_internal(set, operation)
           operation.consumers.each do |consumer|
-            consumer_operation = consumer.operation(self)
-            set << consumer_operation
-            forward_internal(set, consumer_operation)
+            set << consumer.operation
+            forward_internal(set, consumer.operation)
           end
           set
         end
@@ -102,9 +101,8 @@ module Tensorflow
       def backward(operation)
         def backward_internal(set, operation)
           operation.inputs.each do |input|
-            input_operation = input.operation(self)
-            set << input_operation
-            backward_internal(set, input_operation)
+            set << input.operation
+            backward_internal(set, input.operation)
           end
           set
         end
@@ -140,38 +138,34 @@ module Tensorflow
         result
       end
 
-      def tensor_num_dims(operation)
-        output = FFI::Output.new
-        output[:oper] = operation
-        output[:index] = 0
-        Status.check do |status|
-          FFI.TF_GraphGetTensorNumDims(self, output, status)
+      def output_shapes(operation)
+        operation.outputs.map do |output|
+          num_dims = Status.check do |status|
+            FFI.TF_GraphGetTensorNumDims(self, output, status)
+          end
+
+          if num_dims == -1
+            []
+          else
+            dims_ptr = ::FFI::MemoryPointer.new(:int64, num_dims)
+            Status.check do |status|
+              FFI.TF_GraphGetTensorShape(self, output, dims_ptr, num_dims, status)
+            end
+            dims_ptr.read_array_of_int64(num_dims)
+          end
         end
       end
 
-      def tensor_get_shape(operation)
-        length = self.tensor_num_dims(operation)
-        return [-1] if length == -1
-        ptr = ::FFI::MemoryPointer.new(:int64, length)
-        output = FFI::Output.new
-        output[:oper] = operation
-        output[:index] = 0
-        Status.check do |status|
-          FFI.TF_GraphGetTensorShape(self, output, ptr, length, status)
-        end
-        ptr.read_array_of_int64(length)
-      end
-
-      def tensor_set_shape(operation, shape)
-        ptr = ::FFI::MemoryPointer.new(:int64, shape.length)
-        ptr.write_array_of_int64(shape)
-        output = FFI::Output.new
-        output[:oper] = operation
-        output[:index] = 0
-        Status.check do |status|
-          FFI.TF_GraphSetTensorShape(self, output, ptr, shape.length, status)
-        end
-      end
+      # def tensor_set_shape(operation, shape)
+      #   ptr = ::FFI::MemoryPointer.new(:int64, shape.length)
+      #   ptr.write_array_of_int64(shape)
+      #   output = FFI::Output.new
+      #   output[:oper] = operation
+      #   output[:index] = 0
+      #   Status.check do |status|
+      #     FFI.TF_GraphSetTensorShape(self, output, ptr, shape.length, status)
+      #   end
+      # end
 
       def add_function(function, gradient=nil)
         Status.check do |status|
@@ -181,10 +175,10 @@ module Tensorflow
 
       def to_function(name, operators, input_operations, output_operations, output_names=nil)
         inputs = input_operations ? input_operations.map(&:outputs).flatten : []
-        inputs_ptr = FFI::Output.array_to_ptr(inputs)
+        inputs_ptr = FFI::Output.array_to_ptr(inputs.map(&:output))
 
         outputs = output_operations ? output_operations.map(&:outputs).flatten : []
-        outputs_ptr = FFI::Output.array_to_ptr(outputs)
+        outputs_ptr = FFI::Output.array_to_ptr(outputs.map(&:output))
 
         # Check output names size
         if output_names && output_names.length != outputs.length
@@ -215,7 +209,9 @@ module Tensorflow
                                  output_names_ptr,
                                  options, description, status)
         end
-        Function.new(func, output_operations.map(&:output_types).flatten, output_operations.map(&:shape))
+        output_types = output_operations.map(&:output_types).flatten(1)
+        output_shapes = output_operations.map(&:output_shapes).flatten(1)
+        Function.new(func, output_types, output_shapes)
       end
 
       def as_graph_def

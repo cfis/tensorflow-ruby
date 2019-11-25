@@ -11,7 +11,9 @@ module Tensorflow
         implementation's interaction with tf.gradients()
       EOS
 
-      sparse_softmax_grad_without_gradient = Tensorflow.prevent_gradient(outputs[1], message: message)
+      graph = gradient.graph
+      operation = outputs[0].operation
+      sparse_softmax_grad_without_gradient = Tensorflow.prevent_gradient(operation[1], message: message)
       op = Ops.broadcast_mul(gradient, sparse_softmax_grad_without_gradient)
       op.outputs
     end

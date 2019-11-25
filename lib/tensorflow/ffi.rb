@@ -33,8 +33,8 @@ module Tensorflow
       layout :oper, :pointer,
              :index, :int
 
-      def operation(graph)
-        Graph::Operation.new(graph, self[:oper])
+      def to_s
+        "#{self[:oper]}: #{self[:index]}"
       end
     end
 
@@ -50,10 +50,6 @@ module Tensorflow
           copy_output[:index] = output[:index]
         end
         result
-      end
-
-      def operation(graph)
-        Graph::Operation.new(graph, self[:oper])
       end
 
       def to_s

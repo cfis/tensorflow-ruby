@@ -48,8 +48,8 @@ module Tensorflow
       def run(operations, feed_dict={})
         operations = Array(operations).flatten.compact
 
-        key_outputs = feed_dict.keys.map(&:to_output)
-        keys_ptr = FFI::Output.array_to_ptr(key_outputs)
+        key_outputs = feed_dict.keys.map(&:outputs).flatten
+        keys_ptr = FFI::Output.array_to_ptr(key_outputs.map(&:output))
 
         values = self.values_to_tensors(feed_dict)
         values_ptr = ::FFI::MemoryPointer.new(:pointer, values.length)
@@ -60,15 +60,15 @@ module Tensorflow
           case operation
             when Operation, Variable
               operation.outputs
-            when FFI::Output
+            when OutputOperation
               operation
             else
               raise(TensorflowError, "Unsupported operation type: #{operation}")
           end
         end.flatten
 
-        outputs_ptr = FFI::Output.array_to_ptr(outputs)
-        result_ptr = ::FFI::MemoryPointer.new(:pointer, outputs.length)
+        outputs_ptr = FFI::Output.array_to_ptr(outputs.map(&:output))
+        results_ptr = ::FFI::MemoryPointer.new(:pointer, outputs.length)
 
         # Gather up all the targets
         targets = operations.map do |operation|
@@ -92,19 +92,32 @@ module Tensorflow
                             # Inputs
                             keys_ptr, values_ptr, feed_dict.keys.length,
                             # Outputs
-                            outputs_ptr, result_ptr, outputs.length,
+                            outputs_ptr, results_ptr, outputs.length,
                             # Targets
                             targets_ptr, operations.length,
                             metadata,
                             status)
         end
 
-        result = result_ptr.read_array_of_pointer(outputs.length).map.with_index do |pointer, i|
+        results = results_ptr.read_array_of_pointer(outputs.length).map.with_index do |pointer, i|
           output = outputs[i]
           Tensor.from_pointer(pointer).value
         end
 
-        if outputs.length == 1
+        # For each operation we want to return a single result
+        start = 0
+        result = operations.reduce(Array.new) do |array, operation|
+          length = operation.outputs.length
+          if length == 0
+            array << nil
+          else
+            array.concat(results[start, length])
+            start += length
+          end
+          array
+        end
+
+        if operations.length == 1
           result.first
         else
           result

@@ -172,8 +172,8 @@ module Tensorflow
         RawOps.imag(input)
       end
 
-      def in_top_k(predictions, targets, k: nil)
-        RawOps.in_top_k(predictions, targets, k: k)
+      def in_top_k(predictions, targets, k=nil)
+        RawOps.in_top_kv2(predictions, targets, k)
       end
 
       def invert_permutation(x)

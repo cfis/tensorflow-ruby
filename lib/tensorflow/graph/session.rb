@@ -117,7 +117,7 @@ module Tensorflow
           array
         end
 
-        if operations.length == 1
+        if operations.length == 1 && results.length == 1
           result.first
         else
           result

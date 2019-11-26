@@ -17,6 +17,7 @@ Dir[File.join(__dir__, 'tensorflow', 'core', 'lib', 'core', '*.rb')].each { |fil
 Dir[File.join(__dir__, 'tensorflow', 'core', 'stream_executor', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'tensorflow', 'core', 'framework', '*.rb')].each { |file| require file }
 #Dir[File.join(__dir__, 'tensorflow', 'core', 'protobuf', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'tensorflow', 'core', 'util', '*.rb')].each { |file| require file }
 
 # Ops
 require "tensorflow/ops/audio"
@@ -82,11 +83,11 @@ require "tensorflow/type_spec"
 require "tensorflow/batchable_type_spec"
 require "tensorflow/tensor_spec"
 
-# Train
+# Training
 require "tensorflow/train/optimizer"
 require "tensorflow/train/gradient_descent_optimizer"
 
-# data
+# Data
 require "tensorflow/data/dataset"
 require "tensorflow/data/batch_dataset"
 require "tensorflow/data/fixed_length_record_dataset"
@@ -98,6 +99,10 @@ require "tensorflow/data/tensor_dataset"
 require "tensorflow/data/tensor_slice_dataset"
 require "tensorflow/data/tf_record_dataset"
 require "tensorflow/data/zip_dataset"
+
+# Tensorboard
+require "tensorflow/summary"
+require "tensorflow/resource_summary_writer"
 
 # keras
 require "tensorflow/keras/utils"

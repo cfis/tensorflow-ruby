@@ -28,10 +28,25 @@ Run a predefined Graph                         | Implemented                    
 Graph construction with generated op functions | Implemented                                                 |
 Gradients                                      | Implemented                                                 |
 Functions                                      | Implemented                                                 |
+Trainers                                       | Gradient Descent Implemented                                |
+Data API                                       | 80% Implemented                                             |
+Tensorboard Support                            | Not Implemented                                             |
 Control Flow                                   | Not Implemented                                             |
-Neural Network library                         | Not Implemnted                                              |
+Gradient Tape                                  | Not Implemented                                             |
+Keras                                          | Not Implemented                                             |
 
-## Constants
+## Getting Help
+To learn how to use the library:
+* Read this file
+* Take a look at the comprehensive test suite - it will show you examples of using all the binding's functionality
+* Review the gem documentation
+* Review the [Python API](https://www.tensorflow.org/versions/r2.0/api_docs/python/tf) documentation
+* Take a look at the models directory for example implementations (linear regression, mnist neural network, etc.)
+
+## Using tensorflow-ruby
+
+### Constants
+Constants are 
 
 ```ruby
 a = Tf.constant([1, 2, 3])
@@ -39,21 +54,21 @@ b = Tf.constant([4, 5, 6])
 a + b
 ```
 
-## Variables
+### Variables
 
 ```ruby
 v = Tf::Variable.new(0.0)
 w = v + 1
 ```
 
-## Math
+### Math
 
 ```ruby
 Tf::Math.abs([-1, -2])
 Tf::Math.sqrt([1.0, 4.0, 9.0])
 ```
 
-## Data::Dataset
+### Data::Dataset
 
 ```ruby
 # load
@@ -69,6 +84,7 @@ train_dataset.each do |examples, labels|
   # ...
 end
 ```
+
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:

@@ -108,10 +108,12 @@ module Tensorflow
         start = 0
         result = operations.reduce(Array.new) do |array, operation|
           length = case operation
-                     when Operation
+                     when Operation, Variable
                        operation.outputs.length
                      when OperationOutput
                        1
+                     else
+                       raise(Error::UnimplementedError, "Unsupported operation type: #{operation}")
                    end
 
           if length == 0

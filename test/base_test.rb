@@ -5,51 +5,62 @@ require "tensorflow/extensions/array"
 
 module Tensorflow
   class BaseTest < Minitest::Test
+    attr_reader :session
+
     def eager_and_graph(&block)
-      #[Eager::Context.new].each do |context|
-      #[Graph::Graph.new].each do |context|
-      [Eager::Context.new, Graph::Graph.new].each do |context|
+      self.eager_mode(&block)
+      self.graph_mode(&block)
+    end
+
+    def eager_mode(&block)
+      [Eager::Context.new].each do |context|
         context.as_default do
           yield context
         end
       end
     end
 
-    def result(context, operation)
-      case context
-        when Graph::Graph
-          result_graph(context, operation)
-        when Eager::Context
-          result_context(context, operation)
+    def graph_mode(&block)
+      [Graph::Graph.new].each do |context|
+        @session = Graph::Session.new(context, Graph::SessionOptions.new)
+        context.as_default do
+          yield context
         end
+      ensure
+        @session&.close
+        @session = nil
+      end
     end
 
-    def result_graph(context, operation)
-      session = Graph::Session.new(context, Graph::SessionOptions.new)
+    def evaluate(operation)
+      if self.session
+        result_graph(operation)
+      else
+        result_context(operation)
+      end
+    end
 
+    def result_graph(operation)
       case operation
         when Graph::Operation
-          session.run(operation)
+          self.session.run(operation)
         when Data::Dataset
-          iterator = operation.make_one_shot_iterator
-          #iterator = operation.make_initializable_iterator
+          iterator = operation.make_initializable_iterator
           next_element = iterator.get_next
 
-          #session.run(iterator.initializer)
+          self.session.run(iterator.initializer)
           result = []
           begin
             loop do
-              result << session.run(next_element)
+              result << self.session.run(next_element)
             end
           rescue Error::OutOfRangeError
             return result
           end
       end
-    ensure
-      session.close
     end
 
-    def result_context(context, result)
+    def result_context(result)
       case result
         when Data::Dataset
           result.data

@@ -14,7 +14,7 @@ module Tensorflow
           assert_equal([:int32, :int32 , :int32], dataset.output_types)
           assert_equal([[], [3], []], dataset.output_shapes)
 
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal([[1, [1, 2, 3], 37]], result)
         end
       end

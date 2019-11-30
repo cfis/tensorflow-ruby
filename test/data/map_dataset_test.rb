@@ -28,7 +28,7 @@ module Tensorflow
           ExecutionContext.current.add_function(self.function_no_parameters)
           map_dataset = MapDataset.new(dataset, self.function_no_parameters)
 
-          result = self.result(context, map_dataset)
+          result = self.evaluate(map_dataset)
           assert_equal([42], result)
         end
       end
@@ -50,7 +50,7 @@ module Tensorflow
           ExecutionContext.current.add_function(self.function_one_parameter)
 
           map_dataset = MapDataset.new(dataset, self.function_one_parameter)
-          result = self.result(context, map_dataset)
+          result = self.evaluate(map_dataset)
 
           result.each_with_index do |record, index|
             assert_equal(components[0][0] ** 2, record[0])
@@ -71,7 +71,7 @@ module Tensorflow
           dataset = TensorDataset.new(components)
 
           map_dataset = MapDataset.new(dataset, self.one_parameter)
-          result = self.result(context, map_dataset)
+          result = self.evaluate(map_dataset)
 
           result.each_with_index do |record, index|
             assert_equal(components[0][0] ** 2, record[0])
@@ -103,7 +103,7 @@ module Tensorflow
           ExecutionContext.current.add_function(self.function_three_parameters)
 
           map_dataset = MapDataset.new(dataset, self.function_three_parameters)
-          result = self.result(context, map_dataset)
+          result = self.evaluate(map_dataset)
 
           result.each_with_index do |record, index|
             assert_equal(self.three_components[0][index] ** 2, record[0])
@@ -122,7 +122,7 @@ module Tensorflow
         self.eager_and_graph do |context|
           dataset = TensorSliceDataset.new(self.three_components)
           map_dataset = MapDataset.new(dataset, self.three_parameters)
-          result = self.result(context, map_dataset)
+          result = self.evaluate(map_dataset)
 
           result.each_with_index do |record, index|
             assert_equal(self.three_components[0][index] ** 2, record[0])

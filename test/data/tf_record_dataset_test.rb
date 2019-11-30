@@ -13,7 +13,7 @@ module Tensorflow
           assert_equal([:string], dataset.output_types)
           assert_equal([[]], dataset.output_shapes)
 
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal(7, result.length)
           assert_equal(["Record 0 of file 0",
                         "Record 1 of file 0",

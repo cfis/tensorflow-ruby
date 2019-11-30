@@ -84,5 +84,13 @@ module Tensorflow
       y = x % 7
       assert_equal(2, y.value)
     end
+
+    def test_proto
+      data = "\b\x03\x12\x00\"\x04*\x00\x00\x00"
+      proto = TensorProto.decode(data)
+      tensor = Tensor.from_proto(proto)
+      assert_equal([], tensor.shape)
+      assert_equal(42, tensor.value)
+    end
   end
 end 

@@ -18,7 +18,7 @@ module Tensorflow
           assert_equal([:int32, :int32, :double], dataset.output_types)
           assert_equal([[-1], [-1, 3], [-1]], dataset.output_shapes)
 
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal(1, result.length)
           assert_equal([[0, 1],
                         [[0, 0, 0], [1, 2, 3]],
@@ -33,7 +33,7 @@ module Tensorflow
           assert_equal([:int32, :int32, :double], dataset.output_types)
           assert_equal([[-1], [-1, 3], [-1]], dataset.output_shapes)
 
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal(2, result.length)
 
           assert_equal([[0, 1],
@@ -53,7 +53,7 @@ module Tensorflow
           assert_equal([:int32, :int32, :double], dataset.output_types)
           assert_equal([[-1], [-1, 3], [-1]], dataset.output_shapes)
 
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal(2, result.length)
 
           assert_equal([[0, 1],
@@ -73,7 +73,7 @@ module Tensorflow
           assert_equal([:int32, :int32, :double], dataset.output_types)
           assert_equal([[-1], [-1, 3], [-1]], dataset.output_shapes)
 
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal(1, result.length)
 
           assert_equal([[0, 1],

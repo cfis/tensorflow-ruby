@@ -8,7 +8,7 @@ module Tensorflow
           components = Numo::NArray[[1], [2], [3]]
           dataset = TensorSliceDataset.new(components)
           
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal([[1], [2], [3]], result)
         end
       end
@@ -20,7 +20,7 @@ module Tensorflow
                         Numo::NArray[37.0, 38.0, 39.0, 40.0]]
 
           dataset = TensorSliceDataset.new(components)
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
 
           result.each_with_index do |slice, i|
             assert_equal(components[0].to_a[i], slice[0])

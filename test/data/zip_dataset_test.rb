@@ -14,7 +14,7 @@ module Tensorflow
           end
 
           dataset = Data::ZipDataset.new(datasets)
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
 
           result.each_with_index do |slice, i|
             assert_equal(components[0].to_a[i], slice[0])
@@ -35,7 +35,7 @@ module Tensorflow
           end
 
           dataset = Data::ZipDataset.new(datasets)
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
 
           result.each_with_index do |slice, i|
             assert_equal(components[0].to_a[i], slice[0])

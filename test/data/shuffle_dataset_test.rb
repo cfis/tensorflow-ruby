@@ -9,7 +9,7 @@ module Tensorflow
                         Numo::NArray[5, 6, 7, 8],
                         Numo::NArray[9.0, 10.0, 11.0, 12.0]]
           dataset = TensorSliceDataset.new(components).shuffle(100)
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
 
           assert_equal([[1, 5, 9.0],
                         [2, 6, 10.0],

@@ -5,11 +5,11 @@ module Tensorflow
     def test_join
       self.eager_and_graph do |context|
         op = Strings.join(["hello", "world"])
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal("helloworld", result)
 
         op = Strings.join(["hello", "world"], separator: " ")
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal("hello world", result)
       end
     end
@@ -17,7 +17,7 @@ module Tensorflow
     def test_length
       self.eager_and_graph do |context|
         op = Strings.length("hello")
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal(5, result)
       end
     end
@@ -25,7 +25,7 @@ module Tensorflow
     def test_lower
       self.eager_and_graph do |context|
         op = Strings.lower("HELLO")
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal("hello", result)
       end
     end
@@ -33,7 +33,7 @@ module Tensorflow
     def test_to_number
       self.eager_and_graph do |context|
         op = Strings.to_number("123")
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal(123, result)
       end
     end
@@ -41,7 +41,7 @@ module Tensorflow
     def test_strip
       self.eager_and_graph do |context|
         op = Strings.strip(" hello ")
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal("hello", result)
       end
     end
@@ -49,7 +49,7 @@ module Tensorflow
     def test_upper
       self.eager_and_graph do |context|
         op = Strings.upper("hello")
-        result = self.result(context, op)
+        result = self.evaluate(op)
         assert_equal("HELLO", result)
       end
     end

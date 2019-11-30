@@ -10,7 +10,7 @@ module Tensorflow
 
         self.eager_and_graph do |context|
           dataset = TensorDataset.new(components).repeat(3)
-          result = self.result(context, dataset)
+          result = self.evaluate(dataset)
           assert_equal([[1, [1, 2, 3], 37], [1, [1, 2, 3], 37], [1, [1, 2, 3], 37]], result)
         end
       end

@@ -269,5 +269,17 @@ module Tensorflow
       variable = Variable.new(data)
       assert_equal(shape, variable.shape)
     end
+
+    def test_assign_add
+      variable = Variable.new(10)
+      variable.assign_add(1)
+      assert_equal(11, variable.value)
+    end
+
+    def test_assign_sub
+      variable = Variable.new(10)
+      variable.assign_sub(1)
+      assert_equal(9, variable.value)
+    end
   end
 end

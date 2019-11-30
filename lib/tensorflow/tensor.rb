@@ -13,6 +13,8 @@ module Tensorflow
       case value
         when Tensor
           value
+        when Graph::Operation
+          value
         when Eager::TensorHandle
           value.tensor
         when Data::Dataset
@@ -20,6 +22,20 @@ module Tensorflow
         else
           Tensor.new(value, dtype: dtype)
       end
+    end
+
+    def self.from_proto(proto)
+      proto = proto.is_a?(TensorProto) ? proto : TensorProto.decode(proto)
+      shape = proto.tensor_shape.dim.map(&:size)
+      dtype = FFI::DataType[DataType.resolve(proto.dtype)]
+      numo_klass = TensorData::DTYPE_TO_NUMO_TYPE_MAP[dtype]
+      value = if shape.empty?
+                array = numo_klass.from_binary(proto.tensor_content)
+                array[0]
+               else
+                 numo_klass.from_binary(proto.tensor_content, shape)
+               end
+      self.new(value, dtype:dtype, shape:shape)
     end
 
     def self.from_pointer(pointer)

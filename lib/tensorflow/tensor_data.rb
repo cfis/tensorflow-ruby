@@ -73,6 +73,8 @@ module Tensorflow
           nil
         when Eager::TensorHandle
           value.dtype
+        when Google::Protobuf::MessageExts
+          :string
         else
           raise(Error::InvalidArgumentError, "Unsupported type: #{value.class}")
       end
@@ -116,6 +118,9 @@ module Tensorflow
           self.write_narray(value)
         when Array
           raise(Error::InvalidArgumentError, "TensorData does not support Arrays. Please use a Numo::NArray")
+        when Google::Protobuf::MessageExts
+          encoded = value.class.encode(value)
+          self.write_array_of_string([encoded])
         else
           self.write_scalar(value)
       end

@@ -86,6 +86,17 @@ module Tensorflow
         "cd2c89b7-88b7-44c8-ad83-06c2a9158347"
       end
 
+      # Mimic graph api
+      def add_to_collection(name, value)
+      end
+
+      # Mimic graph api
+      def add_to_collections(names, value)
+      end
+
+      def get_collection_ref(name)
+      end
+
       def add_function(function)
         Status.check do |status|
           FFI.TFE_ContextAddFunction(self, function, status)

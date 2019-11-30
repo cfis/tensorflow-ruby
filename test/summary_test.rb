@@ -152,5 +152,27 @@ module Tensorflow
         refute_nil(event.graph_def)
       end
     end
+
+    def test_all_v2_summary_ops
+      ops = []
+
+      self.graph_mode do |context|
+        writer = Summary.create_file_writer(Dir.tmpdir)
+
+        # TF 2.0 summary ops
+        ops << writer.write('write', 1)
+        ops << writer.proto('raw_pb', '')
+
+        # TF 1.x tf.contrib.summary ops
+        writer.step = 1
+        ops << writer.write('tensor', 1)
+        ops << writer.scalar('scalar', 2.0)
+        ops << writer.histogram('histogram', [1.0])
+        ops << writer.image('image', Numo::NArray[[[[1.0]]]])
+        ops << writer.audio('audio', [[1.0]], 1.0, max_outputs: 1)
+
+        assert_equal(ops, Summary.all_v2_summary_ops)
+      end
+    end
   end
 end

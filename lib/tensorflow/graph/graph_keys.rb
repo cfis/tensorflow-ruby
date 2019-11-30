@@ -32,7 +32,7 @@ module Tensorflow
       EVAL_STEP = "eval_step"
       COND_CONTEXT = "cond_context"
       WHILE_CONTEXT = "while_context"
-      _SUMMARY_COLLECTION = "_SUMMARY_V2"
+      SUMMARY_COLLECTION = "_SUMMARY_V2"
       _VARIABLE_COLLECTIONS = [
           GLOBAL_VARIABLES,
           LOCAL_VARIABLES,

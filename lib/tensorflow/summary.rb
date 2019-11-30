@@ -7,7 +7,7 @@ module Tensorflow
     end
 
     def self.all_v2_summary_ops
-      ExecutionContext.current.get_collection_ref(Graph::GraphKeys::_SUMMARY_COLLECTION)
+      ExecutionContext.current.get_collection_ref(Graph::GraphKeys::SUMMARY_COLLECTION)
     end
   end
 end

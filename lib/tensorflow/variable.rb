@@ -36,9 +36,7 @@ module Tensorflow
         collections << Graph::GraphKeys::TRAINABLE_VARIABLES
       end
 
-      if ExecutionContext.current.is_a?(Graph::Graph)
-        ExecutionContext.current.add_to_collections(collections, self)
-      end
+      ExecutionContext.current.add_to_collections(collections, self)
 
       @handle = RawOps.var_handle_op(dtype: @dtype, shape: shape, shared_name: shared_name, name: unique_name)
       self.value = initial_value if initial_value

@@ -101,11 +101,17 @@ module Tensorflow
     end
 
     def assign_add(value, dtype: nil)
-      RawOps.assign_add_variable_op(self.handle, value, dtype: dtype)
+      @value_handle = nil
+      tensor = Tensor.from_value(value, dtype: dtype)
+      tensor = Tensorflow.cast(tensor, self.dtype)
+      RawOps.assign_add_variable_op(self.handle, value, dtype: tensor.dtype)
     end
 
     def assign_sub(value)
-      RawOps.assign_sub_variable_op(self.handle, value, dtype: self.dtype)
+      @value_handle = nil
+      tensor = Tensor.from_value(value, dtype: dtype)
+      tensor = Tensorflow.cast(tensor, self.dtype)
+      RawOps.assign_sub_variable_op(self.handle, value, dtype: tensor.dtype)
     end
 
     def to_s
@@ -114,7 +120,7 @@ module Tensorflow
 
     def inspect
       inspection = []
-      inspection << ["name: #{self.handle.name}"]
+      inspection << ["name: #{self.handle.name}"] if self.handle.respond_to?(:name)
       inspection << ["shape: #{self.value_handle.shape}"]
       inspection << ["dtype: #{self.value_handle.dtype}"]
       "#<#{self.class} #{inspection.join(", ")}>"

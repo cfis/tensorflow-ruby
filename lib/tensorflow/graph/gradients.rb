@@ -102,11 +102,13 @@ module Tensorflow
         # This is the gradient we want to calculate
         dy = ::FFI::MemoryPointer.new(FFI::Output, inputs.length, true)
 
+        prefix = self.graph.scoped_name(inputs.first.operation.name)
         Status.check do |status|
-          FFI.TF_AddGradients(self.graph,
-                              y, outputs.length,
-                              x, inputs.length,
-                              dx, status, dy)
+          FFI.TF_AddGradientsWithPrefix(self.graph,
+                                        prefix,
+                                        y, outputs.length,
+                                        x, inputs.length,
+                                        dx, status, dy)
         end
 
         inputs.length.times.map do |i|

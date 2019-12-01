@@ -30,7 +30,7 @@ Gradients                                      | Implemented                    
 Functions                                      | Implemented                                                 |
 Trainers                                       | Gradient Descent Implemented                                |
 Data API                                       | 80% Implemented                                             |
-Tensorboard Support                            | Not Implemented                                             |
+Tensorboard Support                            | Implemented                                                 |
 Control Flow                                   | Not Implemented                                             |
 Gradient Tape                                  | Not Implemented                                             |
 Keras                                          | Not Implemented                                             |

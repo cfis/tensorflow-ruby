@@ -29,9 +29,13 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
+        self.evaluate(writer.initializer)
+
         writer.step = 12
         write_op = writer.write('tag', 42)
-        writer.flush
+
+        self.evaluate(Summary.all_v2_summary_ops)
+        self.evaluate(writer.flush)
 
         dataset = Data::TfRecordDataset.new(self.event_files.map(&:to_path))
         records = self.evaluate(dataset)
@@ -68,11 +72,15 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
+        self.evaluate(writer.initializer)
+
         writer.write('obj', 0, metadata: metadata)
         writer.write('bytes', 0, metadata: encoded)
         m = Tensorflow.constant(encoded)
         writer.write('string_tensor', 0, metadata: m)
-        writer.flush
+
+        self.evaluate(Summary.all_v2_summary_ops)
+        self.evaluate(writer.flush)
 
         events = read_events(context)
         assert_equal(4, events.length)
@@ -86,9 +94,12 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
+        self.evaluate(writer.initializer)
+
         writer.step = 2
-        write_op = writer.write('tag', [[1, 2], [3, 4]])
-        writer.flush
+        writer.write('tag', [[1, 2], [3, 4]])
+        self.evaluate(Summary.all_v2_summary_ops)
+        self.evaluate(writer.flush)
 
         events = read_events(context)
         assert_equal(2, events.length)
@@ -102,6 +113,7 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
+        self.evaluate(writer.initializer)
 
         writer.step = 1
         writer.write('tag', 1.0)
@@ -110,12 +122,15 @@ module Tensorflow
         writer.write('tag', 1.0)
 
         mystep = Variable.new(10, dtype: :int64)
+        self.evaluate(mystep.initializer)
         writer.step = mystep
         writer.write('tag', 1.0)
 
         mystep.assign_add(1)
         writer.write('tag', 1.0)
-        writer.flush
+
+        self.evaluate(Summary.all_v2_summary_ops)
+        self.evaluate(writer.flush)
 
         events = read_events(context)
         assert_equal(5, events.length)
@@ -130,7 +145,6 @@ module Tensorflow
     def test_graph
       self.graph_mode do |context|
         writer = Summary.create_file_writer(Dir.tmpdir)
-
         self.evaluate(writer.initializer)
         self.evaluate(writer.graph(context))
         self.evaluate(writer.flush)
@@ -161,8 +175,8 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
-
         self.evaluate(writer.initializer)
+
         writer.step = 1
         self.evaluate(writer.audio('audio', [[1.0]], 1.0, max_outputs: 1))
         self.evaluate(writer.flush)
@@ -199,8 +213,8 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
-
         self.evaluate(writer.initializer)
+
         writer.step = 1
         self.evaluate(writer.histogram('histogram', [1.0, 2.0, 3.0]))
         self.evaluate(writer.flush)
@@ -238,8 +252,8 @@ module Tensorflow
       self.eager_and_graph do |context|
         self.delete_event_files
         writer = Summary.create_file_writer(Dir.tmpdir)
-
         self.evaluate(writer.initializer)
+
         writer.step = 1
         self.evaluate(writer.image('image', Numo::NArray[[[[1.0]]]]))
         self.evaluate(writer.flush)

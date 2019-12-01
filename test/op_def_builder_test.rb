@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class OpDefBuilderTest < Minitest::Test
+  class OpDefBuilderTest < BaseTest
     def test_basic
       builder = OpDefBuilder.new('SomeOp')
       builder.attr("attr1: string")

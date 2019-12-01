@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
   module Eager
-    class OperationTest < Minitest::Test
+    class OperationTest < BaseTest
       def test_number_attr
         op_def = Tensorflow.op_def('ZipDataset')
         arg_def = op_def.input_arg.first

@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class TensorDataTest < Minitest::Test
+  class TensorDataTest < BaseTest
     def test_figure_int32_dtype
       result = TensorData.figure_dtype(32)
       assert_equal(:int32, result)

@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class TensorTest < Minitest::Test
+  class TensorTest < BaseTest
     def setup
       Tensorflow.execution_mode = Tensorflow::EAGER_MODE
     end

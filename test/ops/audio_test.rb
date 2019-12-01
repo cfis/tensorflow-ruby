@@ -1,6 +1,6 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
-class AudioTest < Minitest::Test
+class AudioTest < BaseTest
   def test_decode_wav
     #Tensorflow::Audio.decode_wav("hi")
   end

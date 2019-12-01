@@ -42,6 +42,8 @@ module Tensorflow
 
     def result_graph(operation)
       case operation
+        when Array
+          self.session.run(operation)
         when Graph::Operation
           self.session.run(operation)
         when Data::Dataset

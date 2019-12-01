@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
   module Eager
-    class ContextTest < Minitest::Test
+    class ContextTest < BaseTest
       def test_works
         context = Eager::Context.default
         assert !context.function?("hi")

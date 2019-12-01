@@ -1,6 +1,6 @@
-require_relative "test_helper"
+require_relative "base_test"
 
-class KerasDatasetsTest < Minitest::Test
+class KerasDatasetsTest < BaseTest
   def test_boston_housing
     boston_housing = Tensorflow::Keras::Datasets::BostonHousing
     (x_train, y_train), (x_test, y_test) = boston_housing.load_data

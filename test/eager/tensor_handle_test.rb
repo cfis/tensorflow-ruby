@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
   module Eager
-    class TensorHandleTest < Minitest::Test
+    class TensorHandleTest < BaseTest
       def test_tensor
         tensor = Tensor.new("Some tensor")
 

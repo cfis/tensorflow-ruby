@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
   module Graph
-    class GraphTest < Minitest::Test
+    class GraphTest < BaseTest
       def setup
         Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       end

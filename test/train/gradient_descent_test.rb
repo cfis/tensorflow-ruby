@@ -1,7 +1,7 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
-  class GradientDescentTest < Minitest::Test
+  class GradientDescentTest < BaseTest
     def setup
       Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
     end

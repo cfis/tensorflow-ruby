@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class PythonCompatiblityTest < Minitest::Test
+  class PythonCompatiblityTest < BaseTest
     def test_tf
       assert_same(Tensorflow, Tf)
     end

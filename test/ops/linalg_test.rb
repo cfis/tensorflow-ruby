@@ -1,7 +1,7 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
-  class LinalgTest < Minitest::Test
+  class LinalgTest < BaseTest
     def test_matmul_eager
       Tensorflow.enable_eager_execution
       x = [[2.0]]

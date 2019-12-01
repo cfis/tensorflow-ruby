@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class StatusTest < Minitest::Test
+  class StatusTest < BaseTest
     def test_default_status
       status = Status.new
       assert_equal(:tf_ok, status.code)

@@ -1,9 +1,9 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 require 'stringio'
 
 module Tensorflow
   module Printers
-    class GraphPrinterTest < Minitest::Test
+    class GraphPrinterTest < BaseTest
       def setup
         Tensorflow.execution_mode = Tensorflow::EAGER_MODE
       end

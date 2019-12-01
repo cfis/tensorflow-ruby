@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class ConstantTest < Minitest::Test
+  class ConstantTest < BaseTest
     def setup
       Tensorflow.disable_eager_execution
     end

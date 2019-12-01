@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
   module Graph
-    class OperationDescriptionTest < Minitest::Test
+    class OperationDescriptionTest < BaseTest
       def graph
         @graph ||= Graph.new
       end

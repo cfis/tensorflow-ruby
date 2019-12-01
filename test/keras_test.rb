@@ -1,6 +1,6 @@
-require_relative "test_helper"
+require_relative "base_test"
 
-class KerasTest < Minitest::Test
+class KerasTest < BaseTest
   def setup
     Tensorflow.execution_mode = Tensorflow::EAGER_MODE
   end

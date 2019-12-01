@@ -1,8 +1,8 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 
 module Tensorflow
   module Graph
-    class FunctionTest < Minitest::Test
+    class FunctionTest < BaseTest
       def test_oneop_zeroinputs_oneoutput
         #
         #      constant

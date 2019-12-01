@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require_relative 'base_test'
 
 module Tensorflow
-  class NameScopeTest < Minitest::Test
+  class NameScopeTest < BaseTest
     def setup
       Tensorflow.execution_mode = Tensorflow::GRAPH_MODE
       Graph::Graph.reset_default

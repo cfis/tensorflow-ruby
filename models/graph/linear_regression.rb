@@ -33,15 +33,32 @@ optimizer = Tensorflow::Train::GradientDescentOptimizer.new(learning_rate).minim
 session = Tensorflow::Graph::Session.new(Tensorflow::Graph::Graph.default, Tensorflow::Graph::SessionOptions.new)
 session.run(Tensorflow.global_variables_initializer)
 
+
+writer = Tensorflow::Summary.create_file_writer('c:\temp\ruby')
+flush = writer.flush
+
+writer.step = 1
+session.run(writer.initializer)
+
+op = writer.graph(Tensorflow::Graph::Graph.default)
+session.run(op)
+session.run(flush)
+
 result = session.run([cost], x_value => 5.0, y_value => 10.0)
-puts result
+
 
 start_time = Time.now
 
-(0..training_epochs).each do |epoch|
+(0..training_epochs).each_with_index do |epoch, i|
   train_x.zip(train_y).each do |x, y|
     session.run(optimizer, {x_value => x, y_value => y})
   end
+
+  current_cost = session.run(cost, {x_value => train_x, y_value => train_y})
+  writer.step = i
+  op1 = writer.scalar('cost', current_cost )
+  session.run(op1)
+  session.run(flush)
 
   if (epoch + 1) % display_step == 0
     current_cost = session.run(cost, {x_value => train_x, y_value => train_y})

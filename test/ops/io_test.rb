@@ -1,7 +1,7 @@
-require_relative "../test_helper"
+require_relative "../base_test"
 require 'base64'
 
-class IOTest < Minitest::Test
+class IOTest < BaseTest
   def setup
     Tensorflow.execution_mode = Tensorflow::EAGER_MODE
   end

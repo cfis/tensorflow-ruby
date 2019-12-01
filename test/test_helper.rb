@@ -4,7 +4,7 @@ require "minitest/autorun"
 require "tensorflow"
 require "tensorflow/extensions/array"
 
-class Minitest::Test
+class BaseTest
   private
 
   def teardown

@@ -1,8 +1,8 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
   module Graph
-    class DecoratorTest < Minitest::Test
+    class DecoratorTest < BaseTest
       extend Tensorflow::Decorator
 
       def setup

@@ -1,7 +1,7 @@
-require_relative "test_helper"
+require_relative "base_test"
 
 module Tensorflow
-  class TensorflowTest < Minitest::Test
+  class TensorflowTest < BaseTest
     def test_version
       assert_equal "2.0.0", Tensorflow.library_version
     end

@@ -4,7 +4,7 @@ module Tensorflow
     attr_reader :initializer
 
     def initialize(shared_name: "", container: "")
-      self.step = 0
+      self.step = 1
       @resource = RawOps.summary_writer(shared_name: shared_name, container: container)
       @initializer = yield @resource
     end

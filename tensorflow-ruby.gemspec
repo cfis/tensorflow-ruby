@@ -17,10 +17,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency "erubi"
   spec.add_dependency "ffi"
   spec.add_dependency "numo-narray"
+  spec.add_dependency "google-protobuf", ">=3.11.0"
   spec.add_dependency "npy"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", ">= 5.10"
-  spec.add_development_dependency "google-protobuf", ">=3.11.0"
 end

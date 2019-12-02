@@ -4,22 +4,6 @@ require "minitest/autorun"
 require "tensorflow"
 require "tensorflow/extensions/array"
 
-class BaseTest
-  private
-
-  def teardown
-    @tempfile = nil
-  end
-
-  def tempfile
-    @tempfile ||= "#{tempdir}/#{Time.now.to_f}"
-  end
-
-  def tempdir
-    @tempdir ||= File.dirname(Tempfile.new("tensorflow"))
-  end
-end
-
 class MyModel < Tensorflow::Keras::Model
   def initialize
     super

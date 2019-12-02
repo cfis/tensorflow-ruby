@@ -3,6 +3,10 @@ require_relative "../base_test"
 module Tensorflow
   module Eager
     class TensorHandleTest < BaseTest
+      def setup
+        Tensorflow.execution_mode = Tensorflow::EAGER_MODE
+      end
+
       def test_tensor
         tensor = Tensor.new("Some tensor")
 

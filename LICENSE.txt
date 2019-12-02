@@ -1,4 +1,4 @@
-Copyright (c) 2019 Andrew Kane
+Copyright (c) 2019 Andrew Kane, Charlie Savage
 
 MIT License
 

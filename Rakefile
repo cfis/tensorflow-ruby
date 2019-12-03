@@ -3,6 +3,7 @@ Bundler.require(:default)
 
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "rubygems/package_task"
 
 task default: :test
 Rake::TestTask.new do |t|
@@ -10,6 +11,12 @@ Rake::TestTask.new do |t|
   t.pattern = "test/**/*_test.rb"
   t.warning = false
 end
+
+# Read the spec file
+spec = Gem::Specification.load("tensorflow-ruby.gemspec")
+
+# Setup Rake tasks for managing the gem
+Gem::PackageTask.new(spec).define
 
 class RawOpHelper
   # based on ActiveSupport underscore
